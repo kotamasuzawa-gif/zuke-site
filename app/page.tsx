@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import Gallery from "./components/Gallery";
 import Products from "./components/Products";
 import About from "./components/About";
 import HowTo from "./components/HowTo";
@@ -12,6 +13,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <Gallery />
         <Products />
         <About />
         <HowTo />
