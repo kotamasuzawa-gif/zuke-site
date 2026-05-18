@@ -1,66 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const links = [
-    { label: "ITEMS", href: "#products" },
-    { label: "ABOUT", href: "#about" },
-    { label: "HOW TO USE", href: "#howto" },
-    { label: "CONTACT", href: "#contact" },
+    { label: "商品", href: "#products" },
+    { label: "ブランドについて", href: "#about" },
+    { label: "使い方", href: "#howto" },
+    { label: "お問い合わせ", href: "#contact" },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-        <a href="#" className="text-sm font-medium tracking-[0.25em] text-gray-900">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#" className="text-xl font-bold tracking-[0.2em] text-stone-800">
           ZUKE
         </a>
 
-        <nav className="hidden md:flex items-center gap-10">
+        {/* Desktop nav */}
+        <nav className="hidden md:flex gap-8">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-xs text-gray-500 hover:text-gray-900 transition-colors tracking-[0.15em]"
+              className="text-sm text-stone-600 hover:text-stone-900 transition-colors tracking-wide"
             >
               {l.label}
             </a>
           ))}
         </nav>
 
-        <a
-          href="https://zukeplants.base.shop/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden md:block text-xs text-gray-500 hover:text-gray-900 transition-colors tracking-[0.15em]"
-        >
-          SHOP →
-        </a>
-
+        {/* Mobile menu button */}
         <button
-          className="md:hidden"
+          className="md:hidden flex flex-col gap-1.5 p-1"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="メニュー"
         >
-          <div className="flex flex-col gap-1.5">
-            <span className={`block w-5 h-px bg-gray-900 transition-transform ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`block w-5 h-px bg-gray-900 transition-opacity ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-px bg-gray-900 transition-transform ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
-          </div>
+          <span className={`block w-6 h-0.5 bg-stone-800 transition-transform duration-200 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block w-6 h-0.5 bg-stone-800 transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block w-6 h-0.5 bg-stone-800 transition-transform duration-200 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
         </button>
       </div>
 
+      {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-6 flex flex-col gap-5">
+        <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setMenuOpen(false)}
-              className="text-xs text-gray-500 hover:text-gray-900 tracking-[0.15em]"
+              className="text-sm text-stone-600 hover:text-stone-900 transition-colors py-1"
             >
               {l.label}
             </a>
