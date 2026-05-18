@@ -23,17 +23,19 @@ const steps = [
 
 export default function HowTo() {
   return (
-    <section id="howto" className="py-24 px-6 bg-white">
+    <section id="howto" className="py-28 px-8 bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto">
 
-        <p className="text-xs tracking-[0.4em] text-gray-400 mb-16">HOW TO USE</p>
+        <div className="flex items-baseline gap-16 mb-20">
+          <p className="text-[10px] tracking-[0.5em] text-gray-300 font-light">HOW TO USE</p>
+        </div>
 
-        <div className="grid md:grid-cols-4 gap-px bg-gray-100">
+        <div className="grid md:grid-cols-4 gap-16">
           {steps.map((s) => (
-            <div key={s.step} className="bg-white px-8 py-10">
-              <p className="text-[10px] tracking-[0.3em] text-gray-300 mb-6">{s.step}</p>
-              <h3 className="text-sm text-gray-900 mb-4 font-medium">{s.title}</h3>
-              <p className="text-xs text-gray-500 leading-loose">{s.body}</p>
+            <div key={s.step}>
+              <p className="text-[9px] tracking-[0.4em] text-gray-200 mb-8 font-light">{s.step}</p>
+              <h3 className="text-[13px] font-light text-black mb-5 tracking-wide">{s.title}</h3>
+              <p className="text-[11px] font-light text-gray-400 leading-loose">{s.body}</p>
             </div>
           ))}
         </div>
