@@ -33,9 +33,9 @@ export default function HowTo() {
         <div className="grid md:grid-cols-4 gap-16">
           {steps.map((s) => (
             <div key={s.step}>
-              <p className="text-[9px] tracking-[0.4em] text-gray-200 mb-8 font-light">{s.step}</p>
-              <h3 className="text-[13px] font-light text-black mb-5 tracking-wide">{s.title}</h3>
-              <p className="text-[11px] font-light text-gray-400 leading-loose">{s.body}</p>
+              <p className="text-xs tracking-[0.3em] text-gray-300 mb-6 font-light">{s.step}</p>
+              <h3 className="text-sm font-light text-black mb-4 tracking-wide">{s.title}</h3>
+              <p className="text-xs font-light text-gray-500 leading-loose">{s.body}</p>
             </div>
           ))}
         </div>
