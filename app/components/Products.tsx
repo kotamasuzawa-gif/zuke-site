@@ -54,7 +54,7 @@ export default function Products() {
         <div className="mb-16">
           <p className="text-xs tracking-[0.4em] text-green-700 uppercase mb-3">Products</p>
           <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tight">商品ラインナップ</h2>
-          <p className="text-sm text-stone-500 mt-4">全商品はBASEショップにてご購入いただけます。</p>
+          <p className="text-sm text-stone-500 mt-4">全商品はオンラインショップにてご購入いただけます。</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -97,7 +97,7 @@ export default function Products() {
                   rel="noopener noreferrer"
                   className="block w-full text-center py-3 border border-stone-800 text-stone-800 text-xs tracking-widest hover:bg-stone-800 hover:text-white transition-colors duration-200"
                 >
-                  BASEで購入する →
+                  購入する →
                 </a>
               </div>
             </div>
@@ -111,7 +111,7 @@ export default function Products() {
             rel="noopener noreferrer"
             className="inline-block px-8 py-3 border border-stone-300 text-stone-600 text-xs tracking-widest hover:border-stone-600 hover:text-stone-800 transition-colors"
           >
-            BASEショップで全商品を見る →
+            全商品を見る →
           </a>
         </div>
       </div>
