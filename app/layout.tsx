@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
-import { Noto_Serif_JP, Noto_Sans_JP } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 
-const notoSerifJP = Noto_Serif_JP({
-  variable: "--font-serif",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-});
-
-const notoSansJP = Noto_Sans_JP({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "ZUKE | Plants Pole Brand",
-  description: "ZUKEは植物とインテリアの間に美しい支柱を届けるブランドです。",
+  title: "ZUKE | 園芸支柱ブランド",
+  description: "ZUKEは植物を美しく育てるための園芸支柱ブランドです。シンプルで機能的なデザインで、あなたの庭をもっと豊かに。",
 };
 
 export default function RootLayout({
@@ -25,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${notoSerifJP.variable} ${notoSansJP.variable} h-full antialiased`}>
+    <html lang="ja" className={`${geistSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

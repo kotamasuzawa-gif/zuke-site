@@ -1,66 +1,51 @@
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-[#faf9f6] overflow-hidden">
-      {/* 和紙風の薄いテクスチャライン */}
-      <div className="absolute inset-0 opacity-[0.06]"
+    <section className="relative min-h-screen flex items-center justify-center bg-stone-50 overflow-hidden">
+      {/* Background grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
         style={{
-          backgroundImage: "repeating-linear-gradient(0deg, #8b7355 0px, #8b7355 1px, transparent 1px, transparent 60px)",
+          backgroundImage:
+            "linear-gradient(#1a1a1a 1px, transparent 1px), linear-gradient(90deg, #1a1a1a 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
         }}
       />
 
-      {/* 抹茶のぼかし */}
-      <div className="absolute top-1/4 right-1/3 w-80 h-80 rounded-full bg-[#8fa882] opacity-10 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/3 left-1/4 w-96 h-96 rounded-full bg-[#c8b89a] opacity-15 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full bg-green-100 opacity-40 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-stone-200 opacity-60 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 text-center px-8 max-w-2xl mx-auto">
-        {/* 細い横線アクセント */}
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <div className="w-12 h-px bg-[#8b7a6a]" />
-          <p className="text-[10px] tracking-[0.5em] text-[#8b7a6a] uppercase">Plants Pole Brand</p>
-          <div className="w-12 h-px bg-[#8b7a6a]" />
-        </div>
-
-        <h1
-          className="text-6xl md:text-8xl font-light tracking-[0.25em] text-[#1c1a17] mb-6 leading-none"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
+      <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
+        <p className="text-xs tracking-[0.4em] text-green-700 mb-6 uppercase">
+          Plants Pole Brand
+        </p>
+        <h1 className="text-7xl md:text-9xl font-bold tracking-[0.15em] text-stone-800 mb-8 leading-none">
           ZUKE
         </h1>
-
-        {/* 縦線区切り */}
-        <div className="w-px h-10 bg-[#c8b89a] mx-auto mb-8" />
-
-        <p
-          className="text-base md:text-lg text-[#6b6456] leading-loose mb-14 font-light tracking-wide"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
+        <p className="text-lg md:text-xl text-stone-500 leading-relaxed mb-12 font-light">
           植物とインテリアの間に、<br />
           美しい支柱を。
         </p>
-
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#products"
-            className="px-10 py-3.5 bg-[#3d3830] text-[#faf9f6] text-xs tracking-[0.25em] hover:bg-[#2a2520] transition-colors"
-            style={{ fontFamily: "var(--font-sans)" }}
+            className="px-8 py-3.5 bg-stone-800 text-white text-sm tracking-widest hover:bg-stone-700 transition-colors"
           >
-            商　品　を　見　る
+            商品を見る
           </a>
           <a
             href="https://zukeplants.base.shop/"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-10 py-3.5 border border-[#c8b89a] text-[#6b6456] text-xs tracking-[0.25em] hover:border-[#8b7a6a] hover:text-[#3d3830] transition-colors"
-            style={{ fontFamily: "var(--font-sans)" }}
+            className="px-8 py-3.5 border border-stone-400 text-stone-600 text-sm tracking-widest hover:border-stone-600 hover:text-stone-800 transition-colors"
           >
-            シ　ョ　ッ　プ　へ　→
+            ショップへ →
           </a>
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
-        <span className="text-[9px] text-[#b0a898] tracking-[0.4em]">SCROLL</span>
-        <div className="w-px h-14 bg-gradient-to-b from-[#b0a898] to-transparent" />
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span className="text-xs text-stone-400 tracking-widest">SCROLL</span>
+        <div className="w-px h-12 bg-gradient-to-b from-stone-400 to-transparent" />
       </div>
     </section>
   );

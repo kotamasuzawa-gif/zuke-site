@@ -21,23 +21,22 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-[#faf9f6]/95 backdrop-blur-sm border-b border-[#d9d2c5]" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-8 h-16 flex items-center justify-between">
-        <a href="#" className="font-serif text-lg tracking-[0.3em] text-[#1c1a17]" style={{ fontFamily: "var(--font-serif)" }}>
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#" className="text-xl font-bold tracking-[0.2em] text-stone-800">
           ZUKE
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex gap-10">
+        <nav className="hidden md:flex gap-8">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-xs text-[#6b6456] hover:text-[#1c1a17] transition-colors tracking-[0.15em]"
-              style={{ fontFamily: "var(--font-sans)" }}
+              className="text-sm text-stone-600 hover:text-stone-900 transition-colors tracking-wide"
             >
               {l.label}
             </a>
@@ -50,20 +49,21 @@ export default function Header() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="メニュー"
         >
-          <span className={`block w-5 h-px bg-[#1c1a17] transition-transform duration-200 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-          <span className={`block w-5 h-px bg-[#1c1a17] transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block w-5 h-px bg-[#1c1a17] transition-transform duration-200 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+          <span className={`block w-6 h-0.5 bg-stone-800 transition-transform duration-200 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block w-6 h-0.5 bg-stone-800 transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block w-6 h-0.5 bg-stone-800 transition-transform duration-200 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
         </button>
       </div>
 
+      {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#faf9f6] border-t border-[#d9d2c5] px-8 py-6 flex flex-col gap-5">
+        <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setMenuOpen(false)}
-              className="text-sm text-[#6b6456] hover:text-[#1c1a17] transition-colors tracking-[0.15em]"
+              className="text-sm text-stone-600 hover:text-stone-900 transition-colors py-1"
             >
               {l.label}
             </a>
