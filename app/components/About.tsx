@@ -34,7 +34,6 @@ export default function About() {
           <div className="grid grid-cols-2 gap-6 border-t border-gray-100 pt-10">
             {[
               { k: "Material", v: "Iron Steel" },
-              { k: "Design", v: "Made in Japan" },
               { k: "Type", v: "4 Designs" },
               { k: "Use", v: "Indoor Plants" },
             ].map((item) => (
