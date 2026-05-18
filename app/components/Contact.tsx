@@ -44,7 +44,7 @@ export default function Contact() {
               <line x1="3" y1="6" x2="21" y2="6" />
               <path d="M16 10a4 4 0 0 1-8 0" />
             </svg>
-            <span className="text-xs tracking-widest">BASE SHOP</span>
+            <span className="text-xs tracking-widest">SHOP</span>
           </a>
         </div>
       </div>

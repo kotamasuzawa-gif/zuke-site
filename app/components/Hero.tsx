@@ -38,7 +38,7 @@ export default function Hero() {
             rel="noopener noreferrer"
             className="px-8 py-3.5 border border-stone-400 text-stone-600 text-sm tracking-widest hover:border-stone-600 hover:text-stone-800 transition-colors"
           >
-            BASEショップへ →
+            ショップへ →
           </a>
         </div>
       </div>
