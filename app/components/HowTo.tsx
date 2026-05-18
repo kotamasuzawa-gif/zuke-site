@@ -40,21 +40,6 @@ export default function HowTo() {
           ))}
         </div>
 
-        <div className="mt-8 p-6 border-l-2 border-green-600 bg-green-50">
-          <p className="text-sm text-stone-600 leading-relaxed">
-            <span className="font-semibold text-green-700">TIP: </span>
-            Instagramでは実際の使用例を多数紹介しています。
-            植物との組み合わせや飾り方の参考にぜひご覧ください。
-            <a
-              href="https://www.instagram.com/zuke.plantspole/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-2 underline text-green-700 hover:text-green-900 transition-colors"
-            >
-              @zuke.plantspole →
-            </a>
-          </p>
-        </div>
       </div>
     </section>
   );
