@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import Gallery from "./components/Gallery";
 import Products from "./components/Products";
+import { PhotoBreak1, PhotoBreak2, PhotoStrip } from "./components/Gallery";
 import About from "./components/About";
 import HowTo from "./components/HowTo";
 import Contact from "./components/Contact";
@@ -13,10 +13,12 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Gallery />
         <Products />
+        <PhotoBreak1 />
         <About />
+        <PhotoBreak2 />
         <HowTo />
+        <PhotoStrip />
         <Contact />
       </main>
       <Footer />
