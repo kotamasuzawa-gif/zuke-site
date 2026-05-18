@@ -1,54 +1,49 @@
+import Image from "next/image";
+
 export default function Hero() {
   return (
-    <section className="pt-14 min-h-screen flex flex-col">
-      {/* メインビジュアル */}
-      <div className="flex-1 bg-[#f4f2ee] flex items-center justify-center relative overflow-hidden">
-        {/* 商品シルエットの背景 */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.06]">
-          <svg viewBox="0 0 400 600" className="w-64 h-auto">
-            <rect x="185" y="0" width="30" height="480" rx="15" fill="#1a1a1a" />
-            <polygon points="200,600 160,480 240,480" fill="#1a1a1a" />
-            {[100, 200, 320, 430].map((cy, i) => (
-              <polygon
-                key={i}
-                points={`200,${cy - 50} 243,${cy - 25} 243,${cy + 25} 200,${cy + 50} 157,${cy + 25} 157,${cy - 25}`}
-                fill="none"
-                stroke="#1a1a1a"
-                strokeWidth="6"
-              />
-            ))}
-          </svg>
-        </div>
+    <section className="pt-14 min-h-screen flex flex-col md:flex-row">
 
-        <div className="relative text-center px-8 py-32">
-          <p className="text-xs tracking-[0.4em] text-gray-400 mb-8">Plants Pole Brand</p>
-          <h1 className="text-[80px] md:text-[120px] font-thin tracking-[0.2em] text-gray-900 leading-none mb-8">
-            ZUKE
-          </h1>
-          <p className="text-sm text-gray-400 tracking-[0.15em] leading-loose">
-            Products inspired by plants.
-          </p>
+      {/* 左：テキスト */}
+      <div className="flex flex-col justify-center px-10 py-20 md:py-0 md:w-2/5 bg-white order-2 md:order-1">
+        <p className="text-[10px] tracking-[0.4em] text-gray-400 mb-8">ZUKE / Plants Pole Brand</p>
+        <h1 className="text-2xl md:text-3xl font-light text-gray-900 leading-relaxed tracking-wide mb-8">
+          "魅せる"ための<br />園芸支柱
+        </h1>
+        <p className="text-xs text-gray-400 tracking-[0.15em] leading-loose mb-12">
+          支柱を、インテリアにする。<br />
+          鉄の美しさを、植物と共に。
+        </p>
+        <div className="flex flex-col gap-4">
+          <a
+            href="#products"
+            className="inline-block text-xs tracking-[0.3em] text-gray-900 border-b border-gray-900 pb-0.5 w-fit hover:text-gray-400 hover:border-gray-400 transition-colors"
+          >
+            VIEW ITEMS
+          </a>
+          <a
+            href="https://zukeplants.base.shop/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-xs tracking-[0.3em] text-gray-400 hover:text-gray-900 transition-colors w-fit"
+          >
+            ONLINE SHOP →
+          </a>
         </div>
       </div>
 
-      {/* 下部アクション */}
-      <div className="bg-white py-10 px-8 flex flex-col sm:flex-row items-center justify-center gap-6 border-t border-gray-100">
-        <a
-          href="#products"
-          className="text-xs tracking-[0.3em] text-gray-900 border-b border-gray-900 pb-0.5 hover:text-gray-500 hover:border-gray-500 transition-colors"
-        >
-          VIEW ITEMS
-        </a>
-        <span className="hidden sm:block w-px h-4 bg-gray-200" />
-        <a
-          href="https://zukeplants.base.shop/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs tracking-[0.3em] text-gray-400 hover:text-gray-900 transition-colors"
-        >
-          ONLINE SHOP →
-        </a>
+      {/* 右：画像 */}
+      <div className="relative md:w-3/5 bg-[#f4f2ee] order-1 md:order-2" style={{ minHeight: "60vw" }}>
+        <Image
+          src="https://baseec-img-mng.akamaized.net/images/item/origin/99d4b0564f5e6d6c2729f19eee010bc7.png"
+          alt="PLANTS POLE 5つの六角形"
+          fill
+          className="object-contain p-16 md:p-24 mix-blend-multiply"
+          priority
+          sizes="(max-width: 768px) 100vw, 60vw"
+        />
       </div>
+
     </section>
   );
 }
