@@ -1,21 +1,61 @@
+"use client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-// Products直後：全幅シネマティック1枚
+const slides = [
+  { src: "/gallery-2.jpg", alt: "ZUKE nordic room" },
+  { src: "/hero-1.jpg",    alt: "ZUKE warm natural" },
+  { src: "/gallery-3.jpg", alt: "ZUKE desk setting" },
+  { src: "/hero-3.jpg",    alt: "ZUKE shelf scene" },
+];
+
+// Products直後：自動スライダー（5秒）
 export function PhotoBreak1() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="relative w-full h-[60vh] overflow-hidden">
-      <Image
-        src="/gallery-2.jpg"
-        alt="ZUKE living space"
-        fill
-        className="object-cover object-center"
-        sizes="100vw"
-      />
+      {slides.map((slide, i) => (
+        <div
+          key={slide.src}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            i === current ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <Image
+            src={slide.src}
+            alt={slide.alt}
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+            priority={i === 0}
+          />
+        </div>
+      ))}
       <div className="absolute inset-0 bg-black/10" />
-      <div className="absolute bottom-10 left-8 md:left-16">
+      <div className="absolute bottom-10 left-8 md:left-16 z-10">
         <p className="text-[10px] tracking-[0.5em] text-white/70 font-light">
           PLANTS POLE — FOR YOUR LIVING SPACE
         </p>
+      </div>
+      {/* インジケーター */}
+      <div className="absolute bottom-10 right-8 md:right-16 z-10 flex gap-1.5">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-4 h-px transition-all duration-300 ${
+              i === current ? "bg-white" : "bg-white/40"
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
