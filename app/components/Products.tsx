@@ -57,7 +57,7 @@ export default function Products() {
           <p className="text-sm text-stone-500 mt-4">全商品はオンラインショップにてご購入いただけます。</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {products.map((product) => (
             <div
               key={product.id}
