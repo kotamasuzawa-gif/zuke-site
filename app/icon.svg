@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" fill="#111111"/>
+  <!-- 上の六角形 -->
+  <polygon points="16,3 21,6 21,12 16,15 11,12 11,6" stroke="white" stroke-width="1.5" fill="none"/>
+  <!-- 下の六角形 -->
+  <polygon points="16,15 21,18 21,24 16,27 11,24 11,18" stroke="white" stroke-width="1.5" fill="none"/>
+  <!-- 縦の軸 -->
+  <line x1="16" y1="15" x2="16" y2="30" stroke="white" stroke-width="1.5"/>
+</svg>
