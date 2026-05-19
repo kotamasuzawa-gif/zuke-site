@@ -21,12 +21,12 @@ export function PhotoBreak1() {
   );
 }
 
-// About直後：左大・右小の非対称エディトリアル
+// About直後：左大・右小の非対称エディトリアル（高さ統一）
 export function PhotoBreak2() {
   return (
-    <div className="grid grid-cols-3 gap-0.5 bg-white">
-      {/* 左：大きいポートレート */}
-      <div className="col-span-2 relative aspect-[3/2] overflow-hidden">
+    <div className="grid grid-cols-3 gap-0.5 h-[50vw] md:h-[40vw]">
+      {/* 左：大きい */}
+      <div className="col-span-2 relative overflow-hidden">
         <Image
           src="/gallery-3.jpg"
           alt="ZUKE desk scene"
@@ -35,8 +35,8 @@ export function PhotoBreak2() {
           sizes="66vw"
         />
       </div>
-      {/* 右：縦長クローズアップ */}
-      <div className="relative aspect-[2/3] overflow-hidden">
+      {/* 右：クローズアップ */}
+      <div className="relative overflow-hidden">
         <Image
           src="/gallery-1.jpg"
           alt="ZUKE close-up"
