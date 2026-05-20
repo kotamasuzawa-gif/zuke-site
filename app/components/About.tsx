@@ -31,6 +31,17 @@ export default function About() {
             支柱もまた空間の一部であるべき——<br />
             そんな考えから生まれた、鉄製のプランツポールです。
           </p>
+          {/* gallery-4 写真 */}
+          <div className="relative w-full aspect-[4/3] overflow-hidden mb-10">
+            <Image
+              src="/gallery-4.webp"
+              alt="ZUKE インテリアシーン"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+
           <div className="grid grid-cols-2 gap-6 border-t border-gray-100 pt-10">
             {[
               { k: "Material", v: "Iron Steel" },
