@@ -3,11 +3,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const slides = [
-  { src: "/gallery-2.jpg",  alt: "ZUKE nordic room" },
-  { src: "/hero-1.jpg",     alt: "ZUKE warm natural" },
-  { src: "/gallery-3.jpg",  alt: "ZUKE desk setting" },
-  { src: "/hero-3.jpg",     alt: "ZUKE shelf scene" },
-  { src: "/gallery-4.webp", alt: "ZUKE bathroom shelf" },
+  { src: "/gallery-2.jpg", alt: "ZUKE nordic room" },
+  { src: "/hero-1.jpg",    alt: "ZUKE warm natural" },
+  { src: "/gallery-3.jpg", alt: "ZUKE desk setting" },
+  { src: "/hero-3.jpg",    alt: "ZUKE shelf scene" },
 ];
 
 // Products直後：自動スライダー（5秒）
