@@ -3,10 +3,12 @@ import Image from "next/image";
 export default function About() {
   return (
     <section id="about" className="bg-white border-t border-gray-100">
+
+      {/* 上段：2カラム（写真 + テキスト） */}
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-0 items-stretch">
 
-        {/* 写真 */}
-        <div className="relative aspect-[4/5] md:aspect-auto overflow-hidden">
+        {/* 左：ライフスタイル写真 */}
+        <div className="relative aspect-[4/5] overflow-hidden">
           <Image
             src="/hero-1.jpg"
             alt="ZUKE ライフスタイル"
@@ -16,7 +18,7 @@ export default function About() {
           />
         </div>
 
-        {/* テキスト */}
+        {/* 右：テキスト */}
         <div className="flex flex-col justify-center px-10 md:px-16 py-20">
           <p className="text-[10px] tracking-[0.5em] text-gray-300 mb-10 font-light">ABOUT ZUKE</p>
           <h2 className="text-3xl md:text-4xl font-thin text-black tracking-wide leading-relaxed mb-10">
@@ -31,17 +33,6 @@ export default function About() {
             支柱もまた空間の一部であるべき——<br />
             そんな考えから生まれた、鉄製のプランツポールです。
           </p>
-          {/* gallery-4 写真 */}
-          <div className="relative w-full aspect-[4/3] overflow-hidden mb-10">
-            <Image
-              src="/gallery-4.webp"
-              alt="ZUKE インテリアシーン"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
-
           <div className="grid grid-cols-2 gap-6 border-t border-gray-100 pt-10">
             {[
               { k: "Material", v: "Iron Steel" },
@@ -57,6 +48,22 @@ export default function About() {
         </div>
 
       </div>
+
+      {/* 下段：gallery-4 フル幅シネマティックストリップ */}
+      <div className="relative w-full h-[50vh] overflow-hidden">
+        <Image
+          src="/gallery-4.webp"
+          alt="ZUKE インテリアシーン"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute bottom-8 right-8 md:right-16 z-10">
+          <p className="text-[10px] tracking-[0.5em] text-white/70 font-light">PLANTS POLE IN YOUR SPACE</p>
+        </div>
+      </div>
+
     </section>
   );
 }

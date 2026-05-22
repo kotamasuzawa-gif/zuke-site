@@ -93,30 +93,30 @@ export function PhotoBreak2() {
 export function PhotoStrip() {
   return (
     <div className="grid grid-cols-3 gap-0.5">
-      <div className="relative aspect-[3/4] overflow-hidden">
+      <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden">
         <Image
           src="/hero-1.jpg"
           alt="ZUKE warm setting"
           fill
-          className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
+          className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
           sizes="33vw"
         />
       </div>
-      <div className="relative aspect-[3/4] overflow-hidden">
+      <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden">
         <Image
           src="/hero-3.jpg"
           alt="ZUKE nordic shelf"
           fill
-          className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
+          className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
           sizes="33vw"
         />
       </div>
-      <div className="relative aspect-[3/4] overflow-hidden">
+      <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden">
         <Image
           src="/hero-2.jpg"
           alt="ZUKE urban minimal"
           fill
-          className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
+          className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
           sizes="33vw"
         />
       </div>
