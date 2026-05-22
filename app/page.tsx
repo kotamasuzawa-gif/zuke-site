@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Products from "./components/Products";
-import { PhotoBreak1, PhotoBreak2, PhotoStrip } from "./components/Gallery";
+import { PhotoBreak1, PhotoStrip } from "./components/Gallery";
 import About from "./components/About";
 import HowTo from "./components/HowTo";
 import Contact from "./components/Contact";
@@ -12,14 +12,13 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <Hero />
-        <Products />
-        <PhotoBreak1 />
-        <About />
-        <PhotoBreak2 />
-        <HowTo />
-        <PhotoStrip />
-        <Contact />
+        <Hero />          {/* 写真 */}
+        <Products />      {/* テキスト */}
+        <About />         {/* 写真＋テキスト＋gallery-4 */}
+        <HowTo />         {/* テキスト */}
+        <PhotoBreak1 />   {/* 写真スライダー */}
+        <PhotoStrip />    {/* 写真3枚 */}
+        <Contact />       {/* テキスト */}
       </main>
       <Footer />
     </>

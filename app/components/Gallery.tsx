@@ -9,7 +9,7 @@ const slides = [
   { src: "/hero-3.jpg",    alt: "ZUKE shelf scene" },
 ];
 
-// Products直後：自動スライダー（5秒）
+// HowTo直後：縦型写真スライダー（5秒）
 export function PhotoBreak1() {
   const [current, setCurrent] = useState(0);
 
@@ -21,41 +21,53 @@ export function PhotoBreak1() {
   }, []);
 
   return (
-    <div className="relative w-full h-[60vh] overflow-hidden">
-      {slides.map((slide, i) => (
-        <div
-          key={slide.src}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            i === current ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <Image
-            src={slide.src}
-            alt={slide.alt}
-            fill
-            className="object-cover object-center"
-            sizes="100vw"
-            priority={i === 0}
-          />
+    <div className="bg-stone-50 py-16 md:py-24">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10 md:gap-20">
+
+        {/* 縦型写真コンテナ */}
+        <div className="relative w-full max-w-xs md:max-w-sm flex-shrink-0 aspect-[3/4] overflow-hidden">
+          {slides.map((slide, i) => (
+            <div
+              key={slide.src}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                i === current ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 80vw, 384px"
+                priority={i === 0}
+              />
+            </div>
+          ))}
         </div>
-      ))}
-      <div className="absolute inset-0 bg-black/10" />
-      <div className="absolute bottom-10 left-8 md:left-16 z-10">
-        <p className="text-[10px] tracking-[0.5em] text-white/70 font-light">
-          PLANTS POLE — FOR YOUR LIVING SPACE
-        </p>
-      </div>
-      {/* インジケーター */}
-      <div className="absolute bottom-10 right-8 md:right-16 z-10 flex gap-1.5">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`w-4 h-px transition-all duration-300 ${
-              i === current ? "bg-white" : "bg-white/40"
-            }`}
-          />
-        ))}
+
+        {/* 右：テキスト＋インジケーター */}
+        <div className="flex flex-col gap-8">
+          <p className="text-[10px] tracking-[0.5em] text-stone-400 font-light">
+            PLANTS POLE — FOR YOUR LIVING SPACE
+          </p>
+          <p className="text-sm text-stone-500 font-light leading-relaxed max-w-xs">
+            植物の成長とともに、<br />
+            空間もまた育っていく。<br />
+            ZUKEは暮らしに馴染む支柱です。
+          </p>
+          <div className="flex gap-3">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-6 h-px transition-all duration-300 ${
+                  i === current ? "bg-stone-800" : "bg-stone-300"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
