@@ -9,7 +9,7 @@ export default function Hero() {
           src="/hero-4.jpg"
           alt="ZUKE PLANTS POLE"
           fill
-          className="object-cover"
+          className="object-cover object-top"
           priority
           sizes="100vw"
         />
