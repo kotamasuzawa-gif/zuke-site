@@ -1,3 +1,5 @@
+import Reveal from "./Reveal";
+
 const steps = [
   {
     step: "01",
@@ -23,23 +25,34 @@ const steps = [
 
 export default function HowTo() {
   return (
-    <section id="howto" className="py-28 px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
-          <p className="text-xs tracking-[0.4em] text-green-700 uppercase mb-3">How to use</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tight">使い方ガイド</h2>
-        </div>
+    <section id="howto" className="relative border-t border-[var(--line)] px-6 py-28 md:py-36">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <div className="mb-16">
+            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.4em] text-[var(--accent)]">[ 03 ] How to use</p>
+            <h2 className="text-4xl font-thin tracking-tight text-[var(--fg)] md:text-5xl">使い方ガイド</h2>
+          </div>
+        </Reveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-100">
-          {steps.map((s) => (
-            <div key={s.step} className="bg-white p-8 hover:bg-stone-50 transition-colors">
-              <p className="text-4xl font-bold text-stone-100 mb-6 leading-none">{s.step}</p>
-              <h3 className="font-semibold text-stone-800 text-sm tracking-wide mb-3">{s.title}</h3>
-              <p className="text-sm text-stone-500 leading-relaxed">{s.body}</p>
-            </div>
+        <div className="grid gap-px bg-[var(--line)] md:grid-cols-2 lg:grid-cols-4">
+          {steps.map((s, i) => (
+            <Reveal key={s.step} delay={i * 100}>
+              <div className="group relative h-full overflow-hidden bg-[var(--bg)] p-8 transition-colors duration-300 hover:bg-white/[0.02]">
+                <span
+                  className="block text-5xl font-thin leading-none text-transparent transition-all duration-300"
+                  style={{
+                    WebkitTextStroke: "1px rgba(92,242,176,0.45)",
+                  }}
+                >
+                  {s.step}
+                </span>
+                <span className="my-6 block h-px w-8 bg-[var(--accent)] transition-all duration-500 group-hover:w-16" />
+                <h3 className="mb-3 text-sm font-semibold tracking-wide text-[var(--fg)]">{s.title}</h3>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">{s.body}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
-
       </div>
     </section>
   );

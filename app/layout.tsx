@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import ScrollProgress from "./components/ScrollProgress";
+import Cursor from "./components/Cursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* ambient near-future backdrop */}
+        <div className="aurora" aria-hidden />
+        <div className="bg-grid bg-grid-fade pointer-events-none fixed inset-0 -z-10" aria-hidden />
+        <ScrollProgress />
+        <Cursor />
+        {children}
+      </body>
     </html>
   );
 }

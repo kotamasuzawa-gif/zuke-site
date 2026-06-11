@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Reveal from "./Reveal";
+import Tilt from "./Tilt";
 
 const products = [
   {
@@ -49,71 +51,91 @@ const products = [
 
 export default function Products() {
   return (
-    <section id="products" className="py-28 px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
-          <p className="text-xs tracking-[0.4em] text-green-700 uppercase mb-3">Products</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tight">商品ラインナップ</h2>
-          <p className="text-sm text-stone-500 mt-4">全商品はオンラインショップにてご購入いただけます。</p>
-        </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="group border border-stone-100 hover:border-stone-300 transition-colors duration-300 flex flex-col"
-            >
-              {/* Product image */}
-              <div className="aspect-square bg-stone-50 relative overflow-hidden">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-                {product.tag && (
-                  <span className="absolute top-3 left-3 text-xs tracking-widest bg-stone-800 text-white px-2.5 py-1">
-                    {product.tag}
-                  </span>
-                )}
-              </div>
-
-              {/* Product info */}
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex-1">
-                  <h3 className="font-bold text-stone-800 text-sm tracking-wide">{product.name}</h3>
-                  <p className="text-xs text-stone-400 mt-0.5 mb-2 leading-snug">{product.subtitle}</p>
-                  <p className="text-xs text-stone-400 mb-3">{product.size}</p>
-                  <p className="text-xs text-stone-500 leading-relaxed mb-4">{product.description}</p>
-                </div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-lg font-bold text-stone-800">{product.price}</span>
-                  <span className="text-xs text-stone-400">税込</span>
-                </div>
-                <a
-                  href={product.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center py-3 border border-stone-800 text-stone-800 text-xs tracking-widest hover:bg-stone-800 hover:text-white transition-colors duration-200"
-                >
-                  購入する →
-                </a>
-              </div>
+    <section id="products" className="relative px-6 py-28 md:py-36">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <div className="mb-16 flex items-end justify-between">
+            <div>
+              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.4em] text-[var(--accent)]">[ 01 ] Products</p>
+              <h2 className="text-4xl font-thin tracking-tight text-[var(--fg)] md:text-5xl">商品ラインナップ</h2>
+              <p className="mt-4 text-sm font-light text-[var(--muted)]">全商品はオンラインショップにてご購入いただけます。</p>
             </div>
+            <span className="hidden font-mono text-xs tracking-[0.3em] text-[var(--muted)] md:block">04 ITEMS</span>
+          </div>
+        </Reveal>
+
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {products.map((product, i) => (
+            <Reveal key={product.id} delay={i * 90}>
+              <Tilt className="group relative flex h-full flex-col overflow-hidden border border-[var(--line)] bg-white/[0.025] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent)]/50">
+                {/* glow on hover */}
+                <span
+                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{ boxShadow: "inset 0 0 40px rgba(92,242,176,0.12)" }}
+                  aria-hidden
+                />
+                {/* index marker */}
+                <span className="absolute right-3 top-3 z-20 font-mono text-[10px] text-[var(--muted)]">
+                  0{product.id}
+                </span>
+
+                {/* product image — floating light "lightbox" plate (PNGs ship on white) */}
+                <div className="relative m-2.5 aspect-square overflow-hidden rounded-sm bg-gradient-to-b from-white to-[#eceff3] ring-1 ring-black/5 transition-shadow duration-300 group-hover:ring-[var(--accent)]/40">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 transition-transform duration-500 group-hover:scale-110"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  {product.tag && (
+                    <span
+                      className="absolute left-3 top-3 z-10 border border-[var(--accent)] bg-black/80 px-2.5 py-1 font-mono text-[10px] tracking-widest text-[var(--accent)]"
+                      style={{ boxShadow: "0 0 14px rgba(92,242,176,0.3)" }}
+                    >
+                      {product.tag}
+                    </span>
+                  )}
+                </div>
+
+                {/* info */}
+                <div className="flex flex-1 flex-col border-t border-[var(--line)] p-5">
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold tracking-wide text-[var(--fg)]">{product.name}</h3>
+                    <p className="mb-2 mt-0.5 text-xs leading-snug text-[var(--muted)]">{product.subtitle}</p>
+                    <p className="mb-3 font-mono text-[10px] text-[var(--muted)]/70">{product.size}</p>
+                    <p className="mb-4 text-xs leading-relaxed text-[var(--muted)]">{product.description}</p>
+                  </div>
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="text-lg font-semibold text-[var(--fg)]">{product.price}</span>
+                    <span className="font-mono text-[10px] text-[var(--muted)]">税込</span>
+                  </div>
+                  <a
+                    href={product.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full border border-[var(--line)] py-3 text-center font-mono text-[11px] tracking-widest text-[var(--fg)] transition-all duration-200 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-black"
+                  >
+                    購入する →
+                  </a>
+                </div>
+              </Tilt>
+            </Reveal>
           ))}
         </div>
 
-        <div className="mt-10 text-center">
-          <a
-            href="https://zukeplants.base.shop/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-8 py-3 border border-stone-300 text-stone-600 text-xs tracking-widest hover:border-stone-600 hover:text-stone-800 transition-colors"
-          >
-            全商品を見る →
-          </a>
-        </div>
+        <Reveal delay={120}>
+          <div className="mt-12 text-center">
+            <a
+              href="https://zukeplants.base.shop/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-full border border-[var(--line)] px-9 py-3 font-mono text-[11px] tracking-widest text-[var(--muted)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              全商品を見る →
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

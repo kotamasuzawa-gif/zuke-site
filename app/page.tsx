@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import Marquee from "./components/Marquee";
 import Products from "./components/Products";
 import { PhotoBreak1, PhotoStrip } from "./components/Gallery";
 import About from "./components/About";
@@ -12,13 +13,14 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <Hero />          {/* 写真 */}
-        <Products />      {/* テキスト */}
+        <Hero />          {/* フルスクリーン写真＋パララックス */}
+        <Marquee />       {/* 無限スクロールバー */}
+        <Products />      {/* グラスカード＋ティルト */}
         <About />         {/* 写真＋テキスト＋gallery-4 */}
-        <HowTo />         {/* テキスト */}
-        <PhotoBreak1 />   {/* 写真スライダー */}
-        <PhotoStrip />    {/* 写真3枚 */}
-        <Contact />       {/* テキスト */}
+        <HowTo />         {/* ステップ */}
+        <PhotoBreak1 />   {/* 縦型スライダー */}
+        <PhotoStrip />    {/* 縦型3枚 */}
+        <Contact />       {/* CTA */}
       </main>
       <Footer />
     </>
