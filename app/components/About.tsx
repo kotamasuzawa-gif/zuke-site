@@ -46,7 +46,20 @@ export default function About() {
             </p>
           </Reveal>
 
+          {/* gallery-4：縦型カード（被写体が右側 → object-right） */}
           <Reveal delay={180}>
+            <div className="relative mb-10 aspect-[3/4] w-full max-w-[260px] overflow-hidden border border-[var(--line)]">
+              <Image
+                src="/gallery-4.webp"
+                alt="ZUKE インテリアシーン"
+                fill
+                className="object-cover object-right transition-transform duration-[1.2s] ease-out hover:scale-105"
+                sizes="260px"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal delay={220}>
             <div className="grid grid-cols-3 gap-6 border-t border-[var(--line)] pt-8">
               {[
                 { k: "MATERIAL", v: "Iron Steel" },
