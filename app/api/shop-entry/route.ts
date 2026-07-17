@@ -31,6 +31,10 @@ type Payload = {
 const MAX_TOTAL_BYTES = 20 * 1024 * 1024; // 全画像合計の上限(圧縮後・base64概算)
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// 既定の送信先(Apps Script Webアプリ)。環境変数 GOOGLE_APPS_SCRIPT_URL があればそちらを優先。
+const DEFAULT_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbxa3PvKhGapxW8C0NxZ8D_6Lsu-ltPLfbIu5iQOZ_OOKjeeJ6XY0UVh8l27uidxPRHn/exec";
+
 function approxBytes(images: IncomingImage[]): number {
   return images.reduce((sum, img) => {
     const base64 = img.dataUrl.split(",")[1] ?? "";
@@ -86,7 +90,7 @@ export async function POST(request: Request) {
     ownerPhoto,
   };
 
-  const endpoint = process.env.GOOGLE_APPS_SCRIPT_URL;
+  const endpoint = process.env.GOOGLE_APPS_SCRIPT_URL || DEFAULT_APPS_SCRIPT_URL;
   if (!endpoint) {
     // バックエンド未設定でもフォーム自体の動作は確認できるようにする。
     console.warn(
