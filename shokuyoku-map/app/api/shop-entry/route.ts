@@ -110,10 +110,21 @@ export async function POST(request: Request) {
       redirect: "follow",
     });
 
-    if (!res.ok) {
-      console.error(`[shop-entry] Apps Script がエラーを返しました: ${res.status}`);
+    // Apps Script はエラー時もHTTP 200でHTMLやok:falseを返すことがあるため、
+    // ステータスだけでなく本文が {ok:true} のJSONであることまで確認する。
+    const text = await res.text();
+    let gasResult: { ok?: boolean; message?: string } | null = null;
+    try {
+      gasResult = JSON.parse(text);
+    } catch {
+      gasResult = null;
+    }
+
+    if (!res.ok || !gasResult || gasResult.ok !== true) {
+      const hint = (gasResult?.message ?? text).slice(0, 200).replace(/\s+/g, " ");
+      console.error(`[shop-entry] Apps Script エラー: status=${res.status} body=${hint}`);
       return NextResponse.json(
-        { ok: false, message: "送信先の処理でエラーが発生しました。時間をおいてお試しください。" },
+        { ok: false, message: `送信先の処理でエラーが発生しました。管理者向け情報: ${hint}` },
         { status: 502 },
       );
     }
