@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
       // 植欲マップのフォームは専用サイトへ分離済み。旧URLからの転送。
       {
         source: "/entry",
-        destination: "https://shokuyoku-map.vercel.app/",
+        destination: "https://shokuyoku-mapshop.vercel.app/",
         permanent: true,
       },
     ];
