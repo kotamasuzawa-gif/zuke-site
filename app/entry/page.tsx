@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import EntryForm from "./EntryForm";
-import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "掲載情報のご提供 | 植欲マップ",
   description:
     "「植欲マップ」に掲載する園芸店さま向けの情報入力フォームです。店舗写真・オーナーのお写真・ひとことコメントなどをお送りいただけます。",
   robots: { index: false, follow: false },
+  openGraph: {
+    title: "掲載情報のご提供 | 植欲マップ",
+    description:
+      "「植欲マップ」に掲載する園芸店さま向けの情報入力フォームです。掲載は無料です。",
+    images: ["/shokuyoku-og.png"],
+  },
 };
 
 export default function EntryPage() {
@@ -14,7 +20,14 @@ export default function EntryPage() {
     <>
       <header className="border-b border-stone-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center">
-          <span className="text-lg font-bold tracking-[0.2em] text-stone-800">植欲マップ</span>
+          <Image
+            src="/shokuyoku-logo.webp"
+            alt="植欲マップ"
+            width={1144}
+            height={266}
+            priority
+            className="h-9 w-auto"
+          />
         </div>
       </header>
 
@@ -39,7 +52,18 @@ export default function EntryPage() {
         </p>
       </main>
 
-      <Footer />
+      <footer className="border-t border-stone-100 py-10 px-6 mt-8">
+        <div className="max-w-6xl mx-auto flex flex-col items-center gap-3">
+          <Image
+            src="/shokuyoku-logo.webp"
+            alt="植欲マップ"
+            width={1144}
+            height={266}
+            className="h-6 w-auto"
+          />
+          <p className="text-xs text-stone-400">© 植欲マップ</p>
+        </div>
+      </footer>
     </>
   );
 }
