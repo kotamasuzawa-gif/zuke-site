@@ -6,12 +6,18 @@
  * ここを編集して main に push するだけで、再デプロイなしで反映されます。
  * (ローダーの手順は docs/entry-form-setup.md を参照)
  *
+ * 保存先の解決: 下記の既定ID(kotaアカウント所有)にアクセスできない場合は、
+ * 実行アカウント自身のドライブに保存先を自動作成し、以後はそれを使う
+ * (IDはスクリプトプロパティに保存)。作成時は閲覧・管理用に VIEWER_EMAIL にも
+ * 編集権限を自動付与する。
+ *
  * 注意: Apps Script の権限(スコープ)はローダー側の scopes_() が担保するため、
  * ここで新しい Google サービスを使う場合はローダーにも参照を追加すること。
  */
 
-var SHEET_ID = '15UfoQTGJwVxjYNDqUsDTIrInBzmWo4a6D2bCy_KZF3E';
-var DRIVE_FOLDER_ID = '19LN801ypdlgefGAoJrbmgFICFqwRF1CQ';
+var DEFAULT_SHEET_ID = '15UfoQTGJwVxjYNDqUsDTIrInBzmWo4a6D2bCy_KZF3E';
+var DEFAULT_FOLDER_ID = '19LN801ypdlgefGAoJrbmgFICFqwRF1CQ';
+var VIEWER_EMAIL = 'kota11.21soc28@icloud.com';
 
 var LISTING_LABELS = {
   listed: '掲載済み',
@@ -26,12 +32,15 @@ var FLYER_LABELS = {
 };
 
 function MAIN(e) {
+  var folder = null;
   try {
     var body = JSON.parse(e.postData.contents);
 
-    var parentFolder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+    folder = ensureFolder_();
+    var sheet = ensureSheet_();
+
     var stamp = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMdd-HHmmss');
-    var subFolder = parentFolder.createFolder(stamp + ' ' + (body.shopName || 'no-name'));
+    var subFolder = folder.createFolder(stamp + ' ' + (body.shopName || 'no-name'));
 
     var shopPhotoUrls = [];
     (body.shopPhotos || []).forEach(function (img, i) {
@@ -44,7 +53,6 @@ function MAIN(e) {
       ownerPhotoUrl = saveImage_(subFolder, body.ownerPhoto, 'owner') || '';
     }
 
-    var sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
     if (sheet.getLastRow() === 0) {
       sheet.appendRow([
         '受信日時', '店舗名', '所在地', '掲載状況', 'ご担当者', 'メール',
@@ -72,7 +80,7 @@ function MAIN(e) {
   } catch (err) {
     // 失敗の詳細を写真フォルダにテキストで残す(リモートからの原因調査用)
     try {
-      DriveApp.getFolderById(DRIVE_FOLDER_ID).createFile(
+      (folder || ensureFolder_()).createFile(
         'ERROR-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMdd-HHmmss') + '.txt',
         String((err && err.stack) || err),
       );
@@ -81,6 +89,45 @@ function MAIN(e) {
   }
 }
 
+/** 保存先フォルダを返す。既定→プロパティ→自動作成の順に解決する */
+function ensureFolder_() {
+  var props = PropertiesService.getScriptProperties();
+  var candidates = [props.getProperty('FOLDER_ID'), DEFAULT_FOLDER_ID];
+  for (var i = 0; i < candidates.length; i++) {
+    if (!candidates[i]) continue;
+    try {
+      var f = DriveApp.getFolderById(candidates[i]);
+      f.getName(); // アクセス確認
+      return f;
+    } catch (ignore) {}
+  }
+  var created = DriveApp.createFolder('植欲マップ 店舗写真');
+  try {
+    created.addEditor(VIEWER_EMAIL);
+  } catch (ignore) {}
+  props.setProperty('FOLDER_ID', created.getId());
+  return created;
+}
+
+/** 記録先シートを返す。既定→プロパティ→自動作成の順に解決する */
+function ensureSheet_() {
+  var props = PropertiesService.getScriptProperties();
+  var candidates = [props.getProperty('SHEET_ID'), DEFAULT_SHEET_ID];
+  for (var i = 0; i < candidates.length; i++) {
+    if (!candidates[i]) continue;
+    try {
+      return SpreadsheetApp.openById(candidates[i]).getSheets()[0];
+    } catch (ignore) {}
+  }
+  var ss = SpreadsheetApp.create('植欲マップ 掲載情報フォーム回答');
+  try {
+    DriveApp.getFileById(ss.getId()).addEditor(VIEWER_EMAIL);
+  } catch (ignore) {}
+  props.setProperty('SHEET_ID', ss.getId());
+  return ss.getSheets()[0];
+}
+
+/** data URL(base64) を Drive フォルダに画像として保存し、閲覧URLを返す */
 function saveImage_(folder, img, baseName) {
   if (!img || !img.dataUrl) return '';
   var match = /^data:([^;]+);base64,(.*)$/.exec(img.dataUrl);
