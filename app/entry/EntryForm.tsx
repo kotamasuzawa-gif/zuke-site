@@ -30,6 +30,7 @@ export default function EntryForm() {
   const [note, setNote] = useState("");
   const [flyer, setFlyer] = useState<FlyerAnswer | "">("");
   const [consent, setConsent] = useState(false);
+  const [appUse, setAppUse] = useState(false);
 
   // 画像系
   const [shopPhotos, setShopPhotos] = useState<PreparedImage[]>([]);
@@ -121,6 +122,7 @@ export default function EntryForm() {
         comment: comment.trim(),
         note: note.trim(),
         flyer,
+        appUse,
         shopPhotos: shopPhotos.map((p) => ({ name: p.name, type: p.type, dataUrl: p.dataUrl })),
         ownerPhoto: ownerPhoto ? { name: ownerPhoto.name, type: ownerPhoto.type, dataUrl: ownerPhoto.dataUrl } : null,
       };
@@ -156,6 +158,9 @@ export default function EntryForm() {
         <p className="text-stone-600 text-sm leading-relaxed">
           いただいた情報は「植欲マップ」の掲載に活用させていただきます。<br />
           内容を確認のうえ、必要に応じてご入力のメールアドレスへご連絡いたします。
+        </p>
+        <p className="text-stone-500 text-xs leading-relaxed mt-6">
+          確定後の内容変更は随時お受付します。変更をご希望の際はいつでもお気軽にご連絡ください。
         </p>
       </div>
     );
@@ -308,20 +313,39 @@ export default function EntryForm() {
         </Field>
       </fieldset>
 
-      {/* 同意 */}
-      <div data-error={errors.consent ? "true" : undefined}>
+      {/* ご確認・ご同意 */}
+      <div className="space-y-4 border-t border-stone-100 pt-8">
+        <div data-error={errors.consent ? "true" : undefined}>
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              className="mt-1 h-4 w-4 shrink-0 accent-green-700"
+            />
+            <span className="text-sm text-stone-600 leading-relaxed">
+              いただいた写真・コメント等を「植欲マップ」および関連SNSでの店舗紹介に利用することに同意します。
+              <span className="text-red-500 ml-1">*</span>
+            </span>
+          </label>
+          {errors.consent && <p className="text-xs text-red-600 mt-1 ml-7">{errors.consent}</p>}
+        </div>
+
         <label className="flex items-start gap-3 cursor-pointer">
           <input
             type="checkbox"
-            checked={consent}
-            onChange={(e) => setConsent(e.target.checked)}
+            checked={appUse}
+            onChange={(e) => setAppUse(e.target.checked)}
             className="mt-1 h-4 w-4 shrink-0 accent-green-700"
           />
           <span className="text-sm text-stone-600 leading-relaxed">
-            いただいた写真・コメント等を「植欲マップ」および関連SNSでの店舗紹介に利用することに同意します。
+            オーナーからのメッセージ・イラスト・写真などを「植欲マップ」アプリ内で使わせていただくことに同意します。
           </span>
         </label>
-        {errors.consent && <p className="text-xs text-red-600 mt-1 ml-7">{errors.consent}</p>}
+
+        <p className="text-xs text-stone-400 leading-relaxed ml-7">
+          ※確定後の内容変更は随時お受付します。変更をご希望の際はいつでもご連絡ください。
+        </p>
       </div>
 
       {submitError && (

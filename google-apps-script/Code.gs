@@ -61,7 +61,8 @@ function doPost(e) {
     if (sheet.getLastRow() === 0) {
       sheet.appendRow([
         '受信日時', '店舗名', '所在地', '掲載状況', 'ご担当者', 'メール',
-        'ひとことコメント', 'その他連絡', 'チラシ設置', '店舗写真', 'オーナー写真', '保存フォルダ',
+        'ひとことコメント', 'その他連絡', 'チラシ設置', 'アプリ内利用同意',
+        '店舗写真', 'オーナー写真', '保存フォルダ',
       ]);
     }
     sheet.appendRow([
@@ -74,6 +75,7 @@ function doPost(e) {
       body.comment || '',
       body.note || '',
       FLYER_LABELS[body.flyer] || body.flyer || '',
+      body.appUse ? '同意する' : '未同意',
       shopPhotoUrls.join('\n'),
       ownerPhotoUrl,
       subFolder.getUrl(),

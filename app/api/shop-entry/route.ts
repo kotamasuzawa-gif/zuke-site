@@ -23,6 +23,7 @@ type Payload = {
   comment?: string;
   note?: string;
   flyer?: string;
+  appUse?: boolean;
   shopPhotos?: IncomingImage[];
   ownerPhoto?: IncomingImage | null;
 };
@@ -80,6 +81,7 @@ export async function POST(request: Request) {
     comment: (body.comment ?? "").trim(),
     note: (body.note ?? "").trim(),
     flyer,
+    appUse: body.appUse === true,
     shopPhotos,
     ownerPhoto,
   };
