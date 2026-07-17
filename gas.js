@@ -70,6 +70,13 @@ function MAIN(e) {
 
     return jsonOutput_({ ok: true });
   } catch (err) {
+    // 失敗の詳細を写真フォルダにテキストで残す(リモートからの原因調査用)
+    try {
+      DriveApp.getFolderById(DRIVE_FOLDER_ID).createFile(
+        'ERROR-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMdd-HHmmss') + '.txt',
+        String((err && err.stack) || err),
+      );
+    } catch (ignore) {}
     return jsonOutput_({ ok: false, message: String(err) });
   }
 }
