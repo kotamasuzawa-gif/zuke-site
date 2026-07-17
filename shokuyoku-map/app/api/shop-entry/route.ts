@@ -33,7 +33,7 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // 既定の送信先(Apps Script Webアプリ)。環境変数 GOOGLE_APPS_SCRIPT_URL があればそちらを優先。
 const DEFAULT_APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxa3PvKhGapxW8C0NxZ8D_6Lsu-ltPLfbIu5iQOZ_OOKjeeJ6XY0UVh8l27uidxPRHn/exec";
+  "https://script.google.com/macros/s/AKfycbwZNp48FIq6HjLYuqicNzgmFxnDrXKDq-w8gImRccTNW8zf3cybh0lpV5uDwCWhFvHR/exec";
 
 function approxBytes(images: IncomingImage[]): number {
   return images.reduce((sum, img) => {
