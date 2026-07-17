@@ -15,8 +15,8 @@
  * ここで新しい Google サービスを使う場合はローダーにも参照を追加すること。
  */
 
-var DEFAULT_SHEET_ID = '15UfoQTGJwVxjYNDqUsDTIrInBzmWo4a6D2bCy_KZF3E';
-var DEFAULT_FOLDER_ID = '19LN801ypdlgefGAoJrbmgFICFqwRF1CQ';
+var DEFAULT_SHEET_ID = '1NTeg0yQAgfBiZsAE_Xzj8sDD6f7Cl5hokB_KO3NKrZ8';
+var DEFAULT_FOLDER_ID = '1la8Q2AGs1pkmdwp_ravf4BsQsrabS3zu';
 var VIEWER_EMAIL = 'kota11.21soc28@icloud.com';
 
 var LISTING_LABELS = {
