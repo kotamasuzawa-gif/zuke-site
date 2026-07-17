@@ -29,6 +29,43 @@ Google Apps Script（google-apps-script/Code.gs）
 
 ## 2. Google Apps Script を作成・デプロイ
 
+2通りあります。どちらも最後に発行される **ウェブアプリの URL** を控える
+（`GOOGLE_APPS_SCRIPT_URL`）。初回は権限承認のダイアログが出るので許可する。
+
+### 方式A: ローダー方式（現在の運用・貼り付け最小）
+
+本体コードはリポジトリ直下の `gas.js`（設定値埋め込み済み）にあり、
+Apps Script 側は毎回 raw.githubusercontent.com から取得して実行する。
+`gas.js` を main に push するだけで再デプロイなしで反映される。
+
+1. [script.google.com](https://script.google.com) で新規プロジェクトを作成。
+2. 下記のローダーだけを貼り付ける。
+
+   ```javascript
+   var U = 'https://raw.githubusercontent.com/kotamasuzawa-gif/zuke-site/main/gas.js';
+
+   function doPost(e) {
+     var src = UrlFetchApp.fetch(U).getContentText();
+     return eval(src + '\nMAIN(e);');
+   }
+
+   function scopes_() {
+     DriveApp.getRootFolder();
+     SpreadsheetApp.openById('x');
+     ContentService.createTextOutput('');
+   }
+   ```
+
+3. **デプロイ → 新しいデプロイ → 種類「ウェブアプリ」**。
+   - 実行するユーザー: **自分**
+   - アクセスできるユーザー: **全員**
+
+※ `scopes_()` は使わない関数だが削除しないこと。Apps Script は静的解析で
+必要権限を決めるため、eval で読み込む本体が使うサービスへの参照をローダー側に
+置いておく必要がある。`gas.js` で新しい Google サービスを使う場合はここにも追加する。
+
+### 方式B: 全文貼り付け方式
+
 1. [script.google.com](https://script.google.com) で新規プロジェクトを作成。
 2. `google-apps-script/Code.gs` の中身をエディタに貼り付ける。
 3. 左メニュー **プロジェクトの設定 → スクリプト プロパティ** に以下を追加。
@@ -39,11 +76,7 @@ Google Apps Script（google-apps-script/Code.gs）
    | `DRIVE_FOLDER_ID` | 手順1のフォルダID |
    | `SHARED_SECRET` | 任意の長いランダム文字列（推奨） |
 
-4. **デプロイ → 新しいデプロイ → 種類「ウェブアプリ」**。
-   - 実行するユーザー: **自分**
-   - アクセスできるユーザー: **全員**
-5. 発行された **ウェブアプリの URL** を控える（`GOOGLE_APPS_SCRIPT_URL`）。
-   初回は権限承認のダイアログが出るので許可する。
+4. 方式Aの手順3と同様にウェブアプリとしてデプロイ。
 
 ## 3. Next.js 側の環境変数を設定
 
