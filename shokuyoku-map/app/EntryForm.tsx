@@ -27,6 +27,7 @@ export default function EntryForm() {
   const [ownerName, setOwnerName] = useState("");
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
+  const [keywords, setKeywords] = useState(""); // 2026-07-25: 検索されたい植物・キーワード
   const [note, setNote] = useState("");
   const [flyer, setFlyer] = useState<FlyerAnswer | "">("");
   const [consent, setConsent] = useState(false);
@@ -120,6 +121,7 @@ export default function EntryForm() {
         ownerName: ownerName.trim(),
         email: email.trim(),
         comment: comment.trim(),
+        keywords: keywords.trim(),
         note: note.trim(),
         flyer,
         appUse,
@@ -274,6 +276,20 @@ export default function EntryForm() {
       {/* コメント・チラシ */}
       <fieldset className="space-y-6">
         <legend className="text-xs tracking-[0.3em] text-green-700 uppercase mb-2">Message</legend>
+
+        <Field
+          label="検索されたい植物・キーワード"
+          hint="お客様に検索してほしい植物名やキーワードを「、」区切りで（任意）。アプリの検索・マップの絞り込みでお店がヒットしやすくなります"
+        >
+          <input
+            type="text"
+            value={keywords}
+            onChange={(e) => setKeywords(e.target.value)}
+            maxLength={200}
+            placeholder="例）切り花、ドライフラワー、アガベ、多肉植物"
+            className={inputCls(false)}
+          />
+        </Field>
 
         <Field label="オーナーからのひとことコメント" hint="お店の魅力やこだわりなど（任意）">
           <textarea

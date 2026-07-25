@@ -62,7 +62,7 @@ function doPost(e) {
       sheet.appendRow([
         '受信日時', '店舗名', '所在地', '掲載状況', 'ご担当者', 'メール',
         'ひとことコメント', 'その他連絡', 'チラシ設置', 'アプリ内利用同意',
-        '店舗写真', 'オーナー写真', '保存フォルダ',
+        '店舗写真', 'オーナー写真', '保存フォルダ', '検索キーワード',
       ]);
     }
     sheet.appendRow([
@@ -79,6 +79,7 @@ function doPost(e) {
       shopPhotoUrls.join('\n'),
       ownerPhotoUrl,
       subFolder.getUrl(),
+      body.keywords || '',
     ]);
 
     return jsonOutput({ ok: true });

@@ -21,6 +21,7 @@ type Payload = {
   ownerName?: string;
   email?: string;
   comment?: string;
+  keywords?: string;
   note?: string;
   flyer?: string;
   appUse?: boolean;
@@ -83,6 +84,7 @@ export async function POST(request: Request) {
     ownerName,
     email,
     comment: (body.comment ?? "").trim(),
+    keywords: (body.keywords ?? "").trim().slice(0, 200),
     note: (body.note ?? "").trim(),
     flyer,
     appUse: body.appUse === true,
