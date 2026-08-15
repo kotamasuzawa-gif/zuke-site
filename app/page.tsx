@@ -6,10 +6,12 @@ import About from "./components/About";
 import HowTo from "./components/HowTo";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import { JsonLd } from "./components/JsonLd";
 
 export default function Home() {
   return (
     <>
+      <JsonLd />
       <Header />
       <main>
         <Hero />          {/* 写真 */}
