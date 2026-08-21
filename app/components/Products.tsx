@@ -8,7 +8,8 @@ const products = [
     price: "¥1,320",
     size: "高さ約35cm / 幅約8cm",
     description: "横に広がりやすいアロカシアなどに。うねりのある独自フォルムが植物の動きに寄り添います。",
-    image: "https://baseec-img-mng.akamaized.net/images/item/origin/ae57f1835d16cb0c83c4dea585cdb1df.png",
+    image: "/products/product-uneune.webp",
+    imageWhite: null,
     externalUrl: "https://zukeplants.base.shop/items/130117282",
     tag: "NEW",
   },
@@ -19,7 +20,8 @@ const products = [
     price: "¥1,320",
     size: "高さ約39cm / 幅約7cm",
     description: "モンステラやポトスに。5つの六角形が連なるデザインは、部屋のインテリアとして成立します。",
-    image: "https://baseec-img-mng.akamaized.net/images/item/origin/99d4b0564f5e6d6c2729f19eee010bc7.png",
+    image: "/products/product-hex5-black.webp",
+    imageWhite: "/products/product-hex5-white.webp",
     externalUrl: "https://zukeplants.base.shop/items/117375069",
     tag: "人気",
   },
@@ -30,7 +32,8 @@ const products = [
     price: "¥880",
     size: "高さ約22cm / 幅約8cm",
     description: "コンパクトな蔓性植物に。3つの六角形のすっきりとしたサイズ感で、小さな鉢にも合います。",
-    image: "https://baseec-img-mng.akamaized.net/images/item/origin/6973a4ba33d405fdeff104d2e5fa6d67.png",
+    image: "/products/product-hex3-black.webp",
+    imageWhite: "/products/product-hex3-white.webp",
     externalUrl: "https://zukeplants.base.shop/items/128906974",
     tag: null,
   },
@@ -41,7 +44,8 @@ const products = [
     price: "¥770",
     size: "高さ約19.5cm / 幅約8cm",
     description: "小型種やラフィドフォラに。2つの六角形の最もミニマルなモデル。育て始めの株にちょうど良い高さ。",
-    image: "https://baseec-img-mng.akamaized.net/images/item/origin/b7dd362adfcf4f97ebeb1728eaa73918.png",
+    image: "/products/product-hex2-black.webp",
+    imageWhite: "/products/product-hex2-white.webp",
     externalUrl: "https://zukeplants.base.shop/items/124680568",
     tag: null,
   },
@@ -49,31 +53,40 @@ const products = [
 
 export default function Products() {
   return (
-    <section id="products" className="py-28 px-6 bg-white">
+    <section id="products" className="py-24 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
-          <p className="text-xs tracking-[0.4em] text-green-700 uppercase mb-3">Products</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tight">商品ラインナップ</h2>
-          <p className="text-sm text-stone-500 mt-4">全商品はオンラインショップにてご購入いただけます。</p>
+        <div className="mb-14">
+          <p className="zk-label mb-5">( PRODUCTS )</p>
+          <h2 className="font-[family-name:var(--font-geist-mono)] text-2xl md:text-3xl tracking-[0.12em] text-neutral-100">LINE UP</h2>
+          <p className="text-xs text-neutral-500 mt-4">全商品はオンラインストアにてご購入いただけます。</p>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {products.map((product) => (
             <div
               key={product.id}
-              className="group border border-stone-100 hover:border-stone-300 transition-colors duration-300 flex flex-col"
+              className="group bg-[#151514] border border-[#2a2a28] hover:border-neutral-600 transition-colors duration-300 flex flex-col"
             >
-              {/* Product image */}
-              <div className="aspect-square bg-stone-50 relative overflow-hidden">
+              {/* Product image（hoverで白バリエーションに切替） */}
+              <div className="aspect-square bg-[#f4f4f2] relative overflow-hidden">
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
-                  className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                  className={`object-contain p-4 transition-opacity duration-500 ${product.imageWhite ? "group-hover:opacity-0" : "group-hover:scale-105 transition-transform"}`}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
+                {product.imageWhite && (
+                  <Image
+                    src={product.imageWhite}
+                    alt={`${product.name}（ホワイト）`}
+                    fill
+                    className="object-contain p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                )}
                 {product.tag && (
-                  <span className="absolute top-3 left-3 text-xs tracking-widest bg-stone-800 text-white px-2.5 py-1">
+                  <span className="absolute top-3 left-3 font-[family-name:var(--font-geist-mono)] text-[10px] tracking-widest bg-black text-white px-2.5 py-1">
                     {product.tag}
                   </span>
                 )}
@@ -82,20 +95,20 @@ export default function Products() {
               {/* Product info */}
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex-1">
-                  <h3 className="font-bold text-stone-800 text-sm tracking-wide">{product.name}</h3>
-                  <p className="text-xs text-stone-400 mt-0.5 mb-2 leading-snug">{product.subtitle}</p>
-                  <p className="text-xs text-stone-400 mb-3">{product.size}</p>
-                  <p className="text-xs text-stone-500 leading-relaxed mb-4">{product.description}</p>
+                  <h3 className="font-bold text-neutral-100 text-sm tracking-wide">{product.name}</h3>
+                  <p className="text-xs text-neutral-500 mt-0.5 mb-2 leading-snug">{product.subtitle}</p>
+                  <p className="text-xs text-neutral-500 mb-3">{product.size}</p>
+                  <p className="text-xs text-neutral-400 leading-relaxed mb-4">{product.description}</p>
                 </div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-lg font-bold text-stone-800">{product.price}</span>
-                  <span className="text-xs text-stone-400">税込</span>
+                  <span className="text-lg font-bold text-neutral-100">{product.price}</span>
+                  <span className="text-xs text-neutral-500">税込</span>
                 </div>
                 <a
                   href={product.externalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center py-3 border border-stone-800 text-stone-800 text-xs tracking-widest hover:bg-stone-800 hover:text-white transition-colors duration-200"
+                  className="block w-full text-center py-3 border border-neutral-500 text-neutral-100 text-xs tracking-widest hover:bg-white hover:text-black hover:border-white transition-colors duration-200"
                 >
                   購入する →
                 </a>
@@ -109,7 +122,7 @@ export default function Products() {
             href="https://zukeplants.base.shop/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-3 border border-stone-300 text-stone-600 text-xs tracking-widest hover:border-stone-600 hover:text-stone-800 transition-colors"
+            className="inline-block px-8 py-3 border border-neutral-600 text-neutral-300 text-xs tracking-widest hover:border-white hover:text-white transition-colors font-[family-name:var(--font-geist-mono)]"
           >
             全商品を見る →
           </a>
