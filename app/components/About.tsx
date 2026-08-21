@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <section id="about" className="border-t border-[#2a2a28]">
+    <section id="about" className="border-t border-[#e5e5e0]">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-0">
 
         {/* 左：ライフスタイル写真 */}
@@ -19,14 +19,14 @@ export default function About() {
         {/* 右：テキスト ＋ gallery-4 縦型カード */}
         <div className="flex flex-col justify-center px-10 md:px-16 py-16">
           <p className="zk-label mb-10">( ABOUT )</p>
-          <h2 className="text-3xl md:text-4xl font-thin text-neutral-100 tracking-wide leading-relaxed mb-8">
+          <h2 className="text-3xl md:text-4xl font-thin text-neutral-900 tracking-wide leading-relaxed mb-8">
             支柱を、<br />インテリアにする。
           </h2>
-          <p className="text-xs font-light text-neutral-400 leading-loose mb-4">
+          <p className="text-xs font-light text-neutral-600 leading-loose mb-4">
             ZUKEは「植物の支柱」という実用品に、<br />
             デザインの視点を持ち込んだブランドです。
           </p>
-          <p className="text-xs font-light text-neutral-400 leading-loose mb-10">
+          <p className="text-xs font-light text-neutral-600 leading-loose mb-10">
             観葉植物が部屋に溶け込むように、<br />
             支柱もまた空間の一部であるべき——<br />
             そんな考えから生まれた、鉄製のプランツポールです。
@@ -43,7 +43,7 @@ export default function About() {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-6 border-t border-[#2a2a28] pt-8">
+          <div className="grid grid-cols-2 gap-6 border-t border-[#e5e5e0] pt-8">
             {[
               { k: "Material", v: "Iron Steel" },
               { k: "Type", v: "4 Designs" },
@@ -51,7 +51,7 @@ export default function About() {
             ].map((item) => (
               <div key={item.k}>
                 <p className="text-[9px] tracking-[0.3em] text-neutral-500 mb-1 font-light">{item.k}</p>
-                <p className="text-[11px] text-neutral-100 font-light">{item.v}</p>
+                <p className="text-[11px] text-neutral-900 font-light">{item.v}</p>
               </div>
             ))}
           </div>

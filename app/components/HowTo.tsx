@@ -27,15 +27,15 @@ export default function HowTo() {
       <div className="max-w-6xl mx-auto">
         <div className="mb-16">
           <p className="zk-label mb-5">( GUIDE )</p>
-          <h2 className="font-[family-name:var(--font-geist-mono)] text-2xl md:text-3xl tracking-[0.12em] text-neutral-100">HOW TO</h2>
+          <h2 className="font-[family-name:var(--font-geist-mono)] text-2xl md:text-3xl tracking-[0.12em] text-neutral-900">HOW TO</h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#2a2a28]">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#e5e5e0]">
           {steps.map((s) => (
-            <div key={s.step} className="bg-[#151514] p-8 hover:bg-[#1b1b1a] transition-colors">
-              <p className="font-[family-name:var(--font-geist-mono)] text-4xl text-neutral-700 mb-6 leading-none">{s.step}</p>
-              <h3 className="font-semibold text-neutral-100 text-sm tracking-wide mb-3">{s.title}</h3>
-              <p className="text-sm text-neutral-400 leading-relaxed">{s.body}</p>
+            <div key={s.step} className="bg-white p-8 hover:bg-[#f2f2ef] transition-colors">
+              <p className="font-[family-name:var(--font-geist-mono)] text-4xl text-neutral-300 mb-6 leading-none">{s.step}</p>
+              <h3 className="font-semibold text-neutral-900 text-sm tracking-wide mb-3">{s.title}</h3>
+              <p className="text-sm text-neutral-600 leading-relaxed">{s.body}</p>
             </div>
           ))}
         </div>

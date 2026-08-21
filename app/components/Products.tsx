@@ -57,7 +57,7 @@ export default function Products() {
       <div className="max-w-6xl mx-auto">
         <div className="mb-14">
           <p className="zk-label mb-5">( PRODUCTS )</p>
-          <h2 className="font-[family-name:var(--font-geist-mono)] text-2xl md:text-3xl tracking-[0.12em] text-neutral-100">LINE UP</h2>
+          <h2 className="font-[family-name:var(--font-geist-mono)] text-2xl md:text-3xl tracking-[0.12em] text-neutral-900">LINE UP</h2>
           <p className="text-xs text-neutral-500 mt-4">全商品はオンラインストアにてご購入いただけます。</p>
         </div>
 
@@ -65,7 +65,7 @@ export default function Products() {
           {products.map((product) => (
             <div
               key={product.id}
-              className="group bg-[#151514] border border-[#2a2a28] hover:border-neutral-600 transition-colors duration-300 flex flex-col"
+              className="group bg-white border border-[#e5e5e0] hover:border-neutral-400 transition-colors duration-300 flex flex-col"
             >
               {/* Product image（hoverで白バリエーションに切替） */}
               <div className="aspect-square bg-[#f4f4f2] relative overflow-hidden">
@@ -95,20 +95,20 @@ export default function Products() {
               {/* Product info */}
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex-1">
-                  <h3 className="font-bold text-neutral-100 text-sm tracking-wide">{product.name}</h3>
+                  <h3 className="font-bold text-neutral-900 text-sm tracking-wide">{product.name}</h3>
                   <p className="text-xs text-neutral-500 mt-0.5 mb-2 leading-snug">{product.subtitle}</p>
                   <p className="text-xs text-neutral-500 mb-3">{product.size}</p>
-                  <p className="text-xs text-neutral-400 leading-relaxed mb-4">{product.description}</p>
+                  <p className="text-xs text-neutral-600 leading-relaxed mb-4">{product.description}</p>
                 </div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-lg font-bold text-neutral-100">{product.price}</span>
+                  <span className="text-lg font-bold text-neutral-900">{product.price}</span>
                   <span className="text-xs text-neutral-500">税込</span>
                 </div>
                 <a
                   href={product.externalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center py-3 border border-neutral-500 text-neutral-100 text-xs tracking-widest hover:bg-white hover:text-black hover:border-white transition-colors duration-200"
+                  className="block w-full text-center py-3 border border-neutral-400 text-neutral-900 text-xs tracking-widest hover:bg-black hover:text-black hover:border-black transition-colors duration-200"
                 >
                   購入する →
                 </a>
@@ -122,7 +122,7 @@ export default function Products() {
             href="https://zukeplants.base.shop/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-3 border border-neutral-600 text-neutral-300 text-xs tracking-widest hover:border-white hover:text-white transition-colors font-[family-name:var(--font-geist-mono)]"
+            className="inline-block px-8 py-3 border border-neutral-400 text-neutral-700 text-xs tracking-widest hover:border-white hover:text-black transition-colors font-[family-name:var(--font-geist-mono)]"
           >
             全商品を見る →
           </a>

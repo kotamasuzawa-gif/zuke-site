@@ -6,7 +6,7 @@ export default function Footer() {
         <p className="text-xs text-stone-600">© 2025 ZUKE. All rights reserved.</p>
         <div className="flex gap-6">
           {["プライバシーポリシー", "特定商取引法に基づく表記"].map((l) => (
-            <a key={l} href="#" className="text-xs text-neutral-600 hover:text-neutral-400 transition-colors">
+            <a key={l} href="#" className="text-xs text-neutral-600 hover:text-neutral-600 transition-colors">
               {l}
             </a>
           ))}

@@ -18,23 +18,23 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0b0b0b]/90 backdrop-blur-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#fafaf8]/90 backdrop-blur-sm">
       <div className="h-16 px-4 md:px-6 flex items-center justify-between">
         {/* ハンバーガー */}
         <button
-          className="w-12 h-12 flex flex-col items-center justify-center gap-1.5 bg-[#151514] border border-[#2a2a28]"
+          className="w-12 h-12 flex flex-col items-center justify-center gap-1.5 bg-white border border-[#e5e5e0]"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="メニュー"
           aria-expanded={menuOpen}
         >
-          <span className={`block w-5 h-px bg-white transition-transform duration-200 ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`} />
-          <span className={`block w-5 h-px bg-white transition-transform duration-200 ${menuOpen ? "-translate-y-[3.5px] -rotate-45" : ""}`} />
+          <span className={`block w-5 h-px bg-black transition-transform duration-200 ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`} />
+          <span className={`block w-5 h-px bg-black transition-transform duration-200 ${menuOpen ? "-translate-y-[3.5px] -rotate-45" : ""}`} />
         </button>
 
         {/* 中央ワードマーク */}
         <a
           href="#"
-          className="absolute left-1/2 -translate-x-1/2 font-[family-name:var(--font-geist-mono)] text-[11px] tracking-[0.45em] text-neutral-300"
+          className="absolute left-1/2 -translate-x-1/2 font-[family-name:var(--font-geist-mono)] text-[11px] tracking-[0.45em] text-neutral-700"
         >
           ZUKE&nbsp;PLANTS&nbsp;POLE
         </a>
@@ -45,7 +45,7 @@ export default function Header() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="オンラインストア"
-          className="w-12 h-12 flex items-center justify-center bg-[#151514] border border-[#2a2a28] text-neutral-200 hover:text-white hover:border-neutral-500 transition-colors"
+          className="w-12 h-12 flex items-center justify-center bg-white border border-[#e5e5e0] text-neutral-800 hover:text-black hover:border-neutral-400 transition-colors"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="8" cy="21" r="1" />
@@ -57,7 +57,7 @@ export default function Header() {
 
       {/* オーバーレイメニュー */}
       {menuOpen && (
-        <nav className="border-t border-[#2a2a28] bg-[#0b0b0b] px-6 py-8">
+        <nav className="border-t border-[#e5e5e0] bg-[#fafaf8] px-6 py-8">
           <ul className="flex flex-col gap-5 max-w-6xl mx-auto">
             {links.map((l) => (
               <li key={l.href}>
@@ -66,20 +66,20 @@ export default function Header() {
                   onClick={() => setMenuOpen(false)}
                   className="group flex items-baseline gap-4"
                 >
-                  <span className="font-[family-name:var(--font-geist-mono)] text-lg tracking-[0.25em] text-neutral-100 group-hover:text-white">
+                  <span className="font-[family-name:var(--font-geist-mono)] text-lg tracking-[0.25em] text-neutral-900 group-hover:text-black">
                     {l.label}
                   </span>
-                  <span className="text-[11px] text-neutral-500 group-hover:text-neutral-400">{l.jp}</span>
+                  <span className="text-[11px] text-neutral-500 group-hover:text-neutral-600">{l.jp}</span>
                 </a>
               </li>
             ))}
-            <li className="pt-4 border-t border-[#2a2a28]">
+            <li className="pt-4 border-t border-[#e5e5e0]">
               <a
                 href={STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
-                className="font-[family-name:var(--font-geist-mono)] text-[11px] tracking-[0.35em] text-neutral-400 hover:text-white"
+                className="font-[family-name:var(--font-geist-mono)] text-[11px] tracking-[0.35em] text-neutral-600 hover:text-black"
               >
                 ONLINE STORE →
               </a>

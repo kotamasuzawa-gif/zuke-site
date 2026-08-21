@@ -21,7 +21,7 @@ export function PhotoBreak1() {
   }, []);
 
   return (
-    <div className="py-16 md:py-24 border-t border-[#2a2a28]">
+    <div className="py-16 md:py-24 border-t border-[#e5e5e0]">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10 md:gap-20">
 
         {/* 縦型写真コンテナ */}
@@ -50,7 +50,7 @@ export function PhotoBreak1() {
           <p className="font-[family-name:var(--font-geist-mono)] text-[10px] tracking-[0.5em] text-neutral-500 font-light">
             PLANTS POLE — FOR YOUR LIVING SPACE
           </p>
-          <p className="text-sm text-neutral-400 font-light leading-relaxed max-w-xs">
+          <p className="text-sm text-neutral-600 font-light leading-relaxed max-w-xs">
             植物の成長とともに、<br />
             空間もまた育っていく。<br />
             ZUKEは暮らしに馴染む支柱です。
@@ -61,7 +61,7 @@ export function PhotoBreak1() {
                 key={i}
                 onClick={() => setCurrent(i)}
                 className={`w-6 h-px transition-all duration-300 ${
-                  i === current ? "bg-white" : "bg-neutral-600"
+                  i === current ? "bg-black" : "bg-neutral-300"
                 }`}
               />
             ))}

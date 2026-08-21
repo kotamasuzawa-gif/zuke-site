@@ -2,10 +2,10 @@
 
 /* 2026-08-21 増澤さん要望: Ducks(plants.)風のダーク×ミニマルへ全面リデザイン */
 :root {
-  --background: #0b0b0b;
-  --foreground: #f4f4f2;
-  --panel: #151514;
-  --line: #2a2a28;
+  --background: #fafaf8;
+  --foreground: #1a1a1a;
+  --panel: #ffffff;
+  --line: #e5e5e0;
   --muted: #8a8a85;
 }
 
@@ -34,6 +34,6 @@ html {
   width: 5px;
   height: 5px;
   border-radius: 9999px;
-  background: #d3d3ce;
+  background: #3a3a36;
   flex-shrink: 0;
 }
