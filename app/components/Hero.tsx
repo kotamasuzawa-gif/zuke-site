@@ -21,7 +21,7 @@ export default function Hero() {
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6">
           <h1 className="font-[family-name:var(--font-geist-mono)] text-white text-5xl md:text-7xl tracking-[0.08em] text-center leading-tight [text-shadow:0_2px_24px_rgba(0,0,0,.55)]">
             ZUKE
-            <span className="block text-2xl md:text-4xl mt-2 tracking-[0.04em]">( plants pole. )</span>
+            <span className="block text-2xl md:text-4xl mt-2 tracking-[0.08em]">plants pole.</span>
           </h1>
           <p className="mt-6 text-[11px] tracking-[0.5em] text-white/70 font-light">
             &quot;魅せる&quot;園芸支柱
