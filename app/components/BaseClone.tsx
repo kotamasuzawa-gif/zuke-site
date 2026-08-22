@@ -8,15 +8,27 @@ import { useState } from "react";
 
 const SHOP = "https://zukeplants.base.shop";
 
+// 2026-08-22 増澤さん要望: ホームでブラック/ホワイトを切り替え。商品画像とライフスタイル写真が連動する。
+// BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
+type ColorKey = "black" | "white";
+
 const products = [
-  { name: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-', price: "¥1,320", img: "/products/product-uneune-black.webp", url: `${SHOP}/items/130117282` },
-  { name: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥1,320", img: "/products/product-hex5-black.webp", url: `${SHOP}/items/117375069` },
-  { name: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥880", img: "/products/product-hex3-black.webp", url: `${SHOP}/items/128906974` },
-  { name: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥770", img: "/products/product-hex2-black.webp", url: `${SHOP}/items/124680568` },
+  { name: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-', price: "¥1,320", slug: "uneune", url: `${SHOP}/items/130117282` },
+  { name: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥1,320", slug: "hex5", url: `${SHOP}/items/117375069` },
+  { name: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥880", slug: "hex3", url: `${SHOP}/items/128906974` },
+  { name: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥770", slug: "hex2", url: `${SHOP}/items/124680568` },
 ];
 
-export default function BaseClone() {
+const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${color}.webp`;
+
+const COLORS: { key: ColorKey; label: string; swatch: string }[] = [
+  { key: "black", label: "ブラック", swatch: "#222" },
+  { key: "white", label: "ホワイト", swatch: "#EDEAE3" },
+];
+
+export default function BaseClone({ showLifestyle = false }: { showLifestyle?: boolean }) {
   const [open, setOpen] = useState(false);
+  const [color, setColor] = useState<ColorKey>("black");
 
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
@@ -63,13 +75,44 @@ export default function BaseClone() {
           </span>
         </h1>
 
+        {/* カラースイッチ（2026-08-22 増澤さん要望） */}
+        <div className="flex flex-col items-center gap-3 pb-12">
+          <div role="radiogroup" aria-label="カラーを選ぶ" className="flex items-center gap-3">
+            {COLORS.map((c) => (
+              <button
+                key={c.key}
+                type="button"
+                role="radio"
+                aria-checked={color === c.key}
+                aria-label={c.label}
+                onClick={() => setColor(c.key)}
+                className={`w-7 h-7 rounded-full border transition-all ${
+                  color === c.key
+                    ? "border-[#222] ring-1 ring-[#222] ring-offset-2"
+                    : "border-gray-300 hover:border-gray-400"
+                }`}
+                style={{ backgroundColor: c.swatch }}
+              />
+            ))}
+          </div>
+          <p className="text-[11px] tracking-[0.15em] text-gray-500">
+            {COLORS.find((c) => c.key === color)?.label}
+          </p>
+        </div>
+
         {/* 商品グリッド */}
         <section aria-label="商品一覧" className="px-4 md:px-8 max-w-5xl mx-auto pb-20">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             {products.map((p) => (
               <a key={p.url} href={p.url} target="_blank" rel="noopener noreferrer" className="block group">
                 <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
-                  <Image src={p.img} alt={p.name} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 1024px) 50vw, 25vw" />
+                  <Image
+                    src={productImage(p.slug, color)}
+                    alt={`${p.name}（${COLORS.find((c) => c.key === color)?.label}）`}
+                    fill
+                    className="object-contain group-hover:opacity-90 transition-opacity"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                  />
                 </div>
                 <p className="mt-4 text-[15px] leading-relaxed text-[#222] line-clamp-2">{p.name}</p>
                 <p className="mt-2 text-[15px] font-bold">{p.price}</p>
@@ -81,9 +124,26 @@ export default function BaseClone() {
 
       {/* SEO: 本文テキストと内部リンクがゼロだったため、BASE準拠の見た目を保ったまま
           最小限のブランド文とサイト内リンクを追加（2026-08-22） */}
-      <section className="px-6 pb-16 max-w-2xl mx-auto text-center">
+      <section className="px-6 pb-16 max-w-5xl mx-auto text-center">
         <h2 className="text-[15px] font-bold tracking-[0.1em]">&ldquo;魅せる&rdquo;園芸支柱 PLANTS POLE</h2>
-        <p className="mt-4 text-[13px] leading-loose text-gray-600">
+
+        {/* 2026-08-22 増澤さん指定のライフスタイル写真。カラースイッチと連動。
+            横型写真なので横コンテナで扱う（縦型を横コンテナに入れない: mistakes 2026-05-21）。
+            showLifestyle は page.tsx が public/ の実ファイル有無を見て渡す＝画像未配置なら表示しない */}
+        {showLifestyle && (
+          <div className="mt-7 relative w-full aspect-[16/9] overflow-hidden bg-[#f5f4f2]">
+            <Image
+              src={`/lifestyle-hex-${color}.jpg`}
+              alt={`コンクリート壁の棚に飾った PLANTS POLE（${COLORS.find((c) => c.key === color)?.label}）と蔓性の観葉植物。六角形の影が壁に映るインテリアグリーンの実例`}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              className="object-cover"
+            />
+          </div>
+        )}
+
+        <p className="mt-7 max-w-2xl mx-auto text-[13px] leading-loose text-gray-600">
           ZUKE は「インテリアに馴染む」「生活に馴染む」をコンセプトにした園芸支柱ブランドです。
           モンステラやポトスなど蔓性の観葉植物を、垂らしたままにせず立ち上げて仕立てる。
           アイアンスチールの六角形が、家具や部屋の景観に溶け込みながら植物を支えます。
