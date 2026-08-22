@@ -131,13 +131,13 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
             横型写真なので横コンテナで扱う（縦型を横コンテナに入れない: mistakes 2026-05-21）。
             showLifestyle は page.tsx が public/ の実ファイル有無を見て渡す＝画像未配置なら表示しない */}
         {showLifestyle && (
-          <div className="mt-7 relative w-full aspect-[16/9] overflow-hidden bg-[#f5f4f2]">
+          <div className="mt-8 relative w-full max-w-lg mx-auto aspect-square overflow-hidden bg-[#f5f4f2]">
             <Image
               src={`/lifestyle-hex-${color}.jpg`}
               alt={`コンクリート壁の棚に飾った PLANTS POLE（${COLORS.find((c) => c.key === color)?.label}）と蔓性の観葉植物。六角形の影が壁に映るインテリアグリーンの実例`}
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 1024px"
+              sizes="(max-width: 640px) 100vw, 512px"
               className="object-cover"
             />
           </div>
