@@ -21,14 +21,16 @@ const notoSansJP = Noto_Sans_JP({ variable: "--font-noto-sans-jp", subsets: ["la
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.zukeplants.com"),
   title: {
-    default: "ZUKE｜\"魅せる\"園芸支柱 PLANTS POLE - 観葉植物・蔓性植物のおしゃれな支柱",
-    template: "%s｜ZUKE - 園芸支柱ブランド",
+    default: "ZUKE｜インテリアに馴染む園芸支柱 PLANTS POLE",
+    template: "%s｜ZUKE",
   },
   description:
     "ZUKE（ズーケ）は\"魅せる\"園芸支柱ブランド。六角形デザインの植物支柱 PLANTS POLE は、モンステラ・ポトスなど蔓性の観葉植物をインテリアに馴染むように美しく仕立てられます。¥770から、公式オンラインストアで販売中。",
   keywords: [
     "園芸支柱", "植物 支柱", "観葉植物 支柱", "支柱 おしゃれ",
     "蔓性植物 支柱", "モンステラ 支柱", "ポトス 支柱",
+    // 2026-08-22 増澤さん要望: インテリア／インテリアグリーン／家具の文脈を追加
+    "インテリアグリーン", "観葉植物 インテリア", "インテリア 植物", "家具 観葉植物",
     "プランツポール", "PLANTS POLE", "ZUKE",
   ],
   alternates: { canonical: "/" },

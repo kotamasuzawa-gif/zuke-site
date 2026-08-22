@@ -3,6 +3,7 @@
 // 2026-08-21 増澤さん指示: BASEショップ(zukeplants.base.shop)のホームと同じ見た目に。
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const SHOP = "https://zukeplants.base.shop";
@@ -25,7 +26,7 @@ export default function BaseClone() {
           <button aria-label="メニュー" aria-expanded={open} onClick={() => setOpen(!open)} className="p-2 -ml-2">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
-          <a href="/" className="absolute left-1/2 -translate-x-1/2 text-xl md:text-2xl font-bold tracking-[0.25em] text-[#222]">ZUKE</a>
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 text-xl md:text-2xl font-bold tracking-[0.25em] text-[#222]">ZUKE</Link>
           <div className="flex items-center gap-4">
             <a href={SHOP} aria-label="検索" className="p-1">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
@@ -35,27 +36,32 @@ export default function BaseClone() {
             </a>
           </div>
         </div>
-        {open && (
-          <nav className="border-t border-gray-100 bg-white px-6 py-6">
+        {/* SEO: 旧実装は {open && ...} で閉じている間 DOM から消えており、
+            クローラーに内部リンクが1本も見えていなかった。CSSで開閉する方式に変更（見た目は同じ）。 */}
+        <nav className={`border-t border-gray-100 bg-white px-6 py-6 ${open ? "" : "hidden"}`}>
             <ul className="flex flex-col gap-4 text-sm tracking-[0.15em]">
-              <li><a href="/" onClick={() => setOpen(false)}>HOME</a></li>
-              <li><a href={`${SHOP}/about`} target="_blank" rel="noopener noreferrer">ABOUT</a></li>
+              <li><Link href="/" onClick={() => setOpen(false)}>HOME</Link></li>
+              <li><Link href="/products" onClick={() => setOpen(false)}>PRODUCTS</Link></li>
+              <li><Link href="/guide" onClick={() => setOpen(false)}>GUIDE</Link></li>
+              <li><Link href="/about" onClick={() => setOpen(false)}>ABOUT</Link></li>
               <li><a href="https://thebase.com/inquiry/zukeplants-base-shop" target="_blank" rel="noopener noreferrer">CONTACT</a></li>
             </ul>
             <ul className="mt-6 pt-4 border-t border-gray-100 flex flex-col gap-2 text-xs text-gray-500">
               <li><a href={`${SHOP}/privacy`} target="_blank" rel="noopener noreferrer">・プライバシーポリシー</a></li>
               <li><a href={`${SHOP}/law`} target="_blank" rel="noopener noreferrer">・特定商取引法に基づく表記</a></li>
             </ul>
-          </nav>
-        )}
+        </nav>
       </header>
 
       <main className="flex-1">
-        {/* 六角ロゴ */}
-        <div className="flex justify-center pt-16 md:pt-20 pb-14 md:pb-16">
+        {/* 六角ロゴ。SEO: ページに h1 が1つも無かったため、見た目を変えずにロゴを h1 にした */}
+        <h1 className="flex flex-col items-center pt-16 md:pt-20 pb-14 md:pb-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-hex.png" alt="ZUKE Plants Pole" className="w-[150px] md:w-[180px] h-auto" />
-        </div>
+          <img src="/logo-hex.png" alt="ZUKE PLANTS POLE" className="w-[150px] md:w-[180px] h-auto" />
+          <span className="sr-only">
+            ZUKE｜インテリアに馴染む園芸支柱 PLANTS POLE — 観葉植物・インテリアグリーンを魅せる支柱
+          </span>
+        </h1>
 
         {/* 商品グリッド */}
         <section aria-label="商品一覧" className="px-4 md:px-8 max-w-5xl mx-auto pb-20">
@@ -72,6 +78,23 @@ export default function BaseClone() {
           </div>
         </section>
       </main>
+
+      {/* SEO: 本文テキストと内部リンクがゼロだったため、BASE準拠の見た目を保ったまま
+          最小限のブランド文とサイト内リンクを追加（2026-08-22） */}
+      <section className="px-6 pb-16 max-w-2xl mx-auto text-center">
+        <h2 className="text-[15px] font-bold tracking-[0.1em]">&ldquo;魅せる&rdquo;園芸支柱 PLANTS POLE</h2>
+        <p className="mt-4 text-[13px] leading-loose text-gray-600">
+          ZUKE は「インテリアに馴染む」「生活に馴染む」をコンセプトにした園芸支柱ブランドです。
+          モンステラやポトスなど蔓性の観葉植物を、垂らしたままにせず立ち上げて仕立てる。
+          アイアンスチールの六角形が、家具や部屋の景観に溶け込みながら植物を支えます。
+          高さ約19.5cm の小鉢向けから、約39cm の主役サイズまで4型。
+        </p>
+        <nav aria-label="サイト内リンク" className="mt-7 flex flex-wrap justify-center gap-x-7 gap-y-3 text-[13px] tracking-[0.1em]">
+          <Link href="/products" className="hover:opacity-60">商品一覧</Link>
+          <Link href="/guide" className="hover:opacity-60">インテリアグリーンのガイド</Link>
+          <Link href="/about" className="hover:opacity-60">ブランドについて</Link>
+        </nav>
+      </section>
 
       {/* フッター */}
       <footer className="pb-12 pt-8 flex flex-col items-center gap-10">
