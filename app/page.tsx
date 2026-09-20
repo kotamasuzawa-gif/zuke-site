@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import BaseClone from "./components/BaseClone";
+import { HomeFaq } from "./components/HomeFaq";
 import { JsonLd } from "./components/JsonLd";
 
 // 2026-08-21 増澤さん指示: BASEショップのホームと同一の見た目。
@@ -19,6 +20,7 @@ export default function Home() {
     <>
       <JsonLd />
       <BaseClone showLifestyle={showLifestyle} />
+      <HomeFaq />
     </>
   );
 }

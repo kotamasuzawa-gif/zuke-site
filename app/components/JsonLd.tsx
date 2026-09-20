@@ -1,4 +1,6 @@
-// SEO: 構造化データ（Organization / WebSite / 商品ItemList）。
+import { FAQS } from "./HomeFaq";
+
+// SEO: 構造化データ（Organization / WebSite / FAQPage / 商品ItemList）。
 // 商品情報は Products.tsx の掲載内容と一致させること（乖離すると リッチリザルト不適合）。
 const products = [
   { name: 'PLANTS POLE "うねうね"', price: 1320, url: "https://zukeplants.base.shop/items/130117282", image: "https://baseec-img-mng.akamaized.net/images/item/origin/ae57f1835d16cb0c83c4dea585cdb1df.png", description: "横に広がる植物を矯正できる園芸支柱" },
@@ -25,6 +27,16 @@ const jsonLd = {
       url: "https://www.zukeplants.com",
       publisher: { "@id": "https://www.zukeplants.com/#org" },
       inLanguage: "ja",
+    },
+    {
+      // 2026-09-20 SEO: トップのFAQをリッチリザルト対象にする（本文と内容を一致させること）
+      "@type": "FAQPage",
+      "@id": "https://www.zukeplants.com/#faq",
+      mainEntity: FAQS.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
     },
     {
       "@type": "ItemList",
