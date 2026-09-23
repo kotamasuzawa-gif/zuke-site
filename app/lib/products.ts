@@ -136,6 +136,49 @@ export const PRODUCTS: Product[] = [
       "タグポケットに名札を差して、品種管理も一緒に",
     ],
   },
+  {
+    // 2026-09-23 新商品: 樹脂版(PLA・3Dプリント)の支柱。BASE 出品後に baseUrl と price を確定
+    slug: "pole3pla",
+    name: 'PLANTS POLE "3つの六角形" 樹脂版',
+    fullName: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
+    price: 680,
+    image: "/products/product-pole3pla-black.webp",
+    baseUrl: SHOP,
+    summary:
+      "鉄製と同じ六角形のフォルムを、PLA樹脂で3Dプリントした軽量版。全長約22cm。ブラック／オレンジ／グレーの3色。六角鉢セットの差込口にそのまま挿せます。",
+    lead:
+      "鉄製のPLANTS POLEと同じ3連の六角形を、樹脂で軽量化したエントリーモデル。鉄製の約1/3の重さで小さな鉢でも倒れにくく、色は3色から選べます。六角鉢セットと組み合わせると、鉢の差込口で固定できます。",
+    height: "約22cm",
+    width: "約9.4cm（脚の間隔 約6cm）",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["ホヤ", "小ぶりの蔓性植物", "育ちはじめの若い株"],
+    scenes: [
+      "軽いので、小さな鉢や吊り鉢まわりでも安心",
+      "オレンジやグレーで、鉢や部屋の色に合わせる",
+      "六角鉢セットの支柱の差し替え・追加用に",
+    ],
+  },
+  {
+    slug: "pole2pla",
+    name: 'PLANTS POLE "2つの六角形" 樹脂版',
+    fullName: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
+    price: 580,
+    image: "/products/product-pole2pla-black.webp",
+    baseUrl: SHOP,
+    summary:
+      "六角形2連・全長約17cmの樹脂版PLANTS POLE。PLA樹脂・3Dプリント製で軽く、ブラック／オレンジ／グレーの3色。六角鉢セット付属の支柱と同じものです。",
+    lead:
+      "シリーズでいちばん小さい2連を樹脂で。全長約17cmで、デスクや窓辺の小鉢にちょうどよい高さです。六角鉢セットに付属している支柱と同じもので、色違いの買い足しにも。",
+    height: "約17cm",
+    width: "約9.4cm（脚の間隔 約6cm）",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["亀甲竜", "背の低い蔓性植物", "これから蔓を伸ばす株"],
+    scenes: [
+      "小鉢のワンポイントとして",
+      "六角鉢セットの色違い支柱として",
+      "複数の鉢に並べて、色でそろえる",
+    ],
+  },
 ];
 
 export function productBySlug(slug: string): Product | undefined {

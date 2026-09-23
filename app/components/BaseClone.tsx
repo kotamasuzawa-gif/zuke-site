@@ -19,10 +19,12 @@ const products = [
   { name: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥770", slug: "hex2", url: `${SHOP}/items/124680568` },
   // 2026-09-23 新商品（3Dプリント製）。BASE商品ページ作成後に url を差し替える
   { name: "PLANTS POLE 六角鉢セット（鉢・受け皿・支柱の3点）- PLA樹脂・3Dプリント製 -", price: "¥1,980", slug: "hexpot-set", url: SHOP },
+  { name: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -', price: "¥680", slug: "pole3pla", url: SHOP },
+  { name: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -', price: "¥580", slug: "pole2pla", url: SHOP },
 ];
 
 // ホワイト展開のない商品はブラック画像を出す
-const NO_WHITE = new Set(["hexpot-set"]);
+const NO_WHITE = new Set(["hexpot-set", "pole3pla", "pole2pla"]);
 
 const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${NO_WHITE.has(slug) ? "black" : color}.webp`;
 
