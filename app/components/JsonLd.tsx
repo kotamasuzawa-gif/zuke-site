@@ -7,6 +7,7 @@ const products = [
   { name: 'PLANTS POLE "5つの六角形"', price: 1320, url: "https://zukeplants.base.shop/items/117375069", image: "https://baseec-img-mng.akamaized.net/images/item/origin/99d4b0564f5e6d6c2729f19eee010bc7.png", description: "蔓性植物をインテリアに馴染むように飾る六角形の園芸支柱" },
   { name: 'PLANTS POLE "3つの六角形"', price: 880, url: "https://zukeplants.base.shop/items/128906974", image: "https://baseec-img-mng.akamaized.net/images/item/origin/6973a4ba33d405fdeff104d2e5fa6d67.png", description: "蔓性植物をインテリアに馴染むように飾る六角形の園芸支柱" },
   { name: 'PLANTS POLE "2つの六角形"', price: 770, url: "https://zukeplants.base.shop/items/124680568", image: "https://baseec-img-mng.akamaized.net/images/item/origin/b7dd362adfcf4f97ebeb1728eaa73918.png", description: "蔓性植物をインテリアに馴染むように飾る六角形の園芸支柱" },
+  { name: "PLANTS POLE 六角鉢セット", price: 1980, url: "https://www.zukeplants.com/products/hexpot-set", image: "https://www.zukeplants.com/products/product-hexpot-set-black.webp", description: "六角形の鉢・受け皿・支柱の3点セット。PLA樹脂・3Dプリント製" },
 ];
 
 const jsonLd = {

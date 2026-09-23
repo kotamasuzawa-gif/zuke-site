@@ -114,6 +114,28 @@ export const PRODUCTS: Product[] = [
       "複数の鉢に並べて、シリーズで揃える",
     ],
   },
+  {
+    // 2026-09-23 新商品: 3Dプリント製の六角鉢セット。BASE の商品ページ作成後に baseUrl と price を確定させること
+    slug: "hexpot-set",
+    name: "PLANTS POLE 六角鉢セット",
+    fullName: "PLANTS POLE 六角鉢セット（鉢・受け皿・支柱の3点）",
+    price: 1980,
+    image: "/products/product-hexpot-set-black.webp",
+    baseUrl: SHOP,
+    summary:
+      "六角形の鉢・受け皿・支柱「PLANTS POLE」の3点セット。鉢の内側に支柱の差込口があり、土に頼らずまっすぐ立ちます。PLA樹脂・3Dプリント製。",
+    lead:
+      "六角形のプラスチック鉢と、同じ六角形の受け皿、蔓性植物用の支柱を組み合わせた3点セット。鉢の内側に支柱の差込口があるので、差し込むだけで固定できます。植物タグ用のポケット付き。ひとつずつ3Dプリンターで製作しています。",
+    height: "鉢 約95mm／支柱 約172mm（六角形2連）",
+    width: "鉢 対辺約69mm／受け皿 対角約91mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["小さな蔓性植物", "伸び始めの若い株", "ホヤ・ラフィドフォラなど"],
+    scenes: [
+      "鉢・受け皿・支柱がそろった状態で、すぐに仕立て始める",
+      "デスクや棚の上で、小さなグリーンをすっきり見せる",
+      "タグポケットに名札を差して、品種管理も一緒に",
+    ],
+  },
 ];
 
 export function productBySlug(slug: string): Product | undefined {
