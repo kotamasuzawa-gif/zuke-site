@@ -10,6 +10,8 @@ const products = [
   { name: "PLANTS POLE 六角鉢セット", price: 1980, url: "https://www.zukeplants.com/products/hexpot-set", image: "https://www.zukeplants.com/products/product-hexpot-set-black.webp", description: "六角形の鉢・受け皿・支柱の3点セット。PLA樹脂・3Dプリント製" },
   { name: 'PLANTS POLE "3つの六角形" 樹脂版', price: 680, url: "https://www.zukeplants.com/products/pole3pla", image: "https://www.zukeplants.com/products/product-pole3pla-black.webp", description: "PLA樹脂・3Dプリント製の軽量な六角形3連支柱。3色展開" },
   { name: 'PLANTS POLE "2つの六角形" 樹脂版', price: 580, url: "https://www.zukeplants.com/products/pole2pla", image: "https://www.zukeplants.com/products/product-pole2pla-black.webp", description: "PLA樹脂・3Dプリント製の軽量な六角形2連支柱。3色展開" },
+  { name: "PLANTS POLE 六角鉢＋受け皿", price: 1480, url: "https://www.zukeplants.com/products/hexpot", image: "https://www.zukeplants.com/products/product-hexpot-black.webp", description: "支柱の差込口付きの六角形の鉢と受け皿。PLA樹脂・3Dプリント製、3色" },
+  { name: "六角花瓶", price: 1280, url: "https://www.zukeplants.com/products/hexvase", image: "https://www.zukeplants.com/products/product-hexvase-white.webp", description: "六角鉢シリーズの3Dプリント製フラワーベース。高さ約16cm、ホワイト" },
 ];
 
 const jsonLd = {

@@ -21,10 +21,12 @@ const products = [
   { name: "PLANTS POLE 六角鉢セット（鉢・受け皿・支柱の3点）- PLA樹脂・3Dプリント製 -", price: "¥1,980", slug: "hexpot-set", url: SHOP },
   { name: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -', price: "¥680", slug: "pole3pla", url: SHOP },
   { name: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -', price: "¥580", slug: "pole2pla", url: SHOP },
+  { name: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -", price: "¥1,480", slug: "hexpot", url: SHOP },
+  { name: "六角花瓶 - PLANTS POLEシリーズの3Dプリント製フラワーベース -", price: "¥1,280", slug: "hexvase", url: SHOP },
 ];
 
 // ホワイト展開のない商品はブラック画像を出す
-const NO_WHITE = new Set(["hexpot-set", "pole3pla", "pole2pla"]);
+const NO_WHITE = new Set(["hexpot-set", "pole3pla", "pole2pla", "hexpot"]);
 
 const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${NO_WHITE.has(slug) ? "black" : color}.webp`;
 
