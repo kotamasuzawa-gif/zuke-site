@@ -117,8 +117,8 @@ export const PRODUCTS: Product[] = [
   {
     // 2026-09-23 新商品: 3Dプリント製の六角鉢セット。BASE の商品ページ作成後に baseUrl と price を確定させること
     slug: "hexpot-set",
-    name: "PLANTS POLE 六角鉢セット",
-    fullName: "PLANTS POLE 六角鉢セット（鉢・受け皿・支柱の3点）",
+    name: 'PLANTS POLE 六角鉢セット "3つの六角形"',
+    fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
     price: 1980,
     image: "/products/product-hexpot-set-black.webp",
     baseUrl: SHOP,
@@ -221,6 +221,28 @@ export const PRODUCTS: Product[] = [
       "六角鉢と並べて、シリーズでそろえる",
       "玄関やデスクの一輪挿しに",
       "軽いので棚の上や高い場所にも",
+    ],
+  },
+  {
+    // 2026-09-23 新商品: 2連支柱付きセット（4色）。BASE 出品後に baseUrl と price を確定
+    slug: "hexpot-set2",
+    name: 'PLANTS POLE 六角鉢セット "2つの六角形"',
+    fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
+    price: 1880,
+    image: "/products/product-hexpot-set2-black.webp",
+    baseUrl: SHOP,
+    summary:
+      "六角形の鉢・受け皿・2連支柱の3点セット。差込口付きで小さな蔓性植物をすっきり誘引。PLA樹脂・3Dプリント製、ブラック／ライトグレー／オレンジ／ホワイトの4色。",
+    lead:
+      "デスクや窓辺の小さな鉢に合う、コンパクトなセット。鉢の内側の差込口に支柱を差し込むだけで固定でき、支柱は鉢の上に約14cm。蔓が伸び始めた株や小型の蔓性植物に。",
+    height: "鉢 約95mm／支柱 約172mm（六角形2連）",
+    width: "鉢 対辺約69mm／受け皿 対角約91mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["亀甲竜", "背の低い蔓性植物", "これから蔓を伸ばす株"],
+    scenes: [
+      "デスクや窓辺の小鉢に、支柱ごとコンパクトに",
+      "4色から鉢や部屋の色に合わせる",
+      "タグポケット（幅20mm・厚み2.5mmまで）で品種管理も一緒に",
     ],
   },
 ];
