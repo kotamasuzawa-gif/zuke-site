@@ -115,7 +115,6 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
-    // 2026-09-23 新商品: 3Dプリント製の六角鉢セット。BASE の商品ページ作成後に baseUrl と price を確定させること
     slug: "hexpot-set",
     name: 'PLANTS POLE 六角鉢セット "3つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
@@ -137,7 +136,6 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
-    // 2026-09-23 新商品: 樹脂版(PLA・3Dプリント)の支柱。BASE 出品後に baseUrl と price を確定
     slug: "pole3pla",
     name: 'PLANTS POLE "3つの六角形" 樹脂版',
     fullName: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
@@ -224,7 +222,6 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
-    // 2026-09-23 新商品: 2連支柱付きセット（4色）。BASE 出品後に baseUrl と price を確定
     slug: "hexpot-set2",
     name: 'PLANTS POLE 六角鉢セット "2つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
