@@ -121,7 +121,7 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
     price: 1980,
     image: "/products/product-hexpot-set-black.webp",
-    baseUrl: SHOP,
+    baseUrl: `${SHOP}/items/159039931`,
     summary:
       "六角形の鉢・受け皿・支柱「PLANTS POLE」の3点セット。鉢の内側に支柱の差込口があり、土に頼らずまっすぐ立ちます。PLA樹脂・3Dプリント製。",
     lead:
@@ -143,7 +143,7 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
     price: 680,
     image: "/products/product-pole3pla-black.webp",
-    baseUrl: SHOP,
+    baseUrl: `${SHOP}/items/159046672`,
     summary:
       "鉄製と同じ六角形のフォルムを、PLA樹脂で3Dプリントした軽量版。全長約22cm。ブラック／オレンジ／グレーの3色。六角鉢セットの差込口にそのまま挿せます。",
     lead:
@@ -164,7 +164,7 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
     price: 580,
     image: "/products/product-pole2pla-black.webp",
-    baseUrl: SHOP,
+    baseUrl: `${SHOP}/items/159046887`,
     summary:
       "六角形2連・全長約17cmの樹脂版PLANTS POLE。PLA樹脂・3Dプリント製で軽く、ブラック／オレンジ／グレーの3色。六角鉢セット付属の支柱と同じものです。",
     lead:
@@ -186,7 +186,7 @@ export const PRODUCTS: Product[] = [
     fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
     price: 1480,
     image: "/products/product-hexpot-black.webp",
-    baseUrl: SHOP,
+    baseUrl: `${SHOP}/items/159048204`,
     summary:
       "PLANTS POLEを差し込める六角形の鉢と受け皿。支柱の差込口・タグポケット付き。PLA樹脂・3Dプリント製、ブラック／オレンジ／グレーの3色。支柱は付属しません。",
     lead:
@@ -230,7 +230,7 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
     price: 1880,
     image: "/products/product-hexpot-set2-black.webp",
-    baseUrl: SHOP,
+    baseUrl: `${SHOP}/items/159049724`,
     summary:
       "六角形の鉢・受け皿・2連支柱の3点セット。差込口付きで小さな蔓性植物をすっきり誘引。PLA樹脂・3Dプリント製、ブラック／ライトグレー／オレンジ／ホワイトの4色。",
     lead:
