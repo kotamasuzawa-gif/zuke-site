@@ -206,7 +206,7 @@ export const PRODUCTS: Product[] = [
     fullName: "六角花瓶 - PLANTS POLEシリーズの3Dプリント製フラワーベース -",
     price: 1280,
     image: "/products/product-hexvase-white.webp",
-    baseUrl: SHOP,
+    baseUrl: `${SHOP}/items/159228997`,
     summary:
       "六角鉢と同じ六角形のフォルムの花瓶。高さ約16cm、口に向かって少しすぼまる形。PLA樹脂・3Dプリント製、ホワイト／ブラックの2色。排水穴なしで水漏れしません。",
     lead:

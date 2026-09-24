@@ -87,9 +87,8 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           />
         </section>
         {/* 六角ロゴ。SEO: ページに h1 が1つも無かったため、見た目を変えずにロゴを h1 にした */}
-        <h1 className="flex flex-col items-center pt-16 md:pt-20 pb-14 md:pb-16">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-hex.png" alt="ZUKE PLANTS POLE" className="w-[150px] md:w-[180px] h-auto" />
+        {/* 2026-09-24 増澤さん指示: ロゴ画像はホームから外し、動画冒頭に移動。h1 は SEO のため sr-only で維持 */}
+        <h1 className="pt-10 md:pt-12">
           <span className="sr-only">
             ZUKE｜インテリアに馴染む園芸支柱 PLANTS POLE — 観葉植物・インテリアグリーンを魅せる支柱
           </span>
