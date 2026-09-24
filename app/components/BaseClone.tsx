@@ -76,6 +76,16 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
       </header>
 
       <main className="flex-1">
+        {/* 組み立て動画（2026-09-24 増澤さん要望: 横動画をヘッダー下に）。自動再生・無音・ループ */}
+        <section aria-label="六角鉢セット 組み立てムービー" className="w-full bg-white">
+          <video
+            className="w-full h-auto block"
+            src="/video/hexpot-assemble.mp4"
+            poster="/video/hexpot-assemble-poster.jpg"
+            autoPlay muted loop playsInline preload="metadata"
+            aria-label="受け皿・六角鉢・PLANTS POLE が組み上がり、ブラック／ホワイト／ライトグレー／オレンジに切り替わる映像"
+          />
+        </section>
         {/* 六角ロゴ。SEO: ページに h1 が1つも無かったため、見た目を変えずにロゴを h1 にした */}
         <h1 className="flex flex-col items-center pt-16 md:pt-20 pb-14 md:pb-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
