@@ -27,7 +27,7 @@ const products = [
 ];
 
 // ホワイト展開のない商品はブラック画像を出す
-const NO_WHITE = new Set(["hexpot-set", "pole3pla", "pole2pla", "hexpot"]);
+const NO_WHITE = new Set<string>([]);
 
 const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${NO_WHITE.has(slug) ? "black" : color}.webp`;
 
