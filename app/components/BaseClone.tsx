@@ -11,19 +11,22 @@ const SHOP = "https://zukeplants.base.shop";
 
 // 2026-08-22 増澤さん要望: ホームでブラック/ホワイトを切り替え。商品画像とライフスタイル写真が連動する。
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
-type ColorKey = "black" | "white";
+type ColorKey = "black" | "white" | "orange" | "lightgray";
 
 // 2026-09-26 増澤さん指示「LPとBASEの商品を紐づける／並び順もBASEを正に」: products.ts（BASE順・baseUrl）から生成
 const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, url: p.baseUrl }));
 
-// ホワイト展開のない商品はブラック画像を出す
-const NO_WHITE = new Set<string>([]);
-
-const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${NO_WHITE.has(slug) ? "black" : color}.webp`;
+// 色展開: アイアン支柱・花瓶はブラック/ホワイトのみ。3Dプリント樹脂製品は4色（2026-09-26 増澤さん指示でオレンジ/ライトグレー追加）
+const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3pla", "pole2pla", "hexpot", "pole1pla", "hexparts"]);
+const hasColor = (slug: string, color: ColorKey) => color === "black" || color === "white" || FOUR_COLORS.has(slug);
+const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${hasColor(slug, color) ? color : "black"}.webp`;
+const lifestyleImage = (color: ColorKey) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
 
 const COLORS: { key: ColorKey; label: string; swatch: string }[] = [
   { key: "black", label: "ブラック", swatch: "#222" },
   { key: "white", label: "ホワイト", swatch: "#EDEAE3" },
+  { key: "orange", label: "オレンジ", swatch: "#F06A1E" },
+  { key: "lightgray", label: "ライトグレー", swatch: "#C9CACB" },
 ];
 
 export default function BaseClone({ showLifestyle = false }: { showLifestyle?: boolean }) {
@@ -142,7 +145,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
         {showLifestyle && (
           <div className="mt-8 relative w-full max-w-lg mx-auto aspect-square overflow-hidden bg-[#f5f4f2]">
             <Image
-              src={`/lifestyle-hex-${color}.jpg`}
+              src={lifestyleImage(color)}
               alt={`コンクリート壁の棚に飾った PLANTS POLE（${COLORS.find((c) => c.key === color)?.label}）と蔓性の観葉植物。六角形の影が壁に映るインテリアグリーンの実例`}
               fill
               priority
