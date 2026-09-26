@@ -22,20 +22,35 @@ export default function CollectionNav({ current, compact = false }: { current?: 
           ))}
         </div>
       )}
-      <nav aria-label="カテゴリ" className={`${compact ? "" : "mt-6"} flex flex-wrap gap-2`}>
-        {[...MATERIALS, ...CATEGORIES].map((c) => (
-          <Link
-            key={c.key}
-            href={`/collections/${c.key}`}
-            aria-current={current === c.key ? "page" : undefined}
-            className={`px-4 py-2 text-[13px] tracking-[0.1em] border rounded-full transition-colors ${
-              current === c.key ? "bg-[#222] text-white border-[#222]" : "border-gray-300 text-[#222] hover:border-[#222]"
-            }`}
-          >
-            {c.label}
-          </Link>
-        ))}
-      </nav>
+      {compact ? (
+        <nav aria-label="カテゴリ" className="flex flex-wrap gap-2">
+          {[...MATERIALS, ...CATEGORIES].map((c) => (
+            <Link
+              key={c.key}
+              href={`/collections/${c.key}`}
+              aria-current={current === c.key ? "page" : undefined}
+              className={`px-4 py-2 text-[13px] tracking-[0.1em] border rounded-full transition-colors ${
+                current === c.key ? "bg-[#222] text-white border-[#222]" : "border-gray-300 text-[#222] hover:border-[#222]"
+              }`}
+            >
+              {c.label}
+            </Link>
+          ))}
+        </nav>
+      ) : (
+        /* 2026-09-27 増澤さん指示: カテゴリも背景イメージ付きボタンに（アイアン/PLAのチップは重複するので無し） */
+        <nav aria-label="カテゴリ" className="mt-3 md:mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+          {CATEGORIES.map((c) => (
+            <Link key={c.key} href={`/collections/${c.key}`} className="group relative block aspect-[16/10] md:aspect-[4/3] overflow-hidden rounded-sm">
+              <Image src={`/find/bg-${c.key}.jpg`} alt="" fill className="object-cover group-hover:scale-[1.04] transition-transform duration-500" sizes="(max-width: 768px) 50vw, 25vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-black/5" />
+              <div className="absolute inset-x-0 bottom-0 p-3 md:p-4 text-white">
+                <p className="text-[14px] md:text-base font-bold whitespace-nowrap">{c.label}</p>
+              </div>
+            </Link>
+          ))}
+        </nav>
+      )}
     </div>
   );
 }
