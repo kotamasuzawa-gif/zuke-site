@@ -9,6 +9,12 @@ import { PRODUCTS, COLLECTIONS, collectionByKey, yen } from "@/app/lib/products"
 
 const SITE = "https://www.zukeplants.com";
 
+// 2026-09-26 増澤さん指示: 鉢・セットにはホームの組み立て動画、支柱の拡張には拡張動画を常時再生
+const VIDEOS: Record<string, { src: string; poster: string; label: string }> = {
+  pot: { src: "/video/hexpot-assemble.mp4", poster: "/video/hexpot-assemble-poster.jpg", label: "受け皿・六角鉢・PLANTS POLE が組み上がる映像" },
+  extension: { src: "/video/pole-extend.mp4", poster: "/video/pole-extend-poster.jpg", label: "1連の支柱に六角形と留め具を継ぎ足して伸ばす映像" },
+};
+
 export function generateStaticParams() {
   return COLLECTIONS.map((c) => ({ key: c.key }));
 }
@@ -43,6 +49,11 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
+      {VIDEOS[c.key] && (
+        <section aria-label={VIDEOS[c.key].label} className="w-full bg-white">
+          <video className="w-full h-auto block" src={VIDEOS[c.key].src} poster={VIDEOS[c.key].poster} autoPlay muted loop playsInline preload="metadata" aria-label={VIDEOS[c.key].label} />
+        </section>
+      )}
       <main className="flex-1 max-w-5xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-6 flex items-center gap-2">
           <Link href="/" className="hover:text-[#222]">ホーム</Link>

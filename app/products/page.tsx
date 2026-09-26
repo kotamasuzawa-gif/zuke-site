@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, yen } from "@/app/lib/products";
+import { PRODUCTS, CATEGORIES, yen } from "@/app/lib/products";
 import CollectionNav from "@/app/components/CollectionNav";
 import ProductColorGrid from "@/app/components/ProductColorGrid";
 
@@ -53,8 +53,18 @@ export default function ProductsPage() {
 
         <div className="mt-10"><CollectionNav /></div>
 
+        {/* 2026-09-26 増澤さん指示: 全商品一覧も見出しでカテゴリ分け（支柱はアイアン→PLAの順）。色切替は一覧の直上に1つ */}
         <div className="mt-14">
-          <ProductColorGrid items={PRODUCTS.map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: `高さ ${p.height}`, href: `/products/${p.slug}` }))} />
+          <ProductColorGrid
+            groups={CATEGORIES.map((c) => ({
+              key: c.key,
+              title: c.label,
+              moreHref: `/collections/${c.key}`,
+              items: PRODUCTS.filter((p) => p.category === c.key)
+                .sort((x, y) => (x.kind === y.kind ? 0 : x.kind === "iron" ? -1 : 1))
+                .map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.kind === "iron" ? "アイアン" : "PLA樹脂", href: `/products/${p.slug}` })),
+            })).filter((g) => g.items.length > 0)}
+          />
         </div>
 
         <p className="mt-12 text-[13px] text-gray-500">
