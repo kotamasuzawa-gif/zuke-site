@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { PRODUCTS } from "@/app/lib/products";
+import { PRODUCTS, COLLECTIONS } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 
 const SITE = "https://www.zukeplants.com";
@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
+    ...COLLECTIONS.map((c) => ({ url: `${SITE}/collections/${c.key}`, changeFrequency: "weekly" as const, priority: 0.8 })),
     { url: `${SITE}/guide`, changeFrequency: "monthly", priority: 0.8 },
     ...GUIDES.map((g) => ({
       url: `${SITE}/guide/${g.slug}`,

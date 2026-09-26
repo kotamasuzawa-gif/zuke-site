@@ -1,6 +1,9 @@
 // 商品マスタ（単一の正）。スペックは BASE 本店の商品ページ実記載と一致させること。
 // 2026-08-22 SEO強化: 商品ごとの内部ページを新設し、ここを共通データ源にした。
 
+export type MaterialKind = "iron" | "pla";
+export type CategoryKey = "pole" | "pot" | "extension" | "vase";
+
 export type Product = {
   slug: string;
   /** サイト内表示用の短い名前 */
@@ -8,6 +11,10 @@ export type Product = {
   /** BASE 上の正式名称（構造化データ・alt に使用） */
   fullName: string;
   price: number;
+  /** 素材系統（導線用）: アイアン / PLA樹脂 */
+  kind: MaterialKind;
+  /** カテゴリ（導線用）: 支柱 / 鉢・セット / 支柱の拡張 / 花瓶 */
+  category: CategoryKey;
   image: string;
   baseUrl: string;
   /** 一覧・meta description 用の短い説明 */
@@ -31,6 +38,8 @@ export const SHIPPING = { fee: 760, freeOver: 5000 };
 export const PRODUCTS: Product[] = [
   {
     slug: "hex5",
+    kind: "iron",
+    category: "pole",
     name: 'PLANTS POLE "5つの六角形"',
     fullName: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 1320,
@@ -53,6 +62,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hex3",
+    kind: "iron",
+    category: "pole",
     name: 'PLANTS POLE "3つの六角形"',
     fullName: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 880,
@@ -74,6 +85,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hex2",
+    kind: "iron",
+    category: "pole",
     name: 'PLANTS POLE "2つの六角形"',
     fullName: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 770,
@@ -95,6 +108,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "uneune",
+    kind: "iron",
+    category: "pole",
     name: 'PLANTS POLE "うねうね"',
     fullName: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-',
     price: 1320,
@@ -116,6 +131,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hexpot-set",
+    kind: "pla",
+    category: "pot",
     name: 'PLANTS POLE 六角鉢セット "3つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
     price: 1980,
@@ -137,6 +154,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hexpot-set2",
+    kind: "pla",
+    category: "pot",
     name: 'PLANTS POLE 六角鉢セット "2つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
     price: 1880,
@@ -158,6 +177,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "pole3pla",
+    kind: "pla",
+    category: "pole",
     name: 'PLANTS POLE "3つの六角形" 樹脂版',
     fullName: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
     price: 680,
@@ -179,6 +200,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "pole2pla",
+    kind: "pla",
+    category: "pole",
     name: 'PLANTS POLE "2つの六角形" 樹脂版',
     fullName: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
     price: 580,
@@ -201,6 +224,8 @@ export const PRODUCTS: Product[] = [
   {
     // 2026-09-26 新商品: 1連支柱（樹脂版）と拡張パーツ。BASE 159543555 / 159543653
     slug: "pole1pla",
+    kind: "pla",
+    category: "pole",
     name: 'PLANTS POLE "1つの六角形" 樹脂版',
     fullName: 'PLANTS POLE "1つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
     price: 480,
@@ -222,6 +247,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hexparts",
+    kind: "pla",
+    category: "extension",
     name: "PLANTS POLE 拡張パーツ 六角形＋留め具",
     fullName: "PLANTS POLE 拡張パーツ 六角形＋留め具 樹脂版 - 辺同士をつないで伸ばせる -",
     price: 380,
@@ -243,6 +270,8 @@ export const PRODUCTS: Product[] = [
   {
     // 2026-09-23 新商品: 鉢＋受け皿のみ（支柱なし）
     slug: "hexpot",
+    kind: "pla",
+    category: "pot",
     name: "PLANTS POLE 六角鉢＋受け皿",
     fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
     price: 1480,
@@ -265,6 +294,8 @@ export const PRODUCTS: Product[] = [
   {
     // 2026-09-23 新商品: 六角花瓶（白）。価格は仮
     slug: "hexvase",
+    kind: "pla",
+    category: "vase",
     name: "六角花瓶",
     fullName: "六角花瓶 - PLANTS POLEシリーズの3Dプリント製フラワーベース -",
     price: 1280,
@@ -292,3 +323,21 @@ export function productBySlug(slug: string): Product | undefined {
 }
 
 export const yen = (n: number) => `¥${n.toLocaleString("ja-JP")}`;
+
+// 2026-09-26 増澤さん指示: 「アイアンで探す／PLA樹脂で探す」の導線と、支柱・鉢・拡張・花瓶のカテゴリページ
+export const MATERIALS: { key: MaterialKind; label: string; lead: string; image: string }[] = [
+  { key: "iron", label: "アイアン支柱", lead: "職人が曲げるアイアンスチール製。細く、強く、植物の陰になる存在感。", image: "/products/product-hex5-black.webp" },
+  { key: "pla", label: "PLA樹脂製品", lead: "3Dプリントの六角鉢・樹脂支柱・拡張パーツ。軽く、4色から選べます。", image: "/products/product-hexpot-set-black.webp" },
+];
+export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
+  { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。" },
+  { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
+  { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。" },
+  { key: "vase", label: "花瓶", lead: "六角鉢シリーズのフラワーベース。" },
+];
+export type CollectionKey = MaterialKind | CategoryKey;
+export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; filter: (p: Product) => boolean }[] = [
+  ...MATERIALS.map((m) => ({ key: m.key as CollectionKey, label: m.label, lead: m.lead, filter: (p: Product) => p.kind === m.key })),
+  ...CATEGORIES.map((c) => ({ key: c.key as CollectionKey, label: c.label, lead: c.lead, filter: (p: Product) => p.category === c.key })),
+];
+export const collectionByKey = (key: string) => COLLECTIONS.find((c) => c.key === key);

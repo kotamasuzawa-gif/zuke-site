@@ -5,6 +5,7 @@
 import Image from "next/image";
 import { PRODUCTS, yen } from "@/app/lib/products";
 import Link from "next/link";
+import CollectionNav from "@/app/components/CollectionNav";
 import { useState } from "react";
 
 const SHOP = "https://zukeplants.base.shop";
@@ -111,6 +112,12 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
             {COLORS.find((c) => c.key === color)?.label}
           </p>
         </div>
+
+        {/* 探し方の導線（2026-09-26 増澤さん指示: 素材→カテゴリ） */}
+        <section aria-label="探し方" className="px-4 md:px-8 max-w-5xl mx-auto pb-14">
+          <p className="text-[11px] tracking-[0.2em] text-gray-500 mb-4">FIND BY</p>
+          <CollectionNav />
+        </section>
 
         {/* 商品グリッド */}
         <section aria-label="商品一覧" className="px-4 md:px-8 max-w-5xl mx-auto pb-20">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { PRODUCTS, yen } from "@/app/lib/products";
+import CollectionNav from "@/app/components/CollectionNav";
 
 const SITE = "https://www.zukeplants.com";
 
@@ -49,6 +50,8 @@ export default function ProductsPage() {
           素材はすべてアイアンスチール。高さ約19.5cm の小鉢向けから、約39cm の主役サイズまで4型を展開しています。
           モンステラ・ポトス・ホヤ・亀甲竜など蔓性の観葉植物を、インテリアグリーンとして美しく仕立てられます。
         </p>
+
+        <div className="mt-10"><CollectionNav /></div>
 
         <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
           {PRODUCTS.map((p) => (
