@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { PRODUCTS, yen } from "@/app/lib/products";
 import CollectionNav from "@/app/components/CollectionNav";
+import ProductColorGrid from "@/app/components/ProductColorGrid";
 
 const SITE = "https://www.zukeplants.com";
 
@@ -53,17 +53,8 @@ export default function ProductsPage() {
 
         <div className="mt-10"><CollectionNav /></div>
 
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-          {PRODUCTS.map((p) => (
-            <Link key={p.slug} href={`/products/${p.slug}`} className="block group">
-              <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
-                <Image src={p.image} alt={p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 1024px) 50vw, 25vw" />
-              </div>
-              <h2 className="mt-4 text-[15px] leading-relaxed">{p.name}</h2>
-              <p className="mt-1 text-[13px] text-gray-500">高さ {p.height}</p>
-              <p className="mt-2 text-[15px] font-bold">{yen(p.price)}</p>
-            </Link>
-          ))}
+        <div className="mt-14">
+          <ProductColorGrid items={PRODUCTS.map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: `高さ ${p.height}`, href: `/products/${p.slug}` }))} />
         </div>
 
         <p className="mt-12 text-[13px] text-gray-500">

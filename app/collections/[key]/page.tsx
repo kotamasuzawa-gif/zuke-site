@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import CollectionNav from "@/app/components/CollectionNav";
+import ProductColorGrid from "@/app/components/ProductColorGrid";
 import { PRODUCTS, COLLECTIONS, collectionByKey, yen } from "@/app/lib/products";
 
 const SITE = "https://www.zukeplants.com";
@@ -56,17 +56,8 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
         <div className="mt-8">
           <CollectionNav current={c.key} compact />
         </div>
-        <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-          {items.map((p) => (
-            <Link key={p.slug} href={`/products/${p.slug}`} className="block group">
-              <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
-                <Image src={p.image} alt={p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 1024px) 50vw, 25vw" />
-              </div>
-              <h2 className="mt-4 text-[15px] leading-relaxed">{p.name}</h2>
-              <p className="mt-1 text-[13px] text-gray-500">{p.material}</p>
-              <p className="mt-1 text-[15px] font-bold">{yen(p.price)}</p>
-            </Link>
-          ))}
+        <div className="mt-12">
+          <ProductColorGrid items={items.map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.material, href: `/products/${p.slug}` }))} />
         </div>
         {items.length === 0 && <p className="mt-12 text-gray-500">準備中です。</p>}
       </main>

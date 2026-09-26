@@ -338,6 +338,10 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
 export type CollectionKey = MaterialKind | CategoryKey;
 export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; filter: (p: Product) => boolean }[] = [
   ...MATERIALS.map((m) => ({ key: m.key as CollectionKey, label: m.label, lead: m.lead, filter: (p: Product) => p.kind === m.key })),
-  ...CATEGORIES.map((c) => ({ key: c.key as CollectionKey, label: c.label, lead: c.lead, filter: (p: Product) => p.category === c.key })),
+  ...CATEGORIES.map((c) => ({
+    key: c.key as CollectionKey, label: c.label, lead: c.lead,
+    // 「支柱の拡張」には拡張パーツに加え、起点になる挿入部つきの 1連樹脂版も並べる（2026-09-26 増澤さん指示）
+    filter: (p: Product) => p.category === c.key || (c.key === "extension" && p.slug === "pole1pla"),
+  })),
 ];
 export const collectionByKey = (key: string) => COLLECTIONS.find((c) => c.key === key);
