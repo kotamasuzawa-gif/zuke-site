@@ -49,11 +49,6 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
-      {VIDEOS[c.key] && (
-        <section aria-label={VIDEOS[c.key].label} className="w-full bg-white">
-          <video className="w-full h-auto block" src={VIDEOS[c.key].src} poster={VIDEOS[c.key].poster} autoPlay muted loop playsInline preload="metadata" aria-label={VIDEOS[c.key].label} />
-        </section>
-      )}
       <main className="flex-1 max-w-5xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-6 flex items-center gap-2">
           <Link href="/" className="hover:text-[#222]">ホーム</Link>
@@ -64,6 +59,12 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
         </nav>
         <h1 className="text-2xl md:text-3xl font-bold leading-relaxed">{c.label}</h1>
         <p className="mt-3 text-[15px] leading-loose text-gray-700 max-w-2xl">{c.lead}</p>
+        {/* 2026-09-27 増澤さん指示: 動画はタイトル・説明の下に */}
+        {VIDEOS[c.key] && (
+          <section aria-label={VIDEOS[c.key].label} className="mt-8 -mx-6 md:mx-0 bg-white">
+            <video className="w-full h-auto block" src={VIDEOS[c.key].src} poster={VIDEOS[c.key].poster} autoPlay muted loop playsInline preload="metadata" aria-label={VIDEOS[c.key].label} />
+          </section>
+        )}
         <div className="mt-8">
           <CollectionNav current={c.key} compact />
         </div>
