@@ -6,29 +6,20 @@ import Image from "next/image";
 import { PRODUCTS, yen } from "@/app/lib/products";
 import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
+import { COLORS, type ColorKey, productImage } from "@/app/lib/colors";
 import { useState } from "react";
 
 const SHOP = "https://zukeplants.base.shop";
 
 // 2026-08-22 増澤さん要望: ホームでブラック/ホワイトを切り替え。商品画像とライフスタイル写真が連動する。
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
-type ColorKey = "black" | "white" | "orange" | "lightgray";
 
 // 2026-09-26 増澤さん指示「LPとBASEの商品を紐づける／並び順もBASEを正に」: products.ts（BASE順・baseUrl）から生成
 const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, url: p.baseUrl }));
 
-// 色展開: アイアン支柱・花瓶はブラック/ホワイトのみ。3Dプリント樹脂製品は4色（2026-09-26 増澤さん指示でオレンジ/ライトグレー追加）
-const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3pla", "pole2pla", "hexpot", "pole1pla", "hexparts"]);
-const hasColor = (slug: string, color: ColorKey) => color === "black" || color === "white" || FOUR_COLORS.has(slug);
-const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${hasColor(slug, color) ? color : "black"}.webp`;
+// 2026-09-27: 色判定は app/lib/colors.ts に共通化（全商品4色切替）
 const lifestyleImage = (color: ColorKey) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
 
-const COLORS: { key: ColorKey; label: string; swatch: string }[] = [
-  { key: "black", label: "ブラック", swatch: "#222" },
-  { key: "white", label: "ホワイト", swatch: "#EDEAE3" },
-  { key: "orange", label: "オレンジ", swatch: "#F06A1E" },
-  { key: "lightgray", label: "ライトグレー", swatch: "#C9CACB" },
-];
 
 export default function BaseClone({ showLifestyle = false }: { showLifestyle?: boolean }) {
   const [open, setOpen] = useState(false);
