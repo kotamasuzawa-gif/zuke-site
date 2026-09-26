@@ -255,10 +255,10 @@ export const PRODUCTS: Product[] = [
     image: "/products/product-hexparts-black.webp",
     baseUrl: `${SHOP}/items/159543653`,
     summary:
-      "樹脂版PLANTS POLEを伸ばすための六角形パーツ1つ＋留め具1個。いま使っている支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。4色。",
+      "樹脂版PLANTS POLEを伸ばすための六角形パーツ1つ＋留め具3個。いま使っている支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。4色。",
     lead:
       "植物の成長に合わせて、1連→2連→3連と後から伸ばせます。留め具は隣り合う2本の線を1本ずつ咥えるS字型で、入れたあとはねじらないと外れません。鉄製PLANTS POLEには使えません。",
-    height: "六角形 高さ 約72mm／留め具 約16×8×4mm",
+    height: "六角形 高さ 約72mm／留め具 約16×8×4mm ×3",
     width: "六角形 幅 約64mm／線の太さ4.4mm・厚み3.6mm",
     material: "PLA樹脂（3Dプリント・マット仕上げ）",
     plants: ["樹脂版PLANTS POLE（1つ／2つ／3つの六角形）を使っている株"],
