@@ -8,6 +8,7 @@ export const COLORS: { key: ColorKey; label: string; swatch: string }[] = [
 ];
 // アイアン支柱・花瓶はブラック/ホワイトのみ。3Dプリント樹脂製品は4色
 export const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3pla", "pole2pla", "hexpot", "pole1pla", "hexparts"]);
-export const hasColor = (slug: string, color: ColorKey) => color === "black" || color === "white" || FOUR_COLORS.has(slug);
+// 2026-09-27 増澤さん指示: 全商品でオレンジ/ライトグレーにも切り替える（アイアン・花瓶もCodexで色替え画像を用意）
+export const hasColor = (_slug: string, _color: ColorKey) => true;
 export const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${hasColor(slug, color) ? color : "black"}.webp`;
 export const colorLabel = (color: ColorKey) => COLORS.find((c) => c.key === color)?.label ?? "";
