@@ -3,6 +3,7 @@
 // 2026-08-21 増澤さん指示: BASEショップ(zukeplants.base.shop)のホームと同じ見た目に。
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
+import { PRODUCTS, yen } from "@/app/lib/products";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -12,19 +13,8 @@ const SHOP = "https://zukeplants.base.shop";
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
 type ColorKey = "black" | "white";
 
-const products = [
-  { name: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-', price: "¥1,320", slug: "uneune", url: `${SHOP}/items/130117282` },
-  { name: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥1,320", slug: "hex5", url: `${SHOP}/items/117375069` },
-  { name: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥880", slug: "hex3", url: `${SHOP}/items/128906974` },
-  { name: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -', price: "¥770", slug: "hex2", url: `${SHOP}/items/124680568` },
-  // 2026-09-23 新商品（3Dプリント製）。BASE商品ページ作成後に url を差し替える
-  { name: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）- PLA樹脂・3Dプリント製 -', price: "¥1,980", slug: "hexpot-set", url: SHOP },
-  { name: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）- PLA樹脂・3Dプリント製 -', price: "¥1,880", slug: "hexpot-set2", url: SHOP },
-  { name: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -', price: "¥680", slug: "pole3pla", url: SHOP },
-  { name: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -', price: "¥580", slug: "pole2pla", url: SHOP },
-  { name: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -", price: "¥1,480", slug: "hexpot", url: SHOP },
-  { name: "六角花瓶 - PLANTS POLEシリーズの3Dプリント製フラワーベース -", price: "¥1,280", slug: "hexvase", url: SHOP },
-];
+// 2026-09-26 増澤さん指示「LPとBASEの商品を紐づける／並び順もBASEを正に」: products.ts（BASE順・baseUrl）から生成
+const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, url: p.baseUrl }));
 
 // ホワイト展開のない商品はブラック画像を出す
 const NO_WHITE = new Set<string>([]);
