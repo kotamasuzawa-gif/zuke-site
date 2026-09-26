@@ -243,6 +243,48 @@ export const PRODUCTS: Product[] = [
       "タグポケット（幅20mm・厚み2.5mmまで）で品種管理も一緒に",
     ],
   },
+  {
+    // 2026-09-26 新商品: 1連支柱（樹脂版）と拡張パーツ。BASE 159543555 / 159543653
+    slug: "pole1pla",
+    name: 'PLANTS POLE "1つの六角形" 樹脂版',
+    fullName: 'PLANTS POLE "1つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
+    price: 480,
+    image: "/products/product-pole1pla-black.webp",
+    baseUrl: `${SHOP}/items/159543555`,
+    summary:
+      "六角形ひとつの、いちばん小さなPLANTS POLE。鉢に挿すだけで小さな蔓性植物や若い株をやさしく支えます。ブラック／ホワイト／オレンジ／ライトグレーの4色。",
+    lead:
+      "幅約64mm・全長約120mm（挿入部約65mm）。別売りの拡張パーツ（六角形＋留め具）を辺同士でつなぐと、2連・3連と後から伸ばしていけます。",
+    height: "全長 約120mm（挿入部 約65mm）",
+    width: "幅 約64mm／線の太さ4.4mm・厚み3.6mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["ホヤ・ポトスなど小さな蔓性植物", "伸び始めの若い株"],
+    scenes: [
+      "3号〜4号鉢に",
+      "六角鉢シリーズと合わせて",
+      "拡張パーツで成長に合わせて伸ばす",
+    ],
+  },
+  {
+    slug: "hexparts",
+    name: "PLANTS POLE 拡張パーツ 六角形＋留め具",
+    fullName: "PLANTS POLE 拡張パーツ 六角形＋留め具 樹脂版 - 辺同士をつないで伸ばせる -",
+    price: 380,
+    image: "/products/product-hexparts-black.webp",
+    baseUrl: `${SHOP}/items/159543653`,
+    summary:
+      "樹脂版PLANTS POLEを伸ばすための六角形パーツ1つ＋留め具1個。いま使っている支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。4色。",
+    lead:
+      "植物の成長に合わせて、1連→2連→3連と後から伸ばせます。留め具は隣り合う2本の線を1本ずつ咥えるS字型で、入れたあとはねじらないと外れません。鉄製PLANTS POLEには使えません。",
+    height: "六角形 高さ 約72mm／留め具 約16×8×4mm",
+    width: "六角形 幅 約64mm／線の太さ4.4mm・厚み3.6mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["樹脂版PLANTS POLE（1つ／2つ／3つの六角形）を使っている株"],
+    scenes: [
+      "支柱と同色でそろえると留め具が目立ちません",
+      "伸びた分だけ六角形を足す",
+    ],
+  },
 ];
 
 export function productBySlug(slug: string): Product | undefined {
