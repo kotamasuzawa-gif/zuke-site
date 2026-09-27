@@ -316,6 +316,30 @@ export const PRODUCTS: Product[] = [
       "ホワイト／ブラックの2色から部屋に合わせて",
     ],
   },
+  {
+    // 2026-09-27 新商品: 六角土入れスコップ（3Dプリント）
+    slug: "hexscoop",
+    kind: "pla",
+    category: "pot",
+    name: "六角土入れスコップ",
+    fullName: "六角土入れスコップ - 底ふるい穴つき3Dプリント製 -",
+    price: 980,
+    image: "/products/product-hexscoop-black.webp",
+    baseUrl: `${SHOP}/items/159719039`,
+    summary:
+      "六角鉢シリーズとおそろいの六角柱スコップ。底のふるい穴で微塵だけを落とせます。対辺約38mm・全長約200mm。PLA樹脂・3Dプリント製、4色。",
+    lead:
+      "筒を斜めに切った形なので、鉢の縁に沿わせてすくった土をこぼさず入れられます。底にはφ2.5mmのふるい穴。すくった土を軽く振ると、根腐れの原因になる微塵だけが底から落ちます。裏面にZUKEロゴを刻印。六角形なので机に置いても転がりません。",
+    height: "全長 約200mm／開口 約110mm",
+    width: "対辺 約38mm／壁厚 1.6mm",
+    weight: "約40g",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["植え替え・増し土・化粧砂の投入に"],
+    scenes: [
+      "六角鉢への増し土に",
+      "赤玉土や鹿沼土の微塵抜きをしながら土入れ",
+    ],
+  },
 ];
 
 export function productBySlug(slug: string): Product | undefined {
