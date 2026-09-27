@@ -528,7 +528,7 @@ export const GUIDES: Guide[] = [
         ],
       },
     ],
-    related: ["hexparts", "pole1pla", "pole2pla", "pole3pla"],
+    related: ["hexparts", "hexclip5", "pole1pla", "pole2pla", "pole3pla"],
   },
   {
     slug: "kikkouryu-shichu",

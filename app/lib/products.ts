@@ -292,6 +292,29 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
+    // 2026-09-28 新商品: 留め具だけの5個入り（増澤さん指示）。BASE 159749568
+    slug: "hexclip5",
+    kind: "pla",
+    category: "extension",
+    name: "PLANTS POLE 留め具 5個入り",
+    fullName: "PLANTS POLE 留め具 5個入り 樹脂版 - 六角形パーツをつなぐクリップ -",
+    price: 330,
+    image: "/products/product-hexclip5-black.webp",
+    baseUrl: `${SHOP}/items/159749568`,
+    summary:
+      "樹脂版PLANTS POLEの辺同士をつなぐ留め具（クリップ）だけの5個セット。拡張パーツ付属の3個で足りないとき、色をそろえたいとき、なくしたときの補充用に。4色。",
+    lead:
+      "隣り合う支柱の線と六角形の線を並べ、留め具でパチッと挟むだけ。2本の線を1本ずつ咥えるS字型で、入れたあとはねじらないと外れません。鉄製PLANTS POLEには使えません。",
+    height: "約16×8×4mm ×5個",
+    width: "対応線材: 太さ4.4mm・厚み3.6mm（樹脂版PLANTS POLE）",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["樹脂版PLANTS POLE・拡張パーツを使っている株"],
+    scenes: [
+      "支柱と同色でそろえると目立ちません",
+      "拡張パーツの留め具の補充に",
+    ],
+  },
+  {
     // 2026-09-23 新商品: 六角花瓶（白）。価格は仮
     slug: "hexvase",
     kind: "pla",
