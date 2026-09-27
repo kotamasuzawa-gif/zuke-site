@@ -488,7 +488,7 @@ export const GUIDES: Guide[] = [
         ],
       },
     ],
-    related: ["hexscoop", "hexpot", "hexpot-set"],
+    related: ["hexpot", "hexpot-set"],
   },
   {
     slug: "shichu-nobasu-kakuchou",
