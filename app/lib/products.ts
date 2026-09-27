@@ -222,6 +222,30 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
+    // 2026-09-23 新商品: 鉢＋受け皿のみ（支柱なし）
+    slug: "hexpot",
+    kind: "pla",
+    category: "pot",
+    name: "PLANTS POLE 六角鉢＋受け皿",
+    fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
+    price: 1480,
+    image: "/products/product-hexpot-black.webp",
+    baseUrl: `${SHOP}/items/159048204`,
+    summary:
+      "PLANTS POLEを差し込める六角形の鉢と受け皿。支柱の差込口・タグポケット付き。PLA樹脂・3Dプリント製、ブラック／オレンジ／グレーの3色。支柱は付属しません。",
+    lead:
+      "PLANTS POLEの六角形に合わせてつくった鉢と受け皿のセット。鉢の内側に支柱の差込口があり、鉄製・樹脂版どちらのPLANTS POLEも差し込むだけで固定できます。お手持ちの支柱と組み合わせて。",
+    height: "鉢 約95mm／受け皿 約13mm",
+    width: "鉢 対辺約69mm／受け皿 対角約91mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["小さな蔓性植物", "伸び始めの若い株", "ホヤ・ラフィドフォラなど"],
+    scenes: [
+      "すでにPLANTS POLEを持っている方の、専用鉢として",
+      "タグポケット（幅20mm・厚み2.5mmまで）で品種管理も一緒に",
+      "受け皿の浮かせ台で、水が溜まりにくい",
+    ],
+  },
+  {
     // 2026-09-26 新商品: 1連支柱（樹脂版）と拡張パーツ。BASE 159543555 / 159543653
     slug: "pole1pla",
     kind: "pla",
@@ -265,30 +289,6 @@ export const PRODUCTS: Product[] = [
     scenes: [
       "支柱と同色でそろえると留め具が目立ちません",
       "伸びた分だけ六角形を足す",
-    ],
-  },
-  {
-    // 2026-09-23 新商品: 鉢＋受け皿のみ（支柱なし）
-    slug: "hexpot",
-    kind: "pla",
-    category: "pot",
-    name: "PLANTS POLE 六角鉢＋受け皿",
-    fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
-    price: 1480,
-    image: "/products/product-hexpot-black.webp",
-    baseUrl: `${SHOP}/items/159048204`,
-    summary:
-      "PLANTS POLEを差し込める六角形の鉢と受け皿。支柱の差込口・タグポケット付き。PLA樹脂・3Dプリント製、ブラック／オレンジ／グレーの3色。支柱は付属しません。",
-    lead:
-      "PLANTS POLEの六角形に合わせてつくった鉢と受け皿のセット。鉢の内側に支柱の差込口があり、鉄製・樹脂版どちらのPLANTS POLEも差し込むだけで固定できます。お手持ちの支柱と組み合わせて。",
-    height: "鉢 約95mm／受け皿 約13mm",
-    width: "鉢 対辺約69mm／受け皿 対角約91mm",
-    material: "PLA樹脂（3Dプリント・マット仕上げ）",
-    plants: ["小さな蔓性植物", "伸び始めの若い株", "ホヤ・ラフィドフォラなど"],
-    scenes: [
-      "すでにPLANTS POLEを持っている方の、専用鉢として",
-      "タグポケット（幅20mm・厚み2.5mmまで）で品種管理も一緒に",
-      "受け皿の浮かせ台で、水が溜まりにくい",
     ],
   },
   {
