@@ -45,9 +45,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       "@context": "https://schema.org",
       "@type": "Product",
       name: p.fullName,
-      image: `${SITE}${p.image}`,
+      // 2026-09-28 SEO: 色違い画像もすべて登録（画像検索・リッチリザルト）
+      image: (p.kind === "iron" && p.slug !== "uneune" ? ["black", "white"] : ["black", "white", "orange", "lightgray"]).map((c) => `${SITE}/products/product-${p.slug}-${c}.webp`),
       description: p.summary,
+      sku: p.slug,
+      url: `${SITE}/products/${p.slug}`,
       material: p.material,
+      color: p.kind === "iron" ? "ブラック / ホワイト" : "ブラック / ホワイト / オレンジ / ライトグレー",
+      category: p.kind === "iron" ? "園芸支柱（アイアン）" : "3Dプリント園芸用品（PLA樹脂）",
       brand: { "@type": "Brand", name: "ZUKE" },
       offers: {
         "@type": "Offer",

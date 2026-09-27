@@ -1,20 +1,17 @@
 import { FAQS } from "./HomeFaq";
+import { PRODUCTS } from "@/app/lib/products";
 
 // SEO: 構造化データ（Organization / WebSite / FAQPage / 商品ItemList）。
 // 商品情報は Products.tsx の掲載内容と一致させること（乖離すると リッチリザルト不適合）。
-const products = [
-  { name: 'PLANTS POLE "うねうね"', price: 1320, url: "https://zukeplants.base.shop/items/130117282", image: "https://baseec-img-mng.akamaized.net/images/item/origin/ae57f1835d16cb0c83c4dea585cdb1df.png", description: "横に広がる植物を矯正できる園芸支柱" },
-  { name: 'PLANTS POLE "5つの六角形"', price: 1320, url: "https://zukeplants.base.shop/items/117375069", image: "https://baseec-img-mng.akamaized.net/images/item/origin/99d4b0564f5e6d6c2729f19eee010bc7.png", description: "蔓性植物をインテリアに馴染むように飾る六角形の園芸支柱" },
-  { name: 'PLANTS POLE "3つの六角形"', price: 880, url: "https://zukeplants.base.shop/items/128906974", image: "https://baseec-img-mng.akamaized.net/images/item/origin/6973a4ba33d405fdeff104d2e5fa6d67.png", description: "蔓性植物をインテリアに馴染むように飾る六角形の園芸支柱" },
-  { name: 'PLANTS POLE "2つの六角形"', price: 770, url: "https://zukeplants.base.shop/items/124680568", image: "https://baseec-img-mng.akamaized.net/images/item/origin/b7dd362adfcf4f97ebeb1728eaa73918.png", description: "蔓性植物をインテリアに馴染むように飾る六角形の園芸支柱" },
-  { name: 'PLANTS POLE 六角鉢セット "3つの六角形"', price: 1980, url: "https://www.zukeplants.com/products/hexpot-set", image: "https://www.zukeplants.com/products/product-hexpot-set-black.webp", description: "六角形の鉢・受け皿・支柱の3点セット。PLA樹脂・3Dプリント製" },
-  { name: 'PLANTS POLE "3つの六角形" 樹脂版', price: 680, url: "https://www.zukeplants.com/products/pole3pla", image: "https://www.zukeplants.com/products/product-pole3pla-black.webp", description: "PLA樹脂・3Dプリント製の軽量な六角形3連支柱。3色展開" },
-  { name: 'PLANTS POLE "2つの六角形" 樹脂版', price: 580, url: "https://www.zukeplants.com/products/pole2pla", image: "https://www.zukeplants.com/products/product-pole2pla-black.webp", description: "PLA樹脂・3Dプリント製の軽量な六角形2連支柱。3色展開" },
-  { name: "PLANTS POLE 六角鉢＋受け皿", price: 1480, url: "https://www.zukeplants.com/products/hexpot", image: "https://www.zukeplants.com/products/product-hexpot-black.webp", description: "支柱の差込口付きの六角形の鉢と受け皿。PLA樹脂・3Dプリント製、3色" },
-  { name: "六角土入れスコップ", price: 980, url: "https://www.zukeplants.com/products/hexscoop", image: "https://www.zukeplants.com/products/product-hexscoop-black.webp", description: "六角鉢シリーズの3Dプリント製土入れスコップ。底にふるい穴、全長約20cm、4色" },
-  { name: "六角花瓶", price: 1280, url: "https://www.zukeplants.com/products/hexvase", image: "https://www.zukeplants.com/products/product-hexvase-white.webp", description: "六角鉢シリーズの3Dプリント製フラワーベース。高さ約16cm、4色" },
-  { name: 'PLANTS POLE 六角鉢セット "2つの六角形"', price: 1880, url: "https://www.zukeplants.com/products/hexpot-set2", image: "https://www.zukeplants.com/products/product-hexpot-set2-black.webp", description: "六角形の鉢・受け皿・2連支柱の3点セット。PLA樹脂・3Dプリント製、4色" },
-];
+// 2026-09-28 SEO: 商品リストは products.ts（BASEと同期）から生成し、手書きの乖離をなくす
+const SITE_URL = "https://www.zukeplants.com";
+const products = PRODUCTS.map((p) => ({
+  name: p.fullName,
+  price: p.price,
+  url: `${SITE_URL}/products/${p.slug}`,
+  image: `${SITE_URL}${p.image}`,
+  description: p.summary,
+}));
 
 const jsonLd = {
   "@context": "https://schema.org",

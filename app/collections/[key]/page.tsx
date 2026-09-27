@@ -36,7 +36,17 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
   const c = collectionByKey(key);
   if (!c) notFound();
   const items = PRODUCTS.filter(c.filter);
-  const jsonLd = {
+  const jsonLd = [{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `${c.label}｜ZUKE PLANTS POLE`,
+    description: c.lead,
+    url: `${SITE}/collections/${c.key}`,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.map((p, i) => ({ "@type": "ListItem", position: i + 1, url: `${SITE}/products/${p.slug}`, name: p.fullName })),
+    },
+  }, {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
@@ -44,7 +54,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
       { "@type": "ListItem", position: 2, name: "商品一覧", item: `${SITE}/products` },
       { "@type": "ListItem", position: 3, name: c.label, item: `${SITE}/collections/${c.key}` },
     ],
-  };
+  }];
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
