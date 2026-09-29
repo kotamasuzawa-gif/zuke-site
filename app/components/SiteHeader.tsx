@@ -23,6 +23,8 @@ export default function SiteHeader() {
           <Link href="/products" className="hover:opacity-60">PRODUCTS</Link>
           <Link href="/guide" className="hover:opacity-60">GUIDE</Link>
           <Link href="/about" className="hover:opacity-60">ABOUT</Link>
+          {/* 2026-09-29 増澤さん指示: 卸売の案内への導線 */}
+          <Link href="/wholesale" className="hover:opacity-60">WHOLESALE</Link>
           <a href={SHOP} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">STORE</a>
         </nav>
         <a href={SHOP} aria-label="オンラインストア" className="p-1 md:hidden">
@@ -36,6 +38,7 @@ export default function SiteHeader() {
             <li><Link href="/products" onClick={() => setOpen(false)}>PRODUCTS</Link></li>
             <li><Link href="/guide" onClick={() => setOpen(false)}>GUIDE</Link></li>
             <li><Link href="/about" onClick={() => setOpen(false)}>ABOUT</Link></li>
+            <li><Link href="/wholesale" onClick={() => setOpen(false)}>WHOLESALE（卸売）</Link></li>
             <li><a href={SHOP} target="_blank" rel="noopener noreferrer">STORE（BASE）</a></li>
           </ul>
         </nav>

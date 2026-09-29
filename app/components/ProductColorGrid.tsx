@@ -12,13 +12,15 @@ export type GridGroup = { key: string; title?: string; moreHref?: string; items:
 export default function ProductColorGrid({ items, groups }: { items?: GridItem[]; groups?: GridGroup[] }) {
   const [color, setColor] = useState<ColorKey>("black");
   const gs: GridGroup[] = groups ?? [{ key: "all", items: items ?? [] }];
+  // 2026-09-29 SEO R4: グループ見出し（h2）が無いカテゴリページでは h1 の次がいきなり h3 になっていたため、商品名を h2 に（見た目は同じ）
+  const NameTag = groups ? "h3" : "h2";
   const card = (p: GridItem) => {
     const inner = (
       <>
         <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
           <Image src={productImage(p.slug, color)} alt={`${p.fullName}（${colorLabel(color)}）`} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 1024px) 50vw, 25vw" />
         </div>
-        <h3 className="mt-4 text-[15px] leading-relaxed line-clamp-2">{p.name}</h3>
+        <NameTag className="mt-4 text-[15px] leading-relaxed line-clamp-2">{p.name}</NameTag>
         {p.sub && <p className="mt-1 text-[13px] text-gray-500">{p.sub}</p>}
         <p className="mt-1 text-[15px] font-bold">{p.price}</p>
       </>

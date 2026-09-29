@@ -5,17 +5,19 @@ import SiteFooter from "@/app/components/SiteFooter";
 import { PRODUCTS, CATEGORIES, yen } from "@/app/lib/products";
 import CollectionNav from "@/app/components/CollectionNav";
 import ProductColorGrid from "@/app/components/ProductColorGrid";
+import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
-const SITE = "https://www.zukeplants.com";
-
+// 2026-09-29 SEO R4: 「全4型・素材はアイアンのみ・¥770から」の旧文言が、実際の13商品（PLA樹脂の支柱・鉢・パーツ・花瓶）と
+// 矛盾していたため修正。title も支柱カテゴリページと取り合わないよう、鉢・花瓶を含む全商品一覧として付け直した。
 export const metadata: Metadata = {
-  title: "PLANTS POLE 商品一覧｜観葉植物の園芸支柱",
+  title: "PLANTS POLE 全商品一覧｜園芸支柱・六角鉢・花瓶",
   description:
-    "ZUKE の園芸支柱 PLANTS POLE 全4型の一覧。高さ約19.5cm〜39cm、素材はアイアンスチール。モンステラ・ポトス・ホヤ・亀甲竜など、蔓性の観葉植物をインテリアグリーンとして仕立てられます。¥770から。",
+    "ZUKE の PLANTS POLE 全商品一覧。アイアンスチール製の園芸支柱4型、3Dプリント樹脂版の支柱と拡張パーツ、支柱が差せる六角鉢・セット、六角形の花瓶。モンステラ・ポトス・ホヤ・亀甲竜などの観葉植物に。",
   alternates: { canonical: "/products" },
   openGraph: {
+    ...OG_BASE,
     title: "PLANTS POLE 商品一覧｜ZUKE",
-    description: "観葉植物をインテリアに馴染むように仕立てる園芸支柱、全4型。¥770から。",
+    description: "観葉植物をインテリアに馴染むように仕立てる園芸支柱と、支柱が差せる六角鉢・花瓶。",
     url: "/products",
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }],
   },
@@ -33,7 +35,7 @@ const jsonLd = {
 export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
       <SiteHeader />
       <main className="flex-1 max-w-5xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-6 flex items-center gap-2">
@@ -47,7 +49,7 @@ export default function ProductsPage() {
         </h1>
         <p className="mt-4 text-[15px] leading-loose text-gray-700 max-w-2xl">
           ZUKE の PLANTS POLE は、&ldquo;魅せる&rdquo;園芸支柱です。植物を支えるという実用性に、六角形のデザインを加えました。
-          素材はすべてアイアンスチール。高さ約19.5cm の小鉢向けから、約39cm の主役サイズまで4型を展開しています。
+          アイアン支柱はアイアンスチール製で、高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。ほかに、PLA樹脂を3Dプリントした樹脂版の支柱・拡張パーツ、支柱が差せる六角鉢と受け皿、六角形の花瓶を展開しています。
           モンステラ・ポトス・ホヤ・亀甲竜など蔓性の観葉植物を、インテリアグリーンとして美しく仕立てられます。
         </p>
 

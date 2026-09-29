@@ -24,5 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     })),
     { url: `${SITE}/about`, changeFrequency: "monthly", priority: 0.6 },
+    // 2026-09-29 増澤さん指示で新設した卸売ページ（lastModified は R1 の方針どおり付けない）
+    { url: `${SITE}/wholesale`, changeFrequency: "monthly", priority: 0.6 },
   ];
 }

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { preload } from "react-dom";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import CollectionNav from "@/app/components/CollectionNav";
 import ProductColorGrid from "@/app/components/ProductColorGrid";
 import { PRODUCTS, COLLECTIONS, collectionByKey, yen } from "@/app/lib/products";
-
-const SITE = "https://www.zukeplants.com";
+import { GUIDES } from "@/app/lib/guides";
+import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 // 2026-09-26 増澤さん指示: 鉢・セットにはホームの組み立て動画、支柱の拡張には拡張動画を常時再生
 const VIDEOS: Record<string, { src: string; poster: string; label: string }> = {
@@ -24,10 +25,11 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   const c = collectionByKey(key);
   if (!c) return {};
   return {
-    title: `${c.label}｜ZUKE PLANTS POLE`,
-    description: `${c.lead} ZUKE の${c.label}一覧。`,
+    // 2026-09-29 SEO R4: title はテンプレートの「｜ZUKE」と重複しないように。description は products.ts の COLLECTION_SEO
+    title: c.seoTitle,
+    description: c.seoDescription,
     alternates: { canonical: `/collections/${c.key}` },
-    openGraph: { title: `${c.label}｜ZUKE`, description: c.lead, url: `/collections/${c.key}`, images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }] },
+    openGraph: { ...OG_BASE, title: `${c.seoTitle}｜ZUKE`, description: c.seoDescription, url: `/collections/${c.key}`, images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }] },
   };
 }
 
@@ -36,11 +38,15 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
   const c = collectionByKey(key);
   if (!c) notFound();
   const items = PRODUCTS.filter(c.filter);
+  // 2026-09-29 SEO R4: 掲載商品を紹介しているガイドへの内部リンク
+  const relatedGuides = GUIDES.filter((g) => g.related.some((s) => items.some((p) => p.slug === s)));
+  // 2026-09-29 SEO R4: 先頭の動画ポスター（LCP 候補）を優先読み込み
+  if (VIDEOS[c.key]) preload(VIDEOS[c.key].poster, { as: "image", fetchPriority: "high" });
   const jsonLd = [{
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `${c.label}｜ZUKE PLANTS POLE`,
-    description: c.lead,
+    name: c.seoTitle,
+    description: c.seoDescription,
     url: `${SITE}/collections/${c.key}`,
     mainEntity: {
       "@type": "ItemList",
@@ -57,7 +63,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
   }];
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
       <SiteHeader />
       <main className="flex-1 max-w-5xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-6 flex items-center gap-2">
@@ -82,6 +88,20 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
           <ProductColorGrid items={items.map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.material, href: `/products/${p.slug}` }))} />
         </div>
         {items.length === 0 && <p className="mt-12 text-gray-500">準備中です。</p>}
+        {relatedGuides.length > 0 && (
+          <section className="mt-20">
+            <h2 className="text-base font-bold">関連するガイド</h2>
+            <ul className="mt-4 flex flex-col gap-3">
+              {relatedGuides.map((g) => (
+                <li key={g.slug}>
+                  <Link href={`/guide/${g.slug}`} className="text-[15px] text-gray-700 hover:text-[#222] underline underline-offset-4 decoration-gray-300">
+                    {g.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
       <SiteFooter />
     </div>

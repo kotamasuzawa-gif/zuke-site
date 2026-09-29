@@ -8,6 +8,7 @@ import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
 import { COLORS, type ColorKey, productImage } from "@/app/lib/colors";
 import { useState } from "react";
+import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
 const SHOP = "https://zukeplants.base.shop";
 
@@ -51,6 +52,8 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
               <li><Link href="/products" onClick={() => setOpen(false)}>PRODUCTS</Link></li>
               <li><Link href="/guide" onClick={() => setOpen(false)}>GUIDE</Link></li>
               <li><Link href="/about" onClick={() => setOpen(false)}>ABOUT</Link></li>
+              {/* 2026-09-29 増澤さん指示: 卸売の案内への導線（CONTACT は BASE の問い合わせフォームのまま） */}
+              <li><Link href="/wholesale" onClick={() => setOpen(false)}>WHOLESALE</Link></li>
               <li><a href="https://thebase.com/inquiry/zukeplants-base-shop" target="_blank" rel="noopener noreferrer">CONTACT</a></li>
             </ul>
             <ul className="mt-6 pt-4 border-t border-gray-100 flex flex-col gap-2 text-xs text-gray-500">
@@ -146,7 +149,6 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
               src={lifestyleImage(color)}
               alt={`コンクリート壁の棚に飾った PLANTS POLE（${COLORS.find((c) => c.key === color)?.label}）と蔓性の観葉植物。六角形の影が壁に映るインテリアグリーンの実例`}
               fill
-              priority
               sizes="(max-width: 640px) 100vw, 512px"
               className="object-cover"
             />
@@ -156,14 +158,42 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
         <p className="mt-7 max-w-2xl mx-auto text-[13px] leading-loose text-gray-600">
           ZUKE は「インテリアに馴染む」「生活に馴染む」をコンセプトにした園芸支柱ブランドです。
           モンステラやポトスなど蔓性の観葉植物を、垂らしたままにせず立ち上げて仕立てる。
-          アイアンスチールの六角形が、家具や部屋の景観に溶け込みながら植物を支えます。
-          高さ約19.5cm の小鉢向けから、約39cm の主役サイズまで4型。
+          {/* 2026-09-29 SEO R4: 「アイアンのみ・4型」の旧文言を、3Dプリント（PLA樹脂）製品を含む現在のラインナップに合わせた */}
+          アイアンスチールと3Dプリント（PLA樹脂）の六角形が、家具や部屋の景観に溶け込みながら植物を支えます。
+          アイアン支柱は高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。支柱の差込口付き六角鉢や花瓶も展開しています。
         </p>
         <nav aria-label="サイト内リンク" className="mt-7 flex flex-wrap justify-center gap-x-7 gap-y-3 text-[13px] tracking-[0.1em]">
           <Link href="/products" className="hover:opacity-60">商品一覧</Link>
           <Link href="/guide" className="hover:opacity-60">インテリアグリーンのガイド</Link>
           <Link href="/about" className="hover:opacity-60">ブランドについて</Link>
+          <Link href="/wholesale" className="hover:opacity-60">卸売のご案内</Link>
         </nav>
+      </section>
+
+      {/* 2026-09-29 増澤さん指示「卸売用の案内、ボタンなどもLPに設置して。メールが問い合わせ」。
+          HomeFaq は footer の後ろに描画されるため、LP 内（footer の直前）に置く。掛け率・卸価格は載せない */}
+      <section aria-labelledby="wholesale-heading" className="px-6 py-14 border-t border-gray-100">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-[11px] tracking-[0.2em] text-gray-500">FOR SHOPS</p>
+          <h2 id="wholesale-heading" className="mt-3 text-[15px] font-bold tracking-[0.1em]">販売店さまへ｜卸売のご案内</h2>
+          <p className="mt-5 text-[13px] leading-loose text-gray-600">
+            {"園芸店・植物店・インテリアショップ・雑貨店さま向けに、PLANTS POLE の卸売を行っています。1商品10本から。お取引条件は、お取引要綱としてメールでお送りします。"}
+          </p>
+          <div className="mt-7 flex flex-col sm:flex-row justify-center gap-3">
+            <Link
+              href="/wholesale"
+              className="inline-flex items-center justify-center px-8 py-3 border border-[#222] text-[13px] tracking-[0.15em] hover:bg-[#222] hover:text-white transition-colors"
+            >
+              卸売のご案内を見る
+            </Link>
+            <a
+              href={WHOLESALE_MAILTO}
+              className="inline-flex items-center justify-center px-8 py-3 border border-[#222] bg-[#222] text-white text-[13px] tracking-[0.15em] hover:opacity-85 transition-opacity"
+            >
+              メールで問い合わせる
+            </a>
+          </div>
+        </div>
       </section>
 
       {/* フッター */}

@@ -1,5 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Metadata } from "next";
+import { preload } from "react-dom";
 import BaseClone from "./components/BaseClone";
 import { HomeFaq } from "./components/HomeFaq";
 import { JsonLd } from "./components/JsonLd";
@@ -15,7 +17,13 @@ const showLifestyle = LIFESTYLE_FILES.every((f) =>
   fs.existsSync(path.join(process.cwd(), "public", f)),
 );
 
+// 2026-09-29 SEO R4: canonical は layout から移動（全ページへの継承を防ぐ）
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
 export default function Home() {
+  // 2026-09-29 SEO R4: ファーストビューの組み立て動画のポスターを優先読み込み（LCP 候補）。
+  // 以前は下部のライフスタイル写真に priority が付いていて、こちらと帯域を取り合っていた
+  preload("/video/hexpot-assemble-poster.jpg", { as: "image", fetchPriority: "high" });
   return (
     <>
       <JsonLd />

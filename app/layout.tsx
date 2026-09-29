@@ -1,17 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Noto_Sans_JP } from "next/font/google";
+import { Inter, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-// 2026-08-21 増澤さん要望: Ducks(plants.)風リデザイン。タイプライター調の英字ラベルにmonoを使う
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// 2026-09-29 SEO R4: Geist / Geist_Mono は表示中のページで使っておらず（旧コンポーネントのみ）、
+// 全ページで woff2 を preload していたため削除。旧コンポーネントを戻しても monospace にフォールバックする。
 
 // 2026-08-21: BASEショップと同じ書体（Inter + Noto Sans JP）
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -24,8 +16,9 @@ export const metadata: Metadata = {
     default: "ZUKE｜インテリアに馴染む園芸支柱 PLANTS POLE",
     template: "%s｜ZUKE",
   },
+  // 2026-09-29 SEO R4: 142字で検索結果で切れていた＆「¥580から」が実売（支柱¥480〜）とずれていたため、価格を外して短縮
   description:
-    "ZUKE（ズーケ）は\"魅せる\"園芸支柱ブランド。六角形デザインの植物支柱 PLANTS POLE は、モンステラ・ポトスなど蔓性の観葉植物をインテリアに馴染むように美しく仕立てられます。支柱が差せる六角鉢セットや3Dプリント製の花瓶も展開。¥580から、公式オンラインストアで販売中。",
+    "ZUKE（ズーケ）は\"魅せる\"園芸支柱ブランド。六角形デザインの PLANTS POLE で、モンステラ・ポトスなど蔓性の観葉植物をインテリアに馴染むように仕立てます。支柱が差せる六角鉢や花瓶も公式ストアで販売中。",
   keywords: [
     "園芸支柱", "植物 支柱", "観葉植物 支柱", "支柱 おしゃれ",
     "蔓性植物 支柱", "モンステラ 支柱", "ポトス 支柱",
@@ -35,7 +28,8 @@ export const metadata: Metadata = {
     // 2026-09-23 SEO R3: 3Dプリント商品（六角鉢セット・樹脂版支柱・花瓶）
     "支柱 鉢 セット", "支柱付き 鉢", "六角形 鉢", "3Dプリント 植木鉢", "3Dプリント 花瓶", "PLA 鉢", "観葉植物 鉢 おしゃれ",
   ],
-  alternates: { canonical: "/" },
+  // 2026-09-29 SEO R4: canonical "/" は全ページに継承されてしまう（404 や書き忘れたページがホームを canonical にする）ため
+  // app/page.tsx へ移動。robots の index/follow は既定値なので削除（404 で noindex と重複していた）。
   openGraph: {
     type: "website",
     locale: "ja_JP",
@@ -43,16 +37,12 @@ export const metadata: Metadata = {
     siteName: "ZUKE",
     title: "ZUKE｜\"魅せる\"園芸支柱 PLANTS POLE",
     description:
-      "六角形デザインの園芸支柱で、観葉植物をインテリアに馴染むように美しく。¥770から、公式ストアで販売中。",
+      "六角形デザインの園芸支柱で、観葉植物をインテリアに馴染むように美しく。公式ストアで販売中。",
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE - 魅せる園芸支柱" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "ZUKE｜\"魅せる\"園芸支柱 PLANTS POLE",
-    description: "六角形デザインの園芸支柱で、観葉植物をインテリアに馴染むように美しく。",
-    images: ["/og.jpg"],
-  },
-  robots: { index: true, follow: true },
+  // 2026-09-29 SEO R4: card だけにする。title/description/images を root で固定すると全ページに継承され、
+  // 商品ページでも twitter:title がホームの文言になっていた。未指定なら Next が各ページの openGraph から補完する。
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({
@@ -61,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${notoSansJP.variable} h-full antialiased`}>
+    <html lang="ja" className={`${inter.variable} ${notoSansJP.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

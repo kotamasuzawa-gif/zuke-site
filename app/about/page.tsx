@@ -4,8 +4,7 @@ import Image from "next/image";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { PRODUCTS, yen } from "@/app/lib/products";
-
-const SITE = "https://www.zukeplants.com";
+import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
   title: "ブランドについて｜インテリアに馴染む園芸支柱をつくる",
@@ -13,6 +12,7 @@ export const metadata: Metadata = {
     "ZUKE（ズーケ）は「インテリアに馴染む」「生活に馴染む」をコンセプトに、機能性とデザイン性を両立した園芸支柱 PLANTS POLE をつくるブランドです。植物と家具が心地よく共存する暮らしを提案します。",
   alternates: { canonical: "/about" },
   openGraph: {
+    ...OG_BASE,
     title: "ブランドについて｜ZUKE",
     description: "インテリアに馴染む園芸支柱 PLANTS POLE をつくるブランド、ZUKE。",
     url: "/about",
@@ -32,7 +32,7 @@ const jsonLd = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
       <SiteHeader />
       <main className="flex-1 max-w-2xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-8 flex items-center gap-2">
@@ -81,9 +81,11 @@ export default function AboutPage() {
             素材とサイズ
           </h2>
           <p className="mt-5 text-[15px] leading-loose text-gray-700">
-            すべての PLANTS POLE はアイアンスチール製。細くても植物の重さに負けず、
+            {/* 2026-09-29 SEO R4: 「すべてアイアン製」は樹脂版・鉢・花瓶を含む現ラインナップと矛盾するため修正 */}
+            アイアン支柱の PLANTS POLE はアイアンスチール製。細くても植物の重さに負けず、
             黒のマットな質感が葉の緑を引き締めます。サイズは小鉢向けの高さ約19.5cm から、
             リビングの主役になる約39cm まで。置き場所と株の大きさに合わせて選べます。
+            樹脂版の支柱・拡張パーツ、六角鉢と受け皿、花瓶は PLA樹脂の3Dプリント製で、軽く、色を選べます。
           </p>
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
             {PRODUCTS.map((p) => (
@@ -126,6 +128,12 @@ export default function AboutPage() {
                 インテリアグリーンのガイド
               </Link>
               <span className="ml-2 text-[13px] text-gray-500">— 飾り方・仕立て方の解説</span>
+            </li>
+            <li>
+              <Link href="/wholesale" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
+                卸売・仕入れのご案内
+              </Link>
+              <span className="ml-2 text-[13px] text-gray-500">— 販売店さま向けのお取引条件</span>
             </li>
           </ul>
         </section>

@@ -4,12 +4,20 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, productBySlug, yen, SHIPPING } from "@/app/lib/products";
+import { PRODUCTS, CATEGORIES, productBySlug, yen, SHIPPING, type CategoryKey } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import ProductColorImage from "@/app/components/ProductColorImage";
-import { soldColors, type ColorKey } from "@/app/lib/colors";
+import { soldColors, colorLabel, productImage, type ColorKey } from "@/app/lib/colors";
+import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
-const SITE = "https://www.zukeplants.com";
+// 2026-09-29 SEO R4: title の後半を固定の「観葉植物の園芸支柱」にしていたため、花瓶・鉢・留め具のページでも
+// 「六角花瓶｜観葉植物の園芸支柱」のように中身と違う title になっていた。カテゴリで切り替える（商品名は変えない）
+const TITLE_SUFFIX: Record<CategoryKey, string> = {
+  pole: "観葉植物の園芸支柱",
+  pot: "支柱が差せる六角鉢",
+  extension: "樹脂版支柱の拡張パーツ",
+  vase: "3Dプリントの花瓶",
+};
 
 export const dynamicParams = false;
 
@@ -22,14 +30,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = productBySlug(slug);
   if (!p) return {};
   return {
-    title: `${p.name}｜観葉植物の園芸支柱`,
+    title: `${p.name}｜${TITLE_SUFFIX[p.category]}`,
     description: p.summary,
     alternates: { canonical: `/products/${p.slug}` },
     openGraph: {
+      ...OG_BASE,
       title: `${p.name}｜ZUKE`,
       description: p.summary,
       url: `/products/${p.slug}`,
-      images: [{ url: p.image, alt: p.fullName }],
+      images: [{ url: p.image, width: 1200, height: 1200, alt: p.fullName }],
     },
   };
 }
@@ -41,6 +50,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   const others = PRODUCTS.filter((x) => x.slug !== p.slug);
   const relatedGuides = GUIDES.filter((g) => g.related.includes(p.slug));
+  const category = CATEGORIES.find((c) => c.key === p.category);
+  const sold = soldColors(p.slug);
 
   const jsonLd = [
     {
@@ -48,12 +59,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       "@type": "Product",
       name: p.fullName,
       // 2026-09-28 SEO: 色違い画像もすべて登録（画像検索・リッチリザルト）
-      image: (p.kind === "iron" && p.slug !== "uneune" ? ["black", "white"] : ["black", "white", "orange", "lightgray"]).map((c) => `${SITE}/products/product-${p.slug}-${c}.webp`),
+      // 2026-09-29 SEO R4: 手書きの条件式をやめ、BASE で実際に選べる色（soldColors）に合わせる
+      image: sold.map((c) => `${SITE}${productImage(p.slug, c)}`),
       description: p.summary,
       sku: p.slug,
       url: `${SITE}/products/${p.slug}`,
       material: p.material,
-      color: p.kind === "iron" ? "ブラック / ホワイト" : "ブラック / ホワイト / オレンジ / ライトグレー",
+      color: sold.map(colorLabel).join(" / "),
       category: p.kind === "iron" ? "園芸支柱（アイアン）" : "3Dプリント園芸用品（PLA樹脂）",
       brand: { "@type": "Brand", name: "ZUKE" },
       offers: {
@@ -61,6 +73,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         price: p.price,
         priceCurrency: "JPY",
         availability: "https://schema.org/InStock",
+        // 2026-09-29 SEO R4: 販売者リスティングの推奨項目。返品ポリシー・送料は表し方をオーナー確認後に追加する
+        itemCondition: "https://schema.org/NewCondition",
+        seller: { "@type": "Organization", name: "ZUKE", url: SITE },
         url: p.baseUrl,
       },
     },
@@ -70,14 +85,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "ホーム", item: SITE },
         { "@type": "ListItem", position: 2, name: "商品一覧", item: `${SITE}/products` },
-        { "@type": "ListItem", position: 3, name: p.name, item: `${SITE}/products/${p.slug}` },
+        // 2026-09-29 SEO R4: カテゴリページを経由させる（カテゴリページへの内部リンクを増やす）
+        ...(category ? [{ "@type": "ListItem", position: 3, name: category.label, item: `${SITE}/collections/${category.key}` }] : []),
+        { "@type": "ListItem", position: category ? 4 : 3, name: p.name, item: `${SITE}/products/${p.slug}` },
       ],
     },
   ];
 
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
       <SiteHeader />
       <main className="flex-1 max-w-5xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-8 flex flex-wrap items-center gap-2">
@@ -85,6 +102,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <span>/</span>
           <Link href="/products" className="hover:text-[#222]">商品一覧</Link>
           <span>/</span>
+          {category && (
+            <>
+              <Link href={`/collections/${category.key}`} className="hover:text-[#222]">{category.label}</Link>
+              <span>/</span>
+            </>
+          )}
           <span className="text-[#222]">{p.name}</span>
         </nav>
 
@@ -92,8 +115,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <ProductColorImage
             slug={p.slug}
             name={p.fullName}
-            colors={soldColors(p.slug)}
-            initial={(p.image.match(/-(black|white|orange|lightgray)\.webp$/)?.[1] as ColorKey | undefined) ?? soldColors(p.slug)[0]}
+            colors={sold}
+            initial={(p.image.match(/-(black|white|orange|lightgray)\.webp$/)?.[1] as ColorKey | undefined) ?? sold[0]}
           />
 
           <div>
@@ -113,6 +136,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </a>
             <p className="mt-3 text-xs text-gray-500 leading-relaxed">
               購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
+            </p>
+            {/* 2026-09-29 増澤さん指示: 卸売の案内への導線 */}
+            <p className="mt-2 text-xs text-gray-500 leading-relaxed">
+              <Link href="/wholesale" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
+                店舗での取り扱い（卸売）をご検討の方はこちら
+              </Link>
             </p>
 
             <dl className="mt-10 border-t border-gray-100 text-[14px]">

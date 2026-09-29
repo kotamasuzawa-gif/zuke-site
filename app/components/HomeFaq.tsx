@@ -1,4 +1,25 @@
 import Link from "next/link";
+import { PRODUCTS, yen, type Product } from "@/app/lib/products";
+import { WHOLESALE_EMAIL } from "@/app/lib/contact";
+
+// 2026-09-29 SEO R4: 価格は products.ts（BASE と同期）から算出する。
+// 固定文言だと「樹脂版支柱は¥580から」のように実売価格（¥480）とずれ、FAQPage の JSON-LD にもそのまま出ていた。
+const shortName = (p: Product) => p.name.match(/"(.+?)"/)?.[1] ?? p.name;
+const priceFrom = (items: Product[]) => {
+  const min = Math.min(...items.map((p) => p.price));
+  return { price: yen(min), names: items.filter((p) => p.price === min).map(shortName).join("・") };
+};
+const priceTo = (items: Product[]) => {
+  const max = Math.max(...items.map((p) => p.price));
+  return { price: yen(max), names: items.filter((p) => p.price === max).map(shortName).join("・") };
+};
+const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole");
+const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole");
+const potSets = PRODUCTS.filter((p) => p.category === "pot" && p.name.includes("セット"));
+const ironFrom = priceFrom(ironPoles);
+const ironTo = priceTo(ironPoles);
+const plaFrom = priceFrom(plaPoles);
+const setFrom = priceFrom(potSets);
 
 // 2026-09-20 増澤さん依頼のSEO強化:
 //   トップの本文が606字しかなく（BASEクローン化の副作用）、検索で拾える語が不足していた。
@@ -7,7 +28,7 @@ import Link from "next/link";
 export const FAQS = [
   {
     q: "園芸支柱はどう選べばいいですか？",
-    a: "鉢の大きさと植物の高さで選びます。3〜4号鉢のポトスやシンゴニウムなら高さ約19.5cmの「2つの六角形」、5〜6号鉢のモンステラやフィロデンドロンなら約29cm以上の「3つの六角形」「5つの六角形」が目安です。横に広がってしまった株は、曲線で矯正できる「うねうね」が向いています。",
+    a: "鉢の大きさと植物の高さで選びます。3〜4号鉢のポトスやシンゴニウムなら高さ約19.5cmの「2つの六角形」、ホヤなど小さめの蔓性植物なら約22cmの「3つの六角形」、5〜6号鉢のモンステラやフィロデンドロンなら約39cmの「5つの六角形」が目安です。横に広がってしまった株は、曲線で矯正できる「うねうね」が向いています。",
   },
   {
     q: "モンステラの支柱はいつ立てればいいですか？",
@@ -19,7 +40,7 @@ export const FAQS = [
   },
   {
     q: "プラスチックの支柱と何が違いますか？",
-    a: "PLANTS POLE はアイアンスチール製で、六角形が連なるデザインそのものをインテリアの一部として設計しています。緑色の細い棒のように「植物に隠れて目立たないようにするもの」ではなく、家具や部屋の景観に馴染みながら見せる支柱です。",
+    a: "PLANTS POLE にはアイアンスチール製と3Dプリント（PLA樹脂）製があり、どちらも六角形が連なるデザインそのものをインテリアの一部として設計しています。緑色の細い棒のように「植物に隠れて目立たないようにするもの」ではなく、家具や部屋の景観に馴染みながら見せる支柱です。",
   },
   {
     q: "屋外でも使えますか？",
@@ -27,7 +48,7 @@ export const FAQS = [
   },
   {
     q: "価格と購入方法を教えてください。",
-    a: "鉄製のPLANTS POLEは¥770（2つの六角形）から¥1,320（5つの六角形・うねうね）まで4型、3Dプリント製の樹脂版支柱は¥580から、支柱の差込口付きの六角鉢セットは¥1,880からです。公式オンラインストア（BASE）からご購入いただけます。",
+    a: `鉄製のPLANTS POLEは${ironFrom.price}（${ironFrom.names}）から${ironTo.price}（${ironTo.names}）まで${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです。公式オンラインストア（BASE）からご購入いただけます。`,
   },
   {
     q: "鉄製と3Dプリント製（樹脂版）の支柱はどう違いますか？",
@@ -36,6 +57,11 @@ export const FAQS = [
   {
     q: "六角鉢セットの差込口とは何ですか？",
     a: "鉢の内側にある、支柱の脚がぴったり入る2つの穴です。土に頼らず鉢そのもので支柱を固定するので、水やりで支柱が傾いたり抜けたりしません。鉢には植物タグ用のポケット（幅20mm・厚み2.5mmまで）もあり、受け皿には鉢を少し浮かせる台が付いています。",
+  },
+  {
+    // 2026-09-29 増澤さん指示: 卸売の案内（掛け率・卸価格は載せない）
+    q: "お店で取り扱いたい（卸売・仕入れ）場合はどうすればいいですか？",
+    a: `園芸店・インテリアショップなどの販売店さま向けに卸売を行っています。1商品10本からのお取引で、卸価格などの条件はお取引要綱としてメールでお送りします。${WHOLESALE_EMAIL} までお問い合わせください。`,
   },
 ];
 
@@ -59,6 +85,12 @@ export function HomeFaq() {
           インテリアグリーンのガイド
         </Link>
         でも解説しています。
+        <br />
+        販売店さま向けの卸売は
+        <Link href="/wholesale" className="mx-1 underline underline-offset-4 hover:opacity-60">
+          卸売・仕入れのご案内
+        </Link>
+        をご覧ください。
       </p>
     </section>
   );

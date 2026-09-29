@@ -34,6 +34,9 @@ export type Product = {
 export const SHOP = "https://zukeplants.base.shop";
 /** 送料（BASE 本店の記載と同期。2026-09-29 BASE に合わせて修正: ヤマト宅急便・地域/サイズ別 ¥940〜¥2,200、¥5,500以上で無料） */
 export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
+// 2026-09-29 SEO R4: 樹脂版（pole3pla / pole2pla / hexpot / hexvase）の色数を BASE の実バリエーション（4色）に合わせた。
+// hex2 の「シリーズでいちばん〜」は、より小さく安い 1連樹脂版があるため「アイアン製で」と範囲を明記。
+// pole2pla（樹脂・約17cm）はアイアン製2連（約19.5cm）と別物なので、アイアンに触れない表現にした。
 
 export const PRODUCTS: Product[] = [
   {
@@ -93,9 +96,9 @@ export const PRODUCTS: Product[] = [
     image: "/products/product-hex2-black.webp",
     baseUrl: `${SHOP}/items/124680568`,
     summary:
-      "六角形を2つ連ねた高さ約19.5cmの園芸支柱。亀甲竜など背の低い蔓性植物と好相性。シリーズで最も手に取りやすい¥770。",
+      "六角形を2つ連ねた高さ約19.5cmの園芸支柱。亀甲竜など背の低い蔓性植物と好相性。アイアン製で最も手に取りやすい¥770。",
     lead:
-      "シリーズでいちばん小さく、いちばん手に取りやすい一本。高さ約19.5cmと低いので、亀甲竜のようにこれから蔓を伸ばす植物の「最初の一手」に向いています。まず1つ試してみたい方にもおすすめです。",
+      "アイアン製のシリーズでいちばん小さく、いちばん手に取りやすい一本。高さ約19.5cmと低いので、亀甲竜のようにこれから蔓を伸ばす植物の「最初の一手」に向いています。まず1つ試してみたい方にもおすすめです。",
     height: "約19.5cm",
     width: "約8cm（差込部）",
     material: "アイアンスチール",
@@ -185,9 +188,9 @@ export const PRODUCTS: Product[] = [
     image: "/products/product-pole3pla-black.webp",
     baseUrl: `${SHOP}/items/159046672`,
     summary:
-      "鉄製と同じ六角形のフォルムを、PLA樹脂で3Dプリントした軽量版。全長約22cm。ブラック／オレンジ／グレーの3色。六角鉢セットの差込口にそのまま挿せます。",
+      "鉄製と同じ六角形のフォルムを、PLA樹脂で3Dプリントした軽量版。全長約22cm。ブラック／ホワイト／オレンジ／ライトグレーの4色。六角鉢セットの差込口にそのまま挿せます。",
     lead:
-      "鉄製のPLANTS POLEと同じ3連の六角形を、樹脂で軽量化したエントリーモデル。鉄製の約1/3の重さで小さな鉢でも倒れにくく、色は3色から選べます。六角鉢セットと組み合わせると、鉢の差込口で固定できます。",
+      "鉄製のPLANTS POLEと同じ3連の六角形を、樹脂で軽量化したエントリーモデル。鉄製の約1/3の重さで小さな鉢でも倒れにくく、色は4色から選べます。六角鉢セットと組み合わせると、鉢の差込口で固定できます。",
     height: "約22cm",
     width: "約9.4cm（脚の間隔 約6cm）",
     material: "PLA樹脂（3Dプリント・マット仕上げ）",
@@ -208,9 +211,9 @@ export const PRODUCTS: Product[] = [
     image: "/products/product-pole2pla-black.webp",
     baseUrl: `${SHOP}/items/159046887`,
     summary:
-      "六角形2連・全長約17cmの樹脂版PLANTS POLE。PLA樹脂・3Dプリント製で軽く、ブラック／オレンジ／グレーの3色。六角鉢セット付属の支柱と同じものです。",
+      "六角形2連・全長約17cmの樹脂版PLANTS POLE。PLA樹脂・3Dプリント製で軽く、ブラック／ホワイト／オレンジ／ライトグレーの4色。六角鉢セット付属の支柱と同じものです。",
     lead:
-      "シリーズでいちばん小さい2連を樹脂で。全長約17cmで、デスクや窓辺の小鉢にちょうどよい高さです。六角鉢セットに付属している支柱と同じもので、色違いの買い足しにも。",
+      "六角形2連のコンパクトなサイズを樹脂で。全長約17cmで、デスクや窓辺の小鉢にちょうどよい高さです。六角鉢セットに付属している支柱と同じもので、色違いの買い足しにも。",
     height: "約17cm",
     width: "約9.4cm（脚の間隔 約6cm）",
     material: "PLA樹脂（3Dプリント・マット仕上げ）",
@@ -232,7 +235,7 @@ export const PRODUCTS: Product[] = [
     image: "/products/product-hexpot-black.webp",
     baseUrl: `${SHOP}/items/159048204`,
     summary:
-      "PLANTS POLEを差し込める六角形の鉢と受け皿。支柱の差込口・タグポケット付き。PLA樹脂・3Dプリント製、ブラック／オレンジ／グレーの3色。支柱は付属しません。",
+      "PLANTS POLEを差し込める六角形の鉢と受け皿。支柱の差込口・タグポケット付き。PLA樹脂・3Dプリント製、ブラック／ホワイト／オレンジ／ライトグレーの4色。支柱は付属しません。",
     lead:
       "PLANTS POLEの六角形に合わせてつくった鉢と受け皿のセット。鉢の内側に支柱の差込口があり、鉄製・樹脂版どちらのPLANTS POLEも差し込むだけで固定できます。お手持ちの支柱と組み合わせて。",
     height: "鉢 約95mm／受け皿 約13mm",
@@ -336,7 +339,7 @@ export const PRODUCTS: Product[] = [
       "六角鉢と並べて、シリーズでそろえる",
       "玄関やデスクの一輪挿しに",
       "軽いので棚の上や高い場所にも",
-      "ホワイト／ブラックの2色から部屋に合わせて",
+      "4色から部屋に合わせて",
     ],
   },
 ];
@@ -359,10 +362,39 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "vase", label: "花瓶", lead: "六角鉢シリーズのフラワーベース。" },
 ];
 export type CollectionKey = MaterialKind | CategoryKey;
-export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; filter: (p: Product) => boolean }[] = [
-  ...MATERIALS.map((m) => ({ key: m.key as CollectionKey, label: m.label, lead: m.lead, filter: (p: Product) => p.kind === m.key })),
+// 2026-09-29 SEO R4: カテゴリページの title / meta description。label はナビで使うので変えず、SEO 用に別で持つ。
+// title は「支柱｜ZUKE PLANTS POLE｜ZUKE」とブランドが二重になっていた。description は 28〜51字と薄かった。
+// 内容は products.ts（BASE と同期）の事実のみ。
+const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: string }> = {
+  pole: {
+    seoTitle: "おしゃれな観葉植物の支柱｜六角形の園芸支柱 一覧",
+    seoDescription: "六角形デザインの園芸支柱 PLANTS POLE の一覧。アイアンスチール製（高さ約19.5〜39cm）と、軽くて色が選べる3Dプリント樹脂版。モンステラ・ポトス・ホヤなど蔓性の観葉植物を、インテリアに馴染むように仕立てられます。",
+  },
+  iron: {
+    seoTitle: "アイアンの園芸支柱｜六角形の PLANTS POLE",
+    seoDescription: "アイアンスチール製の園芸支柱 PLANTS POLE。六角形を2つ・3つ・5つ連ねた3型と、横に広がる株を整える「うねうね」の全4型。高さ約19.5〜39cm。モンステラ・ポトス・アロカシアなどに。",
+  },
+  pla: {
+    seoTitle: "3Dプリントの六角鉢・樹脂支柱（PLA）",
+    seoDescription: "PLA樹脂を3Dプリントでつくる、支柱の差込口付き六角鉢・受け皿・樹脂版支柱・拡張パーツ・花瓶。軽く、色を選べます。アイアンの PLANTS POLE と同じ六角形のデザインです。",
+  },
+  pot: {
+    seoTitle: "支柱が差せる六角鉢・鉢と支柱のセット",
+    seoDescription: "鉢の内側に支柱の差込口がある六角形の鉢と受け皿、PLANTS POLE とのセット。差し込むだけで支柱が固定でき、植物タグ用のポケット付き。PLA樹脂・3Dプリント製で、小さな蔓性植物や若い株に。",
+  },
+  extension: {
+    seoTitle: "支柱を後から伸ばす拡張パーツ・留め具",
+    seoDescription: "樹脂版 PLANTS POLE に六角形を継ぎ足して、植物の成長に合わせて高さを伸ばせる拡張パーツと留め具。辺同士を並べて留め具で挟むだけ。1連の樹脂版支柱から、2連・3連へと伸ばせます。アイアン製には使えません。",
+  },
+  vase: {
+    seoTitle: "六角形の花瓶（3Dプリント製）",
+    seoDescription: "六角鉢と同じ六角形のフォルムの花瓶。高さ約16cm、PLA樹脂・3Dプリント製のマット仕上げ。排水穴がないので水を入れて一輪挿しや枝ものに。ドライフラワーを飾るのにも使えます。",
+  },
+};
+export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; seoTitle: string; seoDescription: string; filter: (p: Product) => boolean }[] = [
+  ...MATERIALS.map((m) => ({ key: m.key as CollectionKey, label: m.label, lead: m.lead, ...COLLECTION_SEO[m.key], filter: (p: Product) => p.kind === m.key })),
   ...CATEGORIES.map((c) => ({
-    key: c.key as CollectionKey, label: c.label, lead: c.lead,
+    key: c.key as CollectionKey, label: c.label, lead: c.lead, ...COLLECTION_SEO[c.key],
     // 「支柱の拡張」には拡張パーツに加え、起点になる挿入部つきの 1連樹脂版も並べる（2026-09-26 増澤さん指示）
     filter: (p: Product) => p.category === c.key || (c.key === "extension" && p.slug === "pole1pla"),
   })),

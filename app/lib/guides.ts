@@ -572,6 +572,23 @@ export const GUIDES: Guide[] = [
   },
 ];
 
+// 2026-09-29 SEO R4: Article の datePublished 用。各記事の slug が guides.ts に初めて入った git コミットの日付（実データ）。
+// dateModified は実際の更新日を管理していないため付けない（sitemap の lastModified を付けない方針と同じ）。
+export const GUIDE_PUBLISHED: Record<string, string> = {
+  "interior-green": "2026-08-22",
+  "monstera-shichu": "2026-08-22",
+  "pothos-shichu": "2026-08-22",
+  "furniture-green": "2026-08-22",
+  "kanyoushokubutsu-taoreru": "2026-09-21",
+  "shichu-tatekata": "2026-09-21",
+  "shichu-oshare": "2026-09-21",
+  "shichu-sashikomi-hachi": "2026-09-23",
+  "3d-print-hachi": "2026-09-23",
+  "tsuchiire-scoop-mijin": "2026-09-27",
+  "shichu-nobasu-kakuchou": "2026-09-27",
+  "kikkouryu-shichu": "2026-09-27",
+};
+
 export function guideBySlug(slug: string): Guide | undefined {
   return GUIDES.find((g) => g.slug === slug);
 }

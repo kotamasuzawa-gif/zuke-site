@@ -4,10 +4,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { GUIDES, guideBySlug } from "@/app/lib/guides";
-import { productBySlug, yen } from "@/app/lib/products";
-
-const SITE = "https://www.zukeplants.com";
+import { GUIDES, GUIDE_PUBLISHED, guideBySlug } from "@/app/lib/guides";
+import { CATEGORIES, productBySlug, yen } from "@/app/lib/products";
+import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 export const dynamicParams = false;
 
@@ -25,6 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     keywords: g.keywords,
     alternates: { canonical: `/guide/${g.slug}` },
     openGraph: {
+      ...OG_BASE,
       type: "article",
       title: `${g.metaTitle}｜ZUKE`,
       description: g.description,
@@ -41,6 +41,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   const related = g.related.map(productBySlug).filter((p): p is NonNullable<typeof p> => !!p);
   const others = GUIDES.filter((x) => x.slug !== g.slug);
+  // 2026-09-29 SEO R4: 紹介した商品のカテゴリページへもリンクする（カテゴリページへの内部リンクが少なかった）
+  const relatedCategories = CATEGORIES.filter((c) => related.some((p) => p.category === c.key));
 
   const jsonLd = [
     {
@@ -50,7 +52,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       description: g.description,
       image: `${SITE}/og.jpg`,
       inLanguage: "ja",
-      author: { "@type": "Organization", name: "ZUKE" },
+      ...(GUIDE_PUBLISHED[g.slug] && { datePublished: GUIDE_PUBLISHED[g.slug] }),
+      author: { "@type": "Organization", name: "ZUKE", url: SITE },
       publisher: { "@type": "Organization", name: "ZUKE", url: SITE },
       mainEntityOfPage: `${SITE}/guide/${g.slug}`,
     },
@@ -67,7 +70,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
       <SiteHeader />
       <main className="flex-1 max-w-2xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-8 flex flex-wrap items-center gap-2">
@@ -117,6 +120,17 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                 </Link>
               ))}
             </div>
+            {relatedCategories.length > 0 && (
+              <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[14px]">
+                {relatedCategories.map((c) => (
+                  <li key={c.key}>
+                    <Link href={`/collections/${c.key}`} className="text-gray-700 hover:text-[#222] underline underline-offset-4 decoration-gray-300">
+                      {c.label}の一覧を見る
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
         )}
 

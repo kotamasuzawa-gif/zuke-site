@@ -3,8 +3,7 @@ import Link from "next/link";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { GUIDES } from "@/app/lib/guides";
-
-const SITE = "https://www.zukeplants.com";
+import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
   title: "インテリアグリーンのガイド｜観葉植物の飾り方・仕立て方",
@@ -12,6 +11,7 @@ export const metadata: Metadata = {
     "観葉植物をインテリアグリーンとして飾るためのガイド。部屋に合う植物の選び方、モンステラ・ポトスの支柱と誘引、家具に合わせた鉢と支柱のコーディネートまで、ZUKE がまとめています。",
   alternates: { canonical: "/guide" },
   openGraph: {
+    ...OG_BASE,
     title: "インテリアグリーンのガイド｜ZUKE",
     description: "観葉植物の選び方・飾り方・仕立て方。インテリアに馴染ませるための実践ガイド。",
     url: "/guide",
@@ -31,7 +31,7 @@ const jsonLd = {
 export default function GuideIndexPage() {
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
       <SiteHeader />
       <main className="flex-1 max-w-3xl mx-auto px-6 w-full pt-14 md:pt-20">
         <nav aria-label="パンくず" className="text-xs text-gray-500 mb-6 flex items-center gap-2">
