@@ -6,6 +6,8 @@ import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { PRODUCTS, productBySlug, yen, SHIPPING } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
+import ProductColorImage from "@/app/components/ProductColorImage";
+import { soldColors, type ColorKey } from "@/app/lib/colors";
 
 const SITE = "https://www.zukeplants.com";
 
@@ -87,9 +89,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </nav>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
-          <div className="relative aspect-square bg-[#fbfbfb]">
-            <Image src={p.image} alt={p.fullName} fill priority className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
-          </div>
+          <ProductColorImage
+            slug={p.slug}
+            name={p.fullName}
+            colors={soldColors(p.slug)}
+            initial={(p.image.match(/-(black|white|orange|lightgray)\.webp$/)?.[1] as ColorKey | undefined) ?? soldColors(p.slug)[0]}
+          />
 
           <div>
             <h1 className="text-xl md:text-2xl font-bold leading-relaxed">{p.name}</h1>

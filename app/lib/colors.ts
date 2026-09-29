@@ -12,3 +12,13 @@ export const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3p
 export const hasColor = (_slug: string, _color: ColorKey) => true;
 export const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${hasColor(slug, color) ? color : "black"}.webp`;
 export const colorLabel = (color: ColorKey) => COLORS.find((c) => c.key === color)?.label ?? "";
+// 2026-09-29 商品詳細ページの色切替。購入ページなので BASE で実際に選べるバリエーションだけ出す
+// （BASE の Meta フィードの種類と一致させる。BASE 側で色を増減したらここも更新）
+const SOLD_COLORS: Record<string, ColorKey[]> = {
+  hex5: ["black", "white"],
+  hex3: ["black", "white"],
+  hex2: ["black", "white"],
+  uneune: ["black", "white"],
+  "hexpot-set": ["black", "orange", "lightgray"],
+};
+export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
