@@ -68,7 +68,7 @@ export default function ProductsPage() {
         </div>
 
         <p className="mt-12 text-[13px] text-gray-500">
-          ※ 価格は税込。送料は全国一律 ¥760、¥5,000以上のご注文で国内送料無料です（BASE 本店の記載に準じます）。
+          ※ 価格は税込。送料は地域・サイズにより ¥940〜（ヤマト宅急便）、¥5,500以上のご注文で国内送料無料です（BASE 本店の記載に準じます）。
         </p>
       </main>
       <SiteFooter />

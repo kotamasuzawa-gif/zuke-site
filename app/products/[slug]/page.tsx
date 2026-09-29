@@ -112,7 +112,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               オンラインストアで購入する
             </a>
             <p className="mt-3 text-xs text-gray-500 leading-relaxed">
-              購入は BASE の ZUKE 公式ストアへ移動します。送料 全国一律 {yen(SHIPPING.fee)}、{yen(SHIPPING.freeOver)}以上で国内送料無料。
+              購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
             </p>
 
             <dl className="mt-10 border-t border-gray-100 text-[14px]">

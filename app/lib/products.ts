@@ -32,8 +32,8 @@ export type Product = {
 };
 
 export const SHOP = "https://zukeplants.base.shop";
-/** 送料（BASE 本店の記載と同期） */
-export const SHIPPING = { fee: 760, freeOver: 5000 };
+/** 送料（BASE 本店の記載と同期。2026-09-29 BASE に合わせて修正: ヤマト宅急便・地域/サイズ別 ¥940〜¥2,200、¥5,500以上で無料） */
+export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
 
 export const PRODUCTS: Product[] = [
   {
