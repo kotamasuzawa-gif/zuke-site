@@ -4,6 +4,7 @@
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
 import { PRODUCTS, yen } from "@/app/lib/products";
+import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
 import { COLORS, type ColorKey, productImage } from "@/app/lib/colors";
@@ -168,6 +169,27 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           <Link href="/about" className="hover:opacity-60">ブランドについて</Link>
           <Link href="/wholesale" className="hover:opacity-60">卸売のご案内</Link>
         </nav>
+
+        {/* 2026-09-30 SEO R5: GSC で全36URL中インデックス9件。ガイド・商品ページがホームから2クリック以上で
+            クローラーに届きにくかったため、全ガイドと商品LPページへのテキストリンクをホームに置く */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10 text-left max-w-3xl mx-auto">
+          <nav aria-label="ガイド記事">
+            <p className="text-[11px] tracking-[0.2em] text-gray-500">GUIDE</p>
+            <ul className="mt-4 flex flex-col gap-2.5 text-[13px] leading-relaxed">
+              {GUIDES.map((g) => (
+                <li key={g.slug}><Link href={`/guide/${g.slug}`} className="hover:opacity-60">{g.metaTitle}</Link></li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label="商品ページ">
+            <p className="text-[11px] tracking-[0.2em] text-gray-500">PRODUCTS</p>
+            <ul className="mt-4 flex flex-col gap-2.5 text-[13px] leading-relaxed">
+              {PRODUCTS.map((p) => (
+                <li key={p.slug}><Link href={`/products/${p.slug}`} className="hover:opacity-60">{p.name}</Link></li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </section>
 
       {/* 2026-09-29 増澤さん指示「卸売用の案内、ボタンなどもLPに設置して。メールが問い合わせ」。

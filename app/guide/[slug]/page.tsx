@@ -44,7 +44,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // 2026-09-29 SEO R4: 紹介した商品のカテゴリページへもリンクする（カテゴリページへの内部リンクが少なかった）
   const relatedCategories = CATEGORIES.filter((c) => related.some((p) => p.category === c.key));
 
-  const jsonLd = [
+  const jsonLd: object[] = [
     {
       "@context": "https://schema.org",
       "@type": "Article",
@@ -67,6 +67,14 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       ],
     },
   ];
+  // 2026-09-30 SEO R5: FAQ がある記事は FAQPage を追加（本文に同じ Q&A を表示する）
+  if (g.faq && g.faq.length > 0) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: g.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    });
+  }
 
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
@@ -103,6 +111,20 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               )}
             </section>
           ))}
+
+          {g.faq && g.faq.length > 0 && (
+            <section className="mt-14" aria-labelledby="faq-heading">
+              <h2 id="faq-heading" className="text-lg font-bold leading-relaxed border-l-2 border-[#222] pl-4">よくある質問</h2>
+              <dl className="mt-6 flex flex-col gap-6">
+                {g.faq.map((f) => (
+                  <div key={f.q}>
+                    <dt className="text-[15px] font-bold leading-relaxed">Q. {f.q}</dt>
+                    <dd className="mt-2 text-[15px] leading-loose text-gray-700">{f.a}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
         </article>
 
         {related.length > 0 && (
