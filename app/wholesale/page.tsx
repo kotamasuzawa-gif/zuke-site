@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, CATEGORIES, yen } from "@/app/lib/products";
+import { PRODUCTS, yen } from "@/app/lib/products";
+
+// 卸売はアイアン支柱のみ（樹脂製は BASE 専売・2026-10-01 方針）
+const WHOLESALE_PRODUCTS = PRODUCTS.filter((p) => p.kind === "iron");
 import { WHOLESALE_EMAIL, WHOLESALE_MAILTO, WHOLESALE_MAIL_FIELDS } from "@/app/lib/contact";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
@@ -144,27 +147,22 @@ export default function WholesalePage() {
           <p className="mt-5 text-[15px] leading-loose text-gray-700">
             各商品のサイズ・素材・カラーは商品ページでご確認いただけます。価格は公式オンラインストアでの販売価格（税込）です。卸売の対象商品は、お取引要綱とあわせてご案内します。
           </p>
-          <div className="mt-8 flex flex-col gap-10">
-            {CATEGORIES.map((c) => {
-              const items = PRODUCTS.filter((p) => p.category === c.key);
-              if (items.length === 0) return null;
-              return (
-                <div key={c.key}>
-                  <div className="flex items-baseline justify-between border-b border-[#e5e5e0] pb-2">
-                    <h3 className="text-[15px] font-bold tracking-[0.1em]">{c.label}</h3>
-                    <Link href={`/collections/${c.key}`} className="text-[12px] tracking-[0.15em] text-gray-500 hover:text-[#222]">一覧を見る →</Link>
-                  </div>
-                  <ul className="text-[14px]">
-                    {items.map((p) => (
-                      <li key={p.slug} className="flex items-baseline justify-between gap-4 py-3 border-b border-gray-100">
-                        <Link href={`/products/${p.slug}`} className="hover:opacity-60 leading-relaxed">{p.name}</Link>
-                        <span className="shrink-0 text-gray-600">{yen(p.price)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
+          <div className="mt-8">
+            <div className="flex items-baseline justify-between border-b border-[#e5e5e0] pb-2">
+              <h3 className="text-[15px] font-bold tracking-[0.1em]">アイアン支柱</h3>
+              <Link href="/collections/iron" className="text-[12px] tracking-[0.15em] text-gray-500 hover:text-[#222]">一覧を見る →</Link>
+            </div>
+            <ul className="text-[14px]">
+              {WHOLESALE_PRODUCTS.map((p) => (
+                <li key={p.slug} className="flex items-baseline justify-between gap-4 py-3 border-b border-gray-100">
+                  <Link href={`/products/${p.slug}`} className="hover:opacity-60 leading-relaxed">{p.name}</Link>
+                  <span className="shrink-0 text-gray-600">{yen(p.price)}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-[13px] leading-loose text-gray-500">
+              3Dプリントの樹脂製品（六角鉢・樹脂支柱・拡張パーツ・花瓶）は受注生産のため、公式オンラインストアのみでの販売となり、卸売の対象外です。
+            </p>
           </div>
           <p className="mt-6 text-[14px]">
             <Link href="/products" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">商品一覧を見る</Link>
