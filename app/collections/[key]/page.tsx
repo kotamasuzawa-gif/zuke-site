@@ -13,6 +13,8 @@ import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 // 2026-09-26 増澤さん指示: 鉢・セットにはホームの組み立て動画、支柱の拡張には拡張動画を常時再生
 const VIDEOS: Record<string, { src: string; poster: string; label: string }> = {
   pot: { src: "/video/hexpot-assemble.mp4", poster: "/video/hexpot-assemble-poster.jpg", label: "受け皿・六角鉢・PLANTS POLE が組み上がる映像" },
+  // 2026-09-30 増澤さん指示: アイアン支柱にも同じ演出の動画（5つの六角形を組み上げ→2/3/5連＋うねうねが並ぶ）
+  pole: { src: "/video/iron-lineup.mp4", poster: "/video/iron-lineup-poster.jpg", label: "アイアン支柱 5つの六角形が組み上がり、2つ・3つの六角形、うねうねが並ぶ映像" },
   extension: { src: "/video/pole-extend.mp4", poster: "/video/pole-extend-poster.jpg", label: "1連の支柱に六角形と留め具を継ぎ足して伸ばす映像" },
 };
 
