@@ -400,3 +400,47 @@ export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; seo
   })),
 ];
 export const collectionByKey = (key: string) => COLLECTIONS.find((c) => c.key === key);
+
+// 2026-10-01 営業依頼「六角鉢セット×支柱のバンドル導線」: 商品ページに「組み合わせて使う」を出す。
+// 組み合わせの根拠は上の lead / scenes の記載のみ（鉢の差込口は鉄製・樹脂版どちらも可、拡張パーツは樹脂版のみ）
+export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
+  hexpot: [
+    { slug: "hex3", note: "鉢の差込口に挿すだけで固定（アイアン3連）" },
+    { slug: "hex2", note: "鉢の差込口に挿すだけで固定（アイアン2連）" },
+    { slug: "pole3pla", note: "同じ4色で鉢と支柱の色をそろえる" },
+    { slug: "pole2pla", note: "小鉢に合うコンパクトな樹脂版" },
+  ],
+  "hexpot-set": [
+    { slug: "pole3pla", note: "付属支柱の色違い・差し替えに" },
+    { slug: "hexpot", note: "鉢だけ買い足して、お手持ちの支柱と" },
+    { slug: "hexvase", note: "同じ六角形の花瓶を並べて" },
+  ],
+  "hexpot-set2": [
+    { slug: "pole2pla", note: "付属支柱と同じもの。色違いの買い足しに" },
+    { slug: "hexparts", note: "成長に合わせて六角形を足して伸ばす" },
+    { slug: "hexvase", note: "同じ六角形の花瓶を並べて" },
+  ],
+  hex3: [{ slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" }],
+  hex2: [{ slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" }],
+  pole3pla: [
+    { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
+    { slug: "hexparts", note: "六角形を足して伸ばす" },
+  ],
+  pole2pla: [
+    { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
+    { slug: "hexparts", note: "六角形を足して伸ばす" },
+  ],
+  pole1pla: [
+    { slug: "hexparts", note: "1連→2連→3連と後から伸ばす" },
+    { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
+  ],
+  hexparts: [
+    { slug: "pole1pla", note: "伸ばす前の1連から" },
+    { slug: "hexclip5", note: "留め具の補充に" },
+  ],
+  hexclip5: [{ slug: "hexparts", note: "六角形パーツを足して伸ばす" }],
+  hexvase: [
+    { slug: "hexpot", note: "同じ六角形の鉢と並べて" },
+    { slug: "hexpot-set2", note: "鉢・受け皿・支柱の3点セット" },
+  ],
+};

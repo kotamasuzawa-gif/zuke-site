@@ -4,7 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, CATEGORIES, productBySlug, yen, SHIPPING, type CategoryKey } from "@/app/lib/products";
+import { PRODUCTS, CATEGORIES, PAIRINGS, productBySlug, yen, SHIPPING, type CategoryKey } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import ProductColorImage from "@/app/components/ProductColorImage";
 import { soldColors, colorLabel, productImage, type ColorKey } from "@/app/lib/colors";
@@ -48,6 +48,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const p = productBySlug(slug);
   if (!p) notFound();
 
+  const pairings = (PAIRINGS[p.slug] ?? [])
+    .map((x) => ({ ...x, product: productBySlug(x.slug) }))
+    .filter((x): x is typeof x & { product: NonNullable<typeof x.product> } => !!x.product);
   const others = PRODUCTS.filter((x) => x.slug !== p.slug);
   const relatedGuides = GUIDES.filter((g) => g.related.includes(p.slug));
   const category = CATEGORIES.find((c) => c.key === p.category);
@@ -181,6 +184,25 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </ul>
           </div>
         </section>
+
+        {pairings.length > 0 && (
+          <section className="mt-20">
+            <h2 className="text-base font-bold">組み合わせて使う</h2>
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+              {pairings.map(({ product: o, note }) => (
+                <Link key={o.slug} href={`/products/${o.slug}`} className="block group">
+                  <div className="relative aspect-square bg-[#fbfbfb]">
+                    <Image src={o.image} alt={o.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(min-width: 768px) 25vw, 50vw" />
+                  </div>
+                  <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{o.name}</p>
+                  <p className="mt-1 text-[12px] leading-relaxed text-gray-500">{note}</p>
+                  <p className="mt-1 text-[13px] font-bold">{yen(o.price)}</p>
+                </Link>
+              ))}
+            </div>
+            <p className="mt-4 text-[12px] text-gray-500">{yen(SHIPPING.freeOver)}以上のご注文で送料無料です。</p>
+          </section>
+        )}
 
         {relatedGuides.length > 0 && (
           <section className="mt-20">
