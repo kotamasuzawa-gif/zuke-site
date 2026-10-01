@@ -11,7 +11,7 @@ import { COLORS, type ColorKey, productImage } from "@/app/lib/colors";
 import { useState } from "react";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
-const SHOP = "https://zukeplants.base.shop";
+const SHOP = "https://shop.zukeplants.com";
 
 // 2026-08-22 増澤さん要望: ホームでブラック/ホワイトを切り替え。商品画像とライフスタイル写真が連動する。
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。

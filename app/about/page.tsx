@@ -106,7 +106,7 @@ export default function AboutPage() {
           </h2>
           <ul className="mt-5 flex flex-col gap-3 text-[15px] text-gray-700">
             <li>
-              <a href="https://zukeplants.base.shop" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
+              <a href="https://shop.zukeplants.com" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
                 オンラインストア（BASE）
               </a>
               <span className="ml-2 text-[13px] text-gray-500">— 全商品の購入はこちら</span>

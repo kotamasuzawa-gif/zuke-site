@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const SHOP = "https://zukeplants.base.shop";
+const SHOP = "https://shop.zukeplants.com";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);

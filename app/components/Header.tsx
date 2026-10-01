@@ -4,7 +4,7 @@
 // 左ハンバーガー（全デバイス共通のオーバーレイメニュー）＋中央ワードマーク＋右カート(BASE)
 import { useState } from "react";
 
-const STORE_URL = "https://zukeplants.base.shop/";
+const STORE_URL = "https://shop.zukeplants.com/";
 
 const links = [
   { label: "PRODUCTS", jp: "商品", href: "#products" },

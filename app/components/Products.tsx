@@ -10,7 +10,7 @@ const products = [
     description: "横に広がりやすいアロカシアなどに。うねりのある独自フォルムが植物の動きに寄り添います。",
     image: "/products/product-uneune.webp",
     imageWhite: null,
-    externalUrl: "https://zukeplants.base.shop/items/130117282",
+    externalUrl: "https://shop.zukeplants.com/items/130117282",
     tag: "NEW",
   },
   {
@@ -22,7 +22,7 @@ const products = [
     description: "モンステラやポトスに。5つの六角形が連なるデザインは、部屋のインテリアとして成立します。",
     image: "/products/product-hex5-black.webp",
     imageWhite: "/products/product-hex5-white.webp",
-    externalUrl: "https://zukeplants.base.shop/items/117375069",
+    externalUrl: "https://shop.zukeplants.com/items/117375069",
     tag: "人気",
   },
   {
@@ -34,7 +34,7 @@ const products = [
     description: "コンパクトな蔓性植物に。3つの六角形のすっきりとしたサイズ感で、小さな鉢にも合います。",
     image: "/products/product-hex3-black.webp",
     imageWhite: "/products/product-hex3-white.webp",
-    externalUrl: "https://zukeplants.base.shop/items/128906974",
+    externalUrl: "https://shop.zukeplants.com/items/128906974",
     tag: null,
   },
   {
@@ -46,7 +46,7 @@ const products = [
     description: "小型種やラフィドフォラに。2つの六角形の最もミニマルなモデル。育て始めの株にちょうど良い高さ。",
     image: "/products/product-hex2-black.webp",
     imageWhite: "/products/product-hex2-white.webp",
-    externalUrl: "https://zukeplants.base.shop/items/124680568",
+    externalUrl: "https://shop.zukeplants.com/items/124680568",
     tag: null,
   },
 ];
@@ -119,7 +119,7 @@ export default function Products() {
 
         <div className="mt-10 text-center">
           <a
-            href="https://zukeplants.base.shop/"
+            href="https://shop.zukeplants.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-8 py-3 border border-neutral-400 text-neutral-700 text-xs tracking-widest hover:border-white hover:text-black transition-colors font-[family-name:var(--font-geist-mono)]"

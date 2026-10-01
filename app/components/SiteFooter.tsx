@@ -4,7 +4,7 @@ import { GUIDES } from "@/app/lib/guides";
 import { PRODUCTS, COLLECTIONS } from "@/app/lib/products";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
-const SHOP = "https://zukeplants.base.shop";
+const SHOP = "https://shop.zukeplants.com";
 
 // 2026-09-29 SEO R4: 列見出しは h2 → p（全ページの見出し構造に h2 が3つ混ざっていたため。見た目は同じ）。
 // 一覧ページ・カテゴリページ・卸売のご案内への内部リンクを追加。

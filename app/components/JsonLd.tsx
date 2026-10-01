@@ -22,7 +22,7 @@ const jsonLd = {
       sameAs: [
         "https://www.instagram.com/zuke.plantspole/",
         "https://note.com/zuke_plantspole",
-        "https://zukeplants.base.shop",
+        "https://shop.zukeplants.com",
       ],
       contactPoint: [
         {

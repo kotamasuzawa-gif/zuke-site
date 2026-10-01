@@ -15,7 +15,7 @@ echo "" >> "$LOG"
 
 ZUKEは鉄製プランツポールをBASEで販売するECブランド。
 商品: うねうね¥1,320 / 5つの六角形¥1,320 / 3つの六角形¥880 / 2つの六角形¥770
-ショップ: https://zukeplants.base.shop/
+ショップ: https://shop.zukeplants.com/
 
 今週の分析期間: $(date -v-7d '+%Y/%m/%d') 〜 $(date '+%Y/%m/%d')
 

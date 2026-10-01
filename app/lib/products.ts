@@ -31,7 +31,7 @@ export type Product = {
   scenes: string[];
 };
 
-export const SHOP = "https://zukeplants.base.shop";
+export const SHOP = "https://shop.zukeplants.com";
 /** 送料（BASE 本店の記載と同期。2026-09-29 BASE に合わせて修正: ヤマト宅急便・地域/サイズ別 ¥940〜¥2,200、¥5,500以上で無料） */
 export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
 // 2026-09-29 SEO R4: 樹脂版（pole3pla / pole2pla / hexpot / hexvase）の色数を BASE の実バリエーション（4色）に合わせた。

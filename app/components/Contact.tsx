@@ -11,7 +11,7 @@ export default function Contact() {
           お気軽にお問い合わせください。
         </p>
         <a
-          href="https://zukeplants.base.shop/contact"
+          href="https://shop.zukeplants.com/contact"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block px-10 py-4 border border-neutral-400 text-neutral-900 text-sm tracking-widest hover:border-black hover:bg-black hover:text-white transition-all duration-200"
@@ -34,7 +34,7 @@ export default function Contact() {
             <span className="text-xs tracking-widest">@zuke.plantspole</span>
           </a>
           <a
-            href="https://zukeplants.base.shop/"
+            href="https://shop.zukeplants.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center gap-2 text-neutral-500 hover:text-neutral-700 transition-colors group"

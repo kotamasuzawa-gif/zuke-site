@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 // 2026-08-21 Ducks(plants.)風: NOTICEカード＋2×2のリンクカードグリッド
-const STORE_URL = "https://zukeplants.base.shop/";
+const STORE_URL = "https://shop.zukeplants.com/";
 const IG_URL = "https://www.instagram.com/zuke.plantspole/";
 
 export default function InfoCards() {
