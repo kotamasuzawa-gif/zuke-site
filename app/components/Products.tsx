@@ -18,7 +18,7 @@ const products = [
     name: 'PLANTS POLE "5つの六角形"',
     subtitle: "蔓性植物をインテリアに馴染むように飾る支柱",
     price: "¥1,320",
-    size: "高さ約39cm / 幅約7cm",
+    size: "全長約39cm / 幅約7cm",
     description: "モンステラやポトスに。5つの六角形が連なるデザインは、部屋のインテリアとして成立します。",
     image: "/products/product-hex5-black.webp",
     imageWhite: "/products/product-hex5-white.webp",
