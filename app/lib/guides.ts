@@ -229,7 +229,7 @@ export const GUIDES: Guide[] = [
         ],
       },
     ],
-    related: ["hex5", "hex3"],
+    related: ["hex5", "hex3", "hexvase"],
   },
   {
     slug: "monstera-shichu",
