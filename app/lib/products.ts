@@ -16,6 +16,8 @@ export type Product = {
   /** カテゴリ（導線用）: 支柱 / 鉢・セット / 支柱の拡張 / 花瓶 */
   category: CategoryKey;
   image: string;
+  /** SNS共有カード用の画像（未指定なら image）。白背景で輪郭が消える商品用 */
+  ogImage?: string;
   baseUrl: string;
   /** 一覧・meta description 用の短い説明 */
   summary: string;
@@ -326,6 +328,8 @@ export const PRODUCTS: Product[] = [
     fullName: "六角花瓶 - PLANTS POLEシリーズの3Dプリント製フラワーベース -",
     price: 1280,
     image: "/products/product-hexvase-white.webp",
+    // 白×白だと note のリンクカードで輪郭が見えないため黒を共有用に（花入り実物写真が来たら差し替え）
+    ogImage: "/products/product-hexvase-black.webp",
     baseUrl: `${SHOP}/items/159228997`,
     summary:
       "六角鉢と同じ六角形のフォルムの花瓶。高さ約16cm、口に向かって少しすぼまる形。PLA樹脂・3Dプリント製、ホワイト／ブラック／オレンジ／ライトグレーの4色。排水穴なしで水漏れしません。底面にZUKEロゴ入り。",

@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: `${p.name}｜ZUKE`,
       description: p.summary,
       url: `/products/${p.slug}`,
-      images: [{ url: p.image, width: 1200, height: 1200, alt: p.fullName }],
+      images: [{ url: p.ogImage ?? p.image, width: 1200, height: 1200, alt: p.fullName }],
     },
   };
 }
