@@ -18,6 +18,11 @@ export type Product = {
   image: string;
   /** SNS共有カード用の画像（未指定なら image）。白背景で輪郭が消える商品用 */
   ogImage?: string;
+  /** ogImage のサイズ（未指定なら1200x1200の正方形扱い）。横長OG画像を使う商品で指定 */
+  ogWidth?: number;
+  ogHeight?: number;
+  /** ogImage が正方形でない場合に、Facebook等向けの正方形版を追加で渡す */
+  ogImageSquare?: string;
   baseUrl: string;
   /** 一覧・meta description 用の短い説明 */
   summary: string;
@@ -73,6 +78,11 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 880,
     image: "/products/product-hex3-black.webp",
+    // 2026-10-04 SEO: summary_large_image(1.91:1)で正方形og画像の上下が切れる指摘→横長OGに差し替え
+    ogImage: "/products/product-hex3-black-ogwide.webp",
+    ogWidth: 1200,
+    ogHeight: 630,
+    ogImageSquare: "/products/product-hex3-black-1200x1200.webp",
     baseUrl: `${SHOP}/items/128906974`,
     summary:
       "六角形を3つ連ねた高さ約22cmのアイアン製園芸支柱。2.5〜5号鉢が目安で、ホヤなど小さめの蔓性植物に。差込部約8cm、空間を邪魔せずデスクや棚の上にも収まります。",
