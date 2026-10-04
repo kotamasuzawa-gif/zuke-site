@@ -24,6 +24,8 @@ export type Product = {
   /** ogImage が正方形でない場合に、Facebook等向けの正方形版を追加で渡す */
   ogImageSquare?: string;
   baseUrl: string;
+  /** titleタグが長すぎる(37字超)商品のみ指定する短縮title。未指定なら name｜TITLE_SUFFIX を使う */
+  shortTitle?: string;
   /** 一覧・meta description 用の短い説明 */
   summary: string;
   /** 詳細ページのリード文 */
@@ -150,6 +152,7 @@ export const PRODUCTS: Product[] = [
     category: "pot",
     name: 'PLANTS POLE 六角鉢セット "3つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
+    shortTitle: '六角鉢セット "3つの六角形"｜ZUKE',
     price: 1980,
     image: "/products/product-hexpot-set-black.webp",
     baseUrl: `${SHOP}/items/159039931`,
@@ -173,6 +176,7 @@ export const PRODUCTS: Product[] = [
     category: "pot",
     name: 'PLANTS POLE 六角鉢セット "2つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
+    shortTitle: '六角鉢セット "2つの六角形"｜ZUKE',
     price: 1880,
     image: "/products/product-hexpot-set2-black.webp",
     baseUrl: `${SHOP}/items/159049724`,
@@ -196,6 +200,7 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     name: 'PLANTS POLE "3つの六角形" 樹脂版',
     fullName: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
+    shortTitle: '"3つの六角形" 樹脂版｜園芸支柱｜ZUKE',
     price: 680,
     image: "/products/product-pole3pla-black.webp",
     baseUrl: `${SHOP}/items/159046672`,
@@ -219,6 +224,7 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     name: 'PLANTS POLE "2つの六角形" 樹脂版',
     fullName: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
+    shortTitle: '"2つの六角形" 樹脂版｜園芸支柱｜ZUKE',
     price: 580,
     image: "/products/product-pole2pla-black.webp",
     baseUrl: `${SHOP}/items/159046887`,
@@ -267,6 +273,7 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     name: 'PLANTS POLE "1つの六角形" 樹脂版',
     fullName: 'PLANTS POLE "1つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
+    shortTitle: '"1つの六角形" 樹脂版｜園芸支柱｜ZUKE',
     price: 480,
     image: "/products/product-pole1pla-black.webp",
     baseUrl: `${SHOP}/items/159543555`,
@@ -290,6 +297,7 @@ export const PRODUCTS: Product[] = [
     category: "extension",
     name: "PLANTS POLE 拡張パーツ 六角形＋留め具",
     fullName: "PLANTS POLE 拡張パーツ 六角形＋留め具 樹脂版 - 辺同士をつないで伸ばせる -",
+    shortTitle: "拡張パーツ 六角形＋留め具｜樹脂版支柱用｜ZUKE",
     price: 380,
     image: "/products/product-hexparts-black.webp",
     baseUrl: `${SHOP}/items/159543653`,
@@ -313,6 +321,7 @@ export const PRODUCTS: Product[] = [
     category: "extension",
     name: "PLANTS POLE 留め具 5個入り",
     fullName: "PLANTS POLE 留め具 5個入り 樹脂版 - 六角形パーツをつなぐクリップ -",
+    shortTitle: "留め具 5個入り｜樹脂版支柱用｜ZUKE",
     price: 330,
     image: "/products/product-hexclip5-black.webp",
     baseUrl: `${SHOP}/items/159749568`,

@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = productBySlug(slug);
   if (!p) return {};
   return {
-    title: `${p.name}｜${TITLE_SUFFIX[p.category]}`,
+    title: p.shortTitle ?? `${p.name}｜${TITLE_SUFFIX[p.category]}`,
     description: p.summary,
     alternates: { canonical: `/products/${p.slug}` },
     openGraph: {
