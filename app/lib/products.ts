@@ -203,6 +203,10 @@ export const PRODUCTS: Product[] = [
     shortTitle: '"3つの六角形" 樹脂版｜園芸支柱',
     price: 680,
     image: "/products/product-pole3pla-black.webp",
+    // 2026-10-05 SEO: デザイナー納品の実写OG(1200x630)に差し替え(#3172)
+    ogImage: "/products/product-pole3pla-og.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159046672`,
     summary:
       "鉄製と同じ六角形のフォルムを、PLA樹脂で3Dプリントした軽量版。全長約22cm。ブラック／ホワイト／オレンジ／ライトグレーの4色。六角鉢セットの差込口にそのまま挿せます。",
@@ -227,6 +231,10 @@ export const PRODUCTS: Product[] = [
     shortTitle: '"2つの六角形" 樹脂版｜園芸支柱',
     price: 580,
     image: "/products/product-pole2pla-black.webp",
+    // 2026-10-05 SEO: デザイナー納品の実写OG(1200x630)に差し替え(#3172)
+    ogImage: "/products/product-pole2pla-og.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159046887`,
     summary:
       "六角形2連・全長約17cmの樹脂版PLANTS POLE。PLA樹脂・3Dプリント製で軽く、ブラック／ホワイト／オレンジ／ライトグレーの4色。六角鉢セット付属の支柱と同じものです。",
