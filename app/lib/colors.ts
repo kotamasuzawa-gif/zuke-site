@@ -19,6 +19,5 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hex3: ["black", "white"],
   hex2: ["black", "white"],
   uneune: ["black", "white"],
-  "hexpot-set": ["black", "orange", "lightgray"],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
