@@ -352,6 +352,8 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "pot",
     name: "PLANTS POLE 丸鉢スタンドセット",
+    // 2026-10-05 SEO: カテゴリ pot の既定 title「支柱が差せる六角鉢」は丸鉢と合わないので個別に指定
+    shortTitle: "丸鉢スタンドセット｜3.5号ポットがそのまま入る鉢カバー",
     fullName: "PLANTS POLE 丸鉢スタンドセット - 3Dプリント製の鉢カバー＋3本脚スタンド -",
     price: 2480,
     image: "/products/product-marupot-pair.webp",
