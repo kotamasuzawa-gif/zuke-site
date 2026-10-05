@@ -11,10 +11,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // 植欲マップのフォームは専用サイトへ分離済み。旧URLからの転送。
+      // 旧植欲マップ申込フォームのURL。フォームは廃止済みなので植欲マップ本体へ転送。
       {
         source: "/entry",
-        destination: "https://shokuyoku-mapshop.vercel.app/",
+        destination: "https://shokuyoku-map.com/",
         permanent: true,
       },
     ];
