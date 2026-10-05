@@ -347,6 +347,30 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
+    // 2026-10-05 新商品: 丸鉢スタンドセット。BASE 161140229
+    slug: "marupot-stand",
+    kind: "pla",
+    category: "pot",
+    name: "PLANTS POLE 丸鉢スタンドセット",
+    fullName: "PLANTS POLE 丸鉢スタンドセット - 3Dプリント製の鉢カバー＋3本脚スタンド -",
+    price: 2480,
+    image: "/products/product-marupot-pair.webp",
+    baseUrl: `${SHOP}/items/161140229`,
+    summary:
+      "丸みのある鉢カバーと3本脚スタンドのセット。3.5号のビニールポットがそのまま入り、植え替えずに飾れます。PLA樹脂・3Dプリント製、鉢とスタンドは別パーツでブラック／オレンジを組み替え可能。",
+    lead:
+      "丸みのある底の鉢カバーと、まっすぐな3本脚のスタンドを組み合わせたセット。鉢をスタンドのリングに乗せるだけで、床から少し浮いた軽やかな佇まいになります。3.5号のビニールポットがそのまま入るので、植え替えずに飾れます。鉢とスタンドは別パーツなので、ブラックとオレンジを組み替えて楽しめます。",
+    height: "鉢 約11cm（直径・高さ）／スタンド込み 高さ約13cm",
+    width: "鉢 直径約11cm／スタンド込み 直径約12.5cm",
+    material: "PLA（植物由来の樹脂）・3Dプリント・マット仕上げ",
+    plants: ["つる性植物", "細葉の観葉植物", "3.5号ポット苗"],
+    scenes: [
+      "3.5号のビニールポットをそのまま植え替えずに飾る",
+      "鉢とスタンドをブラック／オレンジで組み替える",
+      "PLANTS POLE \"3つの六角形\"と合わせてつる性植物を仕立てる",
+    ],
+  },
+  {
     // 2026-09-23 新商品: 六角花瓶（白）。価格は仮
     slug: "hexvase",
     kind: "pla",
@@ -452,7 +476,10 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
     { slug: "hexparts", note: "成長に合わせて六角形を足して伸ばす" },
     { slug: "hexvase", note: "同じ六角形の花瓶を並べて" },
   ],
-  hex3: [{ slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" }],
+  hex3: [
+    { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
+    { slug: "marupot-stand", note: "丸鉢スタンドセットに仕立てて、つる性・細葉の植物をすっきりまとめる" },
+  ],
   hex2: [{ slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" }],
   pole3pla: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
@@ -474,5 +501,8 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   hexvase: [
     { slug: "hexpot", note: "同じ六角形の鉢と並べて" },
     { slug: "hexpot-set2", note: "鉢・受け皿・支柱の3点セット" },
+  ],
+  "marupot-stand": [
+    { slug: "hex3", note: "六角形3連の支柱を仕立てて、つる性・細葉の植物をすっきりまとめる" },
   ],
 };
