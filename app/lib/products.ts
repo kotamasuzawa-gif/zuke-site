@@ -47,6 +47,7 @@ export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
 // hex2 の「シリーズでいちばん〜」は、より小さく安い 1連樹脂版があるため「アイアン製で」と範囲を明記。
 // pole2pla（樹脂・約17cm）はアイアン製2連（約19.5cm）と別物なので、アイアンに触れない表現にした。
 
+// 2026-10-05 増澤さん「LPがBASEの写真と一緒じゃない。BASEを正にして」: 一覧・詳細の1枚目(image)は BASE の1枚目と同じ写真にする（product-<slug>-base.webp は BASE から取得）
 export const PRODUCTS: Product[] = [
   {
     slug: "hex5",
@@ -130,7 +131,7 @@ export const PRODUCTS: Product[] = [
     name: 'PLANTS POLE "うねうね"',
     fullName: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-',
     price: 1320,
-    image: "/products/product-uneune-black.webp",
+    image: "/products/product-uneune-base.webp",
     baseUrl: `${SHOP}/items/130117282`,
     summary:
       "左右にうねるラインで、横に広がる植物の姿を整えるアイアン製園芸支柱。高さ約35cm・差込部約8cmで5〜7号鉢が目安。アロカシアなど葉が暴れる株をまとまりのある姿に。",
@@ -202,7 +203,7 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
     shortTitle: '"3つの六角形" 樹脂版｜園芸支柱',
     price: 680,
-    image: "/products/product-pole3pla-black.webp",
+    image: "/products/product-pole3pla-base.webp",
     // 2026-10-05 SEO: デザイナー納品の実写OG(1200x630)に差し替え(#3172)
     ogImage: "/products/product-pole3pla-og.jpg",
     ogWidth: 1200,
@@ -230,7 +231,7 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
     shortTitle: '"2つの六角形" 樹脂版｜園芸支柱',
     price: 580,
-    image: "/products/product-pole2pla-black.webp",
+    image: "/products/product-pole2pla-base.webp",
     // 2026-10-05 SEO: デザイナー納品の実写OG(1200x630)に差し替え(#3172)
     ogImage: "/products/product-pole2pla-og.jpg",
     ogWidth: 1200,
@@ -356,7 +357,7 @@ export const PRODUCTS: Product[] = [
     shortTitle: "丸鉢スタンドセット｜3.5号ポットがそのまま入る鉢カバー",
     fullName: "PLANTS POLE 丸鉢スタンドセット - 3Dプリント製の鉢カバー＋3本脚スタンド -",
     price: 2480,
-    image: "/products/product-marupot-pair.webp",
+    image: "/products/product-marupot-stand-base.webp",
     // 2026-10-05 SEO: og:imageはwebp未対応のリンクカード想定でJPGに変更（デザイナー#3517撮影のスタジオ写真）
     ogImage: "/products/product-marupot-stand-og.jpg",
     baseUrl: `${SHOP}/items/161140229`,
@@ -382,7 +383,7 @@ export const PRODUCTS: Product[] = [
     name: "六角花瓶",
     fullName: "六角花瓶 - PLANTS POLEシリーズの3Dプリント製フラワーベース -",
     price: 1280,
-    image: "/products/product-hexvase-white.webp",
+    image: "/products/product-hexvase-base.webp",
     // 白×白だと note のリンクカードで輪郭が見えないため黒を共有用に（花入り実物写真が来たら差し替え）
     // 2026-10-05 SEO: webp未対応のリンクカード想定でJPGに変更（色は黒のまま。デザイナー#3112指摘）
     ogImage: "/products/product-hexvase-black-og.jpg",
