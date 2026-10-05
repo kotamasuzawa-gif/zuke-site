@@ -359,8 +359,11 @@ export const PRODUCTS: Product[] = [
     fullName: "丸鉢スタンドセット - PLANTS POLEシリーズの3Dプリント製 鉢カバー＋3本脚スタンド -",
     price: 2480,
     image: "/products/product-marupot-stand-base.webp",
-    // 2026-10-05 SEO: og:imageはwebp未対応のリンクカード想定でJPGに変更（デザイナー#3517撮影のスタジオ写真）
-    ogImage: "/products/product-marupot-stand-og.jpg",
+    // 2026-10-06 SEO: summary_large_image(1.91:1)で正方形og画像の脚が切れる指摘(デザイナー#3866)→横長OGに差し替え
+    ogImage: "/products/product-marupot-stand-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
+    ogImageSquare: "/products/product-marupot-stand-og.jpg",
     baseUrl: `${SHOP}/items/161140229`,
     summary:
       "丸みのある鉢カバーと3本脚スタンドのセット。3.5号のビニールポットがそのまま入り、植え替えずに飾れます。PLA樹脂・3Dプリント製、鉢とスタンドは別パーツでブラック／オレンジを組み替え可能。",
@@ -386,8 +389,11 @@ export const PRODUCTS: Product[] = [
     price: 1280,
     image: "/products/product-hexvase-base.webp",
     // 白×白だと note のリンクカードで輪郭が見えないため黒を共有用に（花入り実物写真が来たら差し替え）
-    // 2026-10-05 SEO: webp未対応のリンクカード想定でJPGに変更（色は黒のまま。デザイナー#3112指摘）
-    ogImage: "/products/product-hexvase-black-og.jpg",
+    // 2026-10-06 SEO: summary_large_image(1.91:1)で正方形og画像の脚が切れる指摘(デザイナー#3866)→横長OGに差し替え
+    ogImage: "/products/product-hexvase-black-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
+    ogImageSquare: "/products/product-hexvase-black-og.jpg",
     baseUrl: `${SHOP}/items/159228997`,
     summary:
       "六角鉢と同じ六角形のフォルムの花瓶。一輪挿しにも。高さ約16cm、口に向かって少しすぼまる形。PLA樹脂・3Dプリント製、ホワイト／ブラック／オレンジ／ライトグレーの4色（黒・白は即納、他は受注生産）。排水穴なしで水漏れしません。底面にZUKEロゴ入り。",
