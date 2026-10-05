@@ -352,10 +352,11 @@ export const PRODUCTS: Product[] = [
     slug: "marupot-stand",
     kind: "pla",
     category: "pot",
-    name: "PLANTS POLE 丸鉢スタンドセット",
+    // 2026-10-05 増澤さん指示: 支柱(POLE)はセット外なので、名前に「PLANTS POLE」を直接冠さない（六角花瓶と同じ「シリーズ」表記に統一）
+    name: "丸鉢スタンドセット",
     // 2026-10-05 SEO: カテゴリ pot の既定 title「支柱が差せる六角鉢」は丸鉢と合わないので個別に指定
     shortTitle: "丸鉢スタンドセット｜3.5号ポットがそのまま入る鉢カバー",
-    fullName: "PLANTS POLE 丸鉢スタンドセット - 3Dプリント製の鉢カバー＋3本脚スタンド -",
+    fullName: "丸鉢スタンドセット - PLANTS POLEシリーズの3Dプリント製 鉢カバー＋3本脚スタンド -",
     price: 2480,
     image: "/products/product-marupot-stand-base.webp",
     // 2026-10-05 SEO: og:imageはwebp未対応のリンクカード想定でJPGに変更（デザイナー#3517撮影のスタジオ写真）
