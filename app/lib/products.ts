@@ -329,6 +329,10 @@ export const PRODUCTS: Product[] = [
     shortTitle: "拡張パーツ 六角形＋留め具｜樹脂版支柱用",
     price: 380,
     image: "/products/product-hexparts-black.webp",
+    // 2026-10-06 SEO: デザイナー依頼(#3877)でクリップ接合部クローズアップが1.91:1で切れるため横長OGに差し替え
+    ogImage: "/products/product-hexparts-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159543653`,
     summary:
       "樹脂版PLANTS POLEを伸ばすための六角形パーツ1つ＋留め具3個。いま使っている支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。4色。",
