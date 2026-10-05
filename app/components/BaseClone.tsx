@@ -122,7 +122,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
                 <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
                   <Image
                     src={shownImage(p.slug, color)}
-                    alt={`${p.name}（${COLORS.find((c) => c.key === color)?.label}）`}
+                    alt={color ? `${p.name}（${COLORS.find((c) => c.key === color)?.label}）` : p.name}
                     fill
                     className="object-contain group-hover:opacity-90 transition-opacity"
                     sizes="(max-width: 1024px) 50vw, 25vw"
@@ -148,7 +148,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           <div className="mt-8 relative w-full max-w-lg mx-auto aspect-square overflow-hidden bg-[#f5f4f2]">
             <Image
               src={lifestyleImage(color)}
-              alt={`コンクリート壁の棚に飾った PLANTS POLE（${COLORS.find((c) => c.key === color)?.label}）と蔓性の観葉植物。六角形の影が壁に映るインテリアグリーンの実例`}
+              alt={`コンクリート壁の棚に飾った PLANTS POLE（${COLORS.find((c) => c.key === color)?.label ?? "ブラック"}）と蔓性の観葉植物。六角形の影が壁に映るインテリアグリーンの実例`}
               fill
               sizes="(max-width: 640px) 100vw, 512px"
               className="object-cover"
