@@ -57,6 +57,10 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 1320,
     image: "/products/product-hex5-black.webp",
+    // 2026-10-06 SEO: 1.91:1クロップでトレリス上部が切れる指摘→横長OGに差し替え
+    ogImage: "/products/product-hex5-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/117375069`,
     summary:
       "六角形を5つ連ねた全長約39cmの園芸支柱。アイアン製で6〜8号鉢が目安、モンステラやポトスなど伸びる蔓性の観葉植物をインテリアグリーンとして美しく仕立てられます。",
@@ -109,6 +113,10 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 770,
     image: "/products/product-hex2-black.webp",
+    // 2026-10-06 SEO: 1.91:1クロップで欠ける指摘→横長OGに差し替え
+    ogImage: "/products/product-hex2-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/124680568`,
     summary:
       "六角形を2つ連ねた高さ約19.5cmの園芸支柱。亀甲竜など背の低い蔓性植物と好相性。アイアン製で最も手に取りやすい¥770。",
@@ -156,6 +164,10 @@ export const PRODUCTS: Product[] = [
     shortTitle: '六角鉢セット "3つの六角形"',
     price: 1980,
     image: "/products/product-hexpot-set-black.webp",
+    // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
+    ogImage: "/products/product-hexpot-set-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159039931`,
     summary:
       "六角形の鉢・受け皿・支柱「PLANTS POLE」の3点セット。鉢の内側に支柱の差込口があり、土に頼らずまっすぐ立ちます。PLA樹脂・3Dプリント製、ブラック／ライトグレー／オレンジ／ホワイトの4色（黒・ライトグレー・オレンジは即納、白のみ受注生産）。",
@@ -180,6 +192,10 @@ export const PRODUCTS: Product[] = [
     shortTitle: '六角鉢セット "2つの六角形"',
     price: 1880,
     image: "/products/product-hexpot-set2-black.webp",
+    // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
+    ogImage: "/products/product-hexpot-set2-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159049724`,
     summary:
       "六角形の鉢・受け皿・2連支柱の3点セット。差込口付きで小さな蔓性植物をすっきり誘引。PLA樹脂・3Dプリント製、ブラック／ライトグレー／オレンジ／ホワイトの4色（黒・白は即納、他は受注生産）。",
@@ -337,6 +353,10 @@ export const PRODUCTS: Product[] = [
     shortTitle: "留め具 5個入り｜樹脂版支柱用",
     price: 330,
     image: "/products/product-hexclip5-black.webp",
+    // 2026-10-06 SEO: 1.91:1クロップで端が軽微に欠ける指摘→念のため横長OGに差し替え
+    ogImage: "/products/product-hexclip5-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159749568`,
     summary:
       "樹脂版PLANTS POLEの辺同士をつなぐ留め具（クリップ）だけの5個セット。拡張パーツ付属の3個で足りないとき、色をそろえたいとき、なくしたときの補充用に。4色。",
