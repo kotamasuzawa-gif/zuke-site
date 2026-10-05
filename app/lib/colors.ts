@@ -23,5 +23,7 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hex3: ["black", "white"],
   hex2: ["black", "white"],
   uneune: ["black", "white"],
+  // 2026-10-06 丸鉢スタンドセットは色の選択肢ではなく「ブラック鉢×オレンジスタンド」「オレンジ鉢×ブラックスタンド」の2種（BASE と同じ）。色ボタンは出さない
+  "marupot-stand": [],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
