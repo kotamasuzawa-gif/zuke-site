@@ -357,6 +357,8 @@ export const PRODUCTS: Product[] = [
     fullName: "PLANTS POLE 丸鉢スタンドセット - 3Dプリント製の鉢カバー＋3本脚スタンド -",
     price: 2480,
     image: "/products/product-marupot-pair.webp",
+    // 2026-10-05 SEO: og:imageはwebp未対応のリンクカード想定でJPGに変更（デザイナー#3517撮影のスタジオ写真）
+    ogImage: "/products/product-marupot-stand-og.jpg",
     baseUrl: `${SHOP}/items/161140229`,
     summary:
       "丸みのある鉢カバーと3本脚スタンドのセット。3.5号のビニールポットがそのまま入り、植え替えずに飾れます。PLA樹脂・3Dプリント製、鉢とスタンドは別パーツでブラック／オレンジを組み替え可能。",
