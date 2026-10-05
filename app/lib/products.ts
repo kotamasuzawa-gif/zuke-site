@@ -285,6 +285,10 @@ export const PRODUCTS: Product[] = [
     shortTitle: '"1つの六角形" 樹脂版｜園芸支柱',
     price: 480,
     image: "/products/product-pole1pla-black.webp",
+    // 2026-10-06 SEO: デザイナー納品のOG(1200x630、脚切れ回避クロップ)に差し替え
+    ogImage: "/products/product-pole1pla-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159543555`,
     summary:
       "六角形ひとつの、いちばん小さなPLANTS POLE。鉢に挿すだけで小さな蔓性植物や若い株をやさしく支えます。ブラック／ホワイト／オレンジ／ライトグレーの4色。",
