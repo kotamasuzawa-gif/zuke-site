@@ -11,7 +11,11 @@ export const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3p
 // 2026-09-27 増澤さん指示: 全商品でオレンジ/ライトグレーにも切り替える（アイアン・花瓶もCodexで色替え画像を用意）
 export const hasColor = (_slug: string, _color: ColorKey) => true;
 export const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${hasColor(slug, color) ? color : "black"}.webp`;
-export const colorLabel = (color: ColorKey) => COLORS.find((c) => c.key === color)?.label ?? "";
+// 2026-10-05 増澤さん「LPがBASEの写真と一緒じゃない。BASEを正にして」: 最初に見せる写真は BASE の1枚目（product-<slug>-base.webp）。
+// 色のボタンを押したときだけ、その色の写真に切り替える（color が null の間は BASE の写真）
+export const baseImage = (slug: string) => `/products/product-${slug}-base.webp`;
+export const shownImage = (slug: string, color: ColorKey | null) => (color ? productImage(slug, color) : baseImage(slug));
+export const colorLabel = (color: ColorKey | null) => COLORS.find((c) => c.key === color)?.label ?? "";
 // 2026-09-29 商品詳細ページの色切替。購入ページなので BASE で実際に選べるバリエーションだけ出す
 // （BASE の Meta フィードの種類と一致させる。BASE 側で色を増減したらここも更新）
 const SOLD_COLORS: Record<string, ColorKey[]> = {

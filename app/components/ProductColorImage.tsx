@@ -1,15 +1,15 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { COLORS, type ColorKey, productImage, colorLabel } from "@/app/lib/colors";
+import { COLORS, type ColorKey, shownImage, colorLabel } from "@/app/lib/colors";
 
 // 2026-09-29 増澤さん指示: 商品詳細ページでも色を選ぶと写真がその色に切り替わるように
 export default function ProductColorImage({ slug, name, colors, initial }: { slug: string; name: string; colors: ColorKey[]; initial: ColorKey }) {
-  const [color, setColor] = useState<ColorKey>(initial);
+  const [color, setColor] = useState<ColorKey | null>(null);
   return (
     <div>
       <div className="relative aspect-square bg-[#fbfbfb]">
-        <Image src={productImage(slug, color)} alt={`${name}（${colorLabel(color)}）`} fill priority className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
+        <Image src={shownImage(slug, color)} alt={color ? `${name}（${colorLabel(color)}）` : name} fill priority className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
       </div>
       {colors.length > 1 && (
         <div className="mt-5 flex flex-col items-center gap-3">
@@ -27,7 +27,7 @@ export default function ProductColorImage({ slug, name, colors, initial }: { slu
               />
             ))}
           </div>
-          <p className="text-[11px] tracking-[0.15em] text-gray-500">{colorLabel(color)}</p>
+          <p className="text-[11px] tracking-[0.15em] text-gray-500">{color ? colorLabel(color) : "色を選ぶと写真が切り替わります"}</p>
         </div>
       )}
     </div>

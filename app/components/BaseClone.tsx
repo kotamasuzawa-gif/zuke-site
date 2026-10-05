@@ -7,7 +7,7 @@ import { PRODUCTS, yen } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
-import { COLORS, type ColorKey, productImage } from "@/app/lib/colors";
+import { COLORS, type ColorKey, shownImage } from "@/app/lib/colors";
 import { useState } from "react";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
@@ -20,12 +20,12 @@ const SHOP = "https://shop.zukeplants.com";
 const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, url: p.baseUrl }));
 
 // 2026-09-27: 色判定は app/lib/colors.ts に共通化（全商品4色切替）
-const lifestyleImage = (color: ColorKey) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
+const lifestyleImage = (color: ColorKey | null) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
 
 
 export default function BaseClone({ showLifestyle = false }: { showLifestyle?: boolean }) {
   const [open, setOpen] = useState(false);
-  const [color, setColor] = useState<ColorKey>("black");
+  const [color, setColor] = useState<ColorKey | null>(null);
 
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
@@ -121,7 +121,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
               <a key={p.url} href={p.url} target="_blank" rel="noopener noreferrer" className="block group">
                 <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
                   <Image
-                    src={productImage(p.slug, color)}
+                    src={shownImage(p.slug, color)}
                     alt={`${p.name}（${COLORS.find((c) => c.key === color)?.label}）`}
                     fill
                     className="object-contain group-hover:opacity-90 transition-opacity"
