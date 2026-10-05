@@ -420,7 +420,7 @@ export const MATERIALS: { key: MaterialKind; label: string; lead: string; image:
 export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。" },
   { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
-  { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。" },
+  { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
   { key: "vase", label: "花瓶", lead: "六角鉢シリーズのフラワーベース。" },
 ];
 export type CollectionKey = MaterialKind | CategoryKey;
