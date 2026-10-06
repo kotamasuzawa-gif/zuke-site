@@ -59,6 +59,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const relatedGuides = GUIDES.filter((g) => g.related.includes(p.slug));
   const category = CATEGORIES.find((c) => c.key === p.category);
   const sold = soldColors(p.slug);
+  // JST日付で期間判定（サーバーのタイムゾーンに依らずOffsetで計算）
+  const todayJst = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const activeCampaign =
+    p.campaign && todayJst >= p.campaign.startDate && todayJst <= p.campaign.endDate ? p.campaign : undefined;
 
   const jsonLd = [
     {
@@ -130,6 +134,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <h1 className="text-xl md:text-2xl font-bold leading-relaxed">{p.name}</h1>
             <p className="mt-2 text-[13px] text-gray-500 leading-relaxed">{p.fullName}</p>
             <p className="mt-5 text-2xl font-bold">{yen(p.price)}<span className="ml-2 text-xs font-normal text-gray-500">税込</span></p>
+
+            {activeCampaign && (
+              <p className="mt-4 text-xs font-bold text-white bg-[#c0392b] inline-block px-3 py-1.5 rounded">
+                期間限定（{activeCampaign.startDate.slice(5).replace("-", "/")}〜{activeCampaign.endDate.slice(5).replace("-", "/")}）{activeCampaign.label}：クーポン「{activeCampaign.code}」
+                {activeCampaign.note ? `（${activeCampaign.note}）` : ""}
+              </p>
+            )}
 
             <p className="mt-6 text-[15px] leading-loose text-gray-700">{p.lead}</p>
 

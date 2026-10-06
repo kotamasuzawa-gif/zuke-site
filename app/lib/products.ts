@@ -38,6 +38,14 @@ export type Product = {
   plants: string[];
   /** インテリア文脈での使いどころ */
   scenes: string[];
+  /** 期間限定の告知（開始〜終了はJST日付 YYYY-MM-DD。表示側で期間内のみ出す） */
+  campaign?: {
+    code: string;
+    label: string;
+    startDate: string;
+    endDate: string;
+    note?: string;
+  };
 };
 
 export const SHOP = "https://shop.zukeplants.com";
@@ -76,6 +84,14 @@ export const PRODUCTS: Product[] = [
       "棚や家具の上で、高さのアクセントをつくる",
       "伸びすぎて垂れてきた蔓を上方向に誘引し直す",
     ],
+    // 2026-10-06 EC店長承認(#3538): 送料分OFFクーポン。ZUKE2SETとの併用不可
+    campaign: {
+      code: "HEX5FREE",
+      label: "送料分OFFクーポン",
+      startDate: "2026-10-08",
+      endDate: "2026-10-14",
+      note: "ZUKE2SETクーポンと併用不可",
+    },
   },
   {
     slug: "hex3",
