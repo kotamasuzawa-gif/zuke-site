@@ -156,6 +156,10 @@ export const PRODUCTS: Product[] = [
     fullName: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-',
     price: 1320,
     image: "/products/product-uneune-base.webp",
+    // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
+    ogImage: "/products/product-uneune-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/130117282`,
     summary:
       "左右にうねるラインで、横に広がる植物の姿を整えるアイアン製園芸支柱。高さ約35cm・差込部約8cmで5〜7号鉢が目安。アロカシアなど葉が暴れる株をまとまりのある姿に。",
@@ -292,6 +296,10 @@ export const PRODUCTS: Product[] = [
     fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
     price: 1480,
     image: "/products/product-hexpot-black.webp",
+    // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
+    ogImage: "/products/product-hexpot-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/159048204`,
     summary:
       "PLANTS POLEを差し込める六角形の鉢と受け皿。支柱の差込口・タグポケット付き。PLA樹脂・3Dプリント製、ブラック／ホワイト／オレンジ／ライトグレーの4色。支柱は付属しません。",
