@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   // 2026-10-04 SEO: 花瓶ページは note 記事（10/5）からのリンク先。共有カードが汎用 og.jpg だったので商品画像に
   const ogProduct = c.key === "vase" ? PRODUCTS.find((p) => p.slug === "hexvase") : undefined;
   const ogImages = ogProduct
-    ? [{ url: ogProduct.ogImage ?? ogProduct.image, width: 1200, height: 1200, alt: ogProduct.fullName }]
+    ? [{ url: ogProduct.ogImage ?? ogProduct.image, width: ogProduct.ogWidth ?? 1200, height: ogProduct.ogHeight ?? 1200, alt: ogProduct.fullName }]
     : [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }];
   return {
     // 2026-09-29 SEO R4: title はテンプレートの「｜ZUKE」と重複しないように。description は products.ts の COLLECTION_SEO
