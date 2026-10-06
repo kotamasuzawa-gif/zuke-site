@@ -21,6 +21,8 @@ const TITLE_SUFFIX: Record<CategoryKey, string> = {
 };
 
 export const dynamicParams = false;
+// キャンペーン表示の期間判定(todayJst)をビルド時に固定しないため、1時間ごとに再生成
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
