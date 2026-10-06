@@ -26,7 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   const c = collectionByKey(key);
   if (!c) return {};
   // 2026-10-04 SEO: 花瓶ページは note 記事（10/5）からのリンク先。共有カードが汎用 og.jpg だったので商品画像に
-  const ogProduct = c.key === "vase" ? PRODUCTS.find((p) => p.slug === "hexvase") : undefined;
+  // 2026-10-06 SEO: iron/pla/extension も同様に共有カードが汎用 og.jpg だったので代表商品画像に（デザイナー確認済み・既存実写を再利用）
+  const OG_PRODUCT_SLUG: Record<string, string> = { vase: "hexvase", iron: "hex5", pla: "hexpot-set", extension: "hexparts" };
+  const ogProduct = OG_PRODUCT_SLUG[c.key] ? PRODUCTS.find((p) => p.slug === OG_PRODUCT_SLUG[c.key]) : undefined;
   const ogImages = ogProduct
     ? [{ url: ogProduct.ogImage ?? ogProduct.image, width: ogProduct.ogWidth ?? 1200, height: ogProduct.ogHeight ?? 1200, alt: ogProduct.fullName }]
     : [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }];
