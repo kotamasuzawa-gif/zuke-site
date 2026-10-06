@@ -7,7 +7,7 @@ import SiteFooter from "@/app/components/SiteFooter";
 import { PRODUCTS, CATEGORIES, PAIRINGS, productBySlug, yen, SHIPPING, type CategoryKey } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import ProductColorImage from "@/app/components/ProductColorImage";
-import { soldColors, colorLabel, productImage, type ColorKey } from "@/app/lib/colors";
+import { soldColors, colorLabel, productImage, baseImage, type ColorKey } from "@/app/lib/colors";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 // 2026-09-29 SEO R4: title の後半を固定の「観葉植物の園芸支柱」にしていたため、花瓶・鉢・留め具のページでも
@@ -72,12 +72,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       name: p.fullName,
       // 2026-09-28 SEO: 色違い画像もすべて登録（画像検索・リッチリザルト）
       // 2026-09-29 SEO R4: 手書きの条件式をやめ、BASE で実際に選べる色（soldColors）に合わせる
-      image: sold.map((c) => `${SITE}${productImage(p.slug, c)}`),
+      // 2026-10-06 SEO: 色ボタンを出さない商品（丸鉢スタンドセット等・sold が空）は image が [] になりリッチリザルト対象外だった → BASE の1枚目で補う
+      image: sold.length ? sold.map((c) => `${SITE}${productImage(p.slug, c)}`) : [`${SITE}${baseImage(p.slug)}`],
       description: p.summary,
       sku: p.slug,
       url: `${SITE}/products/${p.slug}`,
       material: p.material,
-      color: sold.map(colorLabel).join(" / "),
+      color: sold.length ? sold.map(colorLabel).join(" / ") : undefined,
       category: p.kind === "iron" ? "園芸支柱（アイアン）" : "3Dプリント園芸用品（PLA樹脂）",
       brand: { "@type": "Brand", name: "ZUKE" },
       offers: {
