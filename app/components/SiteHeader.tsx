@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useState } from "react";
 
 const SHOP = "https://shop.zukeplants.com";
+// ストア入口にもUTMを付けてBASEのアクセス解析でzukeplants.com経由を切り分ける（2026-10-07）
+const STORE = `${SHOP}?utm_source=zukeplants_guide`;
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -25,9 +27,9 @@ export default function SiteHeader() {
           <Link href="/about" className="hover:opacity-60">ABOUT</Link>
           {/* 2026-09-29 増澤さん指示: 卸売の案内への導線 */}
           <Link href="/wholesale" className="hover:opacity-60">WHOLESALE</Link>
-          <a href={SHOP} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">STORE</a>
+          <a href={STORE} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">STORE</a>
         </nav>
-        <a href={SHOP} aria-label="オンラインストア" className="p-1 md:hidden">
+        <a href={STORE} aria-label="オンラインストア" className="p-1 md:hidden">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         </a>
       </div>
@@ -39,7 +41,7 @@ export default function SiteHeader() {
             <li><Link href="/guide" onClick={() => setOpen(false)}>GUIDE</Link></li>
             <li><Link href="/about" onClick={() => setOpen(false)}>ABOUT</Link></li>
             <li><Link href="/wholesale" onClick={() => setOpen(false)}>WHOLESALE（卸売）</Link></li>
-            <li><a href={SHOP} target="_blank" rel="noopener noreferrer">STORE（BASE）</a></li>
+            <li><a href={STORE} target="_blank" rel="noopener noreferrer">STORE（BASE）</a></li>
           </ul>
         </nav>
       )}

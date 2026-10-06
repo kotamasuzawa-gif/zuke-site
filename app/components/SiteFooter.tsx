@@ -5,6 +5,8 @@ import { PRODUCTS, COLLECTIONS } from "@/app/lib/products";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
 const SHOP = "https://shop.zukeplants.com";
+// ストア入口にもUTMを付けてBASEのアクセス解析でzukeplants.com経由を切り分ける（2026-10-07）
+const STORE = `${SHOP}?utm_source=zukeplants_guide`;
 
 // 2026-09-29 SEO R4: 列見出しは h2 → p（全ページの見出し構造に h2 が3つ混ざっていたため。見た目は同じ）。
 // 一覧ページ・カテゴリページ・卸売のご案内への内部リンクを追加。
@@ -45,7 +47,7 @@ export default function SiteFooter() {
           <p className="text-[13px] font-bold tracking-[0.15em] text-[#222] mb-4">ZUKE</p>
           <ul className="flex flex-col gap-2 text-[13px] text-gray-600">
             <li><Link href="/about" className="hover:text-[#222]">ブランドについて</Link></li>
-            <li><a href={SHOP} target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">オンラインストア（BASE）</a></li>
+            <li><a href={STORE} target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">オンラインストア（BASE）</a></li>
             <li><Link href="/wholesale" className="hover:text-[#222]">卸売のご案内</Link></li>
             <li><a href={WHOLESALE_MAILTO} className="hover:text-[#222]">卸売のお問い合わせ（メール）</a></li>
             <li><a href="https://www.instagram.com/zuke.plantspole/" target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">Instagram</a></li>
