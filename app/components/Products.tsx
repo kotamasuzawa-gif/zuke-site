@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withUtm } from "@/app/lib/products";
 
 const products = [
   {
@@ -105,7 +106,7 @@ export default function Products() {
                   <span className="text-xs text-neutral-500">税込</span>
                 </div>
                 <a
-                  href={product.externalUrl}
+                  href={withUtm(product.externalUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full text-center py-3 border border-neutral-400 text-neutral-900 text-xs tracking-widest hover:bg-black hover:text-black hover:border-black transition-colors duration-200"
@@ -119,7 +120,7 @@ export default function Products() {
 
         <div className="mt-10 text-center">
           <a
-            href="https://shop.zukeplants.com/"
+            href={withUtm("https://shop.zukeplants.com/")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-8 py-3 border border-neutral-400 text-neutral-700 text-xs tracking-widest hover:border-white hover:text-black transition-colors font-[family-name:var(--font-geist-mono)]"

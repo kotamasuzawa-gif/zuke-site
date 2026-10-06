@@ -4,7 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, CATEGORIES, PAIRINGS, productBySlug, yen, SHIPPING, type CategoryKey } from "@/app/lib/products";
+import { PRODUCTS, CATEGORIES, PAIRINGS, productBySlug, yen, SHIPPING, withUtm, type CategoryKey } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import ProductColorImage from "@/app/components/ProductColorImage";
 import { soldColors, colorLabel, productImage, baseImage, type ColorKey } from "@/app/lib/colors";
@@ -147,7 +147,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <p className="mt-6 text-[15px] leading-loose text-gray-700">{p.lead}</p>
 
             <a
-              href={p.baseUrl}
+              href={withUtm(p.baseUrl)}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 flex items-center justify-center w-full py-4 bg-[#222] text-white text-sm tracking-[0.15em] hover:opacity-85 transition-opacity"

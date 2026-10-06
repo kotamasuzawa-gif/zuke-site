@@ -3,7 +3,7 @@
 // 2026-08-21 増澤さん指示: BASEショップ(zukeplants.base.shop)のホームと同じ見た目に。
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
-import { PRODUCTS, yen } from "@/app/lib/products";
+import { PRODUCTS, yen, withUtm } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
@@ -17,7 +17,7 @@ const SHOP = "https://shop.zukeplants.com";
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
 
 // 2026-09-26 増澤さん指示「LPとBASEの商品を紐づける／並び順もBASEを正に」: products.ts（BASE順・baseUrl）から生成
-const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, url: p.baseUrl }));
+const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, url: withUtm(p.baseUrl) }));
 
 // 2026-09-27: 色判定は app/lib/colors.ts に共通化（全商品4色切替）
 const lifestyleImage = (color: ColorKey | null) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
@@ -37,10 +37,10 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           </button>
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 text-xl md:text-2xl font-bold tracking-[0.25em] text-[#222]">ZUKE</Link>
           <div className="flex items-center gap-4">
-            <a href={SHOP} aria-label="検索" className="p-1">
+            <a href={withUtm(SHOP)} aria-label="検索" className="p-1">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
             </a>
-            <a href={SHOP} aria-label="カート" className="p-1">
+            <a href={withUtm(SHOP)} aria-label="カート" className="p-1">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             </a>
           </div>
