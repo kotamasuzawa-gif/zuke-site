@@ -120,6 +120,13 @@ export const PRODUCTS: Product[] = [
       "棚の中段など、天井までの余白が少ない場所に",
       "大きく育てる前の、仮の仕立てとして",
     ],
+    // 2026-10-06 EC店長承認(#4298): hex2/hex3/hex5まとめ買いクーポン
+    campaign: {
+      code: "ZUKE2SET",
+      label: "2点以上で10%OFF",
+      startDate: "2026-10-06",
+      endDate: "2026-10-19",
+    },
   },
   {
     slug: "hex2",
@@ -147,6 +154,13 @@ export const PRODUCTS: Product[] = [
       "蔓が伸び始めたばかりの株の誘引スタートに",
       "複数の鉢に並べて、シリーズで揃える",
     ],
+    // 2026-10-06 EC店長承認(#4298): hex2/hex3/hex5まとめ買いクーポン
+    campaign: {
+      code: "ZUKE2SET",
+      label: "2点以上で10%OFF",
+      startDate: "2026-10-06",
+      endDate: "2026-10-19",
+    },
   },
   {
     slug: "uneune",
