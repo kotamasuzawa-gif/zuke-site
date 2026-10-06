@@ -61,8 +61,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const sold = soldColors(p.slug);
   // JST日付で期間判定（サーバーのタイムゾーンに依らずOffsetで計算）
   const todayJst = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
-  const activeCampaign =
-    p.campaign && todayJst >= p.campaign.startDate && todayJst <= p.campaign.endDate ? p.campaign : undefined;
+  const activeCampaign = p.campaigns?.find((c) => todayJst >= c.startDate && todayJst <= c.endDate);
 
   const jsonLd = [
     {

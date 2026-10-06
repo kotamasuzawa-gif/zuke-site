@@ -38,14 +38,17 @@ export type Product = {
   plants: string[];
   /** インテリア文脈での使いどころ */
   scenes: string[];
-  /** 期間限定の告知（開始〜終了はJST日付 YYYY-MM-DD。表示側で期間内のみ出す） */
-  campaign?: {
+  /**
+   * 期間限定の告知（開始〜終了はJST日付 YYYY-MM-DD。表示側で期間内のみ出す）。
+   * 複数指定時は配列の先頭ほど優先（期間が重なる場合は先頭が勝つ）。
+   */
+  campaigns?: {
     code: string;
     label: string;
     startDate: string;
     endDate: string;
     note?: string;
-  };
+  }[];
 };
 
 export const SHOP = "https://shop.zukeplants.com";
@@ -84,14 +87,23 @@ export const PRODUCTS: Product[] = [
       "棚や家具の上で、高さのアクセントをつくる",
       "伸びすぎて垂れてきた蔓を上方向に誘引し直す",
     ],
-    // 2026-10-06 EC店長承認(#3538): 送料分OFFクーポン。ZUKE2SETとの併用不可
-    campaign: {
-      code: "HEX5FREE",
-      label: "送料分OFFクーポン",
-      startDate: "2026-10-08",
-      endDate: "2026-10-14",
-      note: "ZUKE2SETクーポンと併用不可",
-    },
+    // 2026-10-06 EC店長決定(#4304): 期間で切替。10/8-10/14はHEX5FREE単独(ZUKE2SETと併用不可・先頭優先)、
+    // それ以外(〜10/7・10/15〜10/19)はhex2/hex3と同じZUKE2SET表示に統一。10/14終了後にHEX5FREEの1行を削除。
+    campaigns: [
+      {
+        code: "HEX5FREE",
+        label: "送料分OFFクーポン",
+        startDate: "2026-10-08",
+        endDate: "2026-10-14",
+        note: "ZUKE2SETクーポンと併用不可",
+      },
+      {
+        code: "ZUKE2SET",
+        label: "2点以上で10%OFF",
+        startDate: "2026-10-06",
+        endDate: "2026-10-19",
+      },
+    ],
   },
   {
     slug: "hex3",
@@ -121,12 +133,14 @@ export const PRODUCTS: Product[] = [
       "大きく育てる前の、仮の仕立てとして",
     ],
     // 2026-10-06 EC店長承認(#4298): hex2/hex3/hex5まとめ買いクーポン
-    campaign: {
-      code: "ZUKE2SET",
-      label: "2点以上で10%OFF",
-      startDate: "2026-10-06",
-      endDate: "2026-10-19",
-    },
+    campaigns: [
+      {
+        code: "ZUKE2SET",
+        label: "2点以上で10%OFF",
+        startDate: "2026-10-06",
+        endDate: "2026-10-19",
+      },
+    ],
   },
   {
     slug: "hex2",
@@ -155,12 +169,14 @@ export const PRODUCTS: Product[] = [
       "複数の鉢に並べて、シリーズで揃える",
     ],
     // 2026-10-06 EC店長承認(#4298): hex2/hex3/hex5まとめ買いクーポン
-    campaign: {
-      code: "ZUKE2SET",
-      label: "2点以上で10%OFF",
-      startDate: "2026-10-06",
-      endDate: "2026-10-19",
-    },
+    campaigns: [
+      {
+        code: "ZUKE2SET",
+        label: "2点以上で10%OFF",
+        startDate: "2026-10-06",
+        endDate: "2026-10-19",
+      },
+    ],
   },
   {
     slug: "uneune",
