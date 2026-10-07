@@ -174,6 +174,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "interior-green",
+    ogImage: "/og/og-guide-interior-green.jpg",
     title: "インテリアグリーンとは？失敗しない選び方と、おしゃれに飾る5つのコツ",
     metaTitle: "インテリアグリーンとは？選び方とおしゃれな飾り方",
     description:
@@ -357,6 +358,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "furniture-green",
+    ogImage: "/og/og-guide-furniture-green.jpg",
     title: "家具と観葉植物のコーディネート｜木・アイアン・白の3パターン",
     metaTitle: "家具と観葉植物のコーディネート術",
     description:
@@ -400,6 +402,7 @@ export const GUIDES: Guide[] = [
   // 2026-09-23 SEO R3: 3Dプリント商品（六角鉢セット・樹脂版支柱・花瓶）の検索受け皿を追加（記事7→9本）
   {
     slug: "shichu-sashikomi-hachi",
+    ogImage: "/og/og-guide-shichu-sashikomi-hachi.jpg",
     title: "支柱がまっすぐ立つ鉢｜差込口付き「六角鉢セット」の使い方",
     metaTitle: "支柱が差せる鉢｜差込口付き六角鉢の使い方",
     description:
@@ -445,6 +448,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "3d-print-hachi",
+    ogImage: "/og/og-guide-3d-print-hachi.jpg",
     title: "3Dプリント製の植木鉢（PLA樹脂）の特徴と注意点｜水やり・日光・耐久性",
     metaTitle: "3Dプリント製の植木鉢の特徴と注意点",
     description:
@@ -492,6 +496,7 @@ export const GUIDES: Guide[] = [
   // 2026-09-28 SEO R3: 新商品（土入れスコップ・拡張パーツ）と塊根植物の検索受け皿を追加（記事9→12本）
   {
     slug: "tsuchiire-scoop-mijin",
+    ogImage: "/og/og-guide-tsuchiire-scoop-mijin.jpg",
     title: "土入れスコップの選び方と使い方｜植え替えで微塵を落とすコツ",
     metaTitle: "土入れスコップの選び方と使い方｜微塵抜きのコツ",
     description:
@@ -537,6 +542,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "shichu-nobasu-kakuchou",
+    ogImage: "/og/og-guide-shichu-nobasu-kakuchou.jpg",
     title: "支柱を後から伸ばす方法｜植物の成長に合わせて継ぎ足す",
     metaTitle: "支柱を後から伸ばす｜成長に合わせて継ぎ足す方法",
     description:
@@ -587,6 +593,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "kikkouryu-shichu",
+    ogImage: "/og/og-guide-kikkouryu-shichu.jpg",
     title: "亀甲竜（塊根植物）の蔓を支柱で仕立てる｜小さな鉢で綺麗に見せるコツ",
     metaTitle: "亀甲竜の蔓を支柱で仕立てる｜小鉢での見せ方",
     description:
