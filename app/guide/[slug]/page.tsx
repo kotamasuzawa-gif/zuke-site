@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { GUIDES, GUIDE_PUBLISHED, guideBySlug } from "@/app/lib/guides";
-import { CATEGORIES, productBySlug, yen } from "@/app/lib/products";
+import { CATEGORIES, productBySlug, yen, withUtm } from "@/app/lib/products";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 export const dynamicParams = false;
@@ -132,14 +132,24 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             <h2 className="text-base font-bold">この記事で紹介した PLANTS POLE</h2>
             <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-6">
               {related.map((p) => (
-                <Link key={p.slug} href={`/products/${p.slug}`} className="block group">
-                  <div className="relative aspect-square bg-[#fbfbfb]">
-                    <Image src={p.image} alt={p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 33vw" />
-                  </div>
-                  <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{p.name}</p>
-                  <p className="mt-1 text-[13px] text-gray-500">高さ {p.height}</p>
-                  <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
-                </Link>
+                <div key={p.slug}>
+                  <Link href={`/products/${p.slug}`} className="block group">
+                    <div className="relative aspect-square bg-[#fbfbfb]">
+                      <Image src={p.image} alt={p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 33vw" />
+                    </div>
+                    <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{p.name}</p>
+                    <p className="mt-1 text-[13px] text-gray-500">高さ {p.height}</p>
+                    <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
+                  </Link>
+                  <a
+                    href={withUtm(p.baseUrl, "guide")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 flex items-center justify-center w-full py-2 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
+                  >
+                    BASEで購入する
+                  </a>
+                </div>
               ))}
             </div>
             {relatedCategories.length > 0 && (
