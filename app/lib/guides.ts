@@ -23,12 +23,15 @@ export type Guide = {
   related: string[];
   /** 2026-09-30 SEO R5: よくある質問（ページ末尾に表示＋FAQPage JSON-LD）。GSC で表示されている検索語を質問文にする */
   faq?: { q: string; a: string }[];
+  /** 2026-10-07 デザイナー: SNS共有用 OG 画像（1200x630・実写）。未指定は /og.jpg */
+  ogImage?: string;
 };
 
 export const GUIDES: Guide[] = [
   // 2026-09-21 SEO R2: 検索需要のある実務質問の受け皿を追加（記事4→7本）。
   {
     slug: "kanyoushokubutsu-taoreru",
+    ogImage: "/og/og-guide-kanyoushokubutsu-taoreru.jpg",
     title: "観葉植物が倒れる・傾く原因と対策｜支柱で立て直す手順",
     metaTitle: "観葉植物が倒れる時の対策｜原因4つと支柱で立て直す手順",
     description:
@@ -234,6 +237,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "monstera-shichu",
+    ogImage: "/og/og-guide-monstera-shichu.jpg",
     title: "モンステラの支柱の立て方｜倒れる・横に広がるを整える仕立て方",
     // 2026-09-30 SEO R5: GSC 実クエリ（モンステラ 自立しない／倒れる／垂らす／矯正）に合わせて見出し・説明を調整
     metaTitle: "モンステラが倒れる・自立しない時の支柱の立て方",

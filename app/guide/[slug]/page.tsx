@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: `${g.metaTitle}｜ZUKE`,
       description: g.description,
       url: `/guide/${g.slug}`,
-      images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE" }],
+      images: [{ url: g.ogImage ?? "/og.jpg", width: 1200, height: 630, alt: g.ogImage ? g.title : "ZUKE" }],
     },
   };
 }
