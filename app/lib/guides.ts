@@ -84,6 +84,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "shichu-tatekata",
+    ogImage: "/og/og-guide-shichu-tatekata.jpg",
     title: "植物の支柱の立て方｜挿す位置・留め方・失敗しないコツ",
     metaTitle: "観葉植物の支柱の立て方｜挿す位置と留め方",
     description:
@@ -129,6 +130,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "shichu-oshare",
+    ogImage: "/og/og-guide-shichu-oshare.jpg",
     title: "おしゃれな園芸支柱の選び方｜緑の棒から卒業する",
     metaTitle: "おしゃれな園芸支柱の選び方",
     description:
@@ -291,6 +293,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "pothos-shichu",
+    ogImage: "/og/og-guide-pothos-shichu.jpg",
     title: "ポトスの誘引と支柱の使い方｜垂らす・立ち上げるで印象が変わる",
     // 2026-09-30 SEO R5: GSC 実クエリ（ポトス 垂らす／垂らし方／登らせる／誘引）に合わせて調整
     metaTitle: "ポトスを垂らす・登らせる仕立て方｜誘引と支柱の使い方",
