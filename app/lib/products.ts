@@ -442,7 +442,7 @@ export const PRODUCTS: Product[] = [
     // 2026-10-05 SEO: カテゴリ pot の既定 title「支柱が差せる六角鉢」は丸鉢と合わないので個別に指定
     shortTitle: "丸鉢スタンドセット｜3.5号ポットがそのまま入る鉢カバー",
     fullName: "丸鉢スタンドセット - PLANTS POLEシリーズの3Dプリント製 鉢カバー＋3本脚スタンド -",
-    price: 2480,
+    price: 1600,
     image: "/products/product-marupot-stand-base.webp",
     // 2026-10-06 SEO: summary_large_image(1.91:1)で正方形og画像の脚が切れる指摘(デザイナー#3866)→横長OGに差し替え
     ogImage: "/products/product-marupot-stand-og-wide.jpg",
