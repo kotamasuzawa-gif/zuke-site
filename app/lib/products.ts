@@ -217,7 +217,8 @@ export const PRODUCTS: Product[] = [
     category: "pot",
     name: 'PLANTS POLE 六角鉢セット "3つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
-    shortTitle: '六角鉢セット "3つの六角形"',
+    // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
+    shortTitle: '六角鉢セット "3つの六角形"｜受け皿・支柱付き',
     price: 1980,
     image: "/products/product-hexpot-set-black.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
@@ -245,7 +246,8 @@ export const PRODUCTS: Product[] = [
     category: "pot",
     name: 'PLANTS POLE 六角鉢セット "2つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
-    shortTitle: '六角鉢セット "2つの六角形"',
+    // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
+    shortTitle: '六角鉢セット "2つの六角形"｜受け皿・支柱付き',
     price: 1880,
     image: "/products/product-hexpot-set2-black.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
