@@ -92,6 +92,13 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         <article>
           <h1 className="text-2xl md:text-[28px] font-bold leading-relaxed">{g.title}</h1>
           <p className="mt-6 text-[15px] leading-loose text-gray-700">{g.lead}</p>
+          {g.slug === "kanyoushokubutsu-taoreru" && (
+            <p className="mt-2 text-xs text-gray-500 leading-relaxed">
+              <Link href="/wholesale" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
+                店舗・まとめ買いの方へ（卸売のご案内）はこちら
+              </Link>
+            </p>
+          )}
 
           {g.sections.map((s) => (
             <section key={s.heading} className="mt-14">
