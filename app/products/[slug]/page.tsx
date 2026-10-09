@@ -168,9 +168,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <div className="flex gap-6 py-3 border-b border-gray-100">
                 <dt className="w-24 shrink-0 text-gray-500">高さ</dt><dd>{p.height}</dd>
               </div>
-              <div className="flex gap-6 py-3 border-b border-gray-100">
-                <dt className="w-24 shrink-0 text-gray-500">幅</dt><dd>{p.width}</dd>
-              </div>
+              {p.width && (
+                <div className="flex gap-6 py-3 border-b border-gray-100">
+                  <dt className="w-24 shrink-0 text-gray-500">幅</dt><dd>{p.width}</dd>
+                </div>
+              )}
               {p.weight && (
                 <div className="flex gap-6 py-3 border-b border-gray-100">
                   <dt className="w-24 shrink-0 text-gray-500">重さ</dt><dd>{p.weight}</dd>

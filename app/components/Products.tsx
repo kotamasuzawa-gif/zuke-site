@@ -7,7 +7,8 @@ const products = [
     name: 'PLANTS POLE "うねうね"',
     subtitle: "横に広がる植物を矯正できる支柱",
     price: "¥1,320",
-    size: "高さ約35cm / 幅約8cm",
+    // 2026-10-10 EC店長#6718: 幅約8cm は雛形の使い回しだった。サイズ図の確定値に差し替え
+    size: "高さ約35cm / うねうね部約12cm",
     description: "横に広がりやすいアロカシアなどに。うねりのある独自フォルムが植物の動きに寄り添います。",
     image: "/products/product-uneune.webp",
     imageWhite: null,
@@ -31,7 +32,8 @@ const products = [
     name: 'PLANTS POLE "3つの六角形"',
     subtitle: "蔓性植物をインテリアに馴染むように飾る支柱",
     price: "¥880",
-    size: "高さ約22cm / 幅約8cm",
+    // 2026-10-10 EC店長#6718: 幅約8cm は雛形の使い回しのため削除（確定値なし）
+    size: "高さ約22cm",
     description: "コンパクトな蔓性植物に。3つの六角形のすっきりとしたサイズ感で、小さな鉢にも合います。",
     image: "/products/product-hex3-black.webp",
     imageWhite: "/products/product-hex3-white.webp",
@@ -43,7 +45,8 @@ const products = [
     name: 'PLANTS POLE "2つの六角形"',
     subtitle: "蔓性植物をインテリアに馴染むように飾る支柱",
     price: "¥770",
-    size: "高さ約19.5cm / 幅約8cm",
+    // 2026-10-10 EC店長#6718: 幅約8cm は雛形の使い回しのため削除（確定値なし）
+    size: "高さ約19.5cm",
     description: "小型種やラフィドフォラに。2つの六角形の最もミニマルなモデル。育て始めの株にちょうど良い高さ。",
     image: "/products/product-hex2-black.webp",
     imageWhite: "/products/product-hex2-white.webp",
