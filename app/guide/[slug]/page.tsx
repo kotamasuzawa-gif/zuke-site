@@ -42,6 +42,18 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   const related = g.related.map(productBySlug).filter((p): p is NonNullable<typeof p> => !!p);
   const others = GUIDES.filter((x) => x.slug !== g.slug);
   // 2026-09-29 SEO R4: 紹介した商品のカテゴリページへもリンクする（カテゴリページへの内部リンクが少なかった）
+  // 2026-10-09 SEO: 本文中の BASE 購入リンク（節の直下・FAQ末尾）
+  const ctaLink = (c?: { product: string; label: string }) => {
+    const p = c && productBySlug(c.product);
+    if (!c || !p) return null;
+    return (
+      <p className="mt-6 text-[15px]">
+        <a href={withUtm(p.baseUrl, "guide_inline")} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
+          {c.label}（{yen(p.price)}）
+        </a>
+      </p>
+    );
+  };
   const relatedCategories = CATEGORIES.filter((c) => related.some((p) => p.category === c.key));
 
   const jsonLd: object[] = [
@@ -116,6 +128,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   ))}
                 </ul>
               )}
+              {ctaLink(s.cta)}
             </section>
           ))}
 
@@ -130,6 +143,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   </div>
                 ))}
               </dl>
+              {ctaLink(g.faqCta)}
             </section>
           )}
         </article>

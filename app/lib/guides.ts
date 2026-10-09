@@ -6,6 +6,8 @@ export type Section = {
   heading: string;
   body: string[];
   points?: string[];
+  /** 2026-10-09 SEO: 節の直下に出す BASE 購入リンク（商品 slug と文言） */
+  cta?: { product: string; label: string };
 };
 
 export type Guide = {
@@ -25,6 +27,8 @@ export type Guide = {
   faq?: { q: string; a: string }[];
   /** 2026-10-07 デザイナー: SNS共有用 OG 画像（1200x630・実写）。未指定は /og.jpg */
   ogImage?: string;
+  /** 2026-10-09 SEO: FAQ の末尾に出す BASE 購入リンク */
+  faqCta?: { product: string; label: string };
 };
 
 export const GUIDES: Guide[] = [
@@ -66,6 +70,7 @@ export const GUIDES: Guide[] = [
           "鉢ごと倒れる場合は置き場所も見直す — エアコンや扇風機の風が直接当たる場所、人やペットがよく通る通路沿いは避け、壁際や部屋の角に置きます",
           "株が片側に偏って重い — 支柱で枝や茎を中心寄りにまとめると、重心が鉢の真上に戻り、鉢ごと倒れにくくなります",
         ],
+        cta: { product: "uneune", label: "茎を中心寄りにまとめる支柱「うねうね」をBASEで見る" },
       },
       {
         heading: "支柱で立て直す手順",
@@ -96,6 +101,7 @@ export const GUIDES: Guide[] = [
       { q: "支柱はどこに挿せばいいですか？", a: "株元から数cm離した鉢のふち寄りに、まっすぐ深く挿します。鉢の中心は主根を傷めるので避けてください。" },
       { q: "観葉植物が伸びすぎて倒れる場合はどうすればいいですか？", a: "茎が細長く間延びしている場合は徒長（日照不足）が原因です。明るい場所へ移したうえで支柱を添えると、新しく伸びる部分からまっすぐ育ちます。伸びた茎を無理に切り詰める必要はありません。" },
     ],
+    faqCta: { product: "uneune", label: "倒れかけた株の立て直しに「うねうね」をBASEで見る" },
   },
   {
     slug: "shichu-tatekata",
