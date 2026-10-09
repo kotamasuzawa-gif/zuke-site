@@ -185,6 +185,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
+        {/* 2026-10-10 SEO #6730: 数字だけでは大きさが伝わらないので実寸カットでも示す。
+            ファーストビューより下なので next/image の既定どおり遅延読み込み（priority は付けない＝LCPに影響させない） */}
+        {p.sizeImage && (
+          <section className="mt-20">
+            <h2 className="text-base font-bold">サイズ</h2>
+            <div className="mt-6 max-w-md">
+              <Image
+                src={p.sizeImage.src}
+                alt={p.sizeImage.alt}
+                width={p.sizeImage.width}
+                height={p.sizeImage.height}
+                sizes="(min-width: 768px) 28rem, 100vw"
+                className="w-full h-auto"
+              />
+              {p.sizeImage.caption && (
+                <p className="mt-3 text-[13px] leading-relaxed text-gray-500">{p.sizeImage.caption}</p>
+              )}
+            </div>
+          </section>
+        )}
+
         <section className="mt-20 grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-base font-bold">相性のよい植物</h2>
