@@ -688,6 +688,9 @@ export const GUIDES: Guide[] = [
   // zuke-site 側に受け皿ページが無く、GSC の「鉢カバー」系は表示0。その入口として新設。
   {
     slug: "hachi-cover-3-5gou",
+    // 2026-10-10 SEO: 本記事だけ ogImage が無く汎用 /og.jpg にフォールバックしていた。
+    // EC店長が public/products/ に追加した丸鉢ライトグレーのスタジオ実写から、他12記事と同じ型（1200x630・縮小のみ）で作成。
+    ogImage: "/og/og-guide-hachi-cover-3-5gou.jpg",
     title: "鉢カバーの選び方｜3.5号ポットのまま植え替えずに飾る",
     metaTitle: "鉢カバー 3.5号｜植え替えずに飾る選び方",
     description:
