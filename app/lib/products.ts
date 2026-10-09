@@ -73,7 +73,7 @@ export const PRODUCTS: Product[] = [
     name: 'PLANTS POLE "5つの六角形"',
     fullName: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 1320,
-    image: "/products/product-hex5-black.webp",
+    image: "/products/product-hex5-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップでトレリス上部が切れる指摘→横長OGに差し替え
     ogImage: "/products/product-hex5-og-wide.jpg",
     ogWidth: 1200,
@@ -118,7 +118,7 @@ export const PRODUCTS: Product[] = [
     name: 'PLANTS POLE "3つの六角形"',
     fullName: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 880,
-    image: "/products/product-hex3-black.webp",
+    image: "/products/product-hex3-base.webp",
     // 2026-10-04 SEO: summary_large_image(1.91:1)で正方形og画像の上下が切れる指摘→横長OGに差し替え
     ogImage: "/products/product-hex3-black-ogwide.jpg",
     ogWidth: 1200,
@@ -155,7 +155,7 @@ export const PRODUCTS: Product[] = [
     name: 'PLANTS POLE "2つの六角形"',
     fullName: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     price: 770,
-    image: "/products/product-hex2-black.webp",
+    image: "/products/product-hex2-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで欠ける指摘→横長OGに差し替え
     ogImage: "/products/product-hex2-og-wide.jpg",
     ogWidth: 1200,
@@ -220,7 +220,7 @@ export const PRODUCTS: Product[] = [
     // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
     shortTitle: '六角鉢セット "3つの六角形"｜受け皿・支柱付き',
     price: 1980,
-    image: "/products/product-hexpot-set-black.webp",
+    image: "/products/product-hexpot-set-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
     ogImage: "/products/product-hexpot-set-og-wide.jpg",
     ogWidth: 1200,
@@ -249,7 +249,7 @@ export const PRODUCTS: Product[] = [
     // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
     shortTitle: '六角鉢セット "2つの六角形"｜受け皿・支柱付き',
     price: 1880,
-    image: "/products/product-hexpot-set2-black.webp",
+    image: "/products/product-hexpot-set2-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
     ogImage: "/products/product-hexpot-set2-og-wide.jpg",
     ogWidth: 1200,
