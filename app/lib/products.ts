@@ -332,6 +332,8 @@ export const PRODUCTS: Product[] = [
     category: "pot",
     name: "PLANTS POLE 六角鉢＋受け皿",
     fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
+    // 2026-10-10 SEO: GSC「六角鉢」3.6位・0click。title 先頭がブランド名で検索語が後ろだったので「六角鉢」を先頭に
+    shortTitle: "六角鉢＋受け皿｜支柱が差せる3Dプリント鉢 4色",
     price: 1480,
     image: "/products/product-hexpot-black.webp",
     // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
