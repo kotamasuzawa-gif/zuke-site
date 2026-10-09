@@ -43,12 +43,17 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   const others = GUIDES.filter((x) => x.slug !== g.slug);
   // 2026-09-29 SEO R4: 紹介した商品のカテゴリページへもリンクする（カテゴリページへの内部リンクが少なかった）
   // 2026-10-09 SEO: 本文中の BASE 購入リンク（節の直下・FAQ末尾）
+  // 2026-10-10 SEO(#6541): trackFrom がある記事は BASE リンクに &from= を足して記事経由の流入を実数で数える
+  const baseLink = (url: string, content: string) => {
+    const u = withUtm(url, content);
+    return g.trackFrom ? `${u}&from=${g.trackFrom}` : u;
+  };
   const ctaLink = (c?: { product: string; label: string }) => {
     const p = c && productBySlug(c.product);
     if (!c || !p) return null;
     return (
       <p className="mt-6 text-[15px]">
-        <a href={withUtm(p.baseUrl, "guide_inline")} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
+        <a href={baseLink(p.baseUrl, "guide_inline")} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
           {c.label}（{yen(p.price)}）
         </a>
       </p>
@@ -163,7 +168,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                     <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
                   </Link>
                   <a
-                    href={withUtm(p.baseUrl, "guide")}
+                    href={baseLink(p.baseUrl, "guide")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 flex items-center justify-center w-full py-2 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"

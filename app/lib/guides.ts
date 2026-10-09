@@ -29,6 +29,8 @@ export type Guide = {
   ogImage?: string;
   /** 2026-10-09 SEO: FAQ の末尾に出す BASE 購入リンク */
   faqCta?: { product: string; label: string };
+  /** 2026-10-10 SEO(#6541 EC店長依頼): 記事→BASE の流入を記事単位で数えるため、BASE リンクに付ける ?from= の値 */
+  trackFrom?: string;
 };
 
 export const GUIDES: Guide[] = [
@@ -751,6 +753,7 @@ export const GUIDES: Guide[] = [
       { q: "3.5号ポットのまま支柱を立てられますか？", a: "ビニールポットは土が浅く、支柱を挿しても傾きやすいので、鉢カバーの中で支柱を立てるのは向きません。支柱を使いたい場合は、鉢の内側に差込口がある六角鉢のように、鉢側で支柱を固定できるものを選んでください。" },
     ],
     faqCta: { product: "marupot-stand", label: "3.5号ポットがそのまま入る丸鉢スタンドセットを見る" },
+    trackFrom: "guide-hachi",
   },
 ];
 
