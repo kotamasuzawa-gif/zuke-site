@@ -550,7 +550,11 @@ export const PRODUCTS: Product[] = [
     ogWidth: 1200,
     ogHeight: 630,
     ogImageSquare: "/products/product-hexvase-black-og.jpg",
-    baseUrl: `${SHOP}/items/159228997`,
+    // 2026-10-10 SEO: item 159228997 は BASE に存在しない（`GET /api/base-items` の17件に無く、
+    // 実HTTP 404「商品が見つかりませんでした」）。購入リンク・JSON-LD の offer URL・ガイドの関連商品カード・
+    // /go/base の許可リストが全部 404 を指していたため、BASE に出し直すまでショップトップへ送る。
+    // BASE に商品を作ったら `${SHOP}/items/<新しいitem_id>` に戻す（EC店長へ #7654 で確認中）。
+    baseUrl: SHOP,
     summary:
       "六角鉢と同じ六角形のフォルムの花瓶。一輪挿しにも。高さ約16cm、口に向かって少しすぼまる形。PLA樹脂・3Dプリント製、ホワイト／ブラック／オレンジ／ライトグレーの4色（黒・白は即納、他は受注生産）。排水穴なしで水漏れしません。底面にZUKEロゴ入り。",
     lead:
