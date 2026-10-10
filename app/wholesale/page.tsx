@@ -152,11 +152,16 @@ export default function WholesalePage() {
               <h3 className="text-[15px] font-bold tracking-[0.1em]">アイアン支柱</h3>
               <Link href="/collections/iron" className="text-[12px] tracking-[0.15em] text-gray-500 hover:text-[#222]">一覧を見る →</Link>
             </div>
-            <ul className="text-[14px]">
+            {/* 2026-10-10 増澤さん指示「商品の写真イメージも載せて」: 名前と価格だけのリストを写真付きグリッドに */}
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-6 pt-4 sm:grid-cols-4">
               {WHOLESALE_PRODUCTS.map((p) => (
-                <li key={p.slug} className="flex items-baseline justify-between gap-4 py-3 border-b border-gray-100">
-                  <Link href={`/products/${p.slug}`} className="hover:opacity-60 leading-relaxed">{p.name}</Link>
-                  <span className="shrink-0 text-gray-600">{yen(p.price)}</span>
+                <li key={p.slug}>
+                  <Link href={`/products/${p.slug}`} className="block hover:opacity-70">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.image} alt={p.name} loading="lazy" className="aspect-square w-full bg-gray-50 object-cover" />
+                    <span className="mt-2 block text-[13px] leading-snug">{p.name}</span>
+                    <span className="mt-1 block text-[13px] text-gray-600">{yen(p.price)}</span>
+                  </Link>
                 </li>
               ))}
             </ul>
