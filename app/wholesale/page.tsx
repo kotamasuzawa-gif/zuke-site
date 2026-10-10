@@ -25,7 +25,8 @@ export const metadata: Metadata = {
     title: `${TITLE}｜ZUKE`,
     description: DESCRIPTION,
     url: "/wholesale",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }],
+    // 2026-10-11 design/SEO(#7916): 汎用 og.jpg だったので卸売専用カード型OGに（10/15 卸提案メールのリンク先）
+    images: [{ url: "/og/og-wholesale.jpg", width: 1200, height: 630, alt: "卸売・仕入れのご案内｜園芸支柱 PLANTS POLE" }],
   },
 };
 

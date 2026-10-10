@@ -38,7 +38,8 @@ export const metadata: Metadata = {
     title: "ZUKE｜\"魅せる\"園芸支柱 PLANTS POLE",
     description:
       "六角形デザインの園芸支柱で、観葉植物をインテリアに馴染むように美しく。公式ストアで販売中。",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE - 魅せる園芸支柱" }],
+    // 2026-10-11 design/SEO(#7916): 汎用 og.jpg（文字なし）だったのでブランドカード型OGに。about と共用。
+    images: [{ url: "/og/og-brand.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE - 魅せる園芸支柱" }],
   },
   // 2026-09-29 SEO R4: card だけにする。title/description/images を root で固定すると全ページに継承され、
   // 商品ページでも twitter:title がホームの文言になっていた。未指定なら Next が各ページの openGraph から補完する。

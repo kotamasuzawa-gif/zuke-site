@@ -15,7 +15,8 @@ export const metadata: Metadata = {
     title: "インテリアグリーンのガイド｜ZUKE",
     description: "観葉植物の選び方・飾り方・仕立て方。インテリアに馴染ませるための実践ガイド。",
     url: "/guide",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE" }],
+    // 2026-10-11 design/SEO(#7916): 汎用 og.jpg だったのでガイド一覧専用のカード型OGに
+    images: [{ url: "/og/og-guide-index.jpg", width: 1200, height: 630, alt: "インテリアグリーンのガイド｜ZUKE" }],
   },
 };
 

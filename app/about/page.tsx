@@ -16,7 +16,8 @@ export const metadata: Metadata = {
     title: "ブランドについて｜ZUKE",
     description: "インテリアに馴染む園芸支柱 PLANTS POLE をつくるブランド、ZUKE。",
     url: "/about",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE" }],
+    // 2026-10-11 design/SEO(#7916): 汎用 og.jpg だったのでブランドカード型OGに（トップと共用）
+    images: [{ url: "/og/og-brand.jpg", width: 1200, height: 630, alt: "インテリアに馴染む園芸支柱をつくるブランド ZUKE" }],
   },
 };
 
