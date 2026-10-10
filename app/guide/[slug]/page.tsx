@@ -85,7 +85,10 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       "@type": "Article",
       headline: g.title,
       description: g.description,
-      image: `${SITE}/og.jpg`,
+      // 2026-10-11 SEO(#7905): Article の image が13記事すべて汎用 og.jpg だった。
+      // 検索結果・Discover のサムネイルは構造化データの image も候補になるため、
+      // OGタグだけカード型に差し替えても足りない。記事固有のOGを渡す。
+      image: `${SITE}${g.ogImage ?? "/og.jpg"}`,
       inLanguage: "ja",
       ...(GUIDE_PUBLISHED[g.slug] && { datePublished: GUIDE_PUBLISHED[g.slug] }),
       author: { "@type": "Organization", name: "ZUKE", url: SITE },
