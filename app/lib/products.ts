@@ -80,6 +80,12 @@ export type Product = {
 };
 
 export const SHOP = "https://shop.zukeplants.com";
+/**
+ * 六角花瓶（hexvase）の BASE item_id。2026-10-10 に業務担当が出し直した新しい ID（#7686）。
+ * 旧 159228997 は BASE 上に存在せず 404 だった。公開（visible:true）になったら hexvase の
+ * baseUrl を `${SHOP}/items/${HEXVASE_ITEM_ID}` にする（下の該当コメント参照）。
+ */
+export const HEXVASE_ITEM_ID = "162055259";
 // 2026-10-07 EC店長依頼(#4631): BASE注文をzukeplants.com経由と切り分けられるよう、
 // 購入リンク（クリックして実際にBASEへ出ていくもの）にUTMを付与する。JSON-LD等の正規URLには付けない。
 export const withUtm = (url: string, utmContent?: string) => {
@@ -553,7 +559,13 @@ export const PRODUCTS: Product[] = [
     // 2026-10-10 SEO: item 159228997 は BASE に存在しない（`GET /api/base-items` の17件に無く、
     // 実HTTP 404「商品が見つかりませんでした」）。購入リンク・JSON-LD の offer URL・ガイドの関連商品カード・
     // /go/base の許可リストが全部 404 を指していたため、BASE に出し直すまでショップトップへ送る。
-    // BASE に商品を作ったら `${SHOP}/items/<新しいitem_id>` に戻す（EC店長へ #7654 で確認中）。
+    //
+    // 2026-10-10 22:3x SEO: 業務担当が BASE に出し直し済み（#7686・新 item_id = HEXVASE_ITEM_ID）。
+    // ただし**まだ visible=0（非公開）**。非公開の item ページは実測で 404（ブラウザUAで
+    // `GET ${SHOP}/items/162055259` → 404「商品が見つかりませんでした」・62,645B）なので、
+    // 今 baseUrl に入れると公開GOまでの間だけ購入ボタンが 404 に戻る。
+    // → **公開（visible:true）を確認してから** 下の baseUrl を `${SHOP}/items/${HEXVASE_ITEM_ID}` に
+    //   差し替えて push する（1行の差し替えで購入リンク・JSON-LD・ガイドカード・/go/base の4か所が生きる）。
     baseUrl: SHOP,
     summary:
       "六角鉢と同じ六角形のフォルムの花瓶。一輪挿しにも。高さ約16cm、口に向かって少しすぼまる形。PLA樹脂・3Dプリント製、ホワイト／ブラック／オレンジ／ライトグレーの4色（黒・白は即納、他は受注生産）。排水穴なしで水漏れしません。底面にZUKEロゴ入り。",
