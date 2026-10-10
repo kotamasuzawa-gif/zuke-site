@@ -49,6 +49,8 @@ export const GUIDES: Guide[] = [
   // 2026-09-21 SEO R2: 検索需要のある実務質問の受け皿を追加（記事4→7本）。
   {
     slug: "kanyoushokubutsu-taoreru",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-taoreru",
     ogImage: "/og/og-guide-kanyoushokubutsu-taoreru.jpg",
     title: "観葉植物が倒れる・傾く原因と対策｜支柱で立て直す手順",
     metaTitle: "観葉植物が倒れる・傾く対策｜伸びすぎ・根詰まり別に支柱で立て直す",
@@ -97,6 +99,8 @@ export const GUIDES: Guide[] = [
           "3. きつく縛らない。茎と支柱の間に指1本入るくらいの余裕を残す",
           "4. 数日おきに角度を確認し、まだ傾くようなら留め位置を上へずらす",
         ],
+        // 2026-10-10 SEO(#7395): CTAが1本しか無かった記事の残り見出しに、節の内容と一致する商品の購入導線を追加
+        cta: { product: "hex3", label: "立て直しの一本に「3つの六角形」（高さ約22cm）をBASEで見る" },
       },
       {
         heading: "再発させないために",
@@ -120,6 +124,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "shichu-tatekata",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-tatekata",
     ogImage: "/og/og-guide-shichu-tatekata.jpg",
     title: "植物の支柱の立て方｜挿す位置・留め方・失敗しないコツ",
     // 2026-10-09 SEO: 「観葉植物 支柱 立て方」5.2位・0click → 長さの目安と手順数をタイトル/説明に出してCTR改善
@@ -149,6 +155,8 @@ export const GUIDES: Guide[] = [
           "1か所で足りないときは、上下2か所に分けて支える",
           "成長期は月1回ほど、食い込んでいないか確認する",
         ],
+        // 2026-10-10 SEO(#7395): CTAが1本しか無かった記事の残り見出しに、節の内容と一致する商品の購入導線を追加
+        cta: { product: "hex3", label: "ひもを使わず枠に通して留められる「3つの六角形」をBASEで見る" },
       },
       {
         heading: "鉢の大きさに合わせた支柱の長さの目安",
@@ -162,6 +170,8 @@ export const GUIDES: Guide[] = [
           "5〜7号鉢で葉が横に広がる株 — 高さ約35cmの「うねうね」",
           "6〜8号鉢でモンステラ・ポトスなど伸びる蔓性植物 — 全長約39cmの「5つの六角形」",
         ],
+        // 2026-10-10 SEO(#7395): CTAが1本しか無かった記事の残り見出しに、節の内容と一致する商品の購入導線を追加
+        cta: { product: "hex5", label: "6〜8号鉢には全長約39cmの「5つの六角形」をBASEで見る" },
       },
       // 2026-10-10 SEO(#6909 EC店長依頼): 記事経由の単品買い→2本買いへ。長さの目安の直後に組み合わせ2案を置く。
       // 金額は本文に書かない（本文は手打ち＝値上げ/セール時に取り残される。合計は記事末の商品ブロックが products.ts の price から自動で出す）
@@ -216,6 +226,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "shichu-oshare",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-oshare",
     ogImage: "/og/og-guide-shichu-oshare.jpg",
     title: "おしゃれな園芸支柱の選び方｜緑の棒から卒業する",
     metaTitle: "おしゃれな園芸支柱の選び方",
@@ -262,6 +274,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "interior-green",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-interior",
     ogImage: "/og/og-guide-interior-green.jpg",
     title: "インテリアグリーンとは？失敗しない選び方と、おしゃれに飾る5つのコツ",
     metaTitle: "インテリアグリーンとは？選び方とおしゃれな飾り方",
@@ -330,6 +344,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "monstera-shichu",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-monstera",
     ogImage: "/og/og-guide-monstera-shichu.jpg",
     title: "モンステラの支柱の立て方｜倒れる・横に広がるを整える仕立て方",
     // 2026-09-30 SEO R5: GSC 実クエリ（モンステラ 自立しない／倒れる／垂らす／矯正）に合わせて見出し・説明を調整
@@ -347,6 +363,8 @@ export const GUIDES: Guide[] = [
           "モンステラは自生地では他の樹木に気根を絡ませながら上へ登っていきます。鉢の中には登る相手がいないため、行き場を失った茎が横に伸び、葉の重さで傾いていきます。",
           "つまり倒れるのは順調に育っている証拠でもあります。問題は姿が崩れることなので、支柱を立てて上方向へ誘導してあげれば解決します。",
         ],
+        // 2026-10-10 SEO(#7395): CTAが1本しか無かった記事の残り見出しに、節の内容と一致する商品の購入導線を追加
+        cta: { product: "uneune", label: "葉が横に広がる株には「うねうね」（高さ約35cm）をBASEで見る" },
       },
       {
         heading: "支柱を立てるベストな時期",
@@ -389,6 +407,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "pothos-shichu",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-pothos",
     ogImage: "/og/og-guide-pothos-shichu.jpg",
     title: "ポトスの誘引と支柱の使い方｜垂らす・立ち上げるで印象が変わる",
     // 2026-09-30 SEO R5: GSC 実クエリ（ポトス 垂らす／垂らし方／登らせる／誘引）に合わせて調整
@@ -428,6 +448,8 @@ export const GUIDES: Guide[] = [
           "③ 節（葉の付け根）が支柱に触れるように留めると、そこから根が出て自分で掴まるようになります",
           "④ 立ち上げなかった長い蔓は思いきって切る。切った蔓は水に挿せば簡単に増やせます",
         ],
+        // 2026-10-10 SEO(#7395): CTAが1本しか無かった記事の残り見出しに、節の内容と一致する商品の購入導線を追加
+        cta: { product: "hex5", label: "長く登らせるなら全長約39cmの「5つの六角形」をBASEで見る" },
       },
       {
         heading: "伸びすぎて株元が寂しくなったら",
@@ -457,6 +479,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "furniture-green",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-furniture",
     ogImage: "/og/og-guide-furniture-green.jpg",
     title: "家具と観葉植物のコーディネート｜木・アイアン・白の3パターン",
     metaTitle: "家具と観葉植物のコーディネート術",
@@ -503,6 +527,8 @@ export const GUIDES: Guide[] = [
   // 2026-09-23 SEO R3: 3Dプリント商品（六角鉢セット・樹脂版支柱・花瓶）の検索受け皿を追加（記事7→9本）
   {
     slug: "shichu-sashikomi-hachi",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-sashikomi",
     ogImage: "/og/og-guide-shichu-sashikomi-hachi.jpg",
     title: "支柱がまっすぐ立つ鉢｜差込口付き「六角鉢セット」の使い方",
     metaTitle: "支柱が差せる鉢｜差込口付き六角鉢の使い方",
@@ -551,6 +577,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "3d-print-hachi",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-3dprint",
     ogImage: "/og/og-guide-3d-print-hachi.jpg",
     title: "3Dプリント製の植木鉢（PLA樹脂）の特徴と注意点｜水やり・日光・耐久性",
     metaTitle: "3Dプリント製の植木鉢の特徴と注意点",
@@ -601,6 +629,8 @@ export const GUIDES: Guide[] = [
   // 2026-09-28 SEO R3: 新商品（土入れスコップ・拡張パーツ）と塊根植物の検索受け皿を追加（記事9→12本）
   {
     slug: "tsuchiire-scoop-mijin",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-scoop",
     ogImage: "/og/og-guide-tsuchiire-scoop-mijin.jpg",
     title: "土入れスコップの選び方と使い方｜植え替えで微塵を落とすコツ",
     metaTitle: "土入れスコップの選び方と使い方｜微塵抜きのコツ",
@@ -649,6 +679,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "shichu-nobasu-kakuchou",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-kakuchou",
     ogImage: "/og/og-guide-shichu-nobasu-kakuchou.jpg",
     title: "支柱を後から伸ばす方法｜植物の成長に合わせて継ぎ足す",
     metaTitle: "支柱を後から伸ばす｜成長に合わせて継ぎ足す方法",
@@ -702,6 +734,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "kikkouryu-shichu",
+    // 2026-10-10 SEO(#7395): 記事別の BASE 流入を数えるため全13記事に付与
+    trackFrom: "guide-kikkouryu",
     ogImage: "/og/og-guide-kikkouryu-shichu.jpg",
     title: "亀甲竜（塊根植物）の蔓を支柱で仕立てる｜小さな鉢で綺麗に見せるコツ",
     // 2026-10-08 SEO: 「亀甲竜 仕立て」(順位8.0)・「亀甲竜 ツル 細い」(順位2.0) を title 先頭に寄せる
