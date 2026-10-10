@@ -65,6 +65,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     .map((it) => ({ p: productBySlug(it.product), note: it.note }))
     .filter((x): x is { p: NonNullable<ReturnType<typeof productBySlug>>; note: string } => !!x.p);
   const bundleTotal = bundleItems.reduce((sum, { p }) => sum + p.price, 0);
+  // 2026-10-10 SEO(#7103/#7110): 同じ2本が1点で買えるセット商品。差額は price から計算する（本文に手打ちしない）
+  const setOfferProduct = g.bundle?.setOffer ? productBySlug(g.bundle.setOffer.product) : undefined;
+  const setOfferSaving = setOfferProduct ? bundleTotal - setOfferProduct.price : 0;
 
   const jsonLd: object[] = [
     {
@@ -199,6 +202,30 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               2本合わせて <span className="font-bold">{yen(bundleTotal)}</span>
               {g.bundle.footnote && <span className="text-gray-600">（{g.bundle.footnote.replace(/。$/, "")}）</span>}
             </p>
+
+            {/* 2026-10-10 SEO(#7103/#7110 EC店長): 同じ2本を1点で買えるセット（161645906）への導線。
+                金額はすべて products.ts の price から出す。BASE が非公開の間は push しない。 */}
+            {setOfferProduct && g.bundle.setOffer && setOfferSaving > 0 && (
+              <div className="mt-6 p-5 bg-[#fbfbfb] border border-gray-100">
+                <p className="text-[14px] leading-relaxed">
+                  この2本は
+                  <Link href={`/products/${setOfferProduct.slug}`} className="font-bold underline underline-offset-4 decoration-gray-400 hover:text-[#222]">
+                    2本セット
+                  </Link>
+                  でもご用意しています。<span className="font-bold">{yen(setOfferProduct.price)}</span>
+                  <span className="text-gray-600">（単品2本より {yen(setOfferSaving)} おトク）</span>
+                </p>
+                <p className="mt-2 text-[13px] leading-relaxed text-gray-600">{g.bundle.setOffer.note}</p>
+                <a
+                  href={baseLink(setOfferProduct.baseUrl, "guide_set")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 flex items-center justify-center w-full py-2.5 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
+                >
+                  2本セットをBASEで見る
+                </a>
+              </div>
+            )}
           </section>
         )}
 
