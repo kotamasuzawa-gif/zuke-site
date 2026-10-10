@@ -59,6 +59,11 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       </p>
     );
   };
+  // 2026-10-10 SEO(#7602): 節の直下のサイト内リンク（商品ページへ）。公開中の商品だけを引く
+  const sectionLinks = (links?: { product: string; label: string }[]) =>
+    (links ?? [])
+      .map((l) => ({ p: productBySlug(l.product), label: l.label }))
+      .filter((x): x is { p: NonNullable<ReturnType<typeof productBySlug>>; label: string } => !!x.p);
   const relatedCategories = CATEGORIES.filter((c) => related.some((p) => p.category === c.key));
   // 2026-10-10 SEO(#6896): 2本使いの提案ブロック（商品リンクの直前）。公開中の商品だけを引く
   const bundleItems = (g.bundle?.items ?? [])
@@ -134,6 +139,28 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                     <li key={pt} className="flex gap-3 text-[15px] leading-relaxed text-gray-700">
                       <span className="mt-2.5 w-1 h-1 rounded-full bg-[#222] shrink-0" />
                       <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {s.image && (
+                <Image
+                  src={s.image.src}
+                  alt={s.image.alt}
+                  width={s.image.width}
+                  height={s.image.height}
+                  className="mt-8 w-full h-auto"
+                  sizes="(max-width: 768px) 100vw, 672px"
+                />
+              )}
+              {sectionLinks(s.links).length > 0 && (
+                <ul className="mt-6 flex flex-col gap-3">
+                  {sectionLinks(s.links).map(({ p, label }) => (
+                    <li key={p.slug} className="text-[15px] leading-relaxed">
+                      <Link href={`/products/${p.slug}`} className="underline underline-offset-4 decoration-gray-400 hover:text-[#222]">
+                        {label}
+                      </Link>
+                      <span className="text-gray-500">（{yen(p.price)}）</span>
                     </li>
                   ))}
                 </ul>
