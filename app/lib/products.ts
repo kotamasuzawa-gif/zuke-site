@@ -619,8 +619,13 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   hex3: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
     { slug: "marupot-stand", note: "丸鉢スタンドセットに仕立てて、つる性・細葉の植物をすっきりまとめる" },
+    // 2026-10-10 SEO: BASEの複数点注文は「3つ＋2つ」の組み合わせが最多（9/27・10/9）。相互に導線を出す
+    { slug: "hex2", note: "高さ違い（約19.5cm）を隣の小鉢に。2点で合計1,650円" },
   ],
-  hex2: [{ slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" }],
+  hex2: [
+    { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
+    { slug: "hex3", note: "高さ違い（約22cm）を並べて。2点で合計1,650円" },
+  ],
   pole3pla: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
     { slug: "hexparts", note: "六角形を足して伸ばす" },
