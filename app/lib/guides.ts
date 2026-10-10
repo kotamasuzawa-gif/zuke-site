@@ -39,6 +39,7 @@ export type Guide = {
   bundle?: {
     heading: string;
     body: string[];
+    image?: { src: string; alt: string; width: number; height: number };
     items: { product: string; note: string }[];
     footnote?: string;
   };
@@ -179,6 +180,13 @@ export const GUIDES: Guide[] = [
         "支柱は1鉢に1本と決まっているわけではありません。高さ約22cmの「3つの六角形」と約19.5cmの「2つの六角形」を並べると、棚の上の2鉢を同じシリーズで揃えながら、高さの差で視線が上下に動く見え方になります。",
         "1鉢に2本挿して、伸びてきた蔓を左右に振り分ける使い方もできます。株が片側に偏って重くなるのを防げるので、鉢ごと倒れにくくなります。",
       ],
+      // 2026-10-09 デザイナー制作の同梱導線カット（1200x800・実写2点＋高さ/価格）を流用
+      image: {
+        src: "/products/guide-hex2-hex3-pair-1200x800.jpg",
+        alt: 'PLANTS POLE "2つの六角形"（高さ19.5cm）と "3つの六角形"（高さ22cm）を鉢に挿して並べた比較写真',
+        width: 1200,
+        height: 800,
+      },
       items: [
         { product: "hex3", note: "高さ約22cm。ホヤなど、少し伸びはじめた株に" },
         { product: "hex2", note: "高さ約19.5cm。亀甲竜など背の低い株・最初の1本に" },

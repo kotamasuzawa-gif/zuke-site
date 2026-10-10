@@ -165,14 +165,21 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             {g.bundle.body.map((para, i) => (
               <p key={i} className="mt-5 text-[15px] leading-loose text-gray-700">{para}</p>
             ))}
+            {g.bundle.image && (
+              <Image
+                src={g.bundle.image.src}
+                alt={g.bundle.image.alt}
+                width={g.bundle.image.width}
+                height={g.bundle.image.height}
+                className="mt-8 w-full h-auto"
+                sizes="(max-width: 768px) 100vw, 672px"
+              />
+            )}
             <div className="mt-8 grid grid-cols-2 gap-6">
               {bundleItems.map(({ p, note }) => (
                 <div key={p.slug}>
                   <Link href={`/products/${p.slug}`} className="block group">
-                    <div className="relative aspect-square bg-[#fbfbfb]">
-                      <Image src={p.image} alt={`${p.fullName}（高さ ${p.height}）`} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 33vw" />
-                    </div>
-                    <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{p.name}</p>
+                    <p className="text-[13px] leading-relaxed line-clamp-2 underline underline-offset-4 decoration-gray-300 group-hover:decoration-[#222]">{p.name}</p>
                     <p className="mt-1 text-[13px] text-gray-500">高さ {p.height}</p>
                     <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
                   </Link>
