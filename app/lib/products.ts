@@ -254,7 +254,8 @@ export const PRODUCTS: Product[] = [
     name: 'PLANTS POLE 六角鉢セット "3つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
     // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
-    shortTitle: '六角鉢セット "3つの六角形"｜受け皿・支柱付き',
+    // 2026-10-10 SEO: 六角鉢3点を検索結果で比べられるよう価格を追加（{price} は price から自動）。EC店長が10/10ライブ値で確認 #7524
+    shortTitle: '六角鉢セット "3つの六角形" {price}｜受け皿・支柱付き',
     price: 1980,
     image: "/products/product-hexpot-set-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
@@ -283,7 +284,8 @@ export const PRODUCTS: Product[] = [
     name: 'PLANTS POLE 六角鉢セット "2つの六角形"',
     fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
     // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
-    shortTitle: '六角鉢セット "2つの六角形"｜受け皿・支柱付き',
+    // 2026-10-10 SEO: 同上（#7524・1,880円）
+    shortTitle: '六角鉢セット "2つの六角形" {price}｜受け皿・支柱付き',
     price: 1880,
     image: "/products/product-hexpot-set2-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
@@ -369,7 +371,9 @@ export const PRODUCTS: Product[] = [
     name: "PLANTS POLE 六角鉢＋受け皿",
     fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
     // 2026-10-10 SEO: GSC「六角鉢」3.6位・0click。title 先頭がブランド名で検索語が後ろだったので「六角鉢」を先頭に
-    shortTitle: "六角鉢＋受け皿｜支柱が差せる3Dプリント鉢 4色",
+    // 2026-10-10 SEO: 価格が無く検索結果で比べられていなかったので {price}（下の price から自動で埋まる）を追加。
+    // 価格はEC店長が10/10にBASEライブ値で確認済み（#7524: 1,480円・4色バリエーションも一致）
+    shortTitle: "六角鉢＋受け皿 {price}｜支柱が差せる3Dプリント鉢 4色",
     price: 1480,
     image: "/products/product-hexpot-black.webp",
     // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
@@ -377,8 +381,10 @@ export const PRODUCTS: Product[] = [
     ogWidth: 1200,
     ogHeight: 630,
     baseUrl: `${SHOP}/items/159048204`,
+    // 2026-10-10 SEO: 検索結果で大きさが分からず比べられていなかったので実寸を入れた。
+    // 号数表記は使わない（3.5号がそのまま入る丸鉢スタンドセットと混同されるため。EC店長 #7524）
     summary:
-      "PLANTS POLEを差し込める六角形の鉢と受け皿。支柱の差込口・タグポケット付き。PLA樹脂・3Dプリント製、ブラック／ホワイト／オレンジ／ライトグレーの4色。支柱は付属しません。",
+      "PLANTS POLEを差し込める六角形の鉢と受け皿（鉢 高さ95mm・対辺69mm／受け皿 対角91mm）。2号前後の小さな株向け。支柱の差込口・タグポケット付き、ブラック／ホワイト／オレンジ／ライトグレーの4色。支柱は付属しません。",
     lead:
       "PLANTS POLEの六角形に合わせてつくった鉢と受け皿のセット。鉢の内側に支柱の差込口があり、鉄製・樹脂版どちらのPLANTS POLEも差し込むだけで固定できます。お手持ちの支柱と組み合わせて。",
     height: "鉢 約95mm／受け皿 約13mm",

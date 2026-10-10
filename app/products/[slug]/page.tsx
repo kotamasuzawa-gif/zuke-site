@@ -32,8 +32,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = productBySlug(slug);
   if (!p) return {};
+  // 2026-10-10 SEO: shortTitle に `{price}` と書くと products.ts の price から埋める。
+  // 価格はEC店長が所有する数字なので、タイトルに数字を二重で持たせない（price を直せばtitleも追従）
+  const title = (p.shortTitle ?? `${p.name}｜${TITLE_SUFFIX[p.category]}`).replace(
+    "{price}",
+    `${p.price.toLocaleString("ja-JP")}円`,
+  );
   return {
-    title: p.shortTitle ?? `${p.name}｜${TITLE_SUFFIX[p.category]}`,
+    title,
     description: p.summary,
     alternates: { canonical: `/products/${p.slug}` },
     openGraph: {
