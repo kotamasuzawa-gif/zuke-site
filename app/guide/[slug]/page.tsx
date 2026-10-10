@@ -44,16 +44,24 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // 2026-09-29 SEO R4: 紹介した商品のカテゴリページへもリンクする（カテゴリページへの内部リンクが少なかった）
   // 2026-10-09 SEO: 本文中の BASE 購入リンク（節の直下・FAQ末尾）
   // 2026-10-10 SEO(#6541): trackFrom がある記事は BASE リンクに &from= を足して記事経由の流入を実数で数える
+  // 2026-10-10 SEO(#7630 EC店長): BASE 側に UTM も from も残らず注文APIにも流入元の項目が無いため、
+  // 記事からの購入リンクは自社ドメインの 302 中継（/go/base/<item_id>）を通してクリックをログに出す。
+  // item_id が取れない商品（ショップトップ等）は従来どおり直リンク。
   const baseLink = (url: string, content: string) => {
     const u = withUtm(url, content);
-    return g.trackFrom ? `${u}&from=${g.trackFrom}` : u;
+    const withFrom = g.trackFrom ? `${u}&from=${g.trackFrom}` : u;
+    const itemId = url.match(/\/items\/(\d+)$/)?.[1];
+    if (!itemId) return withFrom;
+    const q = new URLSearchParams({ c: content });
+    if (g.trackFrom) q.set("from", g.trackFrom);
+    return `/go/base/${itemId}?${q.toString()}`;
   };
   const ctaLink = (c?: { product: string; label: string }) => {
     const p = c && productBySlug(c.product);
     if (!c || !p) return null;
     return (
       <p className="mt-6 text-[15px]">
-        <a href={baseLink(p.baseUrl, "guide_inline")} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
+        <a href={baseLink(p.baseUrl, "guide_inline")} target="_blank" rel="nofollow noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
           {c.label}（{yen(p.price)}）
         </a>
       </p>
@@ -214,7 +222,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   <a
                     href={baseLink(p.baseUrl, "guide_bundle")}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="nofollow noopener noreferrer"
                     className="mt-3 flex items-center justify-center w-full py-2 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
                   >
                     BASEで購入する
@@ -246,7 +254,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   <a
                     href={baseLink(p.baseUrl, "guide")}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="nofollow noopener noreferrer"
                     className="mt-2 flex items-center justify-center w-full py-2 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
                   >
                     BASEで購入する
