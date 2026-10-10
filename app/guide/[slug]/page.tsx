@@ -60,6 +60,11 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     );
   };
   const relatedCategories = CATEGORIES.filter((c) => related.some((p) => p.category === c.key));
+  // 2026-10-10 SEO(#6896): 2本使いの提案ブロック（商品リンクの直前）。公開中の商品だけを引く
+  const bundleItems = (g.bundle?.items ?? [])
+    .map((it) => ({ p: productBySlug(it.product), note: it.note }))
+    .filter((x): x is { p: NonNullable<ReturnType<typeof productBySlug>>; note: string } => !!x.p);
+  const bundleTotal = bundleItems.reduce((sum, { p }) => sum + p.price, 0);
 
   const jsonLd: object[] = [
     {
@@ -152,6 +157,43 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             </section>
           )}
         </article>
+
+        {/* 2026-10-10 SEO(#6896): 商品リンクの直前に「高さ違いの2本使い」を写真付きで提案して客単価を上げる */}
+        {bundleItems.length > 0 && g.bundle && (
+          <section className="mt-20 pt-12 border-t border-gray-100">
+            <h2 className="text-base font-bold">{g.bundle.heading}</h2>
+            {g.bundle.body.map((para, i) => (
+              <p key={i} className="mt-5 text-[15px] leading-loose text-gray-700">{para}</p>
+            ))}
+            <div className="mt-8 grid grid-cols-2 gap-6">
+              {bundleItems.map(({ p, note }) => (
+                <div key={p.slug}>
+                  <Link href={`/products/${p.slug}`} className="block group">
+                    <div className="relative aspect-square bg-[#fbfbfb]">
+                      <Image src={p.image} alt={`${p.fullName}（高さ ${p.height}）`} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 33vw" />
+                    </div>
+                    <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{p.name}</p>
+                    <p className="mt-1 text-[13px] text-gray-500">高さ {p.height}</p>
+                    <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
+                  </Link>
+                  <p className="mt-2 text-[13px] leading-relaxed text-gray-600">{note}</p>
+                  <a
+                    href={baseLink(p.baseUrl, "guide_bundle")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 flex items-center justify-center w-full py-2 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
+                  >
+                    BASEで購入する
+                  </a>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-[14px] leading-relaxed">
+              2本合わせて <span className="font-bold">{yen(bundleTotal)}</span>
+              {g.bundle.footnote && <span className="text-gray-600">（{g.bundle.footnote.replace(/。$/, "")}）</span>}
+            </p>
+          </section>
+        )}
 
         {related.length > 0 && (
           <section className="mt-20 pt-12 border-t border-gray-100">
