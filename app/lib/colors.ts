@@ -27,3 +27,19 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   "marupot-stand": [],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
+// 2026-10-10 EC店長#7597: ホーム・商品一覧・カテゴリの色ボタンは全4色固定なので、その商品に存在しない配色を押すと
+// 中身は base のままなのに alt だけ「（ホワイト）」になっていた（丸鉢スタンドのホワイト用ファイルは base と同一）。
+// 2026-09-27 増澤さん「全商品でオレンジ/ライトグレーにも切り替える」は維持したいので、BASE で買える色（soldColors）では
+// なく「その配色の写真が存在しない色」だけを除外し、base 画像＋色名なしの alt に戻す。
+const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
+  // 丸鉢スタンドセットはオレンジ鉢／ブラック鉢／ライトグレー鉢の3種だけ。白の鉢は商品も写真も無い
+  "marupot-stand": ["white"],
+};
+export const hasColorPhoto = (slug: string, color: ColorKey | null): color is ColorKey =>
+  color !== null && !(NO_PHOTO_COLORS[slug] ?? []).includes(color);
+/** 一覧系の表示画像。その配色の写真が無い色のときは BASE の1枚目に戻す */
+export const shownImageFor = (slug: string, color: ColorKey | null) =>
+  shownImage(slug, hasColorPhoto(slug, color) ? color : null);
+/** 一覧系の alt に付ける色名。その配色の写真が無い色のときは空（色名を書かない） */
+export const shownColorLabel = (slug: string, color: ColorKey | null) =>
+  hasColorPhoto(slug, color) ? colorLabel(color) : "";

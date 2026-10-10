@@ -7,7 +7,7 @@ import { PRODUCTS, yen, withUtm } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
-import { COLORS, type ColorKey, shownImage } from "@/app/lib/colors";
+import { COLORS, type ColorKey, shownImageFor, shownColorLabel } from "@/app/lib/colors";
 import { useState } from "react";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
@@ -120,9 +120,10 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
             {products.map((p) => (
               <a key={p.url} href={p.url} target="_blank" rel="noopener noreferrer" className="block group">
                 <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
+                  {/* 2026-10-10 EC店長#7597: その商品に扱いの無い色はBASEの1枚目＋色名なしのalt（colors.ts の soldColors 準拠） */}
                   <Image
-                    src={shownImage(p.slug, color)}
-                    alt={color ? `${p.name}（${COLORS.find((c) => c.key === color)?.label}）` : p.name}
+                    src={shownImageFor(p.slug, color)}
+                    alt={shownColorLabel(p.slug, color) ? `${p.name}（${shownColorLabel(p.slug, color)}）` : p.name}
                     fill
                     className="object-contain group-hover:opacity-90 transition-opacity"
                     sizes="(max-width: 1024px) 50vw, 25vw"

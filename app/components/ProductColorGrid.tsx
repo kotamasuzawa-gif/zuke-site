@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { COLORS, type ColorKey, shownImage, colorLabel } from "@/app/lib/colors";
+import { COLORS, type ColorKey, shownImageFor, shownColorLabel, colorLabel } from "@/app/lib/colors";
 
 export type GridItem = { slug: string; name: string; fullName: string; price: string; sub?: string; href: string; external?: boolean };
 export type GridGroup = { key: string; title?: string; moreHref?: string; items: GridItem[] };
@@ -15,10 +15,12 @@ export default function ProductColorGrid({ items, groups }: { items?: GridItem[]
   // 2026-09-29 SEO R4: グループ見出し（h2）が無いカテゴリページでは h1 の次がいきなり h3 になっていたため、商品名を h2 に（見た目は同じ）
   const NameTag = groups ? "h3" : "h2";
   const card = (p: GridItem) => {
+    // 2026-10-10 EC店長#7597: その商品に扱いの無い色はBASEの1枚目＋色名なしのalt（colors.ts の soldColors 準拠）
+    const label = shownColorLabel(p.slug, color);
     const inner = (
       <>
         <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
-          <Image src={shownImage(p.slug, color)} alt={color ? `${p.fullName}（${colorLabel(color)}）` : p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 1024px) 50vw, 25vw" />
+          <Image src={shownImageFor(p.slug, color)} alt={label ? `${p.fullName}（${label}）` : p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 1024px) 50vw, 25vw" />
         </div>
         <NameTag className="mt-4 text-[15px] leading-relaxed line-clamp-2">{p.name}</NameTag>
         {p.sub && <p className="mt-1 text-[13px] text-gray-500">{p.sub}</p>}
