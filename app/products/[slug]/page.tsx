@@ -191,6 +191,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
+        {/* 2026-10-10 SEO #7590(EC店長): ヒーローが商品単体カットだと「何に使う物か」がLP上で1枚も分からない。
+            ヒーロー直下に使用イメージ1枚＋キャプションで補う（サイズ図と同じく遅延読み込み・LCPには載せない） */}
+        {p.usageImage && (
+          <section className="mt-20">
+            <h2 className="text-base font-bold">使用イメージ</h2>
+            <div className="mt-6 max-w-md">
+              <Image
+                src={p.usageImage.src}
+                alt={p.usageImage.alt}
+                width={p.usageImage.width}
+                height={p.usageImage.height}
+                sizes="(min-width: 768px) 28rem, 100vw"
+                className="w-full h-auto"
+              />
+              {p.usageImage.caption && (
+                <p className="mt-3 text-[13px] leading-relaxed text-gray-500">{p.usageImage.caption}</p>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* 2026-10-10 SEO #6730: 数字だけでは大きさが伝わらないので実寸カットでも示す。
             ファーストビューより下なので next/image の既定どおり遅延読み込み（priority は付けない＝LCPに影響させない） */}
         {p.sizeImage && (

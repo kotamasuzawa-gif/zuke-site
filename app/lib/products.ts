@@ -50,6 +50,18 @@ export type Product = {
     width: number;
     height: number;
   };
+  /**
+   * 使用イメージ（実際に植物を入れて飾った写真）。
+   * 2026-10-10 EC店長#7590: ヒーローが商品単体カットになり「何に使う物か」がLP上で分からなくなるため、
+   * ヒーロー直下に1枚＋キャプションで補う。白背景の物撮りではなく、暮らしの中のカットだけを入れる。
+   */
+  usageImage?: {
+    src: string;
+    alt: string;
+    caption?: string;
+    width: number;
+    height: number;
+  };
   /** 相性のよい植物 */
   plants: string[];
   /** インテリア文脈での使いどころ */
@@ -498,6 +510,14 @@ export const PRODUCTS: Product[] = [
     ogWidth: 1200,
     ogHeight: 630,
     ogImageSquare: "/products/product-marupot-stand-og.jpg",
+    // 2026-10-10 EC店長#7590: ヒーローが鉢単体なので、使うところが分かるカットをLPに1枚足す
+    usageImage: {
+      src: "/products/product-marupot-leaf.webp",
+      alt: "オレンジ鉢とブラック鉢の丸鉢スタンドセットを棚に並べ、PLANTS POLE \"3つの六角形\"でつる性植物を仕立てたところ",
+      caption: "3.5号のビニールポットをそのまま入れて、棚やデスクの上に。写真はオレンジ鉢×ブラックスタンドとブラック鉢×オレンジスタンドの2点に、PLANTS POLE \"3つの六角形\"を合わせたところです。",
+      width: 640,
+      height: 640,
+    },
     baseUrl: `${SHOP}/items/161140229`,
     summary:
       "丸みのある鉢カバーと3本脚スタンドのセット。3.5号のビニールポットがそのまま入り、植え替えずに飾れます。PLA樹脂・3Dプリント製、鉢とスタンドは別パーツで、オレンジ鉢×ブラックスタンド／ブラック鉢×オレンジスタンド／ライトグレー鉢×ブラックスタンドの3種から選べます。",
