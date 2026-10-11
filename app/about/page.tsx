@@ -86,7 +86,7 @@ export default function AboutPage() {
             アイアン支柱の PLANTS POLE はアイアンスチール製。細くても植物の重さに負けず、
             黒のマットな質感が葉の緑を引き締めます。サイズは小鉢向けの高さ約19.5cm から、
             リビングの主役になる約39cm まで。置き場所と株の大きさに合わせて選べます。
-            樹脂版の支柱・拡張パーツ、六角鉢と受け皿、花瓶は PLA樹脂の3Dプリント製で、軽く、色を選べます。
+            樹脂版の支柱・拡張パーツ、六角鉢と受け皿は PLA樹脂の3Dプリント製で、軽く、色を選べます。
           </p>
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
             {PRODUCTS.map((p) => (

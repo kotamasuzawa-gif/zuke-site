@@ -163,7 +163,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           モンステラやポトスなど蔓性の観葉植物を、垂らしたままにせず立ち上げて仕立てる。
           {/* 2026-09-29 SEO R4: 「アイアンのみ・4型」の旧文言を、3Dプリント（PLA樹脂）製品を含む現在のラインナップに合わせた */}
           アイアンスチールと3Dプリント（PLA樹脂）の六角形が、家具や部屋の景観に溶け込みながら植物を支えます。
-          アイアン支柱は高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。支柱の差込口付き六角鉢や花瓶も展開しています。
+          アイアン支柱は高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。支柱の差込口付き六角鉢も展開しています。
         </p>
         <nav aria-label="サイト内リンク" className="mt-7 flex flex-wrap justify-center gap-x-7 gap-y-3 text-[13px] tracking-[0.1em]">
           <Link href="/products" className="hover:opacity-60">商品一覧</Link>

@@ -167,7 +167,7 @@ export default function WholesalePage() {
               ))}
             </ul>
             <p className="mt-4 text-[13px] leading-loose text-gray-500">
-              3Dプリントの樹脂製品（六角鉢・樹脂支柱・拡張パーツ・花瓶）は受注生産のため、公式オンラインストアのみでの販売となり、卸売の対象外です。
+              3Dプリントの樹脂製品（六角鉢・樹脂支柱・拡張パーツ）は受注生産のため、公式オンラインストアのみでの販売となり、卸売の対象外です。
             </p>
           </div>
           <p className="mt-6 text-[14px]">

@@ -2,7 +2,7 @@
 // 2026-08-22 SEO強化: 商品ごとの内部ページを新設し、ここを共通データ源にした。
 
 export type MaterialKind = "iron" | "pla";
-export type CategoryKey = "pole" | "pot" | "extension" | "vase" | "tool";
+export type CategoryKey = "pole" | "pot" | "extension" | "tool";
 
 export type Product = {
   slug: string;
@@ -13,7 +13,7 @@ export type Product = {
   price: number;
   /** 素材系統（導線用）: アイアン / PLA樹脂 */
   kind: MaterialKind;
-  /** カテゴリ（導線用）: 支柱 / 鉢・セット / 支柱の拡張 / 花瓶 */
+  /** カテゴリ（導線用）: 支柱 / 鉢・セット / 支柱の拡張 / 園芸道具 */
   category: CategoryKey;
   image: string;
   /** SNS共有カード用の画像（未指定なら image）。白背景で輪郭が消える商品用 */
@@ -82,12 +82,6 @@ export type Product = {
 };
 
 export const SHOP = "https://shop.zukeplants.com";
-/**
- * 六角花瓶（hexvase）の BASE item_id。2026-10-10 に業務担当が出し直した新しい ID（#7686）。
- * 旧 159228997 は BASE 上に存在せず 404 だった。公開（visible:true）になったら hexvase の
- * baseUrl を `${SHOP}/items/${HEXVASE_ITEM_ID}` にする（下の該当コメント参照）。
- */
-export const HEXVASE_ITEM_ID = "162055259";
 // 2026-10-07 EC店長依頼(#4631): BASE注文をzukeplants.com経由と切り分けられるよう、
 // 購入リンク（クリックして実際にBASEへ出ていくもの）にUTMを付与する。JSON-LD等の正規URLには付けない。
 export const withUtm = (url: string, utmContent?: string) => {
@@ -571,47 +565,6 @@ export const PRODUCTS: Product[] = [
       "PLANTS POLE \"3つの六角形\"と合わせてつる性植物を仕立てる",
     ],
   },
-  {
-    // 2026-09-23 新商品: 六角花瓶（白）。価格は仮
-    slug: "hexvase",
-    kind: "pla",
-    category: "vase",
-    name: "六角花瓶",
-    fullName: "六角花瓶 - PLANTS POLEシリーズの3Dプリント製フラワーベース -",
-    price: 1280,
-    image: "/products/product-hexvase-base.webp",
-    // 白×白だと note のリンクカードで輪郭が見えないため黒を共有用に（花入り実物写真が来たら差し替え）
-    // 2026-10-06 SEO: summary_large_image(1.91:1)で正方形og画像の脚が切れる指摘(デザイナー#3866)→横長OGに差し替え
-    ogImage: "/products/product-hexvase-black-og-wide.jpg",
-    ogWidth: 1200,
-    ogHeight: 630,
-    ogImageSquare: "/products/product-hexvase-black-og.jpg",
-    // 2026-10-10 SEO: item 159228997 は BASE に存在しない（`GET /api/base-items` の17件に無く、
-    // 実HTTP 404「商品が見つかりませんでした」）。購入リンク・JSON-LD の offer URL・ガイドの関連商品カード・
-    // /go/base の許可リストが全部 404 を指していたため、BASE に出し直すまでショップトップへ送る。
-    //
-    // 2026-10-10 22:3x SEO: 業務担当が BASE に出し直し済み（#7686・新 item_id = HEXVASE_ITEM_ID）。
-    // ただし**まだ visible=0（非公開）**。非公開の item ページは実測で 404（ブラウザUAで
-    // `GET ${SHOP}/items/162055259` → 404「商品が見つかりませんでした」・62,645B）なので、
-    // 今 baseUrl に入れると公開GOまでの間だけ購入ボタンが 404 に戻る。
-    // → **公開（visible:true）を確認してから** 下の baseUrl を `${SHOP}/items/${HEXVASE_ITEM_ID}` に
-    //   差し替えて push する（1行の差し替えで購入リンク・JSON-LD・ガイドカード・/go/base の4か所が生きる）。
-    baseUrl: SHOP,
-    summary:
-      "六角鉢と同じ六角形のフォルムの花瓶。一輪挿しにも。高さ約16cm、口に向かって少しすぼまる形。PLA樹脂・3Dプリント製、ホワイト／ブラック／オレンジ／ライトグレーの4色（黒・白は即納、他は受注生産）。排水穴なしで水漏れしません。底面にZUKEロゴ入り。",
-    lead:
-      "六角鉢シリーズと並べて使える花瓶。底の対辺約55mmから口の対辺約47mmへ、上に向かって少しすぼまるので、一輪でも枝ものでも収まりがよい形です。角を丸めたやさしい輪郭で、マットな質感。底面には「ZUKE / Plants / Pole」のロゴを刻印。ホワイト・ブラック・オレンジ・ライトグレーの4色。ブラック・ホワイトは在庫あり（なくなり次第受注生産）。オレンジ・ライトグレーは受注生産で、発送まで1週間ほどお時間をいただきます。",
-    height: "約160mm",
-    width: "底 対辺約55mm／口 対辺約47mm",
-    material: "PLA樹脂（3Dプリント・マット仕上げ）",
-    plants: ["切り花・一輪挿し", "枝もの", "ドライフラワー"],
-    scenes: [
-      "六角鉢と並べて、シリーズでそろえる",
-      "玄関やデスクの一輪挿しに",
-      "軽いので棚の上や高い場所にも",
-      "4色から部屋に合わせて",
-    ],
-  },
 ];
 
 export function productBySlug(slug: string): Product | undefined {
@@ -620,7 +573,7 @@ export function productBySlug(slug: string): Product | undefined {
 
 export const yen = (n: number) => `¥${n.toLocaleString("ja-JP")}`;
 
-// 2026-09-26 増澤さん指示: 「アイアンで探す／PLA樹脂で探す」の導線と、支柱・鉢・拡張・花瓶のカテゴリページ
+// 2026-09-26 増澤さん指示: 「アイアンで探す／PLA樹脂で探す」の導線と、支柱・鉢・拡張・道具のカテゴリページ（2026-10-11 花瓶は廃止）
 export const MATERIALS: { key: MaterialKind; label: string; lead: string; image: string }[] = [
   { key: "iron", label: "アイアン支柱", lead: "職人が曲げるアイアンスチール製。細く、強く、植物の陰になる存在感。", image: "/products/product-hex5-black.webp" },
   { key: "pla", label: "PLA樹脂製品", lead: "3Dプリントの六角鉢・樹脂支柱・拡張パーツ。軽く、4色から選べます。", image: "/products/product-hexpot-set-black.webp" },
@@ -629,7 +582,6 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。" },
   { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
   { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
-  { key: "vase", label: "花瓶", lead: "六角鉢シリーズのフラワーベース。" },
   { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
 ];
 export type CollectionKey = MaterialKind | CategoryKey;
@@ -647,7 +599,7 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
   },
   pla: {
     seoTitle: "3Dプリントの六角鉢・樹脂支柱（PLA）",
-    seoDescription: "PLA樹脂を3Dプリントでつくる、支柱の差込口付き六角鉢・受け皿・樹脂版支柱・拡張パーツ・花瓶。軽く、色を選べます。アイアンの PLANTS POLE と同じ六角形のデザインです。",
+    seoDescription: "PLA樹脂を3Dプリントでつくる、支柱の差込口付き六角鉢・受け皿・樹脂版支柱・拡張パーツ。軽く、色を選べます。アイアンの PLANTS POLE と同じ六角形のデザインです。",
   },
   pot: {
     seoTitle: "支柱が差せる六角鉢・鉢と支柱のセット",
@@ -656,10 +608,6 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
   extension: {
     seoTitle: "支柱を後から伸ばす拡張パーツ・留め具",
     seoDescription: "樹脂版 PLANTS POLE に六角形を継ぎ足して、植物の成長に合わせて高さを伸ばせる拡張パーツと留め具。辺同士を並べて留め具で挟むだけ。1連の樹脂版支柱から、2連・3連へと伸ばせます。アイアン製には使えません。",
-  },
-  vase: {
-    seoTitle: "六角形の花瓶（3Dプリント製）",
-    seoDescription: "六角鉢と同じ六角形のフォルムの花瓶。一輪挿しにも。高さ約16cm、PLA樹脂・3Dプリント製のマット仕上げ。排水穴がないので水を入れて一輪挿しや枝ものに。ドライフラワーを飾るのにも使えます。",
   },
   tool: {
     seoTitle: "小鉢用の土入れスコップ・園芸道具",
@@ -688,12 +636,10 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   "hexpot-set": [
     { slug: "pole3pla", note: "付属支柱の色違い・差し替えに" },
     { slug: "hexpot", note: "鉢だけ買い足して、お手持ちの支柱と" },
-    { slug: "hexvase", note: "同じ六角形の花瓶を並べて" },
   ],
   "hexpot-set2": [
     { slug: "pole2pla", note: "付属支柱と同じもの。色違いの買い足しに" },
     { slug: "hexparts", note: "成長に合わせて六角形を足して伸ばす" },
-    { slug: "hexvase", note: "同じ六角形の花瓶を並べて" },
   ],
   hex3: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
@@ -725,10 +671,6 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   scoop: [
     { slug: "hexpot", note: "口の小さな六角鉢への土入れに" },
     { slug: "hexpot-set", note: "鉢・受け皿・支柱の3点セットの植え付けに" },
-  ],
-  hexvase: [
-    { slug: "hexpot", note: "同じ六角形の鉢と並べて" },
-    { slug: "hexpot-set2", note: "鉢・受け皿・支柱の3点セット" },
   ],
   "marupot-stand": [
     // 2026-10-10 EC店長#7597: 使用イメージの支柱は樹脂版(オレンジ)。写真どおりの組み合わせを先頭に出す（客単価 1,600→2,280円）

@@ -16,8 +16,6 @@ const TITLE_SUFFIX: Record<CategoryKey, string> = {
   pole: "観葉植物の園芸支柱",
   pot: "支柱が差せる六角鉢",
   extension: "樹脂版支柱の拡張パーツ",
-  // 2026-10-02 SEO: 10/5 note（一輪挿し切り口）に合わせて「一輪挿し」を title に入れる
-  vase: "一輪挿しにも使える3Dプリントの花瓶",
   tool: "小鉢用の土入れスコップ",
 };
 

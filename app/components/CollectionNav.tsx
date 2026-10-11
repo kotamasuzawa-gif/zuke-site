@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MATERIALS, CATEGORIES } from "@/app/lib/products";
 
-// 2026-09-26 増澤さん指示: まず「アイアンで探す／PLA樹脂で探す」、次に支柱・鉢・拡張・花瓶のカテゴリで探せる導線
+// 2026-09-26 増澤さん指示: まず「アイアンで探す／PLA樹脂で探す」、次に支柱・鉢・拡張・道具のカテゴリで探せる導線
 export default function CollectionNav({ current, compact = false }: { current?: string; compact?: boolean }) {
   return (
     <div>

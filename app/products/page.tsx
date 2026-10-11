@@ -10,17 +10,17 @@ import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 // 2026-09-29 SEO R4: 「全4型・素材はアイアンのみ・¥770から」の旧文言が、実際の13商品（PLA樹脂の支柱・鉢・パーツ・花瓶）と
 // 矛盾していたため修正。title も支柱カテゴリページと取り合わないよう、鉢・花瓶を含む全商品一覧として付け直した。
 export const metadata: Metadata = {
-  title: "PLANTS POLE 全商品一覧｜園芸支柱・六角鉢・花瓶",
+  title: "PLANTS POLE 全商品一覧｜園芸支柱・六角鉢",
   description:
-    "ZUKE の PLANTS POLE 全商品一覧。アイアンスチール製の園芸支柱4型、3Dプリント樹脂版の支柱と拡張パーツ、支柱が差せる六角鉢・セット、六角形の花瓶。モンステラ・ポトス・ホヤ・亀甲竜などの観葉植物に。",
+    "ZUKE の PLANTS POLE 全商品一覧。アイアンスチール製の園芸支柱4型、3Dプリント樹脂版の支柱と拡張パーツ、支柱が差せる六角鉢・セット。モンステラ・ポトス・ホヤ・亀甲竜などの観葉植物に。",
   alternates: { canonical: "/products" },
   openGraph: {
     ...OG_BASE,
     title: "PLANTS POLE 商品一覧｜ZUKE",
-    description: "観葉植物をインテリアに馴染むように仕立てる園芸支柱と、支柱が差せる六角鉢・花瓶。",
+    description: "観葉植物をインテリアに馴染むように仕立てる園芸支柱と、支柱が差せる六角鉢。",
     url: "/products",
     // 2026-10-11 design/SEO(#7916): 汎用 og.jpg だったので商品一覧専用のカード型OGに
-    images: [{ url: "/og/og-products.jpg", width: 1200, height: 630, alt: "PLANTS POLE 全商品一覧｜園芸支柱・六角鉢・花瓶" }],
+    images: [{ url: "/og/og-products.jpg", width: 1200, height: 630, alt: "PLANTS POLE 全商品一覧｜園芸支柱・六角鉢" }],
   },
 };
 
@@ -50,7 +50,7 @@ export default function ProductsPage() {
         </h1>
         <p className="mt-4 text-[15px] leading-loose text-gray-700 max-w-2xl">
           ZUKE の PLANTS POLE は、&ldquo;魅せる&rdquo;園芸支柱です。植物を支えるという実用性に、六角形のデザインを加えました。
-          アイアン支柱はアイアンスチール製で、高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。ほかに、PLA樹脂を3Dプリントした樹脂版の支柱・拡張パーツ、支柱が差せる六角鉢と受け皿、六角形の花瓶を展開しています。
+          アイアン支柱はアイアンスチール製で、高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。ほかに、PLA樹脂を3Dプリントした樹脂版の支柱・拡張パーツ、支柱が差せる六角鉢と受け皿を展開しています。
           モンステラ・ポトス・ホヤ・亀甲竜など蔓性の観葉植物を、インテリアグリーンとして美しく仕立てられます。
         </p>
 
