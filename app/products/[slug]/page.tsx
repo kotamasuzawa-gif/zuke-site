@@ -211,6 +211,26 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
+        {/* 2026-10-11 増澤さん指示: 中の構造（内側の写真＋説明） */}
+        {p.structure && (
+          <section className="mt-20">
+            <h2 className="text-base font-bold">中の構造</h2>
+            <div className="mt-6 max-w-md">
+              <Image
+                src={p.structure.src}
+                alt={p.structure.alt}
+                width={p.structure.width}
+                height={p.structure.height}
+                sizes="(min-width: 768px) 28rem, 100vw"
+                className="w-full h-auto"
+              />
+              <div className="mt-4 flex flex-col gap-2 text-[15px] leading-relaxed text-gray-700">
+                {p.structure.lines.map((x) => <p key={x}>{x}</p>)}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* 2026-10-10 SEO #6730: 数字だけでは大きさが伝わらないので実寸カットでも示す。
             ファーストビューより下なので next/image の既定どおり遅延読み込み（priority は付けない＝LCPに影響させない） */}
         {p.sizeImage && (
