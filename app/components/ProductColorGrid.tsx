@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { COLORS, type ColorKey, shownImageFor, shownColorLabel, colorLabel } from "@/app/lib/colors";
 
-export type GridItem = { slug: string; name: string; fullName: string; price: string; sub?: string; href: string; external?: boolean };
+export type GridItem = { slug: string; name: string; fullName: string; price: string; sub?: string; isNew?: boolean; href: string; external?: boolean };
 export type GridGroup = { key: string; title?: string; moreHref?: string; items: GridItem[] };
 
 // 2026-09-26 増澤さん指示: 各ページ（商品一覧・カテゴリ）でも色切替できるように。切替は商品一覧の直上に1つだけ置き、
@@ -21,6 +21,7 @@ export default function ProductColorGrid({ items, groups }: { items?: GridItem[]
       <>
         <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
           <Image src={shownImageFor(p.slug, color)} alt={label ? `${p.fullName}（${label}）` : p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 1024px) 50vw, 25vw" />
+          {p.isNew && <span className="absolute top-2 left-2 bg-[#222] text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">NEW</span>}
         </div>
         <NameTag className="mt-4 text-[15px] leading-relaxed line-clamp-2">{p.name}</NameTag>
         {p.sub && <p className="mt-1 text-[13px] text-gray-500">{p.sub}</p>}

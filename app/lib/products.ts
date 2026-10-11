@@ -2,7 +2,7 @@
 // 2026-08-22 SEO強化: 商品ごとの内部ページを新設し、ここを共通データ源にした。
 
 export type MaterialKind = "iron" | "pla";
-export type CategoryKey = "pole" | "pot" | "extension" | "vase";
+export type CategoryKey = "pole" | "pot" | "extension" | "vase" | "tool";
 
 export type Product = {
   slug: string;
@@ -62,6 +62,8 @@ export type Product = {
     width: number;
     height: number;
   };
+  /** 新商品バッジ（ホーム・一覧に NEW を出す）。2026-10-11 ミニ土入れスコップ追加時に新設 */
+  isNew?: boolean;
   /** 相性のよい植物 */
   plants: string[];
   /** インテリア文脈での使いどころ */
@@ -100,6 +102,34 @@ export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
 
 // 2026-10-05 増澤さん「LPがBASEの写真と一緒じゃない。BASEを正にして」: 一覧・詳細の1枚目(image)は BASE の1枚目と同じ写真にする（product-<slug>-base.webp は BASE から取得）
 export const PRODUCTS: Product[] = [
+  {
+    // 2026-10-11 新商品: ミニ土入れスコップ（BASE 162202851）。増澤さん指示「LPの更新も」。
+    // 樹脂製品なので卸売ページには載せない（kind: "pla" は wholesale の対象外）。説明は BASE 商品ページの記載どおり
+    slug: "scoop",
+    kind: "pla",
+    category: "tool",
+    isNew: true,
+    name: "ミニ土入れスコップ",
+    shortTitle: "ミニ土入れスコップ {price}｜ふるい穴付き・小鉢の土入れに",
+    fullName: "ミニ土入れスコップ - ふるい穴付き・3Dプリント製 小鉢用の土入れ -",
+    price: 550,
+    image: "/products/product-scoop-base.webp",
+    ogImage: "/products/product-scoop-og.jpg",
+    baseUrl: `${SHOP}/items/162202851`,
+    summary:
+      "植え替えや寄せ植えのときに、鉢のすき間へ土を少しずつ入れられる小さな土入れスコップ。直径約3cm・長さ約14cm、先端は斜めカットの注ぎ口。裏面と底はふるい穴で微塵を落とせます。PLA樹脂・3Dプリント製、ブラック／ライトグレー／オレンジの3色。",
+    lead:
+      "先端を斜めにカットした注ぎ口で、小さな鉢や六角鉢、寄せ植えのすき間など狭いところにも狙って土を入れられます。裏面と底はφ2.2mmの穴が並んだふるい状になっていて、すくった土の細かな微塵（みじん）を振るい落としながら使えます。下部にZUKEのロゴ入り。PLA樹脂でひとつずつ3Dプリントしています。",
+    height: "長さ約140mm（注ぎ口の斜めカット部 約75mm）",
+    width: "直径約30mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["小さな鉢の植え替え", "六角鉢", "寄せ植え"],
+    scenes: [
+      "小さな鉢の植え替えで、根のすき間に土を足す",
+      "六角鉢など、口の小さな鉢への土入れに",
+      "軽く振って微塵を落とし、水はけのよい用土に",
+    ],
+  },
   {
     slug: "hex5",
     kind: "iron",
@@ -600,6 +630,7 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
   { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
   { key: "vase", label: "花瓶", lead: "六角鉢シリーズのフラワーベース。" },
+  { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
 ];
 export type CollectionKey = MaterialKind | CategoryKey;
 // 2026-09-29 SEO R4: カテゴリページの title / meta description。label はナビで使うので変えず、SEO 用に別で持つ。
@@ -629,6 +660,10 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
   vase: {
     seoTitle: "六角形の花瓶（3Dプリント製）",
     seoDescription: "六角鉢と同じ六角形のフォルムの花瓶。一輪挿しにも。高さ約16cm、PLA樹脂・3Dプリント製のマット仕上げ。排水穴がないので水を入れて一輪挿しや枝ものに。ドライフラワーを飾るのにも使えます。",
+  },
+  tool: {
+    seoTitle: "小鉢用の土入れスコップ・園芸道具",
+    seoDescription: "小さな鉢の植え替えや寄せ植えに使う、3Dプリント製の園芸道具。ふるい穴付きのミニ土入れスコップ（直径約3cm・長さ約14cm）は、斜めカットの注ぎ口で狭いすき間にも土を入れられます。",
   },
 };
 export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; seoTitle: string; seoDescription: string; filter: (p: Product) => boolean }[] = [
@@ -687,6 +722,10 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
     { slug: "hexclip5", note: "留め具の補充に" },
   ],
   hexclip5: [{ slug: "hexparts", note: "六角形パーツを足して伸ばす" }],
+  scoop: [
+    { slug: "hexpot", note: "口の小さな六角鉢への土入れに" },
+    { slug: "hexpot-set", note: "鉢・受け皿・支柱の3点セットの植え付けに" },
+  ],
   hexvase: [
     { slug: "hexpot", note: "同じ六角形の鉢と並べて" },
     { slug: "hexpot-set2", note: "鉢・受け皿・支柱の3点セット" },

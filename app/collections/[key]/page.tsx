@@ -98,7 +98,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
           <CollectionNav current={c.key} compact />
         </div>
         <div className="mt-12">
-          <ProductColorGrid items={items.map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.material, href: `/products/${p.slug}` }))} />
+          <ProductColorGrid items={items.map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.material, isNew: p.isNew, href: `/products/${p.slug}` }))} />
         </div>
         {items.length === 0 && <p className="mt-12 text-gray-500">準備中です。</p>}
         {relatedGuides.length > 0 && (

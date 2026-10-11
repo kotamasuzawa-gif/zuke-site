@@ -17,7 +17,7 @@ const SHOP = "https://shop.zukeplants.com";
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
 
 // 2026-09-26 増澤さん指示「LPとBASEの商品を紐づける／並び順もBASEを正に」: products.ts（BASE順・baseUrl）から生成
-const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, url: withUtm(p.baseUrl) }));
+const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, isNew: p.isNew, url: withUtm(p.baseUrl) }));
 
 // 2026-09-27: 色判定は app/lib/colors.ts に共通化（全商品4色切替）
 const lifestyleImage = (color: ColorKey | null) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
@@ -128,6 +128,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
                     className="object-contain group-hover:opacity-90 transition-opacity"
                     sizes="(max-width: 1024px) 50vw, 25vw"
                   />
+                  {p.isNew && <span className="absolute top-2 left-2 bg-[#222] text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">NEW</span>}
                 </div>
                 <p className="mt-4 text-[15px] leading-relaxed text-[#222] line-clamp-2">{p.name}</p>
                 <p className="mt-2 text-[15px] font-bold">{p.price}</p>
