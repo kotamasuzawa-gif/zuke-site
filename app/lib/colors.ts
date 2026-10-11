@@ -27,8 +27,8 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   "marupot-stand": [],
   // 2026-10-11 ミニ土入れスコップは ブラック／ライトグレー／オレンジ の3色（白なし）
   scoop: ["black", "lightgray", "orange"],
-  // 2026-10-12 ソイルスティックはブラックのみ
-  soilstick: ["black"],
+  // 2026-10-12 ソイルスティックは ブラック／ライトグレー／オレンジ の3色（白なし）
+  soilstick: ["black", "lightgray", "orange"],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
 // 2026-10-10 EC店長#7597: ホーム・商品一覧・カテゴリの色ボタンは全4色固定なので、その商品に存在しない配色を押すと
@@ -39,7 +39,7 @@ const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
   // 丸鉢スタンドセットはオレンジ鉢／ブラック鉢／ライトグレー鉢の3種だけ。白の鉢は商品も写真も無い
   "marupot-stand": ["white"],
   scoop: ["white"],
-  soilstick: ["white", "orange", "lightgray"],
+  soilstick: ["white"],
 };
 export const hasColorPhoto = (slug: string, color: ColorKey | null): color is ColorKey =>
   color !== null && !(NO_PHOTO_COLORS[slug] ?? []).includes(color);
