@@ -107,6 +107,34 @@ export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
 // 2026-10-05 増澤さん「LPがBASEの写真と一緒じゃない。BASEを正にして」: 一覧・詳細の1枚目(image)は BASE の1枚目と同じ写真にする（product-<slug>-base.webp は BASE から取得）
 export const PRODUCTS: Product[] = [
   {
+    // 2026-10-12 新商品: ソイルスティック（BASE 162230038）。増澤さん指示「スタジオ撮影にして出品して。550円で」。
+    // 樹脂製品なので卸売ページには載せない（kind: "pla"）。説明は BASE 商品ページの記載どおり
+    slug: "soilstick",
+    kind: "pla",
+    category: "tool",
+    isNew: true,
+    name: "ソイルスティック",
+    shortTitle: "ソイルスティック {price}｜植え替え用の土入れ棒・ヘラ付き",
+    fullName: "ソイルスティック - 植え替え用の土入れ棒・ヘラ付き 3Dプリント -",
+    price: 550,
+    image: "/products/product-soilstick-base.webp",
+    ogImage: "/products/product-soilstick-og.jpg",
+    baseUrl: `${SHOP}/items/162230038`,
+    summary:
+      "植え替えのときに、根のすき間へ土を落とし込むための土入れ棒。片側は先の尖った突き棒、反対側は平たいヘラの両頭タイプ。全長約18cm、六角形の持ち手にZUKE刻印。PLA樹脂・3Dプリント製、ブラック。",
+    lead:
+      "突き棒（長さ約6cm）で鉢の土をつつくと、根と根のすき間や鉢の縁まで土が行き渡り、植え替え後の空洞を減らせます。反対側のヘラ（長さ約5cm・幅約14mm）は、表面の土をならしたり、少しだけすくって足したりするのに便利です。中央は手になじむ六角形の持ち手で、ZUKEの刻印入り。PLA樹脂でひとつずつ3Dプリントしています。",
+    height: "全長 約180mm（突き棒 約60mm／持ち手 約70mm／ヘラ 約50mm）",
+    width: "持ち手の太さ 約9mm（六角形）・ヘラ幅 約14mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["小さな鉢の植え替え", "六角鉢", "寄せ植え"],
+    scenes: [
+      "植え替えで、根のすき間に土を落とし込む",
+      "六角鉢など、口の小さな鉢の土をつついてならす",
+      "ヘラで表面の土をならしたり、少しだけ土を足したりする",
+    ],
+  },
+  {
     // 2026-10-11 新商品: ミニ土入れスコップ（BASE 162202851）。増澤さん指示「LPの更新も」。
     // 樹脂製品なので卸売ページには載せない（kind: "pla" は wholesale の対象外）。説明は BASE 商品ページの記載どおり
     slug: "scoop",
@@ -691,6 +719,10 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
     { slug: "hexclip5", note: "留め具の補充に" },
   ],
   hexclip5: [{ slug: "hexparts", note: "六角形パーツを足して伸ばす" }],
+  soilstick: [
+    { slug: "scoop", note: "土入れはスコップ、仕上げのつつき・ならしはスティックで" },
+    { slug: "hexpot", note: "口の小さな六角鉢の植え替えに" },
+  ],
   scoop: [
     { slug: "hexpot", note: "口の小さな六角鉢への土入れに" },
     { slug: "hexpot-set", note: "鉢・受け皿・支柱の3点セットの植え付けに" },
