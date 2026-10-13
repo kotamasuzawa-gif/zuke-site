@@ -1,5 +1,6 @@
 // 下層ページ共通フッター（内部リンク＝クロール経路を兼ねる）。
 import Link from "next/link";
+import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
 import { GUIDES } from "@/app/lib/guides";
 import { PRODUCTS, COLLECTIONS } from "@/app/lib/products";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
@@ -13,6 +14,7 @@ const STORE = `${SHOP}?utm_source=zukeplants_guide`;
 export default function SiteFooter() {
   return (
     <footer className="mt-20 border-t border-gray-100 bg-white">
+      <ShokuyokuAppBanner bordered={false} />
       <div className="max-w-5xl mx-auto px-6 py-14 grid gap-10 md:grid-cols-3">
         <div>
           <p className="text-[13px] font-bold tracking-[0.15em] text-[#222] mb-4">PRODUCTS</p>

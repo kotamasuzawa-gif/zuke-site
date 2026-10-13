@@ -3,6 +3,7 @@
 // 2026-08-21 増澤さん指示: BASEショップ(zukeplants.base.shop)のホームと同じ見た目に。
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
+import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
 import { PRODUCTS, yen, withUtm } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
@@ -219,6 +220,8 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           </div>
         </div>
       </section>
+
+      <ShokuyokuAppBanner />
 
       {/* フッター */}
       <footer className="pb-12 pt-8 flex flex-col items-center gap-10">
