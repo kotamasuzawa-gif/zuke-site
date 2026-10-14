@@ -107,6 +107,34 @@ export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
 // 2026-10-05 増澤さん「LPがBASEの写真と一緒じゃない。BASEを正にして」: 一覧・詳細の1枚目(image)は BASE の1枚目と同じ写真にする（product-<slug>-base.webp は BASE から取得）
 export const PRODUCTS: Product[] = [
   {
+    // 2026-10-14 新商品: 上り棒セット（BASE 162757270）。説明は BASE 商品ページの記載どおり（受け皿付き・水苔／ネコチップを詰める）。
+    // 樹脂製品なので卸売ページには載せない（kind: "pla"）。六角鉢＋支柱のセットなので category は「鉢・セット」
+    slug: "noboribo",
+    kind: "pla",
+    category: "pot",
+    isNew: true,
+    name: 'PLANTS POLE 上り棒セット "3つの六角形"',
+    shortTitle: '上り棒セット {price}｜水苔を詰めるモス支柱（登り棒）＋六角鉢・受け皿',
+    fullName: 'PLANTS POLE 上り棒セット "3つの六角形" - 水苔を詰めて育てる登り棒＋専用六角鉢・受け皿 -',
+    price: 3980,
+    image: "/products/product-noboribo-base.webp",
+    ogImage: "/products/product-noboribo-og.jpg",
+    baseUrl: `${SHOP}/items/162757270`,
+    summary:
+      "水苔やネコチップを詰めて使う、六角形の登り棒（モス支柱）。3つの六角形をつなぎ、専用の六角鉢の差込口に挿せば自立。受け皿付き。モンステラやポトスが気根を伸ばしながら上へ登ります。PLA樹脂・3Dプリント製、ブラック。",
+    lead:
+      "3つの六角形の箱に水苔（ネコチップでも）を詰めて、辺のアリ溝でつなぐだけの水苔ポール。前面は六角格子のシールドで押さえ、脚を専用の六角鉢の差込口に挿せば自立します。水やりは上の六角形の穴から。水苔が湿り気を保ち、モンステラやポトスの気根をしっかり支えます。セット内容は六角形3個（下＝脚付き／中／上）、シールド3枚、登り棒用六角鉢1個、六角受け皿1枚。水苔・植物は付属しません。PLA樹脂でひとつずつ3Dプリントしています。",
+    height: "六角鉢 約95mm（六角形1個 外形約69mm／奥行き約17mm）",
+    width: "六角形・鉢 対辺約69mm／受け皿は鉢に合わせた六角形",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["モンステラ（アダンソニーなど小型種）", "ポトス", "ラフィドフォラなど気根を出す蔓性植物"],
+    scenes: [
+      "気根を水苔に絡ませて、上へ登らせる",
+      "各六角形の穴から水と空気が通り、水苔が蒸れにくい",
+      "PLANTS POLEシリーズと同じ六角形で、並べて飾っても統一感",
+    ],
+  },
+  {
     // 2026-10-12 新商品: ソイルスティック（BASE 162230038）。増澤さん指示「スタジオ撮影にして出品して。550円で」。
     // 樹脂製品なので卸売ページには載せない（kind: "pla"）。説明は BASE 商品ページの記載どおり
     slug: "soilstick",
@@ -721,6 +749,10 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
     { slug: "hexclip5", note: "留め具の補充に" },
   ],
   hexclip5: [{ slug: "hexparts", note: "六角形パーツを足して伸ばす" }],
+  noboribo: [
+    { slug: "scoop", note: "六角鉢への土入れに" },
+    { slug: "soilstick", note: "六角鉢の植え付けに" },
+  ],
   soilstick: [
     { slug: "scoop", note: "土入れはスコップ、仕上げのつつき・ならしはスティックで" },
     { slug: "hexpot", note: "口の小さな六角鉢の植え替えに" },
