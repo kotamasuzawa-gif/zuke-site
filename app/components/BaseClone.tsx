@@ -4,7 +4,7 @@
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
 import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
-import { PRODUCTS, yen, withUtm } from "@/app/lib/products";
+import { PRODUCTS, HOME_FEATURED_SLUGS, yen, withUtm } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
@@ -18,7 +18,8 @@ const SHOP = "https://shop.zukeplants.com";
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
 
 // 2026-09-26 増澤さん指示「LPとBASEの商品を紐づける／並び順もBASEを正に」: products.ts（BASE順・baseUrl）から生成
-const products = PRODUCTS.map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, isNew: p.isNew, url: withUtm(p.baseUrl) }));
+// 2026-10-14 増澤さん「人気なものは上に・数も絞る」: ホームは HOME_FEATURED_SLUGS の8点のみ（全商品は /products へ）
+const products = HOME_FEATURED_SLUGS.map((s) => PRODUCTS.find((p) => p.slug === s)!).filter(Boolean).map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, isNew: p.isNew, url: withUtm(p.baseUrl) }));
 
 // 2026-09-27: 色判定は app/lib/colors.ts に共通化（全商品4色切替）
 const lifestyleImage = (color: ColorKey | null) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
@@ -135,6 +136,11 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
                 <p className="mt-2 text-[15px] font-bold">{p.price}</p>
               </a>
             ))}
+          </div>
+          <div className="mt-14 text-center">
+            <Link href="/products" className="inline-block border border-[#222] px-10 py-3 text-[13px] tracking-[0.15em] text-[#222] hover:bg-[#222] hover:text-white transition-colors">
+              すべての商品を見る（{PRODUCTS.length}点）
+            </Link>
           </div>
         </section>
       </main>
