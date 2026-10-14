@@ -4,7 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { GUIDES, GUIDE_PUBLISHED, guideBySlug } from "@/app/lib/guides";
+import { GUIDES, GUIDE_PUBLISHED, guideBySlug, type GuideImage } from "@/app/lib/guides";
 import { CATEGORIES, productBySlug, yen, withUtm } from "@/app/lib/products";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
@@ -73,6 +73,31 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       .map((l) => ({ p: productBySlug(l.product), label: l.label }))
       .filter((x): x is { p: NonNullable<ReturnType<typeof productBySlug>>; label: string } => !!x.p);
   const relatedCategories = CATEGORIES.filter((c) => related.some((p) => p.category === c.key));
+  // 2026-10-14 オーナー指摘「写真が少なすぎて分かりづらい」: 本文中の任意位置に写真・説明図を差し込む。
+  // 2枚以上は横2列（スマホは1列）。縦写真も h-auto で向きのまま出す（mistakes.md 2026-05-21）
+  const figures = (imgs?: GuideImage[], priority = false) => {
+    if (!imgs || imgs.length === 0) return null;
+    const grid = imgs.length >= 2 ? "grid grid-cols-1 sm:grid-cols-2 gap-5" : "";
+    return (
+      <div className={`mt-7 ${grid}`}>
+        {imgs.map((im) => (
+          <figure key={im.src} className="m-0">
+            <Image
+              src={im.src}
+              alt={im.alt}
+              width={im.width}
+              height={im.height}
+              priority={priority}
+              className="w-full h-auto bg-[#f4f4f4]"
+              sizes={imgs.length >= 2 ? "(max-width: 640px) 100vw, 320px" : "(max-width: 768px) 100vw, 672px"}
+            />
+            {im.caption && <figcaption className="mt-2 text-[12px] leading-relaxed text-gray-500">{im.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    );
+  };
+
   // 2026-10-10 SEO(#6896): 2本使いの提案ブロック（商品リンクの直前）。公開中の商品だけを引く
   const bundleItems = (g.bundle?.items ?? [])
     .map((it) => ({ p: productBySlug(it.product), note: it.note }))
@@ -130,6 +155,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         <article>
           <h1 className="text-2xl md:text-[28px] font-bold leading-relaxed">{g.title}</h1>
           <p className="mt-6 text-[15px] leading-loose text-gray-700">{g.lead}</p>
+          {g.hero && figures([g.hero], true)}
           {g.slug === "kanyoushokubutsu-taoreru" && (
             <p className="mt-2 text-xs text-gray-500 leading-relaxed">
               <Link href="/wholesale" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
@@ -144,6 +170,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               {s.body.map((para, i) => (
                 <p key={i} className="mt-5 text-[15px] leading-loose text-gray-700">{para}</p>
               ))}
+              {s.figuresPlacement !== "afterPoints" && figures(s.figures)}
               {s.points && (
                 <ul className="mt-6 flex flex-col gap-3">
                   {s.points.map((pt) => (
@@ -154,6 +181,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   ))}
                 </ul>
               )}
+              {s.figuresPlacement === "afterPoints" && figures(s.figures)}
               {s.image && (
                 <Image
                   src={s.image.src}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { GUIDES } from "@/app/lib/guides";
@@ -53,11 +54,26 @@ export default function GuideIndexPage() {
         <ul className="mt-14 flex flex-col divide-y divide-gray-100 border-t border-gray-100">
           {GUIDES.map((g) => (
             <li key={g.slug}>
-              <Link href={`/guide/${g.slug}`} className="block py-7 group">
-                <h2 className="text-[17px] font-bold leading-relaxed group-hover:opacity-60 transition-opacity">
-                  {g.title}
-                </h2>
-                <p className="mt-2 text-[14px] leading-relaxed text-gray-600">{g.excerpt}</p>
+              {/* 2026-10-14 オーナー指摘: 一覧にも実写サムネイル（記事冒頭の hero を流用） */}
+              <Link href={`/guide/${g.slug}`} className="flex gap-5 py-7 group">
+                {g.hero && (
+                  <div className="shrink-0 w-24 h-24 md:w-32 md:h-32 overflow-hidden bg-[#f4f4f4]">
+                    <Image
+                      src={g.hero.src}
+                      alt={g.hero.alt}
+                      width={256}
+                      height={256}
+                      className="w-full h-full object-cover"
+                      sizes="128px"
+                    />
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <h2 className="text-[17px] font-bold leading-relaxed group-hover:opacity-60 transition-opacity">
+                    {g.title}
+                  </h2>
+                  <p className="mt-2 text-[14px] leading-relaxed text-gray-600">{g.excerpt}</p>
+                </div>
               </Link>
             </li>
           ))}
