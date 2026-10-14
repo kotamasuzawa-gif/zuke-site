@@ -980,7 +980,7 @@ export const GUIDES: Guide[] = [
     hero: { src: "/guide/set2-caudex-full.webp", alt: "ブラックの六角鉢セット \"2つの六角形\" に植えた亀甲竜の全体写真", width: 1200, height: 1200, caption: "六角鉢セット“2つの六角形”に植えた亀甲竜。鉢・受け皿・支柱が同色で塊根が引き立ちます" },
     sections: [
       {
-        heading: "塊根植物に向く支柱の条件",
+        heading: "亀甲竜・塊根植物に向く支柱の条件",
         figures: [
           { src: "/guide/dim-hexpot-set2.webp", alt: "六角鉢セット \"2つの六角形\" の寸法図。支柱全長約17.2cm、鉢の上に約14cm", width: 1080, height: 1080, caption: "六角鉢セット“2つの六角形”の寸法。支柱は鉢の上に約14cm出ます" },
           { src: "/guide/pole2-caudex-mid.webp", alt: "亀甲竜の塊根から伸びた蔓が \"2つの六角形\" に巻き付いている", width: 1200, height: 1200, caption: "塊根の上で蔓が六角形の枠に巻き付いたところ。浅い鉢でもぐらつきません" },
@@ -999,7 +999,8 @@ export const GUIDES: Guide[] = [
         ],
       },
       {
-        heading: "蔓の誘引のしかた",
+        // 2026-10-15 SEO(秘書の一手): 「亀甲竜 仕立て」13表示・9.2位／「亀甲竜 支柱」7表示・9.0位。H2 に検索語を入れて1ページ目上位を狙う
+        heading: "亀甲竜の仕立て方｜支柱に蔓を誘引する手順",
         figures: [
           { src: "/guide/pole2-caudex-top.webp", alt: "亀甲竜の細い蔓を \"2つの六角形\" の上の輪に通して巻かせている接写", width: 1200, height: 1200, caption: "蔓は切らず、輪の中を往復させるように通していきます" },
           { src: "/guide/pole3-caudex-top.webp", alt: "亀甲竜の蔓が \"3つの六角形\" の枠に絡んでいる接写", width: 1200, height: 1200, caption: "伸びた蔓は数日おきに次の輪へ通すと、小さな支柱でも収まります" },
