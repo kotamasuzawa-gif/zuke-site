@@ -9,7 +9,7 @@ import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 export const metadata: Metadata = {
   title: "ブランドについて｜インテリアに馴染む園芸支柱をつくる",
   description:
-    "ZUKE（ズーケ）は「インテリアに馴染む」「生活に馴染む」をコンセプトに、機能性とデザイン性を両立した園芸支柱 PLANTS POLE をつくるブランドです。植物と家具が心地よく共存する暮らしを提案します。",
+    "ZUKE（ズーク）は「インテリアに馴染む」「生活に馴染む」をコンセプトに、機能性とデザイン性を両立した園芸支柱 PLANTS POLE をつくるブランドです。植物と家具が心地よく共存する暮らしを提案します。",
   alternates: { canonical: "/about" },
   openGraph: {
     ...OG_BASE,

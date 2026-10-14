@@ -40,7 +40,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#site`,
       name: "ZUKE",
-      alternateName: ["ズーケ", "ZUKE PLANTS POLE"],
+      alternateName: ["ズーク", "ZUKE PLANTS POLE"],
       url: SITE_URL,
       publisher: { "@id": `${SITE_URL}/#org` },
       inLanguage: "ja",
