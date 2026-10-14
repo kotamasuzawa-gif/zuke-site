@@ -29,8 +29,8 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   scoop: ["black", "lightgray", "orange"],
   // 2026-10-12 ソイルスティックは ブラック／ライトグレー／オレンジ の3色（白なし）
   soilstick: ["black", "lightgray", "orange"],
-  // 2026-10-14 上り棒セットはブラックのみ
-  noboribo: ["black"],
+  // 2026-10-14 上り棒セットは4色（増澤さん指示）
+  noboribo: ["black", "orange", "lightgray", "white"],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
 // 2026-10-10 EC店長#7597: ホーム・商品一覧・カテゴリの色ボタンは全4色固定なので、その商品に存在しない配色を押すと
@@ -42,7 +42,6 @@ const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
   "marupot-stand": ["white"],
   scoop: ["white"],
   soilstick: ["white"],
-  noboribo: ["white", "orange", "lightgray"],
 };
 export const hasColorPhoto = (slug: string, color: ColorKey | null): color is ColorKey =>
   color !== null && !(NO_PHOTO_COLORS[slug] ?? []).includes(color);
