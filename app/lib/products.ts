@@ -211,6 +211,8 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     name: 'PLANTS POLE "3つの六角形"',
     fullName: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
+    // 2026-10-14 SEO(#8901/#8919): 10/15リールのキャプション軸「伸びた蔓が、インテリアの一部に」と検索結果の言葉を揃える
+    shortTitle: '"3つの六角形" {price}｜伸びた蔓をインテリアの一部にする園芸支柱',
     price: 880,
     image: "/products/product-hex3-base.webp",
     // 2026-10-04 SEO: summary_large_image(1.91:1)で正方形og画像の上下が切れる指摘→横長OGに差し替え
@@ -220,7 +222,7 @@ export const PRODUCTS: Product[] = [
     ogImageSquare: "/products/product-hex3-black-1200x1200.jpg",
     baseUrl: `${SHOP}/items/128906974`,
     summary:
-      "六角形を3つ連ねた高さ約22cmのアイアン製園芸支柱。2.5〜5号鉢が目安で、ホヤなど小さめの蔓性植物に。空間を邪魔せずデスクや棚の上にも収まります。",
+      "伸びた蔓が、インテリアの一部に。六角形を3つ連ねた高さ約22cmのアイアン製園芸支柱。2.5〜5号鉢が目安で、ホヤなど小さめの蔓性植物に。デスクや棚の上にも収まります。",
     lead:
       "小さめの鉢にちょうどいい、高さ約22cmのミドルサイズ。場所を取らないので、デスクや棚の上など、近くで眺めるグリーンに向いています。空間を圧迫せずに、株元からの立ち上がりだけを綺麗に見せられます。",
     height: "約22cm",
