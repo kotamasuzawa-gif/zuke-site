@@ -214,7 +214,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         {p.howtoVideo && (
           <section className="mt-20">
             <h2 className="text-base font-bold">組み立て方</h2>
-            <div className="mt-6 max-w-md">
+            {/* 2026-10-15: LPの組み立て動画（1920x1080・3Dアニメ）と同じ出し方に合わせて横幅いっぱい */}
+            <div className="mt-6 -mx-6 md:mx-0 bg-white">
               <video className="w-full h-auto block" src={p.howtoVideo.src} poster={p.howtoVideo.poster} autoPlay muted loop playsInline preload="metadata" aria-label={p.howtoVideo.label} />
             </div>
           </section>
