@@ -9,6 +9,9 @@ import { CATEGORIES, productBySlug, yen, withUtm } from "@/app/lib/products";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 export const dynamicParams = false;
+// 2026-10-15 SEO: 期間限定クーポン告知（Section.notice）の期間判定をビルド時に固定しないため、
+// 商品ページ（app/products/[slug]/page.tsx）と同じく1時間ごとに再生成する
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return GUIDES.map((g) => ({ slug: g.slug }));
@@ -41,6 +44,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   const related = g.related.map(productBySlug).filter((p): p is NonNullable<typeof p> => !!p);
   const others = GUIDES.filter((x) => x.slug !== g.slug);
+  // 2026-10-15 SEO: 期間限定クーポンの告知段落は失効日を過ぎたら出さない（商品ページと同じ JST 判定）
+  const todayJst = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
   // 2026-09-29 SEO R4: 紹介した商品のカテゴリページへもリンクする（カテゴリページへの内部リンクが少なかった）
   // 2026-10-09 SEO: 本文中の BASE 購入リンク（節の直下・FAQ末尾）
   // 2026-10-10 SEO(#6541): trackFrom がある記事は BASE リンクに &from= を足して記事経由の流入を実数で数える
@@ -175,6 +180,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               {s.body.map((para, i) => (
                 <p key={i} className="mt-5 text-[15px] leading-loose text-gray-700">{para}</p>
               ))}
+              {s.notice && todayJst <= s.notice.endDate && (
+                <p className="mt-5 text-[15px] leading-loose text-gray-700">{s.notice.text}</p>
+              )}
               {s.figuresPlacement !== "afterPoints" && figures(s.figures)}
               {s.points && (
                 <ul className="mt-6 flex flex-col gap-3">
