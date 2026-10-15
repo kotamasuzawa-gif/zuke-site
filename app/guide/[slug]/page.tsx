@@ -59,12 +59,14 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // 2026-10-15 SEO(#9782 EC店長): 本文中のCTAが全部 utm_content=guide_inline で、1記事に5〜6本あっても
   // BASECLICK ログからは「何節目のCTAが押されたか」を分けられなかった。節ごとに guide_sec1, guide_sec2…
   // を振って、11/12 の「sec1 のCTAがクリックの何%を取ったか」を数えられるようにする。
-  const ctaLink = (c: { product: string; label: string } | undefined, content: string) => {
+  // 2026-10-15 SEO(#10022 EC店長): sub=true は「2本目」のCTA（330〜380円のパーツ）。
+  // 第一CTA（高単価）を目立たせるため、2本目は細字・1行下げで出す
+  const ctaLink = (c: { product: string; label: string } | undefined, content: string, sub = false) => {
     const p = c && productBySlug(c.product);
     if (!c || !p) return null;
     return (
-      <p className="mt-6 text-[15px]">
-        <a href={baseLink(p.baseUrl, content)} target="_blank" rel="nofollow noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
+      <p className={sub ? "mt-3 text-[14px]" : "mt-6 text-[15px]"}>
+        <a href={baseLink(p.baseUrl, content)} target="_blank" rel="nofollow noopener noreferrer" className={`underline underline-offset-4 decoration-gray-400 hover:text-[#222]${sub ? "" : " font-bold"}`}>
           {c.label}（{yen(p.price)}）
         </a>
       </p>
@@ -208,6 +210,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                 </ul>
               )}
               {ctaLink(s.cta, `guide_sec${i + 1}`)}
+              {/* 2026-10-15 SEO(#10022 EC店長): 2本目のCTA（330〜380円のパーツ）。第一CTAと分けて数える */}
+              {ctaLink(s.cta2, `guide_sec${i + 1}b`, true)}
             </section>
           ))}
 
