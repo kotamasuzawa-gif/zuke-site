@@ -56,12 +56,15 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     if (g.trackFrom) q.set("from", g.trackFrom);
     return `/go/base/${itemId}?${q.toString()}`;
   };
-  const ctaLink = (c?: { product: string; label: string }) => {
+  // 2026-10-15 SEO(#9782 EC店長): 本文中のCTAが全部 utm_content=guide_inline で、1記事に5〜6本あっても
+  // BASECLICK ログからは「何節目のCTAが押されたか」を分けられなかった。節ごとに guide_sec1, guide_sec2…
+  // を振って、11/12 の「sec1 のCTAがクリックの何%を取ったか」を数えられるようにする。
+  const ctaLink = (c: { product: string; label: string } | undefined, content: string) => {
     const p = c && productBySlug(c.product);
     if (!c || !p) return null;
     return (
       <p className="mt-6 text-[15px]">
-        <a href={baseLink(p.baseUrl, "guide_inline")} target="_blank" rel="nofollow noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
+        <a href={baseLink(p.baseUrl, content)} target="_blank" rel="nofollow noopener noreferrer" className="underline underline-offset-4 decoration-gray-400 hover:text-[#222] font-bold">
           {c.label}（{yen(p.price)}）
         </a>
       </p>
@@ -164,7 +167,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             </p>
           )}
 
-          {g.sections.map((s) => (
+          {g.sections.map((s, i) => (
             <section key={s.heading} className="mt-14">
               <h2 className="text-lg font-bold leading-relaxed border-l-2 border-[#222] pl-4">{s.heading}</h2>
               {s.body.map((para, i) => (
@@ -204,7 +207,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   ))}
                 </ul>
               )}
-              {ctaLink(s.cta)}
+              {ctaLink(s.cta, `guide_sec${i + 1}`)}
             </section>
           ))}
 
@@ -219,7 +222,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   </div>
                 ))}
               </dl>
-              {ctaLink(g.faqCta)}
+              {ctaLink(g.faqCta, "guide_faq")}
             </section>
           )}
         </article>
