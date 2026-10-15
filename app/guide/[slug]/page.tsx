@@ -66,13 +66,17 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // を振って、11/12 の「sec1 のCTAがクリックの何%を取ったか」を数えられるようにする。
   // 2026-10-15 SEO(#10022 EC店長): sub=true は「2本目」のCTA（330〜380円のパーツ）。
   // 第一CTA（高単価）を目立たせるため、2本目は細字・1行下げで出す
-  const ctaLink = (c: { product: string; label: string } | undefined, content: string, sub = false) => {
+  // 2026-10-16 SEO(#10075): 第一CTAの文言A/B。labelB があればそれを出し、utm_content の末尾に c を付けて
+  // 旧型（商品名＋価格＋BASEで見る）と分けて数える。商品・リンク先・価格表示は変えない。
+  const ctaLink = (c: { product: string; label: string; labelB?: string } | undefined, content: string, sub = false) => {
     const p = c && productBySlug(c.product);
     if (!c || !p) return null;
+    const label = c.labelB ?? c.label;
+    const key = c.labelB ? `${content}c` : content;
     return (
       <p className={sub ? "mt-3 text-[14px]" : "mt-6 text-[15px]"}>
-        <a href={baseLink(p.baseUrl, content)} target="_blank" rel="nofollow noopener noreferrer" className={`underline underline-offset-4 decoration-gray-400 hover:text-[#222]${sub ? "" : " font-bold"}`}>
-          {c.label}（{yen(p.price)}）
+        <a href={baseLink(p.baseUrl, key)} target="_blank" rel="nofollow noopener noreferrer" className={`underline underline-offset-4 decoration-gray-400 hover:text-[#222]${sub ? "" : " font-bold"}`}>
+          {label}（{yen(p.price)}）
         </a>
       </p>
     );
