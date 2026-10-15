@@ -211,6 +211,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
+        {p.howtoVideo && (
+          <section className="mt-20">
+            <h2 className="text-base font-bold">組み立て方</h2>
+            <div className="mt-6 max-w-md">
+              <video className="w-full h-auto block" src={p.howtoVideo.src} poster={p.howtoVideo.poster} autoPlay muted loop playsInline preload="metadata" aria-label={p.howtoVideo.label} />
+            </div>
+          </section>
+        )}
+
         {/* 2026-10-11 増澤さん指示: 中の構造（内側の写真＋説明） */}
         {p.structure && (
           <section className="mt-20">

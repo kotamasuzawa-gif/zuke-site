@@ -55,6 +55,8 @@ export type Product = {
    * 2026-10-10 EC店長#7590: ヒーローが商品単体カットになり「何に使う物か」がLP上で分からなくなるため、
    * ヒーロー直下に1枚＋キャプションで補う。白背景の物撮りではなく、暮らしの中のカットだけを入れる。
    */
+  // 2026-10-15 増澤さん「説明書をLPに載せる動画用に」: 組み立て方の動画（無音・ループ）
+  howtoVideo?: { src: string; poster: string; label: string };
   usageImage?: {
     src: string;
     alt: string;
@@ -342,6 +344,7 @@ export const PRODUCTS: Product[] = [
     // 2026-10-14 新商品: 上り棒セット（BASE 162757270）。説明は BASE 商品ページの記載どおり（受け皿付き・水苔／ネコチップを詰める）。
     // 樹脂製品なので卸売ページには載せない（kind: "pla"）。六角鉢＋支柱のセットなので category は「鉢・セット」
     slug: "noboribo",
+    howtoVideo: { src: "/products/noboribo-howto.mp4", poster: "/products/noboribo-howto-poster.jpg", label: "上り棒セットの組み立て方" },
     kind: "pla",
     category: "pot",
     isNew: true,
