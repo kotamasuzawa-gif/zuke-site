@@ -14,6 +14,7 @@ import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 // 「六角花瓶｜観葉植物の園芸支柱」のように中身と違う title になっていた。カテゴリで切り替える（商品名は変えない）
 const TITLE_SUFFIX: Record<CategoryKey, string> = {
   pole: "観葉植物の園芸支柱",
+  climb: "水苔を詰める登り棒（モス支柱）",
   pot: "支柱が差せる六角鉢",
   extension: "樹脂版支柱の拡張パーツ",
   tool: "小鉢用の土入れスコップ",

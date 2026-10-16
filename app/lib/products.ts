@@ -2,7 +2,7 @@
 // 2026-08-22 SEO強化: 商品ごとの内部ページを新設し、ここを共通データ源にした。
 
 export type MaterialKind = "iron" | "pla";
-export type CategoryKey = "pole" | "pot" | "extension" | "tool";
+export type CategoryKey = "pole" | "climb" | "pot" | "extension" | "tool";
 
 export type Product = {
   slug: string;
@@ -384,7 +384,7 @@ export const PRODUCTS: Product[] = [
     slug: "noboribo",
     howtoVideo: { src: "/products/noboribo-howto.mp4", poster: "/products/noboribo-howto-poster.jpg", label: "上り棒セットの組み立て方" },
     kind: "pla",
-    category: "pot",
+    category: "climb",
     isNew: true,
     name: 'PLANTS POLE 上り棒セット "3つの六角形"',
     shortTitle: '上り棒セット {price}｜水苔を詰めるモス支柱（登り棒）＋六角鉢・受け皿',
@@ -711,6 +711,8 @@ export const MATERIALS: { key: MaterialKind; label: string; lead: string; image:
 ];
 export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。" },
+  // 2026-10-16 増澤さん「登り棒というカテゴリも欲しい」
+  { key: "climb", label: "登り棒", lead: "水苔やネコチップを詰めて、気根を這わせて育てる六角形の登り棒（モス支柱）。専用の六角鉢に挿して自立します。" },
   { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
   { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
   { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
@@ -731,6 +733,10 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
   pla: {
     seoTitle: "3Dプリントの六角鉢・樹脂支柱（PLA）",
     seoDescription: "PLA樹脂を3Dプリントでつくる、支柱の差込口付き六角鉢・受け皿・樹脂版支柱・拡張パーツ。軽く、色を選べます。アイアンの PLANTS POLE と同じ六角形のデザインです。",
+  },
+  climb: {
+    seoTitle: "登り棒（モス支柱）｜水苔を詰める六角形の支柱",
+    seoDescription: "水苔やネコチップを詰めて、モンステラやポトスの気根を這わせて育てる六角形の登り棒（モス支柱・水苔ポール）。3つの六角形をつないで専用の六角鉢に挿すだけ。PLA樹脂・3Dプリント製。",
   },
   pot: {
     seoTitle: "支柱が差せる六角鉢・鉢と支柱のセット",
