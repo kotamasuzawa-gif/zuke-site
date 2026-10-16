@@ -13,7 +13,8 @@ const priceTo = (items: Product[]) => {
   const max = Math.max(...items.map((p) => p.price));
   return { price: yen(max), names: items.filter((p) => p.price === max).map(shortName).join("・") };
 };
-const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole");
+// 2026-10-16: 「◯円から◯円まで◯型」の集計は単品だけ（セットを入れると上限がセット価格・型数も合わなくなる）
+const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet);
 const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole");
 const potSets = PRODUCTS.filter((p) => p.category === "pot" && p.name.includes("セット"));
 const ironFrom = priceFrom(ironPoles);

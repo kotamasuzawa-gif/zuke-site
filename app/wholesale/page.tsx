@@ -5,7 +5,8 @@ import SiteFooter from "@/app/components/SiteFooter";
 import { PRODUCTS, yen } from "@/app/lib/products";
 
 // 卸売はアイアン支柱のみ（樹脂製は BASE 専売・2026-10-01 方針）
-const WHOLESALE_PRODUCTS = PRODUCTS.filter((p) => p.kind === "iron");
+// 2026-10-16: BtoC向けのまとめ買いセット（isSet）は、1商品1ロット（10本）単位の卸売ラインナップに混ぜない
+const WHOLESALE_PRODUCTS = PRODUCTS.filter((p) => p.kind === "iron" && !p.isSet);
 import { WHOLESALE_EMAIL, WHOLESALE_MAILTO, WHOLESALE_MAIL_FIELDS } from "@/app/lib/contact";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
