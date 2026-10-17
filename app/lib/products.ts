@@ -257,6 +257,10 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     name: 'PLANTS POLE "うねうね"',
     fullName: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-',
+    // 2026-10-17 SEO(#10800): 売上の中心3商品のうち、うねうねだけ shortTitle が無く
+    // title が「PLANTS POLE "うねうね"｜観葉植物の園芸支柱」= 価格も用途も出ていなかった。
+    // hex3 / noboribo と同じ「商品名＋価格＋中身」の型に揃える（商品名は変えない）
+    shortTitle: '"うねうね" {price}｜横に広がる株を整える曲線の園芸支柱',
     price: 1320,
     image: "/products/product-uneune-base.webp",
     // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
