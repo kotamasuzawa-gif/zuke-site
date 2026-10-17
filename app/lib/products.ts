@@ -98,6 +98,12 @@ export type Product = {
     endDate: string;
     note?: string;
   }[];
+  /**
+   * 2026-10-17 SEO(#10831 EC店長): クーポン期間が終わった日から、同じ位置に出すまとめ買いの理由。
+   * クーポン告知を「消して終わり」にすると、その枠のまとめ買い訴求がゼロになる（CVRが落ちる）。
+   * 期間限定ではないので日付を持たず、activeCampaign が無い時だけ出す。
+   */
+  bundleNote?: string;
 };
 
 export const SHOP = "https://shop.zukeplants.com";
@@ -162,6 +168,9 @@ export const PRODUCTS: Product[] = [
         note: "購入画面でコードを入力",
       },
     ],
+    // 2026-10-17 SEO: ZUKE2SET 失効（10/19 23:59）後のこの枠の受け皿。EC店長 #10831 の差し替え方針に揃える
+    bundleNote:
+      '「3つの六角形」「2つの六角形」と組み合わせると、高さ39cm・22cm・19.5cmの3本立てで株の表情を作れます。一緒にご注文いただくと送料は1配送分です。',
   },
   {
     slug: "hex3",
@@ -211,6 +220,8 @@ export const PRODUCTS: Product[] = [
         note: "購入画面でコードを入力",
       },
     ],
+    // 2026-10-17 SEO: ZUKE2SET 失効後の受け皿。黒＋白のまとめ買いが直近で最多（EC店長 #10831）
+    bundleNote: "黒＋白の2本（1,760円）が一番人気です。一緒にご注文いただくと送料は1配送分でお届けします。",
   },
   {
     slug: "hex2",
@@ -250,6 +261,9 @@ export const PRODUCTS: Product[] = [
         note: "購入画面でコードを入力。2つの六角形2点=1,540円は条件未達",
       },
     ],
+    // 2026-10-17 SEO: ZUKE2SET 失効後の受け皿。条件未達の注意書きは不要になるので、組み合わせの提案に置き換える
+    bundleNote:
+      '「3つの六角形」と合わせると高さ19.5cm＋22cmの2本立て（合計1,650円）になります。一緒にご注文いただくと送料は1配送分です。',
   },
   {
     slug: "uneune",

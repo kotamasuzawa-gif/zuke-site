@@ -184,8 +184,10 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               {s.body.map((para, i) => (
                 <p key={i} className="mt-5 text-[15px] leading-loose text-gray-700">{para}</p>
               ))}
-              {s.notice && todayJst <= s.notice.endDate && (
-                <p className="mt-5 text-[15px] leading-loose text-gray-700">{s.notice.text}</p>
+              {s.notice && (todayJst <= s.notice.endDate || s.notice.textAfter) && (
+                <p className="mt-5 text-[15px] leading-loose text-gray-700">
+                  {todayJst <= s.notice.endDate ? s.notice.text : s.notice.textAfter}
+                </p>
               )}
               {s.figuresPlacement !== "afterPoints" && figures(s.figures)}
               {s.points && (

@@ -149,6 +149,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 {activeCampaign.note ? `（${activeCampaign.note}）` : ""}
               </p>
             )}
+            {/* 2026-10-17 SEO(#10831 EC店長): クーポン期間外はこの枠を空にせず、まとめ買いの理由を残す */}
+            {!activeCampaign && p.bundleNote && (
+              <p className="mt-4 text-[13px] leading-relaxed text-gray-600 bg-gray-50 px-3 py-2 rounded">{p.bundleNote}</p>
+            )}
 
             <p className="mt-6 text-[15px] leading-loose text-gray-700">{p.lead}</p>
 
