@@ -132,6 +132,13 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     name: 'PLANTS POLE "5つの六角形"',
     fullName: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
+    // 2026-10-17 SEO(#10850): 販売数1位（全期間71本・L126）なのに shortTitle が無く、title が
+    // 商品名＋カテゴリ固定文（"5つの六角形"｜観葉植物の園芸支柱）＝用途も高さも価格も出ていなかった。
+    // 入れる言葉はGSCに実在するクエリと products.ts の確定値だけ: /products/hex5 は直近3か月で
+    // 10表示・0クリック・平均順位3.5（10/17 GSC実査）で、サイトに来ているモンステラ系クエリは
+    // 40表示・0クリック（「モンステラ 自立しない」6 /「垂らす」4 /「倒れる」4 /「支柱」4）。
+    // 39cm = height の確定値、モンステラ・ポトス = plants の記載。
+    shortTitle: '"5つの六角形" {price}｜モンステラ・ポトスを立ち上げる39cmの園芸支柱',
     price: 1320,
     image: "/products/product-hex5-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップでトレリス上部が切れる指摘→横長OGに差し替え
