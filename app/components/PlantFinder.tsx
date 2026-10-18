@@ -103,7 +103,8 @@ export default function PlantFinder() {
       for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) y += n.offsetTop;
       const header = document.querySelector("header");
       const headerH = header && getComputedStyle(header).position === "sticky" ? header.getBoundingClientRect().height : 0;
-      return Math.max(0, y - headerH - 20);
+      const navH = mode === "top" ? 0 : (rootRef.current?.querySelector("nav")?.getBoundingClientRect().height ?? 0);   // 追従ロードマップの下に来るように
+      return Math.max(0, y - headerH - navH - 20);
     };
     const root = document.documentElement;
     const jump = (y: number) => {
@@ -159,6 +160,11 @@ export default function PlantFinder() {
     scrollTo.current = "top";
     setPath([]);
   };
+  // 2026-10-18 増澤さん「選択肢をロードマップ形式で画面に追従」: 上部に貼りつく進み具合。タップでその STEP に戻る
+  const jumpTo = (i: number) => {
+    scrollTo.current = "last";
+    setPath((p) => p.slice(0, i));
+  };
   const back = () => {
     scrollTo.current = "last";
     setPath((p) => p.slice(0, -1));
@@ -173,6 +179,32 @@ export default function PlantFinder() {
       <p className="text-[11px] tracking-[0.2em] text-gray-500">FIND YOUR POLE</p>
       <h2 className="mt-2 text-xl md:text-2xl font-bold leading-relaxed">あなたの植物に、ちょうどいい支え。</h2>
       <p className="mt-2 text-[13px] text-gray-600 leading-relaxed">答えるたびに次の選択肢が現れます。</p>
+
+      <nav aria-label="診断の進み具合" className="sticky top-16 md:top-20 z-40 -mx-4 md:mx-0 mt-6 px-4 md:px-0 py-3 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+        <ol className="flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[12px] [scrollbar-width:none]">
+          {steps.map(({ step, picked }, i) => (
+            <li key={`map-${i}`} className="flex items-center gap-1.5 shrink-0">
+              {i > 0 && <span aria-hidden className="w-4 h-px bg-gray-300" />}
+              <button
+                type="button"
+                onClick={() => picked && jumpTo(i)}
+                disabled={!picked}
+                aria-current={!picked && !result ? "step" : undefined}
+                className={`flex items-center gap-1.5 min-h-[36px] px-3 rounded-full border transition-colors ${
+                  picked ? "border-[#222] bg-[#222] text-white" : "border-[#222] bg-white text-[#222] font-bold"
+                }`}
+              >
+                <span className="text-[10px] opacity-70">{String(i + 1).padStart(2, "0")}</span>
+                <span>{picked ? picked.label : step.en}</span>
+              </button>
+            </li>
+          ))}
+          <li className="flex items-center gap-1.5 shrink-0">
+            <span aria-hidden className="w-4 h-px bg-gray-300" />
+            <span className={`flex items-center min-h-[36px] px-3 rounded-full border ${result ? "border-[#222] bg-white text-[#222] font-bold" : "border-dashed border-gray-300 text-gray-400"}`}>結果</span>
+          </li>
+        </ol>
+      </nav>
 
       <ol className="mt-8 relative">
         {steps.map(({ step, picked }, i) => (
