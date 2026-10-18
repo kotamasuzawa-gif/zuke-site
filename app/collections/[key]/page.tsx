@@ -91,13 +91,14 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
             <video className="w-full h-auto block" src={VIDEOS[c.key].src} poster={VIDEOS[c.key].poster} autoPlay muted loop playsInline preload="metadata" aria-label={VIDEOS[c.key].label} />
           </section>
         )}
-        <div className="mt-8">
-          <CollectionNav current={c.key} compact />
-        </div>
         <div className="mt-12">
           <ProductColorGrid items={items.map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.material, isNew: p.isNew, href: `/products/${p.slug}` }))} />
         </div>
         {items.length === 0 && <p className="mt-12 text-gray-500">準備中です。</p>}
+        {/* 2026-10-18 増澤さん指示: カテゴリボタンは商品一覧の下に */}
+        <div className="mt-12">
+          <CollectionNav current={c.key} compact />
+        </div>
         {relatedGuides.length > 0 && (
           <section className="mt-20">
             <h2 className="text-base font-bold">関連するガイド</h2>
