@@ -105,27 +105,50 @@ export default function PlantFinder() {
       const headerH = header && getComputedStyle(header).position === "sticky" ? header.getBoundingClientRect().height : 0;
       return Math.max(0, y - headerH - 20);
     };
+    const root = document.documentElement;
+    const jump = (y: number) => {
+      // html の scroll-behavior: smooth が効いていると毎フレームの移動が二重に補間されるので、動かしている間だけ外す
+      const prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, y);
+      root.style.scrollBehavior = prev;
+    };
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      window.scrollTo({ top: target(), behavior: "instant" });
+      jump(target());
       return;
     }
+    // 2026-10-18 増澤さん「いきなりそこに遷移している／追従式のような遷移に」:
+    // 最初にグッと動く ease-out をやめ、ゆっくり動き出してゆっくり止まる ease-in-out で、新しい枝がせり上がるのに合わせて追いかける
     const from = window.scrollY;
-    const duration = 1000;
-    const ease = (x: number) => 1 - Math.pow(1 - x, 4);
+    const duration = 1400;
+    const delay = 120;
+    const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
     let start = 0;
     let raf = 0;
     const tick = (now: number) => {
       if (!start) start = now;
-      const k = Math.min(1, (now - start) / duration);
-      window.scrollTo({ top: from + (target() - from) * ease(k), behavior: "instant" });
+      const k = Math.min(1, Math.max(0, now - start - delay) / duration);
+      jump(from + (target() - from) * ease(k));
       if (k < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    // ユーザーが自分でスクロールしたら止める
+    // ユーザーが自分でスクロールしたら止める（タップ時の小さな指ブレでは止めない）
+    let touchY: number | null = null;
     const stop = () => cancelAnimationFrame(raf);
+    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0]?.clientY ?? null; };
+    const onTouchMove = (e: TouchEvent) => {
+      const y = e.touches[0]?.clientY;
+      if (touchY !== null && y !== undefined && Math.abs(y - touchY) > 12) stop();
+    };
     window.addEventListener("wheel", stop, { passive: true });
-    window.addEventListener("touchmove", stop, { passive: true });
-    return () => { stop(); window.removeEventListener("wheel", stop); window.removeEventListener("touchmove", stop); };
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    return () => {
+      stop();
+      window.removeEventListener("wheel", stop);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
   }, [path]);
 
   const pick = (depth: number, id: string) => {
