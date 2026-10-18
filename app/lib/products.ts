@@ -451,7 +451,9 @@ export const PRODUCTS: Product[] = [
     fullName: "PLANTS POLE 六角形ハンギング鉢 - S字フックで吊るす着生植物用ポケット 3Dプリント -",
     price: 1380,
     image: "/products/product-hexhanging-base.webp",
-    ogImage: "/products/product-hexhanging-og.jpg",
+    ogImage: "/products/product-hexhanging-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
     baseUrl: `${SHOP}/items/163355667`,
     summary:
       "S字フックで吊るして飾る、六角形のハンギング鉢。水苔やネコチップを詰めて、ホヤ・リプサリス・ポトスの小苗など垂れ下がる着生植物を育てられます。PLA樹脂・3Dプリント製、ブラック／オレンジ／ライトグレー／ホワイトの4色。",
