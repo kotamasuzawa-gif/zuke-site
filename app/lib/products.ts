@@ -412,7 +412,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     // 2026-10-14 新商品: 上り棒セット（BASE 162757270）。説明は BASE 商品ページの記載どおり（受け皿付き・水苔／ネコチップを詰める）。
-    // 樹脂製品なので卸売ページには載せない（kind: "pla"）。六角鉢＋支柱のセットなので category は「鉢・セット」
+    // 樹脂製品（2026-10-18 から卸対象・卸はブラック／ライトグレーのみ）。六角鉢＋支柱のセットなので category は「鉢・セット」
     slug: "noboribo",
     howtoVideo: { src: "/products/noboribo-howto.mp4", poster: "/products/noboribo-howto-poster.jpg", label: "上り棒セットの組み立て方" },
     kind: "pla",
@@ -441,7 +441,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     // 2026-10-12 新商品: ソイルスティック（BASE 162230038）。増澤さん指示「スタジオ撮影にして出品して。550円で」。
-    // 樹脂製品なので卸売ページには載せない（kind: "pla"）。説明は BASE 商品ページの記載どおり
+    // 樹脂製品（2026-10-18 から卸対象・卸はブラック／ライトグレーのみ）。説明は BASE 商品ページの記載どおり
     slug: "soilstick",
     kind: "pla",
     category: "tool",
@@ -469,7 +469,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     // 2026-10-11 新商品: ミニ土入れスコップ（BASE 162202851）。増澤さん指示「LPの更新も」。
-    // 樹脂製品なので卸売ページには載せない（kind: "pla" は wholesale の対象外）。説明は BASE 商品ページの記載どおり
+    // 樹脂製品（2026-10-18 から卸対象・卸はブラック／ライトグレーのみ）。説明は BASE 商品ページの記載どおり
     slug: "scoop",
     kind: "pla",
     category: "tool",

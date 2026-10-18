@@ -7,6 +7,8 @@ import { PRODUCTS, yen } from "@/app/lib/products";
 // 卸売はアイアン支柱のみ（樹脂製は BASE 専売・2026-10-01 方針）
 // 2026-10-16: BtoC向けのまとめ買いセット（isSet）は、1商品1ロット（10本）単位の卸売ラインナップに混ぜない
 const WHOLESALE_PRODUCTS = PRODUCTS.filter((p) => p.kind === "iron" && !p.isSet);
+// 2026-10-18 増澤さん「3Dプリンタ商品を卸対象にして」: 樹脂製品も卸対象（卸はブラック・ライトグレーの2色のみ）
+const WHOLESALE_PLA = PRODUCTS.filter((p) => p.kind === "pla");
 import { WHOLESALE_EMAIL, WHOLESALE_MAILTO, WHOLESALE_MAIL_FIELDS } from "@/app/lib/contact";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
@@ -14,7 +16,7 @@ import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 // 条件は増澤さんのお取引要綱（PDF）に準拠。掛け率・卸価格（下代の単価）はサイトに載せない（JSON-LD にも出さない）。
 const TITLE = "卸売・仕入れのご案内";
 const DESCRIPTION =
-  "園芸店・植物店・インテリアショップ・雑貨店さま向けに、六角形デザインの園芸支柱 PLANTS POLE を卸売しています。1商品1ロット（10本）単位。卸価格などの条件は、お取引要綱としてメールでお送りします。";
+  "園芸店・植物店・インテリアショップ・雑貨店さま向けに、六角形デザインの園芸支柱 PLANTS POLE と、3Dプリントの六角鉢・登り棒などの樹脂製品を卸売しています。1商品1ロット（10本）単位。卸価格などの条件は、お取引要綱としてメールでお送りします。";
 
 export const metadata: Metadata = {
   title: `${TITLE}｜園芸支柱 PLANTS POLE`,
@@ -167,8 +169,24 @@ export default function WholesalePage() {
                 </li>
               ))}
             </ul>
+            <div className="mt-10 flex items-baseline justify-between border-b border-[#e5e5e0] pb-2">
+              <h3 className="text-[15px] font-bold tracking-[0.1em]">3Dプリント 樹脂製品</h3>
+              <Link href="/collections/pla" className="text-[12px] tracking-[0.15em] text-gray-500 hover:text-[#222]">一覧を見る →</Link>
+            </div>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-6 pt-4 sm:grid-cols-4">
+              {WHOLESALE_PLA.map((p) => (
+                <li key={p.slug}>
+                  <Link href={`/products/${p.slug}`} className="block hover:opacity-70">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.image} alt={p.name} loading="lazy" className="aspect-square w-full bg-gray-50 object-cover" />
+                    <span className="mt-2 block text-[13px] leading-snug">{p.name}</span>
+                    <span className="mt-1 block text-[13px] text-gray-600">{yen(p.price)}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
             <p className="mt-4 text-[13px] leading-loose text-gray-500">
-              3Dプリントの樹脂製品（六角鉢・樹脂支柱・拡張パーツ）は受注生産のため、公式オンラインストアのみでの販売となり、卸売の対象外です。
+              3Dプリントの樹脂製品は受注生産のため、卸でのお取り扱いはブラック・ライトグレーの2色です。ご注文のタイミングによって在庫を切らしている場合があり、その際はお届けまでの日数をご案内します。
             </p>
           </div>
           <p className="mt-6 text-[14px]">
