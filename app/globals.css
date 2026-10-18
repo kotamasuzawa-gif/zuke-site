@@ -37,3 +37,13 @@ html {
   background: #3a3a36;
   flex-shrink: 0;
 }
+
+/* 2026-10-18 ホームの診断（PlantFinder）: 新しい枝が下からせり上がる */
+@keyframes finder-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.finder-rise { animation: finder-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .finder-rise { animation: none; }
+}

@@ -7,7 +7,7 @@ import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
 import { PRODUCTS, HOME_FEATURED_SLUGS, yen, withUtm } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
-import CollectionNav from "@/app/components/CollectionNav";
+import PlantFinder from "@/app/components/PlantFinder";
 import { COLORS, type ColorKey, shownImageFor, shownColorLabel } from "@/app/lib/colors";
 import { useState, useEffect } from "react";
 import { CATEGORY_VIDEOS } from "@/app/lib/videos";
@@ -90,10 +90,10 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           </span>
         </h1>
 
-        {/* 探し方の導線（2026-09-26 増澤さん指示: 素材→カテゴリ） */}
-        <section aria-label="探し方" className="px-4 md:px-8 max-w-5xl mx-auto pb-14">
-          <p className="text-[11px] tracking-[0.2em] text-gray-500 mb-4">FIND BY</p>
-          <CollectionNav />
+        {/* 探し方の導線（2026-09-26 増澤さん指示: 素材→カテゴリ）
+            2026-10-18 増澤さん指示: 答えるたびに枝分かれする診断（PlantFinder）に置き換え。動画・商品一覧はそのまま */}
+        <section aria-label="探し方" className="px-4 md:px-8 max-w-3xl mx-auto pb-16">
+          <PlantFinder />
         </section>
 
         {/* カラースイッチ（2026-08-22 増澤さん要望） */}
