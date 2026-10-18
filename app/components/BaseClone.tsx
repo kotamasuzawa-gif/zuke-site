@@ -9,7 +9,8 @@ import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import CollectionNav from "@/app/components/CollectionNav";
 import { COLORS, type ColorKey, shownImageFor, shownColorLabel } from "@/app/lib/colors";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CATEGORY_VIDEOS } from "@/app/lib/videos";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
 const SHOP = "https://shop.zukeplants.com";
@@ -27,6 +28,9 @@ const lifestyleImage = (color: ColorKey | null) => `/lifestyle-hex-${color === "
 
 export default function BaseClone({ showLifestyle = false }: { showLifestyle?: boolean }) {
   const [open, setOpen] = useState(false);
+  // 2026-10-18 増澤さん「トップの動画は各カテゴリの動画をランダムに」: 初回描画は鉢の動画（SSRと一致させる）→ 表示後にランダムで差し替え
+  const [hero, setHero] = useState(CATEGORY_VIDEOS.pot);
+  useEffect(() => { const v = Object.values(CATEGORY_VIDEOS); setHero(v[Math.floor(Math.random() * v.length)]); }, []);
   const [color, setColor] = useState<ColorKey | null>(null);
 
   return (
@@ -68,13 +72,14 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
 
       <main className="flex-1">
         {/* 組み立て動画（2026-09-24 増澤さん要望: 横動画をヘッダー下に）。自動再生・無音・ループ */}
-        <section aria-label="六角鉢セット 組み立てムービー" className="w-full bg-white">
+        <section aria-label="PLANTS POLE の組み立てムービー" className="w-full bg-white">
           <video
             className="w-full h-auto block"
-            src="/video/hexpot-assemble.mp4"
-            poster="/video/hexpot-assemble-poster.jpg"
+            key={hero.src}
+            src={hero.src}
+            poster={hero.poster}
             autoPlay muted loop playsInline preload="metadata"
-            aria-label="受け皿・六角鉢・PLANTS POLE が組み上がり、ブラック／ホワイト／ライトグレー／オレンジに切り替わる映像"
+            aria-label={hero.label}
           />
         </section>
         {/* 六角ロゴ。SEO: ページに h1 が1つも無かったため、見た目を変えずにロゴを h1 にした */}
