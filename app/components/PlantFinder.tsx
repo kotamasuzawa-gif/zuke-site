@@ -71,7 +71,6 @@ const TREE: Step = {
 export default function PlantFinder() {
   const [path, setPath] = useState<string[]>([]);
   const lastRef = useRef<HTMLLIElement>(null);
-  const touched = useRef(false);
 
   // 選んだ道筋をたどって、表示する質問と結果を組み立てる
   const steps: { step: Step; picked?: Opt }[] = [];
@@ -85,35 +84,61 @@ export default function PlantFinder() {
     node = picked.next;
   }
 
-  // 選ぶたびに、新しく現れた枝までふんわりスクロール（ブラウザ標準より遅く、終わりをやわらかく）
+  const rootRef = useRef<HTMLDivElement>(null);
+  // どこへスクロールするか: "last" = 新しく現れた枝 / "top" = 診断の先頭（選び直し・戻る）/ null = 動かさない
+  const scrollTo = useRef<"last" | "top" | null>(null);
+
+  // 選ぶたびに、目的の位置までふんわりスクロール（ブラウザ標準より遅く、終わりをやわらかく）
+  // 2026-10-18 増澤さん「遷移する位置が若干ズレてる」: 出現アニメの translateY や画像の読み込みで位置が動くため、
+  // getBoundingClientRect ではなく transform の影響を受けない offsetTop で、毎フレーム目標を取り直す。
+  // 固定ヘッダーの高さも実測して差し引く。
   useEffect(() => {
-    if (!touched.current || !lastRef.current) return;
-    const el = lastRef.current;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mode = scrollTo.current;
+    scrollTo.current = null;
+    if (!mode) return;
+    const el = mode === "top" ? rootRef.current : lastRef.current;
+    if (!el) return;
+    const target = () => {
+      let y = 0;
+      for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) y += n.offsetTop;
+      const header = document.querySelector("header");
+      const headerH = header && getComputedStyle(header).position === "sticky" ? header.getBoundingClientRect().height : 0;
+      return Math.max(0, y - headerH - 20);
+    };
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      window.scrollTo({ top: target(), behavior: "instant" });
+      return;
+    }
     const from = window.scrollY;
-    const to = from + el.getBoundingClientRect().top - 96;
-    if (reduce) { window.scrollTo({ top: to, behavior: "instant" }); return; }
-    const duration = 1100;
+    const duration = 1000;
     const ease = (x: number) => 1 - Math.pow(1 - x, 4);
     let start = 0;
     let raf = 0;
     const tick = (now: number) => {
       if (!start) start = now;
       const k = Math.min(1, (now - start) / duration);
-      window.scrollTo({ top: from + (to - from) * ease(k), behavior: "instant" });
+      window.scrollTo({ top: from + (target() - from) * ease(k), behavior: "instant" });
       if (k < 1) raf = requestAnimationFrame(tick);
     };
-    // 枝が現れ始めてから動かす。ユーザーが自分でスクロールしたら止める
-    const timer = window.setTimeout(() => { raf = requestAnimationFrame(tick); }, 150);
+    raf = requestAnimationFrame(tick);
+    // ユーザーが自分でスクロールしたら止める
     const stop = () => cancelAnimationFrame(raf);
     window.addEventListener("wheel", stop, { passive: true });
-    window.addEventListener("touchstart", stop, { passive: true });
-    return () => { clearTimeout(timer); stop(); window.removeEventListener("wheel", stop); window.removeEventListener("touchstart", stop); };
+    window.addEventListener("touchmove", stop, { passive: true });
+    return () => { stop(); window.removeEventListener("wheel", stop); window.removeEventListener("touchmove", stop); };
   }, [path]);
 
   const pick = (depth: number, id: string) => {
-    touched.current = true;
+    scrollTo.current = "last";
     setPath((p) => [...p.slice(0, depth), id]);
+  };
+  const reset = () => {
+    scrollTo.current = "top";
+    setPath([]);
+  };
+  const back = () => {
+    scrollTo.current = "last";
+    setPath((p) => p.slice(0, -1));
   };
 
   const products = (result?.slugs ?? []).map((s) => productBySlug(s)).filter((p) => p !== undefined);
@@ -121,14 +146,14 @@ export default function PlantFinder() {
   const lastIndex = result ? steps.length : steps.length - 1;
 
   return (
-    <div>
+    <div ref={rootRef}>
       <p className="text-[11px] tracking-[0.2em] text-gray-500">FIND YOUR POLE</p>
       <h2 className="mt-2 text-xl md:text-2xl font-bold leading-relaxed">あなたの植物に、ちょうどいい支え。</h2>
       <p className="mt-2 text-[13px] text-gray-600 leading-relaxed">答えるたびに次の選択肢が現れます。</p>
 
       <ol className="mt-8 relative">
         {steps.map(({ step, picked }, i) => (
-          <li key={`${i}-${path.slice(0, i).join("/")}`} ref={i === lastIndex ? lastRef : undefined} className="finder-rise relative pl-9 pb-10 scroll-mt-24">
+          <li key={`${i}-${path.slice(0, i).join("/")}`} ref={i === lastIndex ? lastRef : undefined} className="finder-rise relative pl-9 pb-10 ">
             <span aria-hidden className={`absolute left-[11px] top-3 bottom-0 w-px ${picked ? "bg-[#222]" : "bg-gray-200"}`} />
             <span aria-hidden className={`absolute left-[5px] top-1 w-[13px] h-[13px] rounded-full border-2 ${picked ? "bg-[#222] border-[#222]" : "bg-white border-[#222]"}`} />
             <p className="text-[10px] tracking-[0.25em] text-gray-400">STEP {String(i + 1).padStart(2, "0")} · {step.en}</p>
@@ -161,7 +186,7 @@ export default function PlantFinder() {
         ))}
 
         {result && main && (
-          <li key={`result-${path.join("/")}`} ref={lastRef} className="finder-rise relative pl-9 scroll-mt-24">
+          <li key={`result-${path.join("/")}`} ref={lastRef} className="finder-rise relative pl-9 ">
             <span aria-hidden className="absolute left-[3px] top-0.5 w-[17px] h-[17px] rounded-full bg-[#222] ring-4 ring-gray-200" />
             <p className="text-[10px] tracking-[0.25em] text-gray-400">YOUR MATCH</p>
             <h3 className="mt-1 text-[17px] font-bold">あなたには、これ。</h3>
@@ -201,7 +226,8 @@ export default function PlantFinder() {
             )}
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px]">
               <Link href={`/collections/${result.collection}`} className="underline underline-offset-4 decoration-gray-300 hover:decoration-[#222]">{result.collectionLabel}をすべて見る</Link>
-              <button type="button" onClick={() => { touched.current = false; setPath([]); }} className="text-gray-500 underline underline-offset-4 decoration-gray-300 py-2">最初から選び直す</button>
+              <button type="button" onClick={back} className="text-gray-500 underline underline-offset-4 decoration-gray-300 py-2">ひとつ前に戻る</button>
+              <button type="button" onClick={reset} className="text-gray-500 underline underline-offset-4 decoration-gray-300 py-2">最初から選び直す</button>
             </div>
           </li>
         )}
