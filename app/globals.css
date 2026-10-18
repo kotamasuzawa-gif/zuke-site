@@ -38,12 +38,13 @@ html {
   flex-shrink: 0;
 }
 
-/* 2026-10-18 ホームの診断（PlantFinder）: 新しい枝が下からせり上がる */
+/* 2026-10-18 ホームの診断（PlantFinder）: 新しい枝がふんわり現れる。選択肢は1つずつ少し遅れて出る */
 @keyframes finder-rise {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
 }
-.finder-rise { animation: finder-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.finder-rise { animation: finder-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.finder-opt { animation: finder-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
 @media (prefers-reduced-motion: reduce) {
-  .finder-rise { animation: none; }
+  .finder-rise, .finder-opt { animation: none; }
 }

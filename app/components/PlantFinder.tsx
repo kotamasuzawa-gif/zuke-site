@@ -85,10 +85,30 @@ export default function PlantFinder() {
     node = picked.next;
   }
 
-  // 選ぶたびに、新しく現れた枝までスクロール
+  // 選ぶたびに、新しく現れた枝までふんわりスクロール（ブラウザ標準より遅く、終わりをやわらかく）
   useEffect(() => {
-    if (!touched.current) return;
-    lastRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!touched.current || !lastRef.current) return;
+    const el = lastRef.current;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const from = window.scrollY;
+    const to = from + el.getBoundingClientRect().top - 96;
+    if (reduce) { window.scrollTo({ top: to, behavior: "instant" }); return; }
+    const duration = 1100;
+    const ease = (x: number) => 1 - Math.pow(1 - x, 4);
+    let start = 0;
+    let raf = 0;
+    const tick = (now: number) => {
+      if (!start) start = now;
+      const k = Math.min(1, (now - start) / duration);
+      window.scrollTo({ top: from + (to - from) * ease(k), behavior: "instant" });
+      if (k < 1) raf = requestAnimationFrame(tick);
+    };
+    // 枝が現れ始めてから動かす。ユーザーが自分でスクロールしたら止める
+    const timer = window.setTimeout(() => { raf = requestAnimationFrame(tick); }, 150);
+    const stop = () => cancelAnimationFrame(raf);
+    window.addEventListener("wheel", stop, { passive: true });
+    window.addEventListener("touchstart", stop, { passive: true });
+    return () => { clearTimeout(timer); stop(); window.removeEventListener("wheel", stop); window.removeEventListener("touchstart", stop); };
   }, [path]);
 
   const pick = (depth: number, id: string) => {
@@ -114,16 +134,17 @@ export default function PlantFinder() {
             <p className="text-[10px] tracking-[0.25em] text-gray-400">STEP {String(i + 1).padStart(2, "0")} · {step.en}</p>
             <h3 className="mt-1 text-[17px] font-bold">{step.q}</h3>
             <div role="radiogroup" aria-label={step.q} className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {step.options.map((o) => {
+              {step.options.map((o, j) => {
                 const on = picked?.id === o.id;
                 return (
                   <button
                     key={o.id}
+                    style={{ animationDelay: `${250 + j * 90}ms` }}
                     type="button"
                     role="radio"
                     aria-checked={on}
                     onClick={() => pick(i, o.id)}
-                    className={`group flex items-center justify-between gap-3 min-h-[64px] px-4 py-3 text-left border rounded-md transition-all duration-300 active:scale-[0.98] ${
+                    className={`finder-opt group flex items-center justify-between gap-3 min-h-[64px] px-4 py-3 text-left border rounded-md transition-[background-color,border-color,color,transform] duration-500 ease-out active:scale-[0.98] ${
                       on ? "border-[#222] bg-[#222] text-white" : picked ? "border-gray-200 bg-white text-gray-400 hover:text-[#222] hover:border-gray-400" : "border-gray-300 bg-white text-[#222] hover:border-[#222]"
                     }`}
                   >
