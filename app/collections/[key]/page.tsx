@@ -29,7 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
     iron: "hex5", pla: "hexpot-set", extension: "hexparts",
     pole: "uneune", pot: "hexpot",
   };
-  const ogProduct = OG_PRODUCT_SLUG[c.key] ? PRODUCTS.find((p) => p.slug === OG_PRODUCT_SLUG[c.key]) : undefined;
+  // 2026-10-18 増澤さん「ハンギングのリンク画像が鉄支柱になる」: 対応表に無いカテゴリは汎用 og.jpg ではなく、そのカテゴリの先頭商品の画像にする
+  const ogProduct = (OG_PRODUCT_SLUG[c.key] ? PRODUCTS.find((p) => p.slug === OG_PRODUCT_SLUG[c.key]) : undefined) ?? PRODUCTS.find(c.filter);
   const ogImages = ogProduct
     ? [{ url: ogProduct.ogImage ?? ogProduct.image, width: ogProduct.ogWidth ?? 1200, height: ogProduct.ogHeight ?? 1200, alt: ogProduct.fullName }]
     : [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }];
