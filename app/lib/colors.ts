@@ -31,6 +31,8 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   soilstick: ["black", "lightgray", "orange"],
   // 2026-10-14 上り棒セットは4色（増澤さん指示）
   noboribo: ["black", "orange", "lightgray", "white"],
+  // 2026-10-18 六角形ハンギング鉢は ブラック／ライトグレー の2色
+  hexhanging: ["black", "lightgray"],
   // 2026-10-16 2本セット（BASE 162185287）はブラック／ホワイトを選べるが、2本そろいの色違い写真が無い
   // （BASEの5枚もブラックの実写＋カラー説明図）。無い写真を合成して出さないので色ボタンは出さず1枚目のみ
   "hex-set-2pcs": [],
@@ -45,6 +47,7 @@ const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
   "marupot-stand": ["white"],
   scoop: ["white"],
   soilstick: ["white"],
+  hexhanging: ["white", "orange"],
   // 2026-10-16 2本セットは配色ごとの写真が1枚も無い（上の SOLD_COLORS 参照）。一覧で色を押しても1枚目のまま
   "hex-set-2pcs": ["black", "white", "orange", "lightgray"],
 };

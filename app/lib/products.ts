@@ -2,7 +2,7 @@
 // 2026-08-22 SEO強化: 商品ごとの内部ページを新設し、ここを共通データ源にした。
 
 export type MaterialKind = "iron" | "pla";
-export type CategoryKey = "pole" | "climb" | "pot" | "extension" | "tool";
+export type CategoryKey = "pole" | "climb" | "hanging" | "pot" | "extension" | "tool";
 
 export type Product = {
   slug: string;
@@ -440,6 +440,34 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
+    // 2026-10-18 新商品: 六角形ハンギング鉢（BASE 163355667）。増澤さん指示「スタジオ撮影にして、BASE出品」。価格 1,380円。
+    // 樹脂製品（卸対象・卸はブラック／ライトグレーのみ）。カテゴリは新設の「ハンギング」
+    slug: "hexhanging",
+    kind: "pla",
+    category: "hanging",
+    isNew: true,
+    name: "六角形ハンギング鉢",
+    shortTitle: "六角形ハンギング鉢 {price}｜S字フックで吊るす着生植物用ポケット",
+    fullName: "PLANTS POLE 六角形ハンギング鉢 - S字フックで吊るす着生植物用ポケット 3Dプリント -",
+    price: 1380,
+    image: "/products/product-hexhanging-base.webp",
+    ogImage: "/products/product-hexhanging-og.jpg",
+    baseUrl: `${SHOP}/items/163355667`,
+    summary:
+      "S字フックで吊るして飾る、六角形のハンギング鉢。水苔やネコチップを詰めて、ホヤ・リプサリス・ポトスの小苗など垂れ下がる着生植物を育てられます。PLA樹脂・3Dプリント製、ブラック／ライトグレーの2色。",
+    lead:
+      "上の頂点の吊り輪（穴 φ8mm）に S字フックを掛けるだけ。正面の下半分はスライド式のシールドで、下から差し込むとカチッと固定され、上半分がポケットの口になります。側面・底・背面の下側に水抜き穴がたくさん開いていて、水苔が蒸れにくい作りです。背面に「ZUKE Plants Pole」の刻印入り。セット内容は本体1個とシールド1枚（S字フック・水苔・植物は付属しません）。屋内向けです（PLA樹脂は約60℃から変形します）。",
+    height: "約10.4cm（吊り輪を含む）",
+    width: "幅 約7.8cm × 奥行き 約3.5cm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["ホヤ", "リプサリス", "ポトスの小苗"],
+    scenes: [
+      "カーテンレールや壁のフックに S字フックで吊るす",
+      "水苔に着生植物を植えて、葉を垂らして育てる",
+      "水抜き穴が多く、吊るしたままでも水苔が蒸れにくい",
+    ],
+  },
+  {
     // 2026-10-12 新商品: ソイルスティック（BASE 162230038）。増澤さん指示「スタジオ撮影にして出品して。550円で」。
     // 樹脂製品（2026-10-18 から卸対象・卸はブラック／ライトグレーのみ）。説明は BASE 商品ページの記載どおり
     slug: "soilstick",
@@ -745,6 +773,8 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。" },
   // 2026-10-16 増澤さん「登り棒というカテゴリも欲しい」
   { key: "climb", label: "登り棒", lead: "水苔やネコチップを詰めて、気根を這わせて育てる六角形の登り棒（モス支柱）。専用の六角鉢に挿して自立します。" },
+  // 2026-10-18 増澤さん「LPに新しくハンギングカテゴリを追加」
+  { key: "hanging", label: "ハンギング", lead: "S字フックで吊るして、水苔で着生植物を育てる六角形のハンギング鉢。" },
   { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
   { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
   { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
@@ -769,6 +799,10 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
   climb: {
     seoTitle: "登り棒（モス支柱）｜水苔を詰める六角形の支柱",
     seoDescription: "水苔やネコチップを詰めて、モンステラやポトスの気根を這わせて育てる六角形の登り棒（モス支柱・水苔ポール）。3つの六角形をつないで専用の六角鉢に挿すだけ。PLA樹脂・3Dプリント製。",
+  },
+  hanging: {
+    seoTitle: "ハンギング鉢｜S字フックで吊るす六角形の鉢",
+    seoDescription: "S字フックで吊るして飾る六角形のハンギング鉢。水苔やネコチップを詰めて、ホヤ・リプサリス・ポトスの小苗など着生植物を育てられます。PLA樹脂・3Dプリント製、ブラック／ライトグレー。",
   },
   pot: {
     seoTitle: "支柱が差せる六角鉢・鉢と支柱のセット",
