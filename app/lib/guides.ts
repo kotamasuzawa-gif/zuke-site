@@ -919,6 +919,9 @@ export const GUIDES: Guide[] = [
         // 本文「割り箸などで軽く突いて隙間を埋め」に対応するソイルスティックを2本目に置く。
         cta: { product: "hexpot-set", label: "鉢・受け皿・支柱の3点セット1,980円をBASEで見る" },
         cta2: { product: "soilstick", label: "植え付けの突き・ならしに「ソイルスティック」550円" },
+        // 2026-10-18 SEO: cta2 は BASE 直リンク（rel=nofollow）なので内部リンクにならない。
+        // 口の小さな六角鉢は支柱の脚まわりに土が届きにくく、この節が突き棒の受け皿になる
+        links: [{ product: "soilstick", label: "支柱の脚まわりのすき間に土を落とし込む土入れ棒：ソイルスティック" }],
         points: [
           "先に支柱を差込口へ差し、位置を決める",
           "鉢底に軽石や鉢底石を1〜2cm入れる（排水穴の詰まり防止）",
@@ -1094,13 +1097,18 @@ export const GUIDES: Guide[] = [
         heading: "こぼさず入れる手順",
         // 2026-10-10 SEO(#7386): 見出し単位の購入導線の抜けを補完
         cta: { product: "hexpot", label: "口径のそろう「六角鉢＋受け皿」をBASEで見る" },
+        // 2026-10-18 SEO: /products/soilstick がクロール済み-インデックス未登録（初検出 8/22・前回クロール 10/14）。
+        // cta/cta2 は BASE 直リンク（rel=nofollow）でサイト内リンクにならないため、本文手順4「割り箸などで軽く突いて」に
+        // 対応する商品ページへの内部リンクを links で置く（links は /products/<slug> へ飛ぶ）
+        links: [{ product: "soilstick", label: "手順4の「突いて隙間を埋める」に使う土入れ棒：ソイルスティック" }],
         body: [
           "1. 鉢に株を仮置きし、株元の高さを決める。2. スコップに土をすくい、2〜3回軽く振って微塵を落とす。3. 開口を鉢のふちの内側に差し込み、筒を少し傾けて土を流し込む。4. 一周入れたら割り箸などで軽く突いて隙間を埋め、もう一度入れる。",
           "土は一度に入れず、株の周りを回るように少しずつ入れると偏りません。支柱を使う株は、支柱を先に挿してから土を入れると根を傷めずに済みます。",
         ],
       },
     ],
-    related: ["scoop", "hexpot", "hexpot-set"],
+    // 2026-10-18 SEO: soilstick を追加（記事末の関連商品からも /products/soilstick へ内部リンクが張られる）
+    related: ["scoop", "soilstick", "hexpot", "hexpot-set"],
   },
   {
     slug: "shichu-nobasu-kakuchou",

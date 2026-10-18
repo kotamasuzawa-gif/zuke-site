@@ -268,6 +268,22 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
+        {/* 2026-10-18 SEO: 本文（見出し＋段落）。lead とスペックと箇条書きだけだと本文量が足りず、
+            同カテゴリの別商品とページの中身がほぼ同じになる（/products/soilstick がクロール済み-インデックス未登録）。
+            products.ts の details を持つ商品だけに出る */}
+        {p.details && p.details.length > 0 && (
+          <section className="mt-20 max-w-3xl">
+            {p.details.map((d) => (
+              <div key={d.heading} className="mt-10 first:mt-0">
+                <h2 className="text-base font-bold">{d.heading}</h2>
+                <div className="mt-4 flex flex-col gap-4 text-[15px] leading-loose text-gray-700">
+                  {d.paragraphs.map((x) => <p key={x}>{x}</p>)}
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
+
         <section className="mt-20 grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-base font-bold">相性のよい植物</h2>
