@@ -5,7 +5,7 @@
 // 商品・価格・リンクはすべて products.ts（BASE と同期）から引く。カテゴリへの内部リンクは下のチップで維持（SEO）。
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CollectionNav from "@/app/components/CollectionNav";
 import { productBySlug, yen, withUtm } from "@/app/lib/products";
 import { baseImage } from "@/app/lib/colors";
@@ -161,24 +161,22 @@ export default function PlantFinder() {
     };
   }, [path]);
 
-  // 2026-10-19 増澤さん「選んだ所から次の STEP へ、スクロールに合わせて線が伸びていくように」:
-  // タイムラインの縦線を、画面の中ほど（60%の高さ）まで黒で塗る。スクロールに連動して線と先端の点が下へ動く
+  // 2026-10-19 増澤さん「選んだ所から次の STEP へ、スクロールに合わせて線が伸びていくように」
+  // → 同日「スクロールでは遷移せずに、選んだ時にスクロール遷移が走るように」:
+  // 線はスクロール量ではなく選択に連動させる。選ぶと、今の STEP の丸から次の STEP の丸まで、
+  // 画面のスクロール（1.4秒・ease-in-out）と同じ速さで線が伸び、先端の点がいっしょに下りていく。戻るときは縮む
   const olRef = useRef<HTMLOListElement>(null);
   const [fill, setFill] = useState(0);
-  useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const ol = olRef.current;
-      if (!ol) return;
-      const r = ol.getBoundingClientRect();
-      setFill(Math.max(0, Math.min(r.height, window.innerHeight * 0.6 - r.top)));
-    };
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+  const [growing, setGrowing] = useState(false);
+  const fillRef = useRef(0);
+  useLayoutEffect(() => {
+    const last = lastRef.current;
+    // 最後に現れた STEP の丸の位置まで（ol 基準）。STEP 01 しかないときは 0
+    const next = path.length === 0 || !last ? 0 : Math.max(0, last.offsetTop - 2);
+    if (next === fillRef.current) return;
+    fillRef.current = next;
+    setFill(next);
+    setGrowing(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, [path]);
 
   const pick = (depth: number, id: string) => {
@@ -236,8 +234,17 @@ export default function PlantFinder() {
       </nav>
 
       <ol ref={olRef} className="mt-8 relative">
-        <span aria-hidden className="pointer-events-none absolute left-[11px] top-3 w-px bg-[#222] z-[1]" style={{ height: fill }} />
-        <span aria-hidden className="pointer-events-none absolute left-[7px] w-[9px] h-[9px] rounded-full bg-[#222] z-[1] transition-opacity" style={{ top: fill + 8, opacity: fill > 0 && fill < (olRef.current?.offsetHeight ?? 0) - 12 ? 1 : 0 }} />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute left-[11px] top-3 w-px bg-[#222] z-[1] transition-[height] duration-[1400ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none"
+          style={{ height: fill }}
+          onTransitionEnd={(e) => { if (e.propertyName === "height") setGrowing(false); }}
+        />
+        <span
+          aria-hidden
+          className={`pointer-events-none absolute left-[7px] w-[9px] h-[9px] rounded-full bg-[#222] z-[1] motion-reduce:transition-none ${growing ? "opacity-100" : "opacity-0"}`}
+          style={{ top: fill + 7.5, transition: "top 1400ms cubic-bezier(0.65,0,0.35,1), opacity 250ms ease-out" }}
+        />
         {steps.map(({ step, picked }, i) => (
           <li key={`${i}-${path.slice(0, i).join("/")}`} ref={i === lastIndex ? lastRef : undefined} className="finder-rise relative pl-9 pb-10 ">
             <span aria-hidden className={`absolute left-[11px] top-3 bottom-0 w-px bg-gray-200`} />
