@@ -241,7 +241,7 @@ export default function PlantFinder() {
         {steps.map(({ step, picked }, i) => (
           <li key={`${i}-${path.slice(0, i).join("/")}`} ref={i === lastIndex ? lastRef : undefined} className="finder-rise relative pl-9 pb-10 ">
             <span aria-hidden className={`absolute left-[11px] top-3 bottom-0 w-px bg-gray-200`} />
-            <span aria-hidden className={`absolute left-[5px] top-1 w-[13px] h-[13px] rounded-full border-2 ${picked ? "bg-[#222] border-[#222]" : "bg-white border-[#222]"}`} />
+            <span aria-hidden className={`absolute z-[2] left-[5px] top-1 w-[13px] h-[13px] rounded-full border-2 ${picked ? "bg-[#222] border-[#222]" : "bg-white border-[#222]"}`} />
             <p className="text-[10px] tracking-[0.25em] text-gray-400">STEP {String(i + 1).padStart(2, "0")} · {step.en}</p>
             <h3 className="mt-1 text-[17px] font-bold">{step.q}</h3>
             <div role="radiogroup" aria-label={step.q} className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -273,7 +273,7 @@ export default function PlantFinder() {
 
         {result && main && (
           <li key={`result-${path.join("/")}`} ref={lastRef} className="finder-rise relative pl-9 ">
-            <span aria-hidden className="absolute left-[3px] top-0.5 w-[17px] h-[17px] rounded-full bg-[#222] ring-4 ring-gray-200" />
+            <span aria-hidden className="absolute z-[2] left-[3px] top-0.5 w-[17px] h-[17px] rounded-full bg-[#222] ring-4 ring-gray-200" />
             <p className="text-[10px] tracking-[0.25em] text-gray-400">YOUR MATCH</p>
             <h3 className="mt-1 text-[17px] font-bold">あなたには、これ。</h3>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 border border-[#222] rounded-md overflow-hidden bg-white">
