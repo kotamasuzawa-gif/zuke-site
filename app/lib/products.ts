@@ -97,6 +97,12 @@ export type Product = {
   /**
    * 期間限定の告知（開始〜終了はJST日付 YYYY-MM-DD。表示側で期間内のみ出す）。
    * 複数指定時は配列の先頭ほど優先（期間が重なる場合は先頭が勝つ）。
+   *
+   * 2026-10-19 SEO: endDate は「日」までしか持てないので、クーポンが日中に切れる場合は
+   * 切れる日の【前日】を入れる。ZUKE2SET の実設定は 2026/10/03 12:00〜2026/10/19 12:00
+   * （BASE 管理画面の実読値・Marketing/outbox.md）で、endDate: "2026-10-19" のままだと
+   * 12:00〜23:59 の約12時間、失効済みのコードを本番ページで告知し続けていた（10/9 HEX5FREE
+   * 事故と同型）。1日ぶん早く消すほうを選ぶ。時刻まで判定したくなったら endAt を足す。
    */
   campaigns?: {
     code: string;
@@ -178,7 +184,7 @@ export const PRODUCTS: Product[] = [
         code: "ZUKE2SET",
         label: "支柱2点以上・合計1,600円以上で10%OFF",
         startDate: "2026-10-06",
-        endDate: "2026-10-19",
+        endDate: "2026-10-18",
         note: "購入画面でコードを入力",
       },
     ],
@@ -230,7 +236,7 @@ export const PRODUCTS: Product[] = [
         code: "ZUKE2SET",
         label: "支柱2点以上・合計1,600円以上で10%OFF",
         startDate: "2026-10-06",
-        endDate: "2026-10-19",
+        endDate: "2026-10-18",
         note: "購入画面でコードを入力",
       },
     ],
@@ -278,7 +284,7 @@ export const PRODUCTS: Product[] = [
         code: "ZUKE2SET",
         label: "支柱2点以上・合計1,600円以上で10%OFF",
         startDate: "2026-10-06",
-        endDate: "2026-10-19",
+        endDate: "2026-10-18",
         note: "購入画面でコードを入力。2つの六角形2点=1,540円は条件未達",
       },
     ],
