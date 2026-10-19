@@ -96,6 +96,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         // 2026-09-29 SEO R4: 販売者リスティングの推奨項目。返品ポリシー・送料は表し方をオーナー確認後に追加する
         itemCondition: "https://schema.org/NewCondition",
         seller: { "@type": "Organization", name: "ZUKE", url: SITE },
+        // 2026-10-19 Search Console「ショッピングタブに未掲載」対応: BASE 特商法表記どおり（欠陥品以外は返品不可）。送料は地域・サイズで変わるため shippingDetails は入れない
+        hasMerchantReturnPolicy: { "@type": "MerchantReturnPolicy", applicableCountry: "JP", returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted" },
         url: p.baseUrl,
       },
     },
