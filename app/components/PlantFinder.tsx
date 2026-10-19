@@ -106,36 +106,45 @@ export default function PlantFinder() {
       const navH = mode === "top" ? 0 : (rootRef.current?.querySelector("nav")?.getBoundingClientRect().height ?? 0);   // 追従ロードマップの下に来るように
       return Math.max(0, y - headerH - navH - 20);
     };
+    // 2026-10-19 増澤さん「ここの遷移をスクロールしながら移動して欲しい」（iPhone で画面が動かなかった）:
+    // ・iPhone の「視差効果を減らす」がオンだと瞬間移動していた → その場合もブラウザ標準のなめらかスクロールで動かす
+    // ・毎フレーム scroll-behavior を付け外ししていたのが Safari で効かない場合がある → 動かす間ずっと外しておく
+    // ・それでも画面が動いていなければ、ブラウザ標準のなめらかスクロールに切り替える
     const root = document.documentElement;
-    const jump = (y: number) => {
-      // html の scroll-behavior: smooth が効いていると毎フレームの移動が二重に補間されるので、動かしている間だけ外す
-      const prev = root.style.scrollBehavior;
-      root.style.scrollBehavior = "auto";
-      window.scrollTo(0, y);
-      root.style.scrollBehavior = prev;
-    };
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      jump(target());
-      return;
-    }
-    // 2026-10-18 増澤さん「いきなりそこに遷移している／追従式のような遷移に」:
-    // 最初にグッと動く ease-out をやめ、ゆっくり動き出してゆっくり止まる ease-in-out で、新しい枝がせり上がるのに合わせて追いかける
-    const from = window.scrollY;
-    const duration = 1400;
-    const delay = 120;
-    const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-    let start = 0;
+    const prevBehavior = root.style.scrollBehavior;
+    const restore = () => { root.style.scrollBehavior = prevBehavior; };
+    const native = () => { restore(); window.scrollTo({ top: target(), behavior: "smooth" }); };
     let raf = 0;
-    const tick = (now: number) => {
-      if (!start) start = now;
-      const k = Math.min(1, Math.max(0, now - start - delay) / duration);
-      jump(from + (target() - from) * ease(k));
-      if (k < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
+    let fallback = 0;
+    const stop = () => { cancelAnimationFrame(raf); clearTimeout(fallback); restore(); };
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      fallback = window.setTimeout(native, 150);
+    } else {
+      // ゆっくり動き出してゆっくり止まる ease-in-out で、新しい枝がせり上がるのに合わせて追いかける
+      root.style.scrollBehavior = "auto";
+      const from = window.scrollY;
+      const duration = 1400;
+      const delay = 120;
+      const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+      let start = 0;
+      const tick = (now: number) => {
+        if (!start) start = now;
+        const k = Math.min(1, Math.max(0, now - start - delay) / duration);
+        window.scrollTo(0, from + (target() - from) * ease(k));
+        if (k < 1) raf = requestAnimationFrame(tick);
+        else restore();
+      };
+      raf = requestAnimationFrame(tick);
+      // 半分過ぎても画面がほとんど動いていなければ、ブラウザ標準のなめらかスクロールに切り替える
+      fallback = window.setTimeout(() => {
+        if (Math.abs(target() - from) > 40 && Math.abs(window.scrollY - from) < 4) {
+          cancelAnimationFrame(raf);
+          native();
+        }
+      }, delay + duration / 2);
+    }
     // ユーザーが自分でスクロールしたら止める（タップ時の小さな指ブレでは止めない）
     let touchY: number | null = null;
-    const stop = () => cancelAnimationFrame(raf);
     const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0]?.clientY ?? null; };
     const onTouchMove = (e: TouchEvent) => {
       const y = e.touches[0]?.clientY;
