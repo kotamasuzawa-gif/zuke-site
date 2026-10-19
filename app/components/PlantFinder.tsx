@@ -161,6 +161,26 @@ export default function PlantFinder() {
     };
   }, [path]);
 
+  // 2026-10-19 増澤さん「選んだ所から次の STEP へ、スクロールに合わせて線が伸びていくように」:
+  // タイムラインの縦線を、画面の中ほど（60%の高さ）まで黒で塗る。スクロールに連動して線と先端の点が下へ動く
+  const olRef = useRef<HTMLOListElement>(null);
+  const [fill, setFill] = useState(0);
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const ol = olRef.current;
+      if (!ol) return;
+      const r = ol.getBoundingClientRect();
+      setFill(Math.max(0, Math.min(r.height, window.innerHeight * 0.6 - r.top)));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+  }, [path]);
+
   const pick = (depth: number, id: string) => {
     scrollTo.current = "last";
     setPath((p) => [...p.slice(0, depth), id]);
@@ -215,10 +235,12 @@ export default function PlantFinder() {
         </ol>
       </nav>
 
-      <ol className="mt-8 relative">
+      <ol ref={olRef} className="mt-8 relative">
+        <span aria-hidden className="pointer-events-none absolute left-[11px] top-3 w-px bg-[#222] z-[1]" style={{ height: fill }} />
+        <span aria-hidden className="pointer-events-none absolute left-[7px] w-[9px] h-[9px] rounded-full bg-[#222] z-[1] transition-opacity" style={{ top: fill + 8, opacity: fill > 0 && fill < (olRef.current?.offsetHeight ?? 0) - 12 ? 1 : 0 }} />
         {steps.map(({ step, picked }, i) => (
           <li key={`${i}-${path.slice(0, i).join("/")}`} ref={i === lastIndex ? lastRef : undefined} className="finder-rise relative pl-9 pb-10 ">
-            <span aria-hidden className={`absolute left-[11px] top-3 bottom-0 w-px ${picked ? "bg-[#222]" : "bg-gray-200"}`} />
+            <span aria-hidden className={`absolute left-[11px] top-3 bottom-0 w-px bg-gray-200`} />
             <span aria-hidden className={`absolute left-[5px] top-1 w-[13px] h-[13px] rounded-full border-2 ${picked ? "bg-[#222] border-[#222]" : "bg-white border-[#222]"}`} />
             <p className="text-[10px] tracking-[0.25em] text-gray-400">STEP {String(i + 1).padStart(2, "0")} · {step.en}</p>
             <h3 className="mt-1 text-[17px] font-bold">{step.q}</h3>
