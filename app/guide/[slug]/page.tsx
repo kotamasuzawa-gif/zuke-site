@@ -213,15 +213,17 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               )}
               {/* 2026-10-20 SEO(#11663 EC店長): 自社ホスト動画を節のリンク・CTAの直上に置く。
                   受注5点が全点リール投稿24h以内＝動きを見た人だけが買っているため、検索の着地にも動きを置く */}
+              {/* 2026-10-20 SEO(#11684 デザイナー): 縦型（720x1280）の動画が来たので、実寸を width/height に渡して
+                  縦のときだけ枠を 360px に絞る。横型の枠に入れると黒帯が出る */}
               {s.video && (
-                <figure className="m-0 mt-8">
+                <figure className={`m-0 mt-8${(s.video.height ?? 1080) > (s.video.width ?? 1920) ? " max-w-[360px]" : ""}`}>
                   <div className="overflow-hidden bg-[#f4f4f4]">
                     <video
                       className="w-full h-auto block"
                       src={s.video.src}
                       poster={s.video.poster}
-                      width={1920}
-                      height={1080}
+                      width={s.video.width ?? 1920}
+                      height={s.video.height ?? 1080}
                       autoPlay
                       muted
                       loop
