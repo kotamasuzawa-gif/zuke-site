@@ -43,6 +43,14 @@ export type Section = {
   notice?: { text: string; endDate: string; textAfter?: string };
   /** 2026-10-10 SEO(#7602): 節の内容を説明する写真（本文の下・リンクの上に出す） */
   image?: { src: string; alt: string; width: number; height: number };
+  /**
+   * 2026-10-20 SEO(#11663 EC店長): 節の購入CTAの直上に出す自社ホストの動画（音なし・自動ループ）。
+   * 理由: 上り棒セット 3,980円の受注5点は全点がリール投稿から24時間以内＝「動いている物」を見た人しか
+   * 買っていない（投稿の無い 10/19・10/20 は受注0）。商品ページには 10/20 12:52 に動画をCTA直下へ上げたが、
+   * 検索の着地であるガイド記事側は figures/image の静止画だけで動画が0本＝検索から来た人は動きを見ずに
+   * CTA を踏む（2ホップ目の穴）。外部埋め込み（Instagram 等）は第三者Cookieが入るため使わず public/ の自社ファイルのみ。
+   */
+  video?: { src: string; poster: string; label: string; caption?: string };
   /** 2026-10-10 SEO(#7602): 節の直下に出すサイト内リンク（商品ページへ）。組み合わせ提案で2商品を並べるのに使う */
   links?: { product: string; label: string }[];
 };
@@ -678,6 +686,17 @@ export const GUIDES: Guide[] = [
         ],
         // 2026-10-19 SEO: /products/noboribo が GSC「クロール済み - インデックス未登録」だったため、
         // 本文でこの商品を説明している節からサイト内リンクを張る（soilstick と同型の対策）
+        // 2026-10-20 SEO(#11663 EC店長): ガイド記事14本に動画が0本だったため、この節に1本だけ置く。
+        // ここを選んだ理由: ①本文が組み立て（箱3個→アリ溝→シールド→六角鉢の差込口）そのものを説明している
+        // ＝動画と内容が一致する唯一の節 ②同じ節に noboribo の内部リンクと第一CTAが並んでいる
+        // ③「モンステラ 気根 支柱」は上り棒セット（3,980円・10月のBASE商品売上の46%）に最も近い検索意図。
+        // 商品ページと同じファイル（/products/noboribo-howto.mp4・1.0MB・自社ホスト）を使い、外部埋め込みは無し。
+        video: {
+          src: "/products/noboribo-howto.mp4",
+          poster: "/products/noboribo-howto-poster.jpg",
+          label: "上り棒セット \"3つの六角形\" の六角形3個を継ぎ、シールドを差して六角鉢に立てるまでの映像",
+          caption: "六角形3個をアリ溝でつなぎ、シールドで押さえて六角鉢の差込口に立てるまで",
+        },
         links: [{ product: "noboribo", label: "上り棒セット \"3つの六角形\" の組み立て方・サイズ・4色を見る（水苔を詰める登り棒＋専用六角鉢・受け皿）" }],
         cta: { product: "noboribo", label: "気根を水苔に絡ませるなら「上り棒セット」（六角鉢・受け皿付き）をBASEで見る" },
       },

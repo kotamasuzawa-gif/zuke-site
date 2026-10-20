@@ -211,6 +211,30 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   sizes="(max-width: 768px) 100vw, 672px"
                 />
               )}
+              {/* 2026-10-20 SEO(#11663 EC店長): 自社ホスト動画を節のリンク・CTAの直上に置く。
+                  受注5点が全点リール投稿24h以内＝動きを見た人だけが買っているため、検索の着地にも動きを置く */}
+              {s.video && (
+                <figure className="m-0 mt-8">
+                  <div className="overflow-hidden bg-[#f4f4f4]">
+                    <video
+                      className="w-full h-auto block"
+                      src={s.video.src}
+                      poster={s.video.poster}
+                      width={1920}
+                      height={1080}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      aria-label={s.video.label}
+                    />
+                  </div>
+                  {s.video.caption && (
+                    <figcaption className="mt-2 text-[12px] leading-relaxed text-gray-500">{s.video.caption}</figcaption>
+                  )}
+                </figure>
+              )}
               {sectionLinks(s.links).length > 0 && (
                 <ul className="mt-6 flex flex-col gap-3">
                   {sectionLinks(s.links).map(({ p, label }) => (
