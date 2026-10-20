@@ -57,6 +57,9 @@ export type Product = {
    */
   // 2026-10-15 増澤さん「説明書をLPに載せる動画用に」: 組み立て方の動画（無音・ループ）
   howtoVideo?: { src: string; poster: string; label: string };
+  // 2026-10-20 EC店長#11643: 実際に使っているところのリール（受注5点は全点がリール投稿から24h以内）。
+  // 埋め込みではなくリンクで出す（第三者Cookie・外部JSを入れない）
+  reel?: { url: string; label: string };
   usageImage?: {
     src: string;
     alt: string;
@@ -428,6 +431,7 @@ export const PRODUCTS: Product[] = [
     // 樹脂製品（2026-10-18 から卸対象・卸はブラック／ライトグレーのみ）。六角鉢＋支柱のセットなので category は「鉢・セット」
     slug: "noboribo",
     howtoVideo: { src: "/products/noboribo-howto.mp4", poster: "/products/noboribo-howto-poster.jpg", label: "上り棒セットの組み立て方" },
+    reel: { url: "https://www.instagram.com/reel/DeeaKECSXL_/", label: "実際に使っているところを動画で見る（28秒・Instagram）" },
     kind: "pla",
     category: "climb",
     isNew: true,

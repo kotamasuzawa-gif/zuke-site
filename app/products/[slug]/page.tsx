@@ -177,6 +177,42 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </Link>
             </p>
 
+            {/* 2026-10-20 SEO #11643(EC店長): 上り棒セットの受注5点は全点がリール投稿から24h以内＝「動いている物」を見た人だけ買っている。
+                検索で来た人にも同じ体験を渡すため、動画を下の独立セクションから価格・CTAの直下（13%地点）へ引き上げる。
+                Instagram の公式埋め込みは第三者Cookie／外部JSが入るので使わず、自社ホストの動画（1.0MB・20秒）＋リールへのリンクで出す。 */}
+            {p.howtoVideo && (
+              <div className="mt-8 border-t border-gray-100 pt-6">
+                <h2 className="text-[13px] font-bold">組み立て方</h2>
+                <div className="mt-3 bg-white">
+                  <video
+                    className="w-full h-auto block"
+                    src={p.howtoVideo.src}
+                    poster={p.howtoVideo.poster}
+                    width={1920}
+                    height={1080}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label={p.howtoVideo.label}
+                  />
+                </div>
+                {p.reel && (
+                  <p className="mt-3 text-xs text-gray-500 leading-relaxed">
+                    <a
+                      href={p.reel.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]"
+                    >
+                      {p.reel.label}
+                    </a>
+                  </p>
+                )}
+              </div>
+            )}
+
             <dl className="mt-10 border-t border-gray-100 text-[14px]">
               <div className="flex gap-6 py-3 border-b border-gray-100">
                 <dt className="w-24 shrink-0 text-gray-500">高さ</dt><dd>{p.height}</dd>
@@ -219,15 +255,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
-        {p.howtoVideo && (
-          <section className="mt-20">
-            <h2 className="text-base font-bold">組み立て方</h2>
-            {/* 2026-10-15: LPの組み立て動画（1920x1080・3Dアニメ）と同じ出し方に合わせて横幅いっぱい */}
-            <div className="mt-6 -mx-6 md:mx-0 bg-white">
-              <video className="w-full h-auto block" src={p.howtoVideo.src} poster={p.howtoVideo.poster} autoPlay muted loop playsInline preload="metadata" aria-label={p.howtoVideo.label} />
-            </div>
-          </section>
-        )}
+        {/* 2026-10-20 SEO #11643: 組み立て動画はヒーロー内（価格・CTA直下）へ移動。ここでの二重掲載はしない */}
 
         {/* 2026-10-11 増澤さん指示: 中の構造（内側の写真＋説明） */}
         {p.structure && (
