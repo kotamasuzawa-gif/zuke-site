@@ -161,14 +161,37 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             <p className="mt-6 text-[15px] leading-loose text-gray-700">{p.lead}</p>
 
-            <a
-              href={withUtm(p.baseUrl)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 flex items-center justify-center w-full py-4 bg-[#222] text-white text-sm tracking-[0.15em] hover:opacity-85 transition-opacity"
-            >
-              オンラインストアで購入する
-            </a>
+            {/* 2026-10-23 EC店長#12801(SEO): JSON-LD だけ OutOfStock にしても、表示は「オンラインストアで購入する」のまま
+                BASE の購入ボタンが消えたページへ送っていた。soldOut の商品は黒ボタンを出さず、買える行き先に振り替える。 */}
+            {p.soldOut ? (
+              <>
+                <div className="mt-8 flex items-center justify-center w-full py-4 bg-gray-100 text-gray-500 text-sm tracking-[0.15em]">
+                  ただいま品切れです
+                </div>
+                {p.soldOutAlt && (
+                  <>
+                    {p.soldOutAlt.note && (
+                      <p className="mt-3 text-[13px] leading-relaxed text-gray-700">{p.soldOutAlt.note}</p>
+                    )}
+                    <Link
+                      href={p.soldOutAlt.href}
+                      className="mt-3 flex items-center justify-center w-full py-4 bg-[#222] text-white text-sm tracking-[0.15em] hover:opacity-85 transition-opacity"
+                    >
+                      {p.soldOutAlt.label}
+                    </Link>
+                  </>
+                )}
+              </>
+            ) : (
+              <a
+                href={withUtm(p.baseUrl)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 flex items-center justify-center w-full py-4 bg-[#222] text-white text-sm tracking-[0.15em] hover:opacity-85 transition-opacity"
+              >
+                オンラインストアで購入する
+              </a>
+            )}
             <p className="mt-3 text-xs text-gray-500 leading-relaxed">
               購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
             </p>
