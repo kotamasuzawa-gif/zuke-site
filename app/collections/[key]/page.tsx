@@ -6,6 +6,7 @@ import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import CollectionNav from "@/app/components/CollectionNav";
 import ProductColorGrid from "@/app/components/ProductColorGrid";
+import IronPriceTable from "@/app/components/IronPriceTable";
 import { PRODUCTS, COLLECTIONS, collectionByKey, yen } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
@@ -85,6 +86,8 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
         </nav>
         <h1 className="text-2xl md:text-3xl font-bold leading-relaxed">{c.label}</h1>
         <p className="mt-3 text-[15px] leading-loose text-gray-700 max-w-2xl">{c.lead}</p>
+        {/* 2026-10-23 SEO(#12563): アイアン支柱は4本の違いが高さと用途だけなので、冒頭で価格帯と一緒に比較できるようにする */}
+        {c.key === "iron" && <IronPriceTable />}
         {/* 2026-09-27 増澤さん指示: 動画はタイトル・説明の下に */}
         {VIDEOS[c.key] && (
           <section aria-label={VIDEOS[c.key].label} className="mt-8 -mx-6 md:mx-0 bg-white">
