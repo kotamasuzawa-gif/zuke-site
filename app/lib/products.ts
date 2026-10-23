@@ -87,6 +87,15 @@ export type Product = {
    */
   isSet?: boolean;
   /**
+   * 在庫切れ（BASE の全バリエーション在庫の合計が0）。2026-10-23 EC店長#12795 で新設。
+   * Product JSON-LD の offers.availability が全商品 InStock ハードコードで、
+   * 在庫0の商品も「在庫あり」として配信していた（Google への不実表示）。true で OutOfStock に切り替える。
+   * 在庫が戻ったらこのフラグを外す。判定は BASE が正（/api/base-items の variations.stock 合計）。
+   * 2026-10-23 実測: サイト掲載18商品のうち合計0は hex-set-2pcs（162185287）のみ。
+   * BASE の visible=1 は「買える」を意味しない（公開のまま在庫0になる）ので visible では判定しない。
+   */
+  soldOut?: boolean;
+  /**
    * 2026-10-18 SEO: 商品ページ本文（見出し＋段落）。lead・スペック・箇条書きだけでは本文量が足りず、
    * 同カテゴリの別商品とページの中身がほぼ同じになる商品があるため（/products/soilstick が
    * 「クロール済み - インデックス未登録」になった）。入れてよいのは products.ts の確定値と
@@ -405,6 +414,9 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     isNew: true,
     isSet: true,
+    // 2026-10-23 EC店長#12795: BASE 162185287 は全バリエーション在庫0（実読）。部材の hex5 は台帳が黒-14/白-4 で
+    // 発注も見送り済み（#12793）＝組成できないため、復活まで JSON-LD は OutOfStock にする。
+    soldOut: true,
     name: 'PLANTS POLE 2本セット "3つの六角形"＋"5つの六角形"',
     shortTitle: '六角形の支柱 2本セット {price}｜22cm＋39cm（220円おトク）',
     fullName: 'PLANTS POLE 2本セット「3つの六角形」22cm＋「5つの六角形」39cm（カラー選択・1配送）',

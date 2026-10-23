@@ -92,7 +92,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         "@type": "Offer",
         price: p.price,
         priceCurrency: "JPY",
-        availability: "https://schema.org/InStock",
+        // 2026-10-23 EC店長#12795: 全商品 InStock のハードコードをやめ、products.ts の soldOut で分岐。
+        // 在庫0の商品を「在庫あり」で配信するとGoogleへの不実表示になる（ショッピングタブ側の信頼にも効く）。
+        availability: p.soldOut ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
         // 2026-09-29 SEO R4: 販売者リスティングの推奨項目。返品ポリシー・送料は表し方をオーナー確認後に追加する
         itemCondition: "https://schema.org/NewCondition",
         seller: { "@type": "Organization", name: "ZUKE", url: SITE },
