@@ -17,11 +17,17 @@ type Step = { en: string; q: string; options: Opt[] };
 const IRON_SIZE: Step = {
   en: "SIZE",
   q: "鉢と植物の大きさは？",
+  // 2026-10-23 SEO(#12779 EC店長の裏取り): アイアンで BASE にブラックが残っているのは hex2(124680568・黒10/白10) だけ。
+  // hex3 は黒0/白2・hex5 は黒0/白7・uneune は黒0/白24 で、hex-set-2pcs(162185287) は黒白とも0。
+  // 黒は単独で売れ、白は「黒の注文に1本足す」形でしか売れていない（白単独受注0本）ので、
+  // 4つの枝すべてから黒の買える hex2 に届くようにする。main（先頭＝ヒーローカード）の商品と並び順は変えない＝追加のみ。
+  // 「大きく育てたい」(l) だけは 19.5cm を並べると質問（39cm・主役サイズ）と食い違うため足していない。
+  // 在庫数は書かない（腐るため。PAIRINGS の 2026-10-16 方針と同じ）。
   options: [
     { id: "s", label: "小鉢・まだ小さい株", sub: "高さ約19.5cm", result: { slugs: ["hex2", "hex3"], collection: "iron", collectionLabel: "アイアン支柱" } },
-    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["hex3", "hex-set-2pcs"], collection: "iron", collectionLabel: "アイアン支柱", note: "成長したら 5つの六角形 に差し替えられる2本セットもあります。" } },
+    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["hex3", "hex2", "hex-set-2pcs"], collection: "iron", collectionLabel: "アイアン支柱", note: "成長したら 5つの六角形 に差し替えられる2本セットもあります。" } },
     { id: "l", label: "大きく育てたい", sub: "高さ約39cm・主役サイズ", result: { slugs: ["hex5", "hex-set-2pcs"], collection: "iron", collectionLabel: "アイアン支柱" } },
-    { id: "w", label: "横に広がる株", sub: "うねる形で株をまとめる", result: { slugs: ["uneune", "hex3"], collection: "iron", collectionLabel: "アイアン支柱" } },
+    { id: "w", label: "横に広がる株", sub: "うねる形で株をまとめる", result: { slugs: ["uneune", "hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
   ],
 };
 
