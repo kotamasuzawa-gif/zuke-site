@@ -192,9 +192,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 オンラインストアで購入する
               </a>
             )}
-            <p className="mt-3 text-xs text-gray-500 leading-relaxed">
-              購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
-            </p>
+            {/* soldOut のときのボタンはサイト内の商品ページへ行くので、「BASE へ移動します」の注記は出さない（行き先と食い違う） */}
+            {!p.soldOut && (
+              <p className="mt-3 text-xs text-gray-500 leading-relaxed">
+                購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
+              </p>
+            )}
             {/* 2026-09-29 増澤さん指示: 卸売の案内への導線 */}
             <p className="mt-2 text-xs text-gray-500 leading-relaxed">
               <Link href="/wholesale" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
