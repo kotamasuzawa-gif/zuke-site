@@ -100,7 +100,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         seller: { "@type": "Organization", name: "ZUKE", url: SITE },
         // 2026-10-19 Search Console「ショッピングタブに未掲載」対応: BASE 特商法表記どおり（欠陥品以外は返品不可）。送料は地域・サイズで変わるため shippingDetails は入れない
         hasMerchantReturnPolicy: { "@type": "MerchantReturnPolicy", applicableCountry: "JP", returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted" },
-        url: p.baseUrl,
+        // 2026-10-23 SEO(#12803 EC店長): soldOut の商品は BASE 側の商品ページが承認セット(78)で非公開＝404 になる。
+        // availability だけ OutOfStock にして offers.url を死んだ URL のまま配信すると、Offer の行き先が
+        // クロールで 404 になる（表示上の黒ボタンは 6eee200 で外れているが、構造化データだけ残っていた）。
+        // 品切れの間は自社の商品ページを行き先にする。在庫が戻って soldOut を外せば自動で baseUrl に戻る。
+        url: p.soldOut ? `${SITE}/products/${p.slug}` : p.baseUrl,
       },
     },
     {

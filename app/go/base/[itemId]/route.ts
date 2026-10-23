@@ -20,6 +20,15 @@ const ALLOWED_ITEM_IDS = new Set(
   PRODUCTS.map((p) => p.baseUrl.match(/\/items\/(\d+)$/)?.[1]).filter((v): v is string => !!v),
 );
 
+// 2026-10-23 SEO(#12803 EC店長): 品切れ(soldOut)の商品は BASE 側が承認セット(78)で非公開＝404 になる。
+// 上の「404 を見せるより購入可能なページに着地させる」と同じ扱いで、自社の商品ページへ送る
+// （そこに買える行き先＝soldOutAlt の黒ボタンが出ている。6eee200）。クリックのログは今までどおり残す。
+const SOLD_OUT_ITEM_SLUG = new Map(
+  PRODUCTS.filter((p) => p.soldOut)
+    .map((p) => [p.baseUrl.match(/\/items\/(\d+)$/)?.[1], p.slug] as const)
+    .filter((e): e is readonly [string, string] => !!e[0]),
+);
+
 /** from / utm_content は自分で付けている値だけを通す（ログと転送先に任意文字列を混ぜない） */
 const sanitizeTag = (v: string | null) => (v && /^[A-Za-z0-9_-]{1,40}$/.test(v) ? v : null);
 
@@ -36,10 +45,15 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ item
   const from = sanitizeTag(req.nextUrl.searchParams.get("from"));
   const content = sanitizeTag(req.nextUrl.searchParams.get("c"));
 
-  const dest = new URL(`${SHOP}/items/${itemId}`);
-  dest.searchParams.set("utm_source", "zukeplants_guide");
-  if (content) dest.searchParams.set("utm_content", content);
-  if (from) dest.searchParams.set("from", from);
+  const soldOutSlug = SOLD_OUT_ITEM_SLUG.get(itemId);
+  const dest = soldOutSlug
+    ? new URL(`/products/${soldOutSlug}`, req.nextUrl.origin)
+    : new URL(`${SHOP}/items/${itemId}`);
+  if (!soldOutSlug) {
+    dest.searchParams.set("utm_source", "zukeplants_guide");
+    if (content) dest.searchParams.set("utm_content", content);
+    if (from) dest.searchParams.set("from", from);
+  }
 
   const ua = req.headers.get("user-agent") ?? "";
   // クローラ・OGPプレビューのアクセスはクリック数に混ぜない
