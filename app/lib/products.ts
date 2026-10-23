@@ -872,8 +872,10 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
     seoDescription: "六角形デザインの園芸支柱 PLANTS POLE の一覧。アイアンスチール製（高さ約19.5〜39cm）と、軽くて色が選べる3Dプリント樹脂版。モンステラ・ポトス・ホヤなど蔓性の観葉植物を、インテリアに馴染むように仕立てられます。",
   },
   iron: {
-    seoTitle: "アイアンの園芸支柱｜六角形の PLANTS POLE",
-    seoDescription: "アイアンスチール製の園芸支柱 PLANTS POLE。六角形を2つ・3つ・5つ連ねた3型と、横に広がる株を整える「うねうね」の全4型。高さ約19.5〜39cm。モンステラ・ポトス・アロカシアなどに。",
+    // 2026-10-23 SEO週次: GSC 28日「アイアン支柱」4表示・11.2位／「アイアン 支柱」1表示・11.0位・0click。
+    // ナビの label と同じ「アイアン支柱」を title 先頭に置き、検索結果で比べられるよう価格帯（hex2〜hex5/uneune の price）を description に追加。
+    seoTitle: "アイアン支柱｜観葉植物用 六角形の園芸支柱",
+    seoDescription: "アイアン支柱（アイアンスチール製の園芸支柱）PLANTS POLE。六角形を2つ・3つ・5つ連ねた3型と、横に広がる株を整える「うねうね」の全4型。高さ約19.5〜39cm・¥770〜¥1,320。モンステラ・ポトス・アロカシアなどに。",
   },
   pla: {
     seoTitle: "3Dプリントの六角鉢・樹脂支柱（PLA）",
