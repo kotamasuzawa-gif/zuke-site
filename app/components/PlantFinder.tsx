@@ -25,8 +25,12 @@ const IRON_SIZE: Step = {
   // 在庫数は書かない（腐るため。PAIRINGS の 2026-10-16 方針と同じ）。
   options: [
     { id: "s", label: "小鉢・まだ小さい株", sub: "高さ約19.5cm", result: { slugs: ["hex2", "hex3"], collection: "iron", collectionLabel: "アイアン支柱" } },
-    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["hex3", "hex2", "hex-set-2pcs"], collection: "iron", collectionLabel: "アイアン支柱", note: "成長したら 5つの六角形 に差し替えられる2本セットもあります。" } },
-    { id: "l", label: "大きく育てたい", sub: "高さ約39cm・主役サイズ", result: { slugs: ["hex5", "hex-set-2pcs"], collection: "iron", collectionLabel: "アイアン支柱" } },
+    // 2026-10-23 SEO(#12790 EC店長): 2本セット hex-set-2pcs(162185287) は visible=1 のまま黒白とも在庫0で、
+    // 店頭（shop.zukeplants.com）に「カートに入れる」が1件も出ていない＝クリックしても買えないカード。m・l の2枝から外す。
+    // l は hex5(白7のみ)だけでは黒が0になるため、黒8本が買える上り棒セット noboribo(162757270・3,980円) を併記。
+    // sub の「約39cm」と寸法が食い違わないよう、性質（水苔を詰めて気根を登らせる・鉢と受け皿付き）を note で明示する。
+    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
+    { id: "l", label: "大きく育てたい", sub: "高さ約39cm・主役サイズ", result: { slugs: ["hex5", "noboribo"], collection: "iron", collectionLabel: "アイアン支柱", note: "上り棒セットは水苔を詰めて気根を登らせるタイプです（六角鉢・受け皿付き）。" } },
     { id: "w", label: "横に広がる株", sub: "うねる形で株をまとめる", result: { slugs: ["uneune", "hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
   ],
 };
