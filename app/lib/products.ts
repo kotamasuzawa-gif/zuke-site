@@ -561,6 +561,43 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
+    // 2026-10-24 増澤さん指示「壁掛け六角鉢を単品でも購入できるように。1100円、カラーは4種類」。セット（hexwall-set）の鉢と同じもの
+    slug: "hexwallpot",
+    kind: "pla",
+    category: "hanging",
+    isNew: true,
+    name: "壁掛け六角鉢（単品）",
+    shortTitle: "壁掛け六角鉢 {price}｜壁掛けプレートに足せる単品",
+    fullName: "PLANTS POLE 壁掛け六角鉢（単品） - 壁面緑化 3Dプリント -",
+    price: 1100,
+    image: "/products/product-hexwallpot-base.webp",
+    ogImage: "/products/product-hexwallpot-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
+    ogImageSquare: "/products/product-hexwallpot-og.jpg",
+    baseUrl: `${SHOP}/items/__POTID__`,
+    summary:
+      "壁掛けプレートのセットと同じ、六角形の壁掛け鉢の単品。プレートの空いているピンに鉢を足したり、壁のピンやフックに直接掛けたりできます。PLA樹脂・3Dプリント製、ブラック／オレンジ／ライトグレー／ホワイトの4色。",
+    lead:
+      "背面の鍵穴を、壁掛けプレートのピンや壁のピン・フックに上から引っ掛けて使います。正面の下半分はシールドで、上半分がポケットの口。背面の下側に水抜き穴があります。セット内容は鉢1個（シールド付き）です（プレート・フック・用土・植物は付属しません）。屋内向けです（PLA樹脂は約60℃から変形します）。",
+    height: "約9cm",
+    width: "幅 約7.8cm × 奥行き 約3.5cm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    structure: {
+      src: "/products/product-hexwall-back.webp",
+      alt: "壁掛け六角鉢の背面。中央に鍵穴、下側に水抜き穴",
+      lines: ["背面中央の鍵穴を、プレートのピンや壁のピンに上から引っ掛けて固定", "背面の下側に水抜き穴（9個）"],
+      width: 1200,
+      height: 1200,
+    },
+    plants: ["ポトス", "ホヤ", "リプサリス"],
+    scenes: [
+      "壁掛けプレートの空いている位置に、鉢を買い足す",
+      "壁のピンに直接掛けて、1鉢だけ飾る",
+      "色違いを混ぜて、壁のグリーンにアクセントを",
+    ],
+  },
+  {
     // 2026-10-24 新商品: 壁掛け鉢3個＋壁掛けプレートのセット（壁面緑化）。増澤さん指示「壁面緑化にできる、壁掛け用鉢は3つ、壁掛けプレートのセットでbaseに販売」「スタジオ撮影にして」。5,500円・4色。
     slug: "hexwall-set",
     kind: "pla",
@@ -992,6 +1029,8 @@ export const collectionByKey = (key: string) => COLLECTIONS.find((c) => c.key ==
 // 2026-10-01 営業依頼「六角鉢セット×支柱のバンドル導線」: 商品ページに「組み合わせて使う」を出す。
 // 組み合わせの根拠は上の lead / scenes の記載のみ（鉢の差込口は鉄製・樹脂版どちらも可、拡張パーツは樹脂版のみ）
 export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
+  "hexwall-set": [{ slug: "hexwallpot", note: "空いている位置に鉢を買い足す（1個 1,100円）" }],
+  hexwallpot: [{ slug: "hexwall-set", note: "壁掛けプレートと鉢3個のセット（5,500円）" }],
   hexpot: [
     { slug: "hex3", note: "鉢の差込口に挿すだけで固定（アイアン3連）" },
     { slug: "hex2", note: "鉢の差込口に挿すだけで固定（アイアン2連）" },
