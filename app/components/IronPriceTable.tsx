@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PRODUCTS, yen } from "@/app/lib/products";
+import { PRODUCTS, SHIPPING, yen } from "@/app/lib/products";
 
 // 2026-10-23 SEO(#12563): /collections/iron の冒頭に価格帯の比較表を置く。
 // アイアン支柱は ¥770〜¥1,320 の4本で、違いは「高さ」と「向いている植物」だけ。
@@ -54,6 +54,40 @@ export default function IronPriceTable() {
           </tbody>
         </table>
       </div>
+      {/* 2026-10-24 SEO(朝会handoff #13080): 比較表で選び終えた人が、このページから直接買えるようにする。
+          表の商品名は /products/<slug> へのリンクだけで、本番の /collections/iron に BASE への入口が
+          1本も無かった（本番HTMLを実読: /go/base 0本・shop.zukeplants.com 0本）。
+          行き先は記事と同じ自社ドメインの 302 中継（/go/base/<item_id>）に通してクリックを残す。
+          品切れ(soldOut)の商品は BASE 側が非公開＝404 になるので、サイト内の商品ページへ振り替える（6eee200 と同じ扱い）。*/}
+      <div className="mt-5 flex flex-wrap gap-2">
+        {rows.map((p) => {
+          const itemId = p.baseUrl.match(/\/items\/(\d+)$/)?.[1];
+          const label = p.name.replace(/^PLANTS POLE\s*/, "");
+          if (p.soldOut || !itemId) {
+            return (
+              <Link
+                key={p.slug}
+                href={`/products/${p.slug}`}
+                className="inline-flex items-center justify-center border border-gray-300 px-4 py-2.5 text-[13px] text-gray-600 hover:border-[#222] hover:text-[#222] transition-colors"
+              >
+                {label} を見る
+              </Link>
+            );
+          }
+          return (
+            <a
+              key={p.slug}
+              href={`/go/base/${itemId}?from=collections_iron&c=${p.slug}`}
+              className="inline-flex items-center justify-center border border-[#222] px-4 py-2.5 text-[13px] text-[#222] hover:bg-[#222] hover:text-white transition-colors"
+            >
+              {label} {yen(p.price)} を買う
+            </a>
+          );
+        })}
+      </div>
+      <p className="mt-3 text-xs leading-relaxed text-gray-500">
+        購入は BASE の ZUKE 公式ストアへ移動します。{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
+      </p>
     </section>
   );
 }
