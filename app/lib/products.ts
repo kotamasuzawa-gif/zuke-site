@@ -575,7 +575,7 @@ export const PRODUCTS: Product[] = [
     ogWidth: 1200,
     ogHeight: 630,
     ogImageSquare: "/products/product-hexwallpot-og.jpg",
-    baseUrl: `${SHOP}/items/__POTID__`,
+    baseUrl: `${SHOP}/items/164004153`,
     summary:
       "壁掛けプレートのセットと同じ、六角形の壁掛け鉢の単品。プレートの空いているピンに鉢を足したり、壁のピンやフックに直接掛けたりできます。PLA樹脂・3Dプリント製、ブラック／オレンジ／ライトグレー／ホワイトの4色。",
     lead:
