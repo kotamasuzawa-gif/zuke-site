@@ -575,7 +575,7 @@ export const PRODUCTS: Product[] = [
     ogWidth: 1200,
     ogHeight: 630,
     ogImageSquare: "/products/product-hexwall-og.jpg",
-    baseUrl: `${SHOP}/items/__BASEID__`,
+    baseUrl: `${SHOP}/items/164000445`,
     summary:
       "壁に掛けるだけで小さな壁面緑化ができる、六角形の壁掛け鉢3個と壁掛けプレートのセット。プレートのピンに鉢を引っ掛け、ポトスやホヤなど垂れる植物を壁のグリーンに。PLA樹脂・3Dプリント製、ブラック／オレンジ／ライトグレー／ホワイトの4色。",
     lead:
