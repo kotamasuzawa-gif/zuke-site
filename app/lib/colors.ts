@@ -35,6 +35,8 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hexhanging: ["black", "orange", "lightgray", "white"],
   // 2026-10-16 2本セット（BASE 162185287）はブラック／ホワイトを選べるが、2本そろいの色違い写真が無い
   // （BASEの5枚もブラックの実写＋カラー説明図）。無い写真を合成して出さないので色ボタンは出さず1枚目のみ
+  // 2026-10-24 壁掛け六角鉢セットは4色販売だが実写はブラックのみ。無い写真を合成しないので色ボタンは出さない
+  "hexwall-set": [],
   "hex-set-2pcs": [],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
