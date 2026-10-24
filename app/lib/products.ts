@@ -575,7 +575,7 @@ export const PRODUCTS: Product[] = [
     ogWidth: 1200,
     ogHeight: 630,
     ogImageSquare: "/products/product-hexwallplate-og.jpg",
-    baseUrl: `${SHOP}/items/__PLATEID__`,
+    baseUrl: `${SHOP}/items/164005125`,
     summary:
       "六角形を7つつないだ、壁掛け六角鉢用のプレート単品。上の吊り輪を壁のフックに掛け、ピンに鉢を引っ掛けて壁面緑化に。中央に ZUKE Plants Pole の刻印。PLA樹脂・3Dプリント製、ブラック／オレンジ／ライトグレー／ホワイトの4色。",
     lead:
