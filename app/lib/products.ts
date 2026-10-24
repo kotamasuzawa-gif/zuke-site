@@ -583,6 +583,7 @@ export const PRODUCTS: Product[] = [
     height: "約25cm（吊り輪を含む）",
     width: "幅 約24cm × 厚さ 約8mm",
     material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    howtoVideo: { src: "/video/hexwall.mp4", poster: "/video/hexwall-poster.jpg", label: "壁掛けプレートに六角鉢を3つ掛けていく映像" },
     plants: ["ポトス", "ホヤ", "リプサリス"],
     scenes: [
       "壁掛け六角鉢を最大7か所に掛けて、壁面緑化をつくる",
@@ -613,6 +614,7 @@ export const PRODUCTS: Product[] = [
     height: "約9cm",
     width: "幅 約7.8cm × 奥行き 約3.5cm",
     material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    howtoVideo: { src: "/video/hexwall.mp4", poster: "/video/hexwall-poster.jpg", label: "壁掛けプレートに六角鉢を3つ掛けていく映像" },
     structure: {
       src: "/products/product-hexwall-back.webp",
       alt: "壁掛け六角鉢の背面。中央に鍵穴、下側に水抜き穴",
@@ -650,6 +652,7 @@ export const PRODUCTS: Product[] = [
     height: "プレート 約25cm（吊り輪を含む）／鉢 約9cm",
     width: "プレート 幅 約24cm／鉢 幅 約7.8cm × 奥行き 約3.5cm",
     material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    howtoVideo: { src: "/video/hexwall.mp4", poster: "/video/hexwall-poster.jpg", label: "壁掛けプレートに六角鉢を3つ掛けていく映像" },
     isSet: true,
     structure: {
       src: "/products/product-hexwall-back.webp",
