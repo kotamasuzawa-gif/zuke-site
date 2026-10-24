@@ -561,6 +561,36 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
+    // 2026-10-24 増澤さん指示「取引要項にプレートがない」→ 壁掛けプレート単品を 2,480円・BASE/LPでも販売
+    slug: "hexwallplate",
+    kind: "pla",
+    category: "hanging",
+    isNew: true,
+    name: "壁掛けプレート（単品）",
+    shortTitle: "壁掛けプレート {price}｜壁掛け六角鉢を7か所に掛けられる",
+    fullName: "PLANTS POLE 壁掛けプレート（単品） - 壁面緑化 3Dプリント -",
+    price: 2480,
+    image: "/products/product-hexwallplate-base.webp",
+    ogImage: "/products/product-hexwallplate-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
+    ogImageSquare: "/products/product-hexwallplate-og.jpg",
+    baseUrl: `${SHOP}/items/__PLATEID__`,
+    summary:
+      "六角形を7つつないだ、壁掛け六角鉢用のプレート単品。上の吊り輪を壁のフックに掛け、ピンに鉢を引っ掛けて壁面緑化に。中央に ZUKE Plants Pole の刻印。PLA樹脂・3Dプリント製、ブラック／オレンジ／ライトグレー／ホワイトの4色。",
+    lead:
+      "プレート上部の吊り輪（穴 φ8mm）を壁のフックに掛け、7つの六角形にあるピンに壁掛け六角鉢（別売・1個 1,100円）の背面の鍵穴を引っ掛けます。2枚目のプレートを足して面を広げたり、鉢の数を増やしたりするのに。セット内容はプレート1枚です（鉢・フック・植物は付属しません）。屋内向けです（PLA樹脂は約60℃から変形します）。",
+    height: "約25cm（吊り輪を含む）",
+    width: "幅 約24cm × 厚さ 約8mm",
+    material: "PLA樹脂（3Dプリント・マット仕上げ）",
+    plants: ["ポトス", "ホヤ", "リプサリス"],
+    scenes: [
+      "壁掛け六角鉢を最大7か所に掛けて、壁面緑化をつくる",
+      "2枚並べて、グリーンの面を広げる",
+      "鉢を掛けない位置も、六角形の格子が壁のアクセントに",
+    ],
+  },
+  {
     // 2026-10-24 増澤さん指示「壁掛け六角鉢を単品でも購入できるように。1100円、カラーは4種類」。セット（hexwall-set）の鉢と同じもの
     slug: "hexwallpot",
     kind: "pla",
@@ -1029,8 +1059,9 @@ export const collectionByKey = (key: string) => COLLECTIONS.find((c) => c.key ==
 // 2026-10-01 営業依頼「六角鉢セット×支柱のバンドル導線」: 商品ページに「組み合わせて使う」を出す。
 // 組み合わせの根拠は上の lead / scenes の記載のみ（鉢の差込口は鉄製・樹脂版どちらも可、拡張パーツは樹脂版のみ）
 export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
-  "hexwall-set": [{ slug: "hexwallpot", note: "空いている位置に鉢を買い足す（1個 1,100円）" }],
-  hexwallpot: [{ slug: "hexwall-set", note: "壁掛けプレートと鉢3個のセット（5,500円）" }],
+  "hexwall-set": [{ slug: "hexwallpot", note: "空いている位置に鉢を買い足す（1個 1,100円）" }, { slug: "hexwallplate", note: "プレートを足して面を広げる（2,480円）" }],
+  hexwallpot: [{ slug: "hexwall-set", note: "壁掛けプレートと鉢3個のセット（5,500円）" }, { slug: "hexwallplate", note: "鉢を掛ける壁掛けプレート（2,480円）" }],
+  hexwallplate: [{ slug: "hexwallpot", note: "プレートに掛ける壁掛け六角鉢（1個 1,100円）" }, { slug: "hexwall-set", note: "プレート＋鉢3個のセット（5,500円）" }],
   hexpot: [
     { slug: "hex3", note: "鉢の差込口に挿すだけで固定（アイアン3連）" },
     { slug: "hex2", note: "鉢の差込口に挿すだけで固定（アイアン2連）" },

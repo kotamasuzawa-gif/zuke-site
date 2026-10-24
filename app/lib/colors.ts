@@ -38,6 +38,7 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   // 2026-10-24 壁掛け六角鉢セットは4色販売だが実写はブラックのみ。無い写真を合成しないので色ボタンは出さない
   "hexwall-set": [],
   hexwallpot: [],
+  hexwallplate: [],
   "hex-set-2pcs": [],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
