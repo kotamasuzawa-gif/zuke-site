@@ -250,6 +250,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                 </ul>
               )}
               {ctaLink(s.cta, `guide_sec${i + 1}`)}
+              {/* 2026-10-25 SEO(#13367 EC店長): 第一CTAのすぐ下の併せ買い1行（鉢ごとそろうセット）。
+                  第一CTAを 880円→770円 に付け替えた3記事の客単価を戻すための枠。cta2 とは utm_content で分ける */}
+              {ctaLink(s.ctaAddon, `guide_sec${i + 1}u`, true)}
               {/* 2026-10-15 SEO(#10022 EC店長): 2本目のCTA（330〜380円のパーツ）。第一CTAと分けて数える */}
               {ctaLink(s.cta2, `guide_sec${i + 1}b`, true)}
             </section>
