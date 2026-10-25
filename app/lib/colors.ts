@@ -53,6 +53,10 @@ const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
   soilstick: ["white"],
   // 2026-10-16 2本セットは配色ごとの写真が1枚も無い（上の SOLD_COLORS 参照）。一覧で色を押しても1枚目のまま
   "hex-set-2pcs": ["black", "white", "orange", "lightgray"],
+  // 2026-10-25 壁掛け六角鉢シリーズは色違い写真が未作成。一覧で色を押すと画像が割れていた
+  "hexwall-set": ["black", "white", "orange", "lightgray"],
+  hexwallpot: ["black", "white", "orange", "lightgray"],
+  hexwallplate: ["black", "white", "orange", "lightgray"],
 };
 export const hasColorPhoto = (slug: string, color: ColorKey | null): color is ColorKey =>
   color !== null && !(NO_PHOTO_COLORS[slug] ?? []).includes(color);
