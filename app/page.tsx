@@ -5,6 +5,7 @@ import { preload } from "react-dom";
 import BaseClone from "./components/BaseClone";
 import { HomeFaq } from "./components/HomeFaq";
 import { JsonLd } from "./components/JsonLd";
+import { NoteArticles } from "./components/NoteArticles";
 
 // 2026-08-21 増澤さん指示: BASEショップのホームと同一の見た目。
 // 旧セクション(Ducks風/白基調)のコンポーネントは components/ に温存（復帰可能）。
@@ -28,6 +29,7 @@ export default function Home() {
     <>
       <JsonLd />
       <BaseClone showLifestyle={showLifestyle} />
+      <NoteArticles />
       <HomeFaq />
     </>
   );
