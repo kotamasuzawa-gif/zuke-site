@@ -21,7 +21,8 @@ const IRON_SIZE: Step = {
   // hex3 は黒0/白2・hex5 は黒0/白7・uneune は黒0/白24 で、hex-set-2pcs(162185287) は黒白とも0。
   // 黒は単独で売れ、白は「黒の注文に1本足す」形でしか売れていない（白単独受注0本）ので、
   // 4つの枝すべてから黒の買える hex2 に届くようにする。main（先頭＝ヒーローカード）の商品と並び順は変えない＝追加のみ。
-  // 「大きく育てたい」(l) だけは 19.5cm を並べると質問（39cm・主役サイズ）と食い違うため足していない。
+  // 「大きく育てたい」(l) は当初 19.5cm を並べると質問（39cm・主役サイズ）と食い違うため足していなかったが、
+  // 2026-10-26 に 39cm の hex5 が落ちて答えが樹脂1点になったため hex2 を2点目に足した（#13855）。
   // 在庫数は書かない（腐るため。PAIRINGS の 2026-10-16 方針と同じ）。
   options: [
     { id: "s", label: "小鉢・まだ小さい株", sub: "高さ約19.5cm", result: { slugs: ["hex2", "hex3"], collection: "iron", collectionLabel: "アイアン支柱" } },
@@ -32,7 +33,9 @@ const IRON_SIZE: Step = {
     { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
     // 2026-10-26 SEO(#13848 EC店長): hex5(117375069) は 10/29 の卸引き当て（承認セット169）で黒白とも0＝完全完売。
     // l 枝は noboribo 単独に。sub の「高さ約39cm・主役サイズ」は嘘になるので noboribo の確定値に差し替えた。
-    { id: "l", label: "大きく育てたい", sub: "全高約28.5cm・鉢と受け皿つき", result: { slugs: ["noboribo"], collection: "iron", collectionLabel: "アイアン支柱", note: "上り棒セットは水苔を詰めて気根を登らせるタイプです（六角鉢・受け皿付き）。" } },
+    // 2026-10-26 追記(#13855 EC店長): noboribo は kind:"pla"＝「アイアン」を選んだ答えが樹脂1点だけになるため
+    // 2点目に hex2 を足す。並びは noboribo → hex2（目的＝大きく育てる が先、素材の答えが後）。sub は noboribo の確定値のまま。
+    { id: "l", label: "大きく育てたい", sub: "全高約28.5cm・鉢と受け皿つき", result: { slugs: ["noboribo", "hex2"], collection: "iron", collectionLabel: "アイアン支柱", note: "上り棒セットは水苔を詰めて気根を登らせるタイプです（六角鉢・受け皿付き）。アイアンでお探しなら高さ約19.5cmの「2つの六角形」に黒・白とも在庫があります。" } },
     { id: "w", label: "横に広がる株", sub: "うねる形で株をまとめる", result: { slugs: ["uneune", "hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
   ],
 };

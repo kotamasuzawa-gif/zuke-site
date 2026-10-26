@@ -66,13 +66,15 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // を振って、11/12 の「sec1 のCTAがクリックの何%を取ったか」を数えられるようにする。
   // 2026-10-15 SEO(#10022 EC店長): sub=true は「2本目」のCTA（330〜380円のパーツ）。
   // 第一CTA（高単価）を目立たせるため、2本目は細字・1行下げで出す
-  // 2026-10-16 SEO(#10075): 第一CTAの文言A/B。labelB があればそれを出し、utm_content の末尾に c を付けて
-  // 旧型（商品名＋価格＋BASEで見る）と分けて数える。商品・リンク先・価格表示は変えない。
-  const ctaLink = (c: { product: string; label: string; labelB?: string } | undefined, content: string, sub = false) => {
+  // 2026-10-16 SEO(#10075): 第一CTAの文言A/B（labelB があればそれを出し utm_content 末尾に c を付けて分けて数える）。
+  // 2026-10-26 SEO(#13855 EC店長): A/B は打ち切り。計測そのものを 10/17 に見送って base-clicks が
+  // 9/29〜10/26 で total=0 ＝勝敗の出ない指標になったため、実際に表示されていた labelB（悩み解決型）の文言を
+  // 単一 label に畳んで labelB の型ごと外した（型が残ると次に触る人がA/Bが生きていると読むため）。
+  const ctaLink = (c: { product: string; label: string } | undefined, content: string, sub = false) => {
     const p = c && productBySlug(c.product);
     if (!c || !p) return null;
-    const label = c.labelB ?? c.label;
-    const key = c.labelB ? `${content}c` : content;
+    const label = c.label;
+    const key = content;
     return (
       <p className={sub ? "mt-3 text-[14px]" : "mt-6 text-[15px]"}>
         <a href={baseLink(p.baseUrl, key)} target="_blank" rel="nofollow noopener noreferrer" className={`underline underline-offset-4 decoration-gray-400 hover:text-[#222]${sub ? "" : " font-bold"}`}>
