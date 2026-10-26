@@ -26,8 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   // 2026-10-06 SEO: iron/pla/extension も同様に共有カードが汎用 og.jpg だったので代表商品画像に（デザイナー確認済み・既存実写を再利用）
   // 2026-10-11 SEO(#7905): 残り2ページ（pole/pot）も汎用 og.jpg だった。既存の横長OGを割り当て
   // （pole=うねうね・pot=六角鉢。iron/pla と別カットにしてサムネイルの見分けが付くようにする）
+  // 2026-10-26 SEO(#13848 EC店長): iron の代表商品を hex5(117375069・10/29 に完全完売) から hex2(124680568・黒/白とも在庫あり) へ。
+  // 共有カードの画像が完売品だと、SNS・チャットから来た人の着地が買えない商品になる。
   const OG_PRODUCT_SLUG: Record<string, string> = {
-    iron: "hex5", pla: "hexpot-set", extension: "hexparts",
+    iron: "hex2", pla: "hexpot-set", extension: "hexparts",
     pole: "uneune", pot: "hexpot",
   };
   // 2026-10-18 増澤さん「ハンギングのリンク画像が鉄支柱になる」: 対応表に無いカテゴリは汎用 og.jpg ではなく、そのカテゴリの先頭商品の画像にする

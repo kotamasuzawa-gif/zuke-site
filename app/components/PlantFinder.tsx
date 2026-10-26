@@ -30,7 +30,9 @@ const IRON_SIZE: Step = {
     // l は hex5(白7のみ)だけでは黒が0になるため、黒8本が買える上り棒セット noboribo(162757270・3,980円) を併記。
     // sub の「約39cm」と寸法が食い違わないよう、性質（水苔を詰めて気根を登らせる・鉢と受け皿付き）を note で明示する。
     { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
-    { id: "l", label: "大きく育てたい", sub: "高さ約39cm・主役サイズ", result: { slugs: ["hex5", "noboribo"], collection: "iron", collectionLabel: "アイアン支柱", note: "上り棒セットは水苔を詰めて気根を登らせるタイプです（六角鉢・受け皿付き）。" } },
+    // 2026-10-26 SEO(#13848 EC店長): hex5(117375069) は 10/29 の卸引き当て（承認セット169）で黒白とも0＝完全完売。
+    // l 枝は noboribo 単独に。sub の「高さ約39cm・主役サイズ」は嘘になるので noboribo の確定値に差し替えた。
+    { id: "l", label: "大きく育てたい", sub: "全高約28.5cm・鉢と受け皿つき", result: { slugs: ["noboribo"], collection: "iron", collectionLabel: "アイアン支柱", note: "上り棒セットは水苔を詰めて気根を登らせるタイプです（六角鉢・受け皿付き）。" } },
     { id: "w", label: "横に広がる株", sub: "うねる形で株をまとめる", result: { slugs: ["uneune", "hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
   ],
 };
