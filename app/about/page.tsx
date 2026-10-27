@@ -91,8 +91,12 @@ export default function AboutPage() {
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
             {PRODUCTS.map((p) => (
               <Link key={p.slug} href={`/products/${p.slug}`} className="block group">
-                <div className="relative aspect-square bg-[#fbfbfb]">
-                  <Image src={p.image} alt={p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 25vw" />
+                {/* 2026-10-27 EC店長: ここも soldOut を見ておらず、完売品が通常カードで並んでいた（d26d513 の対象外）。 */}
+                <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
+                  <Image src={p.image} alt={p.fullName} fill className={`object-contain group-hover:opacity-90 transition-opacity${p.soldOut ? " opacity-40" : ""}`} sizes="(max-width: 768px) 50vw, 25vw" />
+                  {p.soldOut && (
+                    <span className="absolute top-2 left-2 bg-gray-500 text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">SOLD OUT</span>
+                  )}
                 </div>
                 <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{p.name}</p>
                 <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>

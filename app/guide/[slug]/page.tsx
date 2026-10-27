@@ -330,21 +330,35 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               {related.map((p) => (
                 <div key={p.slug}>
                   <Link href={`/products/${p.slug}`} className="block group">
-                    <div className="relative aspect-square bg-[#fbfbfb]">
-                      <Image src={p.image} alt={p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 33vw" />
+                    {/* 2026-10-27 EC店長: d26d513 の対象外。ここは「BASEで購入する」が直リンクなので、
+                        完売品が related に入ると押しても買えない BASE ページに落ちる。バッジと行き先で塞ぐ。 */}
+                    <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
+                      <Image src={p.image} alt={p.fullName} fill className={`object-contain group-hover:opacity-90 transition-opacity${p.soldOut ? " opacity-40" : ""}`} sizes="(max-width: 768px) 50vw, 33vw" />
+                      {p.soldOut && (
+                        <span className="absolute top-2 left-2 bg-gray-500 text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">SOLD OUT</span>
+                      )}
                     </div>
                     <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{p.name}</p>
                     <p className="mt-1 text-[13px] text-gray-500">高さ {p.height}</p>
                     <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
                   </Link>
-                  <a
-                    href={baseLink(p.baseUrl, "guide")}
-                    target="_blank"
-                    rel="nofollow noopener noreferrer"
-                    className="mt-2 flex items-center justify-center w-full py-2 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
-                  >
-                    BASEで購入する
-                  </a>
+                  {p.soldOut ? (
+                    <Link
+                      href={p.soldOutAlt?.href ?? `/products/${p.slug}`}
+                      className="mt-2 flex items-center justify-center w-full py-2 bg-gray-500 text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
+                    >
+                      いま買えるものを見る
+                    </Link>
+                  ) : (
+                    <a
+                      href={baseLink(p.baseUrl, "guide")}
+                      target="_blank"
+                      rel="nofollow noopener noreferrer"
+                      className="mt-2 flex items-center justify-center w-full py-2 bg-[#222] text-white text-[11px] tracking-[0.1em] hover:opacity-85 transition-opacity"
+                    >
+                      BASEで購入する
+                    </a>
+                  )}
                 </div>
               ))}
             </div>

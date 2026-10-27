@@ -437,8 +437,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="mt-6 grid grid-cols-3 gap-6">
             {others.map((o) => (
               <Link key={o.slug} href={`/products/${o.slug}`} className="block group">
-                <div className="relative aspect-square bg-[#fbfbfb]">
-                  <Image src={o.image} alt={o.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="33vw" />
+                {/* 2026-10-27 EC店長: d26d513（SEO）は ProductColorGrid＝/products・/collections だけを直したが、
+                    この「ほかの PLANTS POLE」は soldOut を見ておらず、完売品（hex5・hex-set-2pcs）が
+                    通常カードのまま並んでいた。実測で商品詳細21ページ＋/about の22ページが素通し。 */}
+                <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
+                  <Image src={o.image} alt={o.fullName} fill className={`object-contain group-hover:opacity-90 transition-opacity${o.soldOut ? " opacity-40" : ""}`} sizes="33vw" />
+                  {o.soldOut && (
+                    <span className="absolute top-2 left-2 bg-gray-500 text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">SOLD OUT</span>
+                  )}
                 </div>
                 <p className="mt-3 text-[13px] leading-relaxed line-clamp-2">{o.name}</p>
                 <p className="mt-1 text-[13px] font-bold">{yen(o.price)}</p>
