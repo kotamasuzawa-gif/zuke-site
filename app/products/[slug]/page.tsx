@@ -202,6 +202,39 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
               </p>
             )}
+            {/* 2026-10-27 EC店長#14267: 黒目当て・色で選びたいお客様の受け皿。購入ボタンと同じ画面に常設で出す。
+                行き先は記事・カテゴリページと同じ 302 中継（/go/base/<item_id>）に通してクリックを残す。
+                品切れ・item_id なしの商品はサイト内の商品ページへ（そこに soldOutAlt の買える行き先が出る）。 */}
+            {p.altPicks && (
+              <div className="mt-4 rounded bg-gray-50 px-3 py-2.5 text-[13px] leading-relaxed text-gray-600">
+                <p>{p.altPicks.lead}</p>
+                <ul className="mt-1.5 space-y-1.5">
+                  {p.altPicks.items.map((pick) => {
+                    const target = productBySlug(pick.slug);
+                    if (!target) return null;
+                    const itemId = target.baseUrl.match(/\/items\/(\d+)$/)?.[1];
+                    const label = `${target.name.replace(/^PLANTS POLE\s*/, "")} ${yen(target.price)}`;
+                    return (
+                      <li key={pick.slug}>
+                        {target.soldOut || !itemId ? (
+                          <Link href={`/products/${target.slug}`} className="font-bold underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
+                            {label}
+                          </Link>
+                        ) : (
+                          <a
+                            href={`/go/base/${itemId}?from=pdp_${p.slug}&c=altpick_${target.slug}`}
+                            className="font-bold underline underline-offset-4 decoration-gray-300 hover:text-[#222]"
+                          >
+                            {label}
+                          </a>
+                        )}
+                        <span className="block text-gray-500">{pick.note}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
             {/* 2026-09-29 増澤さん指示: 卸売の案内への導線 */}
             <p className="mt-2 text-xs text-gray-500 leading-relaxed">
               <Link href="/wholesale" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
