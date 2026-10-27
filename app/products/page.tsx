@@ -65,7 +65,7 @@ export default function ProductsPage() {
               moreHref: `/collections/${c.key}`,
               items: PRODUCTS.filter((p) => p.category === c.key)
                 .sort((x, y) => (x.kind === y.kind ? 0 : x.kind === "iron" ? -1 : 1))
-                .map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.kind === "iron" ? "アイアン" : "PLA樹脂", isNew: p.isNew, href: `/products/${p.slug}` })),
+                .map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.kind === "iron" ? "アイアン" : "PLA樹脂", isNew: p.isNew, soldOut: p.soldOut, href: `/products/${p.slug}` })),
             })).filter((g) => g.items.length > 0)}
           />
         </div>
