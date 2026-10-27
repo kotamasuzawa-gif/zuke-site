@@ -172,6 +172,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           <h1 className="text-2xl md:text-[28px] font-bold leading-relaxed">{g.title}</h1>
           <p className="mt-6 text-[15px] leading-loose text-gray-700">{g.lead}</p>
           {g.hero && figures([g.hero], true)}
+          {/* 2026-10-27 SEO(朝会 #14072): 冒頭の購入リンク。hero の実写に写っている商品を指す記事だけ。
+              第一CTA(guide_sec1)は節の末尾にあり、本番実測で記事先頭から約4.4KB下＝モバイルで2画面以上先だった */}
+          {ctaLink(g.leadCta, "guide_lead")}
           {g.slug === "kanyoushokubutsu-taoreru" && (
             <p className="mt-2 text-xs text-gray-500 leading-relaxed">
               <Link href="/wholesale" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">

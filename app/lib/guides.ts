@@ -90,6 +90,13 @@ export type Guide = {
   ogImage?: string;
   /** 2026-10-09 SEO: FAQ の末尾に出す BASE 購入リンク */
   faqCta?: { product: string; label: string };
+  /**
+   * 2026-10-27 SEO(朝会 #14072): 冒頭（リード文＋hero 写真の直下）に出す BASE 購入リンク。
+   * 第一CTA(guide_sec1) は節の末尾＝H2＋本文2段落＋図版2枚の下にあり、本番の実測で記事先頭から
+   * 約4.4KB（モバイルで2画面以上）下だった。hero に写っている商品そのものを指すときだけ置く。
+   * 計測は utm_content=guide_lead で第一CTA(guide_sec1)と分ける。
+   */
+  leadCta?: { product: string; label: string };
   /** 2026-10-10 SEO(#6541 EC店長依頼): 記事→BASE の流入を記事単位で数えるため、BASE リンクに付ける ?from= の値 */
   trackFrom?: string;
   /**
@@ -1462,6 +1469,10 @@ export const GUIDES: Guide[] = [
     lead:
       "亀甲竜は塊根の見た目が主役ですが、成長期に伸びる蔓は細く、1本で1m近くになることもあります。放っておくと隣の鉢に絡み、水やりのたびに引っかかります。塊根を隠さない低めの支柱に、ゆるく巻かせるのが扱いやすい仕立て方です。",
     hero: { src: "/guide/set2-caudex-full.webp", alt: "ブラックの六角鉢セット \"2つの六角形\" に植えた亀甲竜の全体写真", width: 1200, height: 1200, caption: "六角鉢セット“2つの六角形”に植えた亀甲竜。鉢・受け皿・支柱が同色で塊根が引き立ちます" },
+    // 2026-10-27 SEO(朝会 #14072): 秋の芽出し期で「亀甲竜 支柱」「亀甲竜 仕立て」が伸びる時期。
+    // 本番実読で冒頭〜第一CTAの間に H2＋本文2段落＋points3件＋図版2枚があり、最初の購入リンクが
+    // 記事先頭から約4.4KB下だった。hero に写っているのがこの商品そのものなので、写真の直下に1本置く。
+    leadCta: { product: "hexpot-set2", label: "写真の六角鉢セット「2つの六角形」（鉢・受け皿・支柱が同色）をBASEで見る" },
     sections: [
       {
         heading: "亀甲竜・塊根植物に向く支柱の条件",
