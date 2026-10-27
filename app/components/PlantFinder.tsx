@@ -66,7 +66,7 @@ const TREE: Step = {
       },
     },
     { id: "climb", label: "気根を這わせて大きく育てたい", sub: "水苔を詰める登り棒（モス支柱）", result: { slugs: ["noboribo"], collection: "climb", collectionLabel: "登り棒" } },
-    { id: "hang", label: "吊るして飾りたい", sub: "S字フックで窓辺や棚に", result: { slugs: ["hexhanging"], collection: "hanging", collectionLabel: "ハンギング" } },
+    { id: "hang", label: "吊るして飾りたい", sub: "S字フックで窓辺や棚に", result: { slugs: ["hexhanging", "hexwall-set", "hexwallplate"], collection: "hanging", collectionLabel: "ハンギング", note: "壁に掛けて飾るなら、壁掛けプレートと鉢のセットもあります。" } },
     {
       id: "pot", label: "鉢ごとそろえたい", sub: "支柱の差込口付きの六角鉢",
       next: {
