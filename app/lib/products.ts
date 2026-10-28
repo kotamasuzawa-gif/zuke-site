@@ -187,6 +187,9 @@ export const PRODUCTS: Product[] = [
     // 黒0・白0＝完全完売。BASE 117375069 は他商品の本文から4本リンクが来ているので visible=1 のまま残す（#13847）＝
     // 振り替えの理由は「非公開＝404 の回避」ではなく「公開のまま在庫0＝押しても買えない行き止まりの回避」。
     soldOut: true,
+    // 2026-10-28 EC店長: hex5 には stockNote を付けない。BASE 実読は ブラック0・ホワイト7 で「白は買える」状態だが、
+    // その白7点は (169b) で The Naturalist（10/30 納品）へ引き当て済み＝BASE から売れると卸が欠品する。
+    // soldOut の先出しは意図どおり。10/29 午前の `zuke_hex5_soldout_sync.sh` が実棚と表示を合わせる。
     // 行き先は noboribo。3,980円は hex5 の1,320円の3倍で仕組みも違うため、BASE 直送ではなく商品ページ経由にする。
     soldOutAlt: {
       href: "/products/noboribo",
@@ -374,6 +377,10 @@ export const PRODUCTS: Product[] = [
     ogWidth: 1200,
     ogHeight: 630,
     baseUrl: `${SHOP}/items/130117282`,
+    // 2026-10-28 EC店長(#14599 の handoff): BASE /api/base-items を実読して ブラック0・ホワイト24（合計24）。
+    // hex3 と同じ「黒だけ品切れ・白は買える」状態なので、hex3 と同文の但し書きを出す（soldOut にはしない）。
+    // 白24点は当面尽きないので soldOut への切り替え予定は無い。黒が戻る経路も無い（declined.md 2026-10-03 / 10-06）。
+    stockNote: "いまホワイトのみ（ブラックは品切れ）",
     summary:
       "左右にうねるラインで、横に広がる植物の姿を整えるアイアン製園芸支柱。高さ約35cm・うねうね部 約12cmで5〜7号鉢が目安。アロカシアなど葉が暴れる株をまとまりのある姿に。",
     lead:
