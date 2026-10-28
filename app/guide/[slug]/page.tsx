@@ -342,6 +342,11 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                     <p className="mt-1 text-[13px] text-gray-500">高さ {p.height}</p>
                     <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
                   </Link>
+                  {/* 2026-10-28 SEO(#14595 EC店長): 全色0（soldOut）ではないが一部の色だけ在庫がある商品の但し書き。
+                      hex3 は黒0・白2で、売れているのは黒＝カードから黒目的の読者を落とさないため色を先に出す。 */}
+                  {!p.soldOut && p.stockNote && (
+                    <p className="mt-1 text-[12px] text-gray-500">{p.stockNote}</p>
+                  )}
                   {p.soldOut ? (
                     <Link
                       href={p.soldOutAlt?.href ?? `/products/${p.slug}`}
