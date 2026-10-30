@@ -114,6 +114,33 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     );
   };
 
+  // 2026-10-30 SEO(#14726 note担当): 本文中の文脈リンク（記事→記事）。
+  // それまでの記事間リンクは下の「ほかのガイド」＝全記事が全記事へ並ぶ定型リストだけで、アンカーテキストが
+  // 記事タイトルで全ページ同一だった。body / points / FAQ の回答に出てくる語をそのままアンカーにして、
+  // 同じ語を扱う記事へ本文の文脈から渡す。1ページで同じ行き先は最初の1か所だけ（張りすぎると薄まる）。
+  const usedInlineLinks = new Set<string>();
+  const inlineLinks = (g.inlineGuideLinks ?? []).filter(
+    (l) => l.slug !== g.slug && GUIDES.some((x) => x.slug === l.slug),
+  );
+  const linkify = (text: string) => {
+    const hit = inlineLinks.find((l) => !usedInlineLinks.has(l.slug) && text.includes(l.text));
+    if (!hit) return text;
+    usedInlineLinks.add(hit.slug);
+    const at = text.indexOf(hit.text);
+    return (
+      <>
+        {text.slice(0, at)}
+        <Link
+          href={`/guide/${hit.slug}`}
+          className="underline underline-offset-4 decoration-gray-400 hover:text-[#222]"
+        >
+          {hit.text}
+        </Link>
+        {text.slice(at + hit.text.length)}
+      </>
+    );
+  };
+
   // 2026-10-10 SEO(#6896): 2本使いの提案ブロック（商品リンクの直前）。公開中の商品だけを引く
   const bundleItems = (g.bundle?.items ?? [])
     .map((it) => ({ p: productBySlug(it.product), note: it.note }))
@@ -187,7 +214,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             <section key={s.heading} className="mt-14">
               <h2 className="text-lg font-bold leading-relaxed border-l-2 border-[#222] pl-4">{s.heading}</h2>
               {s.body.map((para, i) => (
-                <p key={i} className="mt-5 text-[15px] leading-loose text-gray-700">{para}</p>
+                <p key={i} className="mt-5 text-[15px] leading-loose text-gray-700">{linkify(para)}</p>
               ))}
               {s.notice && (todayJst <= s.notice.endDate || s.notice.textAfter) && (
                 <p className="mt-5 text-[15px] leading-loose text-gray-700">
@@ -200,7 +227,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   {s.points.map((pt) => (
                     <li key={pt} className="flex gap-3 text-[15px] leading-relaxed text-gray-700">
                       <span className="mt-2.5 w-1 h-1 rounded-full bg-[#222] shrink-0" />
-                      <span>{pt}</span>
+                      <span>{linkify(pt)}</span>
                     </li>
                   ))}
                 </ul>
@@ -270,7 +297,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                 {g.faq.map((f) => (
                   <div key={f.q}>
                     <dt className="text-[15px] font-bold leading-relaxed">Q. {f.q}</dt>
-                    <dd className="mt-2 text-[15px] leading-loose text-gray-700">{f.a}</dd>
+                    {/* 2026-10-30 SEO(#14726): FAQ の回答も文脈リンクの対象。JSON-LD には素の文字列を渡すので構造化データは変わらない */}
+                    <dd className="mt-2 text-[15px] leading-loose text-gray-700">{linkify(f.a)}</dd>
                   </div>
                 ))}
               </dl>
