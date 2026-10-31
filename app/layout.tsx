@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+
+// 2026-10-31 SEO: GA4 と Search Console 所有確認。値は Vercel の環境変数で設定（コードに書かない）
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const SITE_VERIFICATION = process.env.GOOGLE_SITE_VERIFICATION;
 
 // 2026-09-29 SEO R4: Geist / Geist_Mono は表示中のページで使っておらず（旧コンポーネントのみ）、
 // 全ページで woff2 を preload していたため削除。旧コンポーネントを戻しても monospace にフォールバックする。
@@ -44,6 +49,7 @@ export const metadata: Metadata = {
   // 2026-09-29 SEO R4: card だけにする。title/description/images を root で固定すると全ページに継承され、
   // 商品ページでも twitter:title がホームの文言になっていた。未指定なら Next が各ページの openGraph から補完する。
   twitter: { card: "summary_large_image" },
+  ...(SITE_VERIFICATION ? { verification: { google: SITE_VERIFICATION } } : {}),
 };
 
 export default function RootLayout({
@@ -53,7 +59,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${inter.variable} ${notoSansJP.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        {GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
+      </body>
     </html>
   );
 }
