@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    {
+      "path": "/api/base-mismatch",
+      "schedule": "0 21 * * *"
+    }
+  ]
+}

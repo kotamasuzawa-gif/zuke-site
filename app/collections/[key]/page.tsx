@@ -7,13 +7,16 @@ import SiteFooter from "@/app/components/SiteFooter";
 import CollectionNav from "@/app/components/CollectionNav";
 import ProductColorGrid from "@/app/components/ProductColorGrid";
 import IronPriceTable from "@/app/components/IronPriceTable";
-import { PRODUCTS, COLLECTIONS, collectionByKey, yen } from "@/app/lib/products";
+import { COLLECTIONS, collectionByKey, yen } from "@/app/lib/products";
+import { productsForSurface } from "@/app/lib/live-product";
 import { GUIDES } from "@/app/lib/guides";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 // 2026-09-26 増澤さん指示: 鉢・セットにはホームの組み立て動画、支柱の拡張には拡張動画を常時再生
 // 2026-10-18 ホームのトップ動画でも使うので app/lib/videos.ts に移動
 import { CATEGORY_VIDEOS as VIDEOS } from "@/app/lib/videos";
+
+export const revalidate = 1800;
 
 export function generateStaticParams() {
   return COLLECTIONS.map((c) => ({ key: c.key }));
@@ -33,7 +36,8 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
     pole: "uneune", pot: "hexpot",
   };
   // 2026-10-18 増澤さん「ハンギングのリンク画像が鉄支柱になる」: 対応表に無いカテゴリは汎用 og.jpg ではなく、そのカテゴリの先頭商品の画像にする
-  const ogProduct = (OG_PRODUCT_SLUG[c.key] ? PRODUCTS.find((p) => p.slug === OG_PRODUCT_SLUG[c.key]) : undefined) ?? PRODUCTS.find(c.filter);
+  const products = await productsForSurface("listing");
+  const ogProduct = (OG_PRODUCT_SLUG[c.key] ? products.find((p) => p.slug === OG_PRODUCT_SLUG[c.key]) : undefined) ?? products.find(c.filter);
   const ogImages = ogProduct
     ? [{ url: ogProduct.ogImage ?? ogProduct.image, width: ogProduct.ogWidth ?? 1200, height: ogProduct.ogHeight ?? 1200, alt: ogProduct.fullName }]
     : [{ url: "/og.jpg", width: 1200, height: 630, alt: "ZUKE PLANTS POLE" }];
@@ -50,7 +54,8 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
   const { key } = await params;
   const c = collectionByKey(key);
   if (!c) notFound();
-  const items = PRODUCTS.filter(c.filter);
+  const products = await productsForSurface("listing");
+  const items = products.filter(c.filter);
   // 2026-09-29 SEO R4: 掲載商品を紹介しているガイドへの内部リンク
   const relatedGuides = GUIDES.filter((g) => g.related.some((s) => items.some((p) => p.slug === s)));
   // 2026-09-29 SEO R4: 先頭の動画ポスター（LCP 候補）を優先読み込み
@@ -89,7 +94,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ key
         <h1 className="text-2xl md:text-3xl font-bold leading-relaxed">{c.label}</h1>
         <p className="mt-3 text-[15px] leading-loose text-gray-700 max-w-2xl">{c.lead}</p>
         {/* 2026-10-23 SEO(#12563): アイアン支柱は4本の違いが高さと用途だけなので、冒頭で価格帯と一緒に比較できるようにする */}
-        {c.key === "iron" && <IronPriceTable />}
+        {c.key === "iron" && <IronPriceTable products={products} />}
         {/* 2026-09-27 増澤さん指示: 動画はタイトル・説明の下に */}
         {VIDEOS[c.key] && (
           <section aria-label={VIDEOS[c.key].label} className="mt-8 -mx-6 md:mx-0 bg-white">

@@ -5,13 +5,14 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
 import { GUIDES, GUIDE_PUBLISHED, guideBySlug, type GuideImage } from "@/app/lib/guides";
-import { CATEGORIES, productBySlug, yen, withUtm } from "@/app/lib/products";
+import { CATEGORIES, yen, withUtm, type Product } from "@/app/lib/products";
+import { productsForSurface } from "@/app/lib/live-product";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 export const dynamicParams = false;
 // 2026-10-15 SEO: 期間限定クーポン告知（Section.notice）の期間判定をビルド時に固定しないため、
-// 商品ページ（app/products/[slug]/page.tsx）と同じく1時間ごとに再生成する
-export const revalidate = 3600;
+// 商品ページと同じく 30 分ごとに再生成する（クーポン日付と、段階3の価格・在庫）。
+export const revalidate = 1800;
 
 export function generateStaticParams() {
   return GUIDES.map((g) => ({ slug: g.slug }));
@@ -42,7 +43,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   const g = guideBySlug(slug);
   if (!g) notFound();
 
-  const related = g.related.map(productBySlug).filter((p): p is NonNullable<typeof p> => !!p);
+  const live = await productsForSurface("listing");
+  const productOf = (slug: string): Product | undefined => live.find((p) => p.slug === slug);
+  const related = g.related.map((slug) => productOf(slug)).filter((p): p is Product => !!p);
   const others = GUIDES.filter((x) => x.slug !== g.slug);
   // 2026-10-15 SEO: 期間限定クーポンの告知段落は失効日を過ぎたら出さない（商品ページと同じ JST 判定）
   const todayJst = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -71,7 +74,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // 9/29〜10/26 で total=0 ＝勝敗の出ない指標になったため、実際に表示されていた labelB（悩み解決型）の文言を
   // 単一 label に畳んで labelB の型ごと外した（型が残ると次に触る人がA/Bが生きていると読むため）。
   const ctaLink = (c: { product: string; label: string } | undefined, content: string, sub = false) => {
-    const p = c && productBySlug(c.product);
+    const p = c && productOf(c.product);
     if (!c || !p) return null;
     const label = c.label;
     const key = content;
@@ -86,8 +89,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // 2026-10-10 SEO(#7602): 節の直下のサイト内リンク（商品ページへ）。公開中の商品だけを引く
   const sectionLinks = (links?: { product: string; label: string }[]) =>
     (links ?? [])
-      .map((l) => ({ p: productBySlug(l.product), label: l.label }))
-      .filter((x): x is { p: NonNullable<ReturnType<typeof productBySlug>>; label: string } => !!x.p);
+      .map((l) => ({ p: productOf(l.product), label: l.label }))
+      .filter((x): x is { p: NonNullable<ReturnType<typeof productOf>>; label: string } => !!x.p);
   const relatedCategories = CATEGORIES.filter((c) => related.some((p) => p.category === c.key));
   // 2026-10-14 オーナー指摘「写真が少なすぎて分かりづらい」: 本文中の任意位置に写真・説明図を差し込む。
   // 2枚以上は横2列（スマホは1列）。縦写真も h-auto で向きのまま出す（mistakes.md 2026-05-21）
@@ -143,8 +146,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   // 2026-10-10 SEO(#6896): 2本使いの提案ブロック（商品リンクの直前）。公開中の商品だけを引く
   const bundleItems = (g.bundle?.items ?? [])
-    .map((it) => ({ p: productBySlug(it.product), note: it.note }))
-    .filter((x): x is { p: NonNullable<ReturnType<typeof productBySlug>>; note: string } => !!x.p);
+    .map((it) => ({ p: productOf(it.product), note: it.note }))
+    .filter((x): x is { p: NonNullable<ReturnType<typeof productOf>>; note: string } => !!x.p);
   const bundleTotal = bundleItems.reduce((sum, { p }) => sum + p.price, 0);
 
   const jsonLd: object[] = [

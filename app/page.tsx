@@ -6,6 +6,8 @@ import BaseClone from "./components/BaseClone";
 import { HomeFaq } from "./components/HomeFaq";
 import { JsonLd } from "./components/JsonLd";
 import { NoteArticles } from "./components/NoteArticles";
+import { productsForSurface } from "@/app/lib/live-product";
+import { finderSnapshots, homeFeaturedCards } from "@/app/lib/products";
 
 // 2026-08-21 増澤さん指示: BASEショップのホームと同一の見た目。
 // 旧セクション(Ducks風/白基調)のコンポーネントは components/ に温存（復帰可能）。
@@ -21,14 +23,18 @@ const showLifestyle = LIFESTYLE_FILES.every((f) =>
 // 2026-09-29 SEO R4: canonical は layout から移動（全ページへの継承を防ぐ）
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
-export default function Home() {
+// 価格と在庫を出すページは 30 分で作り直す（BASE 同期のカタログと同じ間隔）。
+export const revalidate = 1800;
+
+export default async function Home() {
+  const listing = await productsForSurface("listing");
   // 2026-09-29 SEO R4: ファーストビューの組み立て動画のポスターを優先読み込み（LCP 候補）。
   // 以前は下部のライフスタイル写真に priority が付いていて、こちらと帯域を取り合っていた
   preload("/video/hexpot-assemble-poster.jpg", { as: "image", fetchPriority: "high" });
   return (
     <>
       <JsonLd />
-      <BaseClone showLifestyle={showLifestyle} />
+      <BaseClone showLifestyle={showLifestyle} cards={homeFeaturedCards(listing)} finderProducts={finderSnapshots(listing)} />
       <NoteArticles />
       <HomeFaq />
     </>

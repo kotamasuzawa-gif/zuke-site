@@ -3,8 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, yen } from "@/app/lib/products";
+import { yen } from "@/app/lib/products";
+import { productsForSurface } from "@/app/lib/live-product";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
+
+export const revalidate = 1800;
 
 export const metadata: Metadata = {
   title: "ブランドについて｜インテリアに馴染む園芸支柱をつくる",
@@ -30,7 +33,8 @@ const jsonLd = {
   ],
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const products = await productsForSurface("listing");
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
@@ -89,7 +93,7 @@ export default function AboutPage() {
             樹脂版の支柱・拡張パーツ、六角鉢と受け皿は PLA樹脂の3Dプリント製で、軽く、色を選べます。
           </p>
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-            {PRODUCTS.map((p) => (
+            {products.map((p) => (
               <Link key={p.slug} href={`/products/${p.slug}`} className="block group">
                 {/* 2026-10-27 EC店長: ここも soldOut を見ておらず、完売品が通常カードで並んでいた（d26d513 の対象外）。 */}
                 <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">

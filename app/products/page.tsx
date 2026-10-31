@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, CATEGORIES, yen } from "@/app/lib/products";
+import { CATEGORIES, yen } from "@/app/lib/products";
+import { productsForSurface } from "@/app/lib/live-product";
 import CollectionNav from "@/app/components/CollectionNav";
 import ProductColorGrid from "@/app/components/ProductColorGrid";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 // 2026-09-29 SEO R4: 「全4型・素材はアイアンのみ・¥770から」の旧文言が、実際の13商品（PLA樹脂の支柱・鉢・パーツ・花瓶）と
 // 矛盾していたため修正。title も支柱カテゴリページと取り合わないよう、鉢・花瓶を含む全商品一覧として付け直した。
+export const revalidate = 1800;
+
 export const metadata: Metadata = {
   title: "PLANTS POLE 全商品一覧｜園芸支柱・六角鉢",
   description:
@@ -33,7 +36,8 @@ const jsonLd = {
   ],
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await productsForSurface("listing");
   return (
     <div className="min-h-screen bg-white text-[#222] flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />
@@ -63,7 +67,7 @@ export default function ProductsPage() {
               key: c.key,
               title: c.label,
               moreHref: `/collections/${c.key}`,
-              items: PRODUCTS.filter((p) => p.category === c.key)
+              items: products.filter((p) => p.category === c.key)
                 .sort((x, y) => (x.kind === y.kind ? 0 : x.kind === "iron" ? -1 : 1))
                 .map((p) => ({ slug: p.slug, name: p.name, fullName: p.fullName, price: yen(p.price), sub: p.kind === "iron" ? "アイアン" : "PLA樹脂", isNew: p.isNew, soldOut: p.soldOut, href: `/products/${p.slug}` })),
             })).filter((g) => g.items.length > 0)}

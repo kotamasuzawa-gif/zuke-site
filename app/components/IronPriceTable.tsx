@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PRODUCTS, SHIPPING, yen } from "@/app/lib/products";
+import { PRODUCTS, SHIPPING, yen, type Product } from "@/app/lib/products";
 
 // 2026-10-23 SEO(#12563): /collections/iron の冒頭に価格帯の比較表を置く。
 // アイアン支柱は ¥770〜¥1,320 の4本で、違いは「高さ」と「向いている植物」だけ。
@@ -8,8 +8,8 @@ import { PRODUCTS, SHIPPING, yen } from "@/app/lib/products";
 // 数字は products.ts の確定値だけを使う（height / price / plants。推定値は入れない）。
 const ORDER = ["hex2", "hex3", "uneune", "hex5"] as const;
 
-export default function IronPriceTable() {
-  const rows = ORDER.map((slug) => PRODUCTS.find((p) => p.slug === slug)).filter(
+export default function IronPriceTable({ products = PRODUCTS }: { products?: readonly Product[] }) {
+  const rows = ORDER.map((slug) => products.find((p) => p.slug === slug)).filter(
     (p): p is NonNullable<typeof p> => Boolean(p),
   );
   if (rows.length === 0) return null;

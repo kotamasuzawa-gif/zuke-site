@@ -1,7 +1,8 @@
-import { FAQS } from "./HomeFaq";
-import { PRODUCTS } from "@/app/lib/products";
+import { faqsFor } from "./HomeFaq";
+import { PRODUCTS, type Product } from "@/app/lib/products";
 import { WHOLESALE_EMAIL } from "@/app/lib/contact";
 import { SITE as SITE_URL, jsonLdHtml } from "@/app/lib/seo";
+import { productsForSurface } from "@/app/lib/live-product";
 
 // SEO: 構造化データ（Organization / WebSite / FAQPage / 商品ItemList）。
 // 2026-09-28 SEO: 商品リストは products.ts（BASEと同期）から生成し、手書きの乖離をなくす
@@ -9,7 +10,9 @@ import { SITE as SITE_URL, jsonLdHtml } from "@/app/lib/seo";
 //   - Organization.logo が /icon.svg（本番404）を指していたため /icon.png（512x512）に修正。sameAs・卸売の contactPoint を追加
 //   - WebSite.name はブランド名そのものに（Google のサイト名表示の推奨）
 //   - ItemList は ListItem に url だけを持たせる形に（Product の詳細は各商品ページの JSON-LD が正。二重定義をなくす）
-const jsonLd = {
+function jsonLdFor(products: readonly Product[]) {
+  const faqs = faqsFor(products);
+  return {
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -49,7 +52,7 @@ const jsonLd = {
       // 2026-09-20 SEO: トップのFAQをリッチリザルト対象にする（本文と内容を一致させること）
       "@type": "FAQPage",
       "@id": `${SITE_URL}/#faq`,
-      mainEntity: FAQS.map((f) => ({
+      mainEntity: faqs.map((f) => ({
         "@type": "Question",
         name: f.q,
         acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -58,7 +61,7 @@ const jsonLd = {
     {
       "@type": "ItemList",
       name: "PLANTS POLE 商品ラインナップ",
-      itemListElement: PRODUCTS.map((p, i) => ({
+      itemListElement: products.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
         url: `${SITE_URL}/products/${p.slug}`,
@@ -66,8 +69,12 @@ const jsonLd = {
       })),
     },
   ],
-};
+  };
+}
 
-export function JsonLd() {
-  return <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLd)} />;
+export async function JsonLd() {
+  // 段階3かつトークンがあるときだけ正式名称が BASE に寄る。それ以外は PRODUCTS そのもの。
+  const products = await productsForSurface("listing");
+  const source = products === PRODUCTS ? PRODUCTS : products;
+  return <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(jsonLdFor(source))} />;
 }
