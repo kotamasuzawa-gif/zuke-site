@@ -24,12 +24,27 @@ export const metadata: Metadata = {
   },
 };
 
+// 2026-10-31 SEO: 一覧に ItemList を追加（Product の詳細は各商品ページの JSON-LD が正）
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "ホーム", item: SITE },
-    { "@type": "ListItem", position: 2, name: "商品一覧", item: `${SITE}/products` },
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "ホーム", item: SITE },
+        { "@type": "ListItem", position: 2, name: "商品一覧", item: `${SITE}/products` },
+      ],
+    },
+    {
+      "@type": "ItemList",
+      name: "PLANTS POLE 全商品一覧",
+      itemListElement: PRODUCTS.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${SITE}/products/${p.slug}`,
+        name: p.fullName,
+      })),
+    },
   ],
 };
 
