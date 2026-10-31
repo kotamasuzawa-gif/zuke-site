@@ -122,21 +122,80 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   const inlineLinks = (g.inlineGuideLinks ?? []).filter(
     (l) => l.slug !== g.slug && GUIDES.some((x) => x.slug === l.slug),
   );
+  // 2026-10-31: 本文中の /go/base リンク。c= と from= は上の baseLink（既存CTA）と同じ組み立て。
+  const baseAnchors = (g.inlineBaseLinks ?? []).filter(
+    (l) => l.text.length > 0 && /^\d+$/.test(l.itemId) && /^[A-Za-z0-9_-]{1,40}$/.test(l.content),
+  );
+  const linkClass = "underline underline-offset-4 decoration-gray-400 hover:text-[#222]";
   const linkify = (text: string) => {
-    const hit = inlineLinks.find((l) => !usedInlineLinks.has(l.slug) && text.includes(l.text));
+    const candidates = [
+      ...inlineLinks.map((l) => ({
+        key: l.slug,
+        text: l.text,
+        external: false,
+        href: `/guide/${l.slug}`,
+      })),
+      ...baseAnchors.map((l) => ({
+        key: `base:${l.itemId}:${l.content}`,
+        text: l.text,
+        external: true,
+        href: baseLink(`/items/${l.itemId}`, l.content),
+      })),
+    ].filter((l) => !usedInlineLinks.has(l.key) && text.includes(l.text));
+    const hit = candidates.sort((a, b) => text.indexOf(a.text) - text.indexOf(b.text))[0];
     if (!hit) return text;
-    usedInlineLinks.add(hit.slug);
+    usedInlineLinks.add(hit.key);
     const at = text.indexOf(hit.text);
+    const link = hit.external ? (
+      <a href={hit.href} target="_blank" rel="nofollow noopener noreferrer" className={linkClass}>
+        {hit.text}
+      </a>
+    ) : (
+      <Link href={hit.href} className={linkClass}>
+        {hit.text}
+      </Link>
+    );
     return (
       <>
         {text.slice(0, at)}
-        <Link
-          href={`/guide/${hit.slug}`}
-          className="underline underline-offset-4 decoration-gray-400 hover:text-[#222]"
-        >
-          {hit.text}
-        </Link>
+        {link}
         {text.slice(at + hit.text.length)}
+      </>
+    );
+  };
+  const pointList = (items: string[], className = "mt-6") =>
+    items.length === 0 ? null : (
+      <ul className={`${className} flex flex-col gap-3`}>
+        {items.map((pt) => (
+          <li key={pt} className="flex gap-3 text-[15px] leading-relaxed text-gray-700">
+            <span className="mt-2.5 w-1 h-1 rounded-full bg-[#222] shrink-0" />
+            <span>{linkify(pt)}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  const prose = (items: string[] | undefined, prefix: string) =>
+    (items ?? []).map((para, n) => (
+      <p key={`${prefix}-${n}`} className="mt-5 text-[15px] leading-loose text-gray-700">
+        {linkify(para)}
+      </p>
+    ));
+  const renderPoints = (s: (typeof g.sections)[number]) => {
+    if (!s.points) return null;
+    const at = s.followPoint ? s.points.indexOf(s.followPoint.after) : -1;
+    if (at < 0) {
+      return (
+        <>
+          {pointList(s.points)}
+          {prose(s.followPoint?.paragraphs, "follow")}
+        </>
+      );
+    }
+    return (
+      <>
+        {pointList(s.points.slice(0, at + 1))}
+        {prose(s.followPoint?.paragraphs, "follow")}
+        {pointList(s.points.slice(at + 1))}
       </>
     );
   };
@@ -198,6 +257,13 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         <article>
           <h1 className="text-2xl md:text-[28px] font-bold leading-relaxed">{g.title}</h1>
           <p className="mt-6 text-[15px] leading-loose text-gray-700">{g.lead}</p>
+          {g.conclusion && (
+            <div className="mt-8">
+              <p className="text-[15px] font-bold leading-relaxed">{g.conclusion.heading}</p>
+              {pointList(g.conclusion.points, "mt-4")}
+              <p className="mt-5 text-[15px] leading-loose text-gray-700">{linkify(g.conclusion.closing)}</p>
+            </div>
+          )}
           {g.hero && figures([g.hero], true)}
           {/* 2026-10-27 SEO(朝会 #14072): 冒頭の購入リンク。hero の実写に写っている商品を指す記事だけ。
               第一CTA(guide_sec1)は節の末尾にあり、本番実測で記事先頭から約4.4KB下＝モバイルで2画面以上先だった */}
@@ -222,16 +288,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                 </p>
               )}
               {s.figuresPlacement !== "afterPoints" && figures(s.figures)}
-              {s.points && (
-                <ul className="mt-6 flex flex-col gap-3">
-                  {s.points.map((pt) => (
-                    <li key={pt} className="flex gap-3 text-[15px] leading-relaxed text-gray-700">
-                      <span className="mt-2.5 w-1 h-1 rounded-full bg-[#222] shrink-0" />
-                      <span>{linkify(pt)}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {renderPoints(s)}
+              {prose(s.afterList, "after")}
               {s.figuresPlacement === "afterPoints" && figures(s.figures)}
               {s.image && (
                 <Image
