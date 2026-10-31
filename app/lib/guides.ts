@@ -875,6 +875,15 @@ export const GUIDES: Guide[] = [
         // アイアンは cta2（在庫限り）へ落とし、空いた第一CTA直下の ctaAddon に noboribo（3,980円）を移して単価を補う。
         cta: { product: "pole3pla", label: "ひもも留め具も使わず、枠に通すだけで茎を留める（4色）" },
         ctaAddon: { product: "noboribo", label: "茎が太くて枠に通らない株は、水苔に気根を掴ませる「上り棒セット」へ" },
+        // 🕒 2026-10-31 SEO(#14987 EC店長の申し送り): hex3(128906974) は BASE在庫2（黒0/白2）で補充が無い。
+        // 0になると BASE は visible=1 のまま買えなくなるので、この cta2 は SOLD OUT の行き止まりになる。
+        // EC店長が毎回の実行で在庫を見ており、0を踏んだ日に社内チャットへ投げる約束。**その日にこの1行を削除**
+        // （cta=pole3pla / ctaAddon=noboribo の2本立てに戻す）。
+        // 🔴 完売日に直すのはこの1行だけではありません。サイト側の hex3 参照は2か所です:
+        //   ① ここ（/guide/monstera-shichu sec4 の cta2）
+        //   ② /guide/shichu-tatekata の items（hex2 との2本比較。hex3 側を pole3pla に替えるか hex2 1本にする。
+        //      直上の image が hex2+hex3 の実写比較写真なので、文言だけ替えると写真と食い違う＝写真も要差し替え）
+        // BASE 側の detail の入口は待機番号 (145)→(209) が同じ日に樹脂版 159046672 へ退避させる（outbox）。
         cta2: { product: "hex3", label: "同じ3連の六角形をアイアンで。高さも約22cmで、こちらは在庫限り" },
       },
       {
