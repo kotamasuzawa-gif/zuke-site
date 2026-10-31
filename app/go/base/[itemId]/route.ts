@@ -1,6 +1,8 @@
 import { NextResponse, after } from "next/server";
 import type { NextRequest } from "next/server";
 import { SHOP, PRODUCTS } from "@/app/lib/products";
+import { productsForSurface } from "@/app/lib/live-product";
+import { itemIdFromBaseUrl } from "@/app/lib/base-sync";
 
 // 2026-10-10 EC店長依頼(#7630): BASE の注文API(`/api/base-orders`)には流入元の項目が無く、
 // UTM も BASE 側に残らないため「ガイド経由でBASEへ出ていったクリック数」を社内で数える手段が無かった。
@@ -17,17 +19,12 @@ const MAIBIZ_CLICKS_URL = "https://inventory-app-production-660b.up.railway.app/
 
 /** 中継先は BASE 本店の商品だけ。products.ts に載っている item_id 以外は受け付けない（オープンリダイレクト防止） */
 const ALLOWED_ITEM_IDS = new Set(
-  PRODUCTS.map((p) => p.baseUrl.match(/\/items\/(\d+)$/)?.[1]).filter((v): v is string => !!v),
+  PRODUCTS.map((p) => itemIdFromBaseUrl(p.baseUrl)).filter((v): v is string => !!v),
 );
 
-// 2026-10-23 SEO(#12803 EC店長): 品切れ(soldOut)の商品は BASE 側が承認セット(78)で非公開＝404 になる。
-// 上の「404 を見せるより購入可能なページに着地させる」と同じ扱いで、自社の商品ページへ送る
-// （そこに買える行き先＝soldOutAlt の黒ボタンが出ている。6eee200）。クリックのログは今までどおり残す。
-const SOLD_OUT_ITEM_SLUG = new Map(
-  PRODUCTS.filter((p) => p.soldOut)
-    .map((p) => [p.baseUrl.match(/\/items\/(\d+)$/)?.[1], p.slug] as const)
-    .filter((e): e is readonly [string, string] => !!e[0]),
-);
+// 2026-10-23 SEO(#12803 EC店長): 品切れの商品は BASE へ出さず、自社の商品ページへ送る。
+// 2026-10-31: 段階2かつトークンがあるときは、同じ判定を BASE の在庫（と forceSoldOut）で行う。
+// 段階0やトークン無しでは products.ts の soldOut のまま。
 
 /** from / utm_content は自分で付けている値だけを通す（ログと転送先に任意文字列を混ぜない） */
 const sanitizeTag = (v: string | null) => (v && /^[A-Za-z0-9_-]{1,40}$/.test(v) ? v : null);
@@ -45,7 +42,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ item
   const from = sanitizeTag(req.nextUrl.searchParams.get("from"));
   const content = sanitizeTag(req.nextUrl.searchParams.get("c"));
 
-  const soldOutSlug = SOLD_OUT_ITEM_SLUG.get(itemId);
+  const live = await productsForSurface("pdp");
+  const match = live.find((p) => itemIdFromBaseUrl(p.baseUrl) === itemId);
+  const soldOutSlug = match?.soldOut ? match.slug : undefined;
   const dest = soldOutSlug
     ? new URL(`/products/${soldOutSlug}`, req.nextUrl.origin)
     : new URL(`${SHOP}/items/${itemId}`);

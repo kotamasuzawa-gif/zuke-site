@@ -4,7 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, CATEGORIES, PAIRINGS, productBySlug, yen, SHIPPING, withUtm, type CategoryKey } from "@/app/lib/products";
+import { PRODUCTS, CATEGORIES, PAIRINGS, yen, SHIPPING, withUtm, type CategoryKey } from "@/app/lib/products";
+import { productsForSurface } from "@/app/lib/live-product";
 import { GUIDES } from "@/app/lib/guides";
 import ProductColorImage from "@/app/components/ProductColorImage";
 import { soldColors, colorLabel, productImage, baseImage, type ColorKey } from "@/app/lib/colors";
@@ -22,8 +23,8 @@ const TITLE_SUFFIX: Record<CategoryKey, string> = {
 };
 
 export const dynamicParams = false;
-// キャンペーン表示の期間判定(todayJst)をビルド時に固定しないため、1時間ごとに再生成
-export const revalidate = 3600;
+// キャンペーンの日付と、段階2以降の BASE 価格・在庫を 30 分で作り直す。
+export const revalidate = 1800;
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -31,7 +32,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const p = productBySlug(slug);
+  const p = (await productsForSurface("pdp")).find((x) => x.slug === slug);
   if (!p) return {};
   // 2026-10-10 SEO: shortTitle に `{price}` と書くと products.ts の price から埋める。
   // 価格はEC店長が所有する数字なので、タイトルに数字を二重で持たせない（price を直せばtitleも追従）
@@ -58,13 +59,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const p = productBySlug(slug);
+  const live = await productsForSurface("pdp");
+  const p = live.find((x) => x.slug === slug);
   if (!p) notFound();
+  const productOf = (key: string) => live.find((x) => x.slug === key);
 
   const pairings = (PAIRINGS[p.slug] ?? [])
-    .map((x) => ({ ...x, product: productBySlug(x.slug) }))
+    .map((x) => ({ ...x, product: productOf(x.slug) }))
     .filter((x): x is typeof x & { product: NonNullable<typeof x.product> } => !!x.product);
-  const others = PRODUCTS.filter((x) => x.slug !== p.slug);
+  const others = live.filter((x) => x.slug !== p.slug);
   const relatedGuides = GUIDES.filter((g) => g.related.includes(p.slug));
   const category = CATEGORIES.find((c) => c.key === p.category);
   const sold = soldColors(p.slug);
@@ -210,7 +213,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <p>{p.altPicks.lead}</p>
                 <ul className="mt-1.5 space-y-1.5">
                   {p.altPicks.items.map((pick) => {
-                    const target = productBySlug(pick.slug);
+                    const target = productOf(pick.slug);
                     if (!target) return null;
                     const itemId = target.baseUrl.match(/\/items\/(\d+)$/)?.[1];
                     const label = `${target.name.replace(/^PLANTS POLE\s*/, "")} ${yen(target.price)}`;

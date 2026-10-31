@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CollectionNav from "@/app/components/CollectionNav";
-import { productBySlug, yen, withUtm } from "@/app/lib/products";
+import { yen, withUtm, type FinderSnapshot } from "@/app/lib/products";
 import { baseImage } from "@/app/lib/colors";
 
 type Result = { slugs: string[]; collection: string; collectionLabel: string; note?: string };
@@ -83,7 +83,7 @@ const TREE: Step = {
   ],
 };
 
-export default function PlantFinder() {
+export default function PlantFinder({ products: catalog }: { products: FinderSnapshot[] }) {
   const [path, setPath] = useState<string[]>([]);
   const lastRef = useRef<HTMLLIElement>(null);
 
@@ -212,7 +212,8 @@ export default function PlantFinder() {
     setPath((p) => p.slice(0, -1));
   };
 
-  const products = (result?.slugs ?? []).map((s) => productBySlug(s)).filter((p) => p !== undefined);
+  const bySlug = new Map(catalog.map((p) => [p.slug, p]));
+  const products = (result?.slugs ?? []).map((s) => bySlug.get(s)).filter((p) => p !== undefined);
   const [main, ...more] = products;
   const lastIndex = result ? steps.length : steps.length - 1;
 
@@ -309,9 +310,15 @@ export default function PlantFinder() {
                 <p className="text-[13px] text-gray-600 leading-loose">{main.summary}</p>
                 <p className="text-[12px] text-gray-500">サイズ {main.height}</p>
                 <p className="text-xl font-bold">{main.price ? yen(main.price) : ""}</p>
-                <a href={withUtm(main.baseUrl, "finder")} target="_blank" rel="noopener noreferrer" className="mt-1 flex items-center justify-center min-h-[52px] bg-[#222] text-white text-[14px] font-bold tracking-[0.1em] hover:opacity-85 transition-opacity">
-                  ショップで購入する
-                </a>
+                {main.soldOut ? (
+                  <Link href={`/products/${main.slug}`} className="mt-1 flex items-center justify-center min-h-[52px] bg-gray-500 text-white text-[14px] font-bold tracking-[0.1em] hover:opacity-85 transition-opacity">
+                    商品ページを見る
+                  </Link>
+                ) : (
+                  <a href={withUtm(main.baseUrl, "finder")} target="_blank" rel="noopener noreferrer" className="mt-1 flex items-center justify-center min-h-[52px] bg-[#222] text-white text-[14px] font-bold tracking-[0.1em] hover:opacity-85 transition-opacity">
+                    ショップで購入する
+                  </a>
+                )}
                 <Link href={`/products/${main.slug}`} className="text-center text-[13px] text-gray-600 underline underline-offset-4 decoration-gray-300 py-1">詳しく見る</Link>
               </div>
             </div>

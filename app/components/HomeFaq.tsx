@@ -1,26 +1,32 @@
 import Link from "next/link";
 import { PRODUCTS, yen, type Product } from "@/app/lib/products";
 import { WHOLESALE_EMAIL } from "@/app/lib/contact";
+import { productsForSurface } from "@/app/lib/live-product";
 
 // 2026-09-29 SEO R4: 価格は products.ts（BASE と同期）から算出する。
 // 固定文言だと「樹脂版支柱は¥580から」のように実売価格（¥480）とずれ、FAQPage の JSON-LD にもそのまま出ていた。
 const shortName = (p: Product) => p.name.match(/"(.+?)"/)?.[1] ?? p.name;
-const priceFrom = (items: Product[]) => {
+const priceFrom = (items: readonly Product[]) => {
   const min = Math.min(...items.map((p) => p.price));
   return { price: yen(min), names: items.filter((p) => p.price === min).map(shortName).join("・") };
 };
-const priceTo = (items: Product[]) => {
+const priceTo = (items: readonly Product[]) => {
   const max = Math.max(...items.map((p) => p.price));
   return { price: yen(max), names: items.filter((p) => p.price === max).map(shortName).join("・") };
 };
 // 2026-10-16: 「◯円から◯円まで◯型」の集計は単品だけ（セットを入れると上限がセット価格・型数も合わなくなる）
-const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet);
-const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole");
-const potSets = PRODUCTS.filter((p) => p.category === "pot" && p.name.includes("セット"));
-const ironFrom = priceFrom(ironPoles);
-const ironTo = priceTo(ironPoles);
-const plaFrom = priceFrom(plaPoles);
-const setFrom = priceFrom(potSets);
+export function priceAnswer(products: readonly Product[]) {
+  const ironPoles = products.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet);
+  const plaPoles = products.filter((p) => p.kind === "pla" && p.category === "pole");
+  const potSets = products.filter((p) => p.category === "pot" && p.name.includes("セット"));
+  const ironFrom = priceFrom(ironPoles);
+  const ironTo = priceTo(ironPoles);
+  const plaFrom = priceFrom(plaPoles);
+  const setFrom = priceFrom(potSets);
+  return `鉄製のPLANTS POLEは${ironFrom.price}（${ironFrom.names}）から${ironTo.price}（${ironTo.names}）まで${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです。公式オンラインストア（BASE）からご購入いただけます。`;
+}
+
+const PRICE_Q = "価格と購入方法を教えてください。";
 
 // 2026-09-20 増澤さん依頼のSEO強化:
 //   トップの本文が606字しかなく（BASEクローン化の副作用）、検索で拾える語が不足していた。
@@ -51,8 +57,8 @@ export const FAQS = [
     a: "室内のインテリアグリーン向けに設計していますが、ベランダなど軒下での使用も可能です。雨ざらしになる環境では、素材の性質上さびが出ることがあります。",
   },
   {
-    q: "価格と購入方法を教えてください。",
-    a: `鉄製のPLANTS POLEは${ironFrom.price}（${ironFrom.names}）から${ironTo.price}（${ironTo.names}）まで${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです。公式オンラインストア（BASE）からご購入いただけます。`,
+    q: PRICE_Q,
+    a: priceAnswer(PRODUCTS),
   },
   {
     q: "鉄製と3Dプリント製（樹脂版）の支柱はどう違いますか？",
@@ -69,14 +75,22 @@ export const FAQS = [
   },
 ];
 
-export function HomeFaq() {
+/** 段階3で価格が BASE に寄ったときだけ価格の回答を作り直す。それ以外は FAQS そのもの。 */
+export function faqsFor(products: readonly Product[]) {
+  if (products === PRODUCTS) return FAQS;
+  return FAQS.map((f) => (f.q === PRICE_Q ? { ...f, a: priceAnswer(products) } : f));
+}
+
+export async function HomeFaq() {
+  const products = await productsForSurface("listing");
+  const faqs = faqsFor(products);
   return (
     <section className="px-6 pb-20 max-w-2xl mx-auto" aria-labelledby="faq-heading">
       <h2 id="faq-heading" className="text-[15px] font-bold tracking-[0.1em] text-center">
         よくあるご質問
       </h2>
       <dl className="mt-8 divide-y divide-gray-100 border-t border-gray-100">
-        {FAQS.map((f) => (
+        {faqs.map((f) => (
           <div key={f.q} className="py-5">
             <dt className="text-[14px] font-bold leading-relaxed text-[#222]">{f.q}</dt>
             <dd className="mt-2 text-[13px] leading-loose text-gray-600">{f.a}</dd>

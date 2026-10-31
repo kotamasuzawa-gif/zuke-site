@@ -4,7 +4,7 @@
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
 import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
-import { PRODUCTS, HOME_FEATURED_SLUGS, yen, withUtm } from "@/app/lib/products";
+import { PRODUCTS, withUtm, type FinderSnapshot, type HomeFeaturedCard } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import PlantFinder from "@/app/components/PlantFinder";
@@ -20,13 +20,21 @@ const SHOP = "https://shop.zukeplants.com";
 
 // 2026-09-26 増澤さん指示「LPとBASEの商品を紐づける／並び順もBASEを正に」: products.ts（BASE順・baseUrl）から生成
 // 2026-10-14 増澤さん「人気なものは上に・数も絞る」: ホームは HOME_FEATURED_SLUGS の8点のみ（全商品は /products へ）
-const products = HOME_FEATURED_SLUGS.map((s) => PRODUCTS.find((p) => p.slug === s)!).filter(Boolean).map((p) => ({ name: p.fullName, price: yen(p.price), slug: p.slug, isNew: p.isNew, url: withUtm(p.baseUrl) }));
+// 2026-10-31: 8点の名前・価格・売り切れはサーバーが渡す。段階0やトークン無しでは products.ts と同じ中身。
 
 // 2026-09-27: 色判定は app/lib/colors.ts に共通化（全商品4色切替）
 const lifestyleImage = (color: ColorKey | null) => `/lifestyle-hex-${color === "white" ? "white" : "black"}.jpg`;
 
 
-export default function BaseClone({ showLifestyle = false }: { showLifestyle?: boolean }) {
+export default function BaseClone({
+  showLifestyle = false,
+  cards,
+  finderProducts,
+}: {
+  showLifestyle?: boolean;
+  cards: HomeFeaturedCard[];
+  finderProducts: FinderSnapshot[];
+}) {
   const [open, setOpen] = useState(false);
   // 2026-10-18 増澤さん「トップの動画は各カテゴリの動画をランダムに」: 初回描画は鉢の動画（SSRと一致させる）→ 表示後にランダムで差し替え
   const [hero, setHero] = useState(CATEGORY_VIDEOS.pot);
@@ -93,7 +101,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
         {/* 探し方の導線（2026-09-26 増澤さん指示: 素材→カテゴリ）
             2026-10-18 増澤さん指示: 答えるたびに枝分かれする診断（PlantFinder）に置き換え。動画・商品一覧はそのまま */}
         <section aria-label="探し方" className="px-4 md:px-8 max-w-3xl mx-auto pb-16">
-          <PlantFinder />
+          <PlantFinder products={finderProducts} />
         </section>
 
         {/* カラースイッチ（2026-08-22 増澤さん要望） */}
@@ -124,18 +132,22 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
         {/* 商品グリッド */}
         <section aria-label="商品一覧" className="px-4 md:px-8 max-w-5xl mx-auto pb-20">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-            {products.map((p) => (
-              <a key={p.url} href={p.url} target="_blank" rel="noopener noreferrer" className="block group">
+            {cards.map((p) => (
+              <a key={p.slug} href={p.url} {...(p.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="block group">
                 <div className="relative aspect-square bg-[#fbfbfb] overflow-hidden">
                   {/* 2026-10-10 EC店長#7597: その商品に扱いの無い色はBASEの1枚目＋色名なしのalt（colors.ts の soldColors 準拠） */}
                   <Image
                     src={shownImageFor(p.slug, color)}
                     alt={shownColorLabel(p.slug, color) ? `${p.name}（${shownColorLabel(p.slug, color)}）` : p.name}
                     fill
-                    className="object-contain group-hover:opacity-90 transition-opacity"
+                    className={`object-contain group-hover:opacity-90 transition-opacity${p.soldOut ? " opacity-40" : ""}`}
                     sizes="(max-width: 1024px) 50vw, 25vw"
                   />
-                  {p.isNew && <span className="absolute top-2 left-2 bg-[#222] text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">NEW</span>}
+                  {p.soldOut ? (
+                    <span className="absolute top-2 left-2 bg-gray-500 text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">SOLD OUT</span>
+                  ) : p.isNew ? (
+                    <span className="absolute top-2 left-2 bg-[#222] text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">NEW</span>
+                  ) : null}
                 </div>
                 <p className="mt-4 text-[15px] leading-relaxed text-[#222] line-clamp-2">{p.name}</p>
                 <p className="mt-2 text-[15px] font-bold">{p.price}</p>

@@ -96,6 +96,14 @@ export type Product = {
    */
   soldOut?: boolean;
   /**
+   * LP だけの売り切れ固定。2026-10-31。
+   * BASE に在庫があっても、同期（BASE_SYNC_STAGE が 2 以上）を入れたあとの画面では SOLD OUT のままにする。
+   * 卸へ回した在庫など、BASE の数字と店頭を意図的に分けるときに使う。未設定なら BASE の在庫が正。
+   * 日次の /api/base-mismatch は、この印が付いた商品を必ずログに出す。
+   * トークンが無い、または段階が 0 のときは見ない（そのときは下の soldOut が今までどおりの表示）。
+   */
+  forceSoldOut?: boolean;
+  /**
    * soldOut のときに黒ボタンの代わりに出す「いま買える行き先」。2026-10-23 EC店長#12801 で新設。
    * soldOut だけだと表示は「オンラインストアで購入する」のままで、購入ボタンが消えた BASE の
    * ページに送ってしまう（お客様から見れば行き止まり）。href はサイト内の商品ページを指す。
@@ -187,6 +195,9 @@ export const PRODUCTS: Product[] = [
     // 黒0・白0＝完全完売。BASE 117375069 は他商品の本文から4本リンクが来ているので visible=1 のまま残す（#13847）＝
     // 振り替えの理由は「非公開＝404 の回避」ではなく「公開のまま在庫0＝押しても買えない行き止まりの回避」。
     soldOut: true,
+    // 2026-10-31: 同期を段階2以降にしても、この SOLD OUT は外さない（BASE に在庫があっても LP は売り切れ）。
+    // 卸へ残す本数は、将来 BASE の在庫を減らしてからこの印を外す。
+    forceSoldOut: true,
     // 2026-10-28 EC店長: hex5 には stockNote を付けない。BASE 実読は ブラック0・ホワイト7 で「白は買える」状態だが、
     // その白7点は (169b) で The Naturalist（10/30 納品）へ引き当て済み＝BASE から売れると卸が欠品する。
     // soldOut の先出しは意図どおり。10/29 午前の `zuke_hex5_soldout_sync.sh` が実棚と表示を合わせる。
@@ -1046,6 +1057,60 @@ export const PRODUCTS: Product[] = [
 // 行き止まりにしないため、直近25注文で売上1位（19,900円）かつ4色25点ある noboribo(162757270) を先頭へ。
 // hex5 は外し、同じ「支柱」カテゴリで4色34点の pole3pla(159046672) を8点の枠に入れる。
 export const HOME_FEATURED_SLUGS = ["noboribo", "hex3", "hex2", "hexpot-set", "uneune", "hexpot-set2", "pole3pla", "scoop"];
+
+export type HomeFeaturedCard = {
+  name: string;
+  price: string;
+  slug: string;
+  isNew?: boolean;
+  url: string;
+  soldOut: boolean;
+  external: boolean;
+};
+
+/** ホームの8点。売り切れのときは BASE へ出さず商品ページへ。売り切れでなければ今までどおり UTM 付きの BASE。 */
+export function homeFeaturedCards(source: readonly Product[]): HomeFeaturedCard[] {
+  return HOME_FEATURED_SLUGS.map((s) => source.find((p) => p.slug === s))
+    .filter((p): p is Product => Boolean(p))
+    .map((p) => ({
+      name: p.fullName,
+      price: yen(p.price),
+      slug: p.slug,
+      isNew: p.isNew,
+      url: p.soldOut ? `/products/${p.slug}` : withUtm(p.baseUrl),
+      soldOut: Boolean(p.soldOut),
+      external: !p.soldOut,
+    }));
+}
+
+export type FinderSnapshot = {
+  slug: string;
+  name: string;
+  fullName: string;
+  price: number;
+  baseUrl: string;
+  summary: string;
+  height: string;
+  material: string;
+  isNew?: boolean;
+  soldOut?: boolean;
+};
+
+/** 診断が参照する商品。サーバーで作り、ブラウザ側の部品へ渡す。 */
+export function finderSnapshots(source: readonly Product[]): FinderSnapshot[] {
+  return source.map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    fullName: p.fullName,
+    price: p.price,
+    baseUrl: p.baseUrl,
+    summary: p.summary,
+    height: p.height,
+    material: p.material,
+    isNew: p.isNew,
+    soldOut: p.soldOut,
+  }));
+}
 
 export function productBySlug(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug);
