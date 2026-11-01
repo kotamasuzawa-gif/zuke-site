@@ -145,6 +145,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             name={p.fullName}
             colors={sold}
             initial={(p.image.match(/-(black|white|orange|lightgray)\.webp$/)?.[1] as ColorKey | undefined) ?? sold[0]}
+            defaultImage={p.initialImage}
           />
 
           <div>
@@ -187,14 +188,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 )}
               </>
             ) : (
-              <a
-                href={withUtm(p.baseUrl)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 flex items-center justify-center w-full py-4 bg-[#222] text-white text-sm tracking-[0.15em] hover:opacity-85 transition-opacity"
-              >
-                オンラインストアで購入する
-              </a>
+              <>
+                {/* 2026-11-01 広告・SEO 案、増澤さん承認: 購入ボタンの直上。soldOut ではこの枝に入らない */}
+                {p.pageStockNote && (
+                  <p className="mt-8 text-xs text-gray-500 leading-relaxed">{p.pageStockNote}</p>
+                )}
+                <a
+                  href={withUtm(p.baseUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${p.pageStockNote ? "mt-3" : "mt-8"} flex items-center justify-center w-full py-4 bg-[#222] text-white text-sm tracking-[0.15em] hover:opacity-85 transition-opacity`}
+                >
+                  オンラインストアで購入する
+                </a>
+              </>
             )}
             {/* soldOut のときのボタンはサイト内の商品ページへ行くので、「BASE へ移動します」の注記は出さない（行き先と食い違う） */}
             {!p.soldOut && (
@@ -280,7 +287,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             <dl className="mt-10 border-t border-gray-100 text-[14px]">
               <div className="flex gap-6 py-3 border-b border-gray-100">
-                <dt className="w-24 shrink-0 text-gray-500">高さ</dt><dd>{p.height}</dd>
+                {/* 2026-11-01 広告・SEO 案、増澤さん承認: heightLabel がある商品だけ「高さ」を上書き */}
+                <dt className="w-24 shrink-0 text-gray-500">{p.heightLabel ?? "高さ"}</dt><dd>{p.height}</dd>
               </div>
               {p.width && (
                 <div className="flex gap-6 py-3 border-b border-gray-100">

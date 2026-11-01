@@ -4,12 +4,14 @@ import Image from "next/image";
 import { COLORS, type ColorKey, shownImage, colorLabel } from "@/app/lib/colors";
 
 // 2026-09-29 増澤さん指示: 商品詳細ページでも色を選ぶと写真がその色に切り替わるように
-export default function ProductColorImage({ slug, name, colors, initial }: { slug: string; name: string; colors: ColorKey[]; initial: ColorKey }) {
+// 2026-11-01 広告・SEO 案、増澤さん承認（17:04 JST）: defaultImage は色を選ぶ前（color === null）だけ。選んだあとは従来の色写真。
+export default function ProductColorImage({ slug, name, colors, defaultImage }: { slug: string; name: string; colors: ColorKey[]; initial: ColorKey; defaultImage?: string }) {
   const [color, setColor] = useState<ColorKey | null>(null);
+  const src = color === null ? (defaultImage ?? shownImage(slug, null)) : shownImage(slug, color);
   return (
     <div>
       <div className="relative aspect-square bg-[#fbfbfb]">
-        <Image src={shownImage(slug, color)} alt={color ? `${name}（${colorLabel(color)}）` : name} fill priority className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
+        <Image src={src} alt={color ? `${name}（${colorLabel(color)}）` : name} fill priority className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
       </div>
       {colors.length > 1 && (
         <div className="mt-5 flex flex-col items-center gap-3">

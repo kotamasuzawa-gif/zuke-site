@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -70,14 +71,25 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // 2026-10-26 SEO(#13855 EC店長): A/B は打ち切り。計測そのものを 10/17 に見送って base-clicks が
   // 9/29〜10/26 で total=0 ＝勝敗の出ない指標になったため、実際に表示されていた labelB（悩み解決型）の文言を
   // 単一 label に畳んで labelB の型ごと外した（型が残ると次に触る人がA/Bが生きていると読むため）。
-  const ctaLink = (c: { product: string; label: string } | undefined, content: string, sub = false) => {
+  const ctaLink = (c: { product: string; label: string; to?: "product" } | undefined, content: string, sub = false) => {
     const p = c && productBySlug(c.product);
     if (!c || !p) return null;
     const label = c.label;
     const key = content;
+    const className = `underline underline-offset-4 decoration-gray-400 hover:text-[#222]${sub ? "" : " font-bold"}`;
+    // 2026-11-01 広告・SEO 案、増澤さん承認: to: "product" はサイト内商品ページ。/go/base も外部遷移の注記も付けない。
+    if (c.to === "product") {
+      return (
+        <p className={sub ? "mt-3 text-[14px]" : "mt-6 text-[15px]"}>
+          <Link href={`/products/${p.slug}`} className={className}>
+            {label}（{yen(p.price)}）
+          </Link>
+        </p>
+      );
+    }
     return (
       <p className={sub ? "mt-3 text-[14px]" : "mt-6 text-[15px]"}>
-        <a href={baseLink(p.baseUrl, key)} target="_blank" rel="nofollow noopener noreferrer" className={`underline underline-offset-4 decoration-gray-400 hover:text-[#222]${sub ? "" : " font-bold"}`}>
+        <a href={baseLink(p.baseUrl, key)} target="_blank" rel="nofollow noopener noreferrer" className={className}>
           {label}（{yen(p.price)}）
         </a>
       </p>
@@ -118,27 +130,67 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   // それまでの記事間リンクは下の「ほかのガイド」＝全記事が全記事へ並ぶ定型リストだけで、アンカーテキストが
   // 記事タイトルで全ページ同一だった。body / points / FAQ の回答に出てくる語をそのままアンカーにして、
   // 同じ語を扱う記事へ本文の文脈から渡す。1ページで同じ行き先は最初の1か所だけ（張りすぎると薄まる）。
+  // 2026-11-01 広告・SEO 案、増澤さん承認: 商品ページ向けも同じ見た目。1文に両方が当たっても重ならなければ両方出す。
   const usedInlineLinks = new Set<string>();
+  const usedProductLinks = new Set<string>();
   const inlineLinks = (g.inlineGuideLinks ?? []).filter(
     (l) => l.slug !== g.slug && GUIDES.some((x) => x.slug === l.slug),
   );
+  const inlineProductLinks = (g.inlineProductLinks ?? []).filter((l) => !!productBySlug(l.slug));
   const linkify = (text: string) => {
-    const hit = inlineLinks.find((l) => !usedInlineLinks.has(l.slug) && text.includes(l.text));
-    if (!hit) return text;
-    usedInlineLinks.add(hit.slug);
-    const at = text.indexOf(hit.text);
-    return (
-      <>
-        {text.slice(0, at)}
-        <Link
-          href={`/guide/${hit.slug}`}
-          className="underline underline-offset-4 decoration-gray-400 hover:text-[#222]"
-        >
-          {hit.text}
-        </Link>
-        {text.slice(at + hit.text.length)}
-      </>
-    );
+    type Hit = { at: number; len: number; href: string; label: string; mark: () => void };
+    const hits: Hit[] = [];
+    const guide = inlineLinks.find((l) => !usedInlineLinks.has(l.slug) && text.includes(l.text));
+    if (guide) {
+      const at = text.indexOf(guide.text);
+      hits.push({
+        at,
+        len: guide.text.length,
+        href: `/guide/${guide.slug}`,
+        label: guide.text,
+        mark: () => usedInlineLinks.add(guide.slug),
+      });
+    }
+    const productByDest = new Map<string, Hit>();
+    for (const l of inlineProductLinks) {
+      if (usedProductLinks.has(l.slug)) continue;
+      const at = text.indexOf(l.text);
+      if (at < 0) continue;
+      const prev = productByDest.get(l.slug);
+      if (!prev || at < prev.at) {
+        productByDest.set(l.slug, {
+          at,
+          len: l.text.length,
+          href: `/products/${l.slug}`,
+          label: l.text,
+          mark: () => usedProductLinks.add(l.slug),
+        });
+      }
+    }
+    for (const hit of productByDest.values()) hits.push(hit);
+    hits.sort((a, b) => a.at - b.at || b.len - a.len);
+    const chosen: Hit[] = [];
+    let cursor = 0;
+    for (const hit of hits) {
+      if (hit.at < cursor) continue;
+      chosen.push(hit);
+      cursor = hit.at + hit.len;
+    }
+    if (chosen.length === 0) return text;
+    for (const hit of chosen) hit.mark();
+    const parts: ReactNode[] = [];
+    let i = 0;
+    for (const hit of chosen) {
+      parts.push(text.slice(i, hit.at));
+      parts.push(
+        <Link key={`${hit.href}@${hit.at}`} href={hit.href} className="underline underline-offset-4 decoration-gray-400 hover:text-[#222]">
+          {hit.label}
+        </Link>,
+      );
+      i = hit.at + hit.len;
+    }
+    parts.push(text.slice(i));
+    return <>{parts}</>;
   };
 
   // 2026-10-10 SEO(#6896): 2本使いの提案ブロック（商品リンクの直前）。公開中の商品だけを引く
