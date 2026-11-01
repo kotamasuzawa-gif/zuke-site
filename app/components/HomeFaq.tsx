@@ -14,14 +14,9 @@ const priceTo = (items: Product[]) => {
   return { price: yen(max), names: items.filter((p) => p.price === max).map(shortName).join("・") };
 };
 // 2026-10-16: 「◯円から◯円まで◯型」の集計は単品だけ（セットを入れると上限がセット価格・型数も合わなくなる）
-// 売り切れ（soldOut）は型数にも上限にも入れない。hex5 を残すと「¥1,320（5つの六角形・うねうね）まで4型」になり、
-// このファイル先頭の「完売の5つの六角形を案内しない」方針と矛盾する。残るのは hex2 / hex3 / uneune の3型。
-const onSale = (p: Product) => !p.soldOut;
-const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet && onSale(p));
-const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole" && onSale(p));
-// 名前に「セット」が付く鉢は丸鉢スタンドセット（¥1,600）も含む。ここは六角鉢セットの最安だけを出す
-// （hexpot-set2 が ¥1,880。丸鉢を混ぜると「六角鉢セットは¥1,600から」になる）。
-const potSets = PRODUCTS.filter((p) => p.name.includes("六角鉢セット") && onSale(p));
+const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet);
+const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole");
+const potSets = PRODUCTS.filter((p) => p.category === "pot" && p.name.includes("セット"));
 const ironFrom = priceFrom(ironPoles);
 const ironTo = priceTo(ironPoles);
 const plaFrom = priceFrom(plaPoles);
@@ -37,7 +32,7 @@ export const FAQS = [
     // 2026-10-26 SEO(#13854 EC店長): JsonLd.tsx が FAQS を import して FAQPage の構造化データに流している。
     // hex5 は 10/29 に完全完売するので「5〜6号なら39cmの5つの六角形」を残すと Google への不実表示になる
     // （10/23 に直した「全商品 InStock」と同じ系統）。号数の対応表に noboribo を押し込まず、別解として書く。
-    a: "鉢の大きさと植物の高さで選びます。3〜4号鉢のポトスやシンゴニウムなら高さ約19.5cmの「2つの六角形」、ホヤなど小さめの蔓性植物なら約22cmの「3つの六角形」が目安です。モンステラやフィロデンドロンのように大きく育つ株は、水苔に気根を掴ませて登らせる「上り棒セット」が向いています。横に広がってしまった株は、曲線で矯正できる「うねうね」が合います。",
+    a: "鉢の大きさと植物の高さで選びます。3〜4号鉢のポトスやシンゴニウムなら高さ約19.5cmの「2つの六角形」、ホヤなど小さめの蔓性植物なら約22cmの「3つの六角形」が目安です。モンステラやフィロデンドロンのように大きく育つ株は、支柱で高さを足すより、水苔に気根を掴ませて登らせる「上り棒セット」が向いています。横に広がってしまった株は、曲線で矯正できる「うねうね」が合います。",
   },
   {
     q: "モンステラの支柱はいつ立てればいいですか？",
@@ -57,7 +52,7 @@ export const FAQS = [
   },
   {
     q: "価格と購入方法を教えてください。",
-    a: `鉄製のPLANTS POLEは${ironFrom.price}〜${ironTo.price}（${ironTo.names}）の${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです（税込）。公式オンラインストア（BASE）からご購入いただけます。`,
+    a: `鉄製のPLANTS POLEは${ironFrom.price}（${ironFrom.names}）から${ironTo.price}（${ironTo.names}）まで${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです。公式オンラインストア（BASE）からご購入いただけます。`,
   },
   {
     q: "鉄製と3Dプリント製（樹脂版）の支柱はどう違いますか？",
@@ -65,7 +60,7 @@ export const FAQS = [
   },
   {
     q: "六角鉢セットの差込口とは何ですか？",
-    a: "鉢の内側にある、支柱の脚がぴったり入る2つの穴です。土に頼らず鉢そのもので支柱を固定するので、水やりで支柱が傾いたり抜けたりしません。",
+    a: "鉢の内側にある、支柱の脚がぴったり入る2つの穴です。土に頼らず鉢そのもので支柱を固定するので、水やりで支柱が傾いたり抜けたりしません。鉢には植物タグ用のポケット（幅20mm・厚み2.5mmまで）もあり、受け皿には鉢を少し浮かせる台が付いています。",
   },
   {
     // 2026-09-29 増澤さん指示: 卸売の案内（掛け率・卸価格は載せない）

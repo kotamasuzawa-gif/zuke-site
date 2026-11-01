@@ -1,21 +1,6 @@
-import { FAQS } from "@/app/components/HomeFaq";
-
-/** 画面に出す5問。先頭2つだけ開く。FAQPage は FAQS の9問（この5問と本文が一致）。 */
-const VISIBLE_QUESTIONS = [
-  "園芸支柱はどう選べばいいですか？",
-  "鉄製と3Dプリント製（樹脂版）の支柱はどう違いますか？",
-  "六角鉢セットの差込口とは何ですか？",
-  "屋外でも使えますか？",
-  "価格と購入方法を教えてください。",
-] as const;
+import { LP_FAQS } from "./lpFaq";
 
 export function LpFaq() {
-  const items = VISIBLE_QUESTIONS.map((q) => {
-    const found = FAQS.find((f) => f.q === q);
-    if (!found) throw new Error(`FAQ missing: ${q}`);
-    return found;
-  });
-
   return (
     <section aria-labelledby="lp-faq-heading" className="mx-auto w-full max-w-[760px] px-5 py-12 min-[601px]:px-8 min-[601px]:py-16">
       <p className="text-[12px] font-bold tracking-[0.22em] text-[#6B6259]">FAQ</p>
@@ -23,7 +8,7 @@ export function LpFaq() {
         よくあるご質問
       </h2>
       <div className="mt-8 border-t border-[#E5DDCF]">
-        {items.map((item, i) => (
+        {LP_FAQS.map((item, i) => (
           <details
             key={item.q}
             {...(i < 2 ? { open: true } : {})}

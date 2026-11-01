@@ -1,4 +1,4 @@
-import { FAQS } from "./HomeFaq";
+import { LP_FAQS } from "./lp/lpFaq";
 import { PRODUCTS } from "@/app/lib/products";
 import { WHOLESALE_EMAIL } from "@/app/lib/contact";
 import { SITE as SITE_URL, jsonLdHtml } from "@/app/lib/seo";
@@ -46,10 +46,10 @@ const jsonLd = {
       inLanguage: "ja",
     },
     {
-      // 2026-09-20 SEO: トップのFAQをリッチリザルト対象にする（本文と内容を一致させること）
+      // トップに見えている5問だけ。Google は FAQ の構造化データと本文の一致を求める。
       "@type": "FAQPage",
       "@id": `${SITE_URL}/#faq`,
-      mainEntity: FAQS.map((f) => ({
+      mainEntity: LP_FAQS.map((f) => ({
         "@type": "Question",
         name: f.q,
         acceptedAnswer: { "@type": "Answer", text: f.a },
