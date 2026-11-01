@@ -21,6 +21,9 @@ export function LpHero() {
         >
           ショップで見る
         </a>
+        <p className="mt-4 max-w-[34em] text-[13px] leading-relaxed text-[#6B6259]">
+          アイアンはブラック・ホワイト。3Dプリントはブラック・ホワイト・ライトグレー・オレンジ。
+        </p>
       </div>
       <div className="relative aspect-square overflow-hidden rounded-[20px] border border-[#E5DDCF] bg-[#FFFDF8]">
         <Image

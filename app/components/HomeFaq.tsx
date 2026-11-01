@@ -14,11 +14,14 @@ const priceTo = (items: Product[]) => {
   return { price: yen(max), names: items.filter((p) => p.price === max).map(shortName).join("・") };
 };
 // 2026-10-16: 「◯円から◯円まで◯型」の集計は単品だけ（セットを入れると上限がセット価格・型数も合わなくなる）
-const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet);
-const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole");
+// 売り切れ（soldOut）は型数にも上限にも入れない。hex5 を残すと「¥1,320（5つの六角形・うねうね）まで4型」になり、
+// このファイル先頭の「完売の5つの六角形を案内しない」方針と矛盾する。残るのは hex2 / hex3 / uneune の3型。
+const onSale = (p: Product) => !p.soldOut;
+const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet && onSale(p));
+const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole" && onSale(p));
 // 名前に「セット」が付く鉢は丸鉢スタンドセット（¥1,600）も含む。ここは六角鉢セットの最安だけを出す
 // （hexpot-set2 が ¥1,880。丸鉢を混ぜると「六角鉢セットは¥1,600から」になる）。
-const potSets = PRODUCTS.filter((p) => p.name.includes("六角鉢セット"));
+const potSets = PRODUCTS.filter((p) => p.name.includes("六角鉢セット") && onSale(p));
 const ironFrom = priceFrom(ironPoles);
 const ironTo = priceTo(ironPoles);
 const plaFrom = priceFrom(plaPoles);
@@ -54,7 +57,7 @@ export const FAQS = [
   },
   {
     q: "価格と購入方法を教えてください。",
-    a: `鉄製のPLANTS POLEは${ironFrom.price}（${ironFrom.names}）から${ironTo.price}（${ironTo.names}）まで${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです。公式オンラインストア（BASE）からご購入いただけます。`,
+    a: `鉄製のPLANTS POLEは${ironFrom.price}〜${ironTo.price}（${ironTo.names}）の${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです（税込）。公式オンラインストア（BASE）からご購入いただけます。`,
   },
   {
     q: "鉄製と3Dプリント製（樹脂版）の支柱はどう違いますか？",

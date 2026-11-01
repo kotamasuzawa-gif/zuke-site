@@ -27,6 +27,9 @@ export function LpLineup() {
                   sizes="(max-width: 600px) 92vw, (max-width: 1100px) 45vw, 260px"
                   className="object-contain"
                 />
+                <span className="absolute left-2 top-2 rounded-full bg-[#5E7F3B] px-2.5 py-1 text-[11px] font-bold text-white">
+                  {card.badge}
+                </span>
               </div>
               <h3 className="mt-4 px-1 text-[14px] font-bold leading-relaxed">{card.displayName}</h3>
               <p className="mt-auto px-1 pt-3 text-[16px] font-black">{card.priceLabel}</p>

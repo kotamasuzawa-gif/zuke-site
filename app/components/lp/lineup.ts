@@ -1,11 +1,6 @@
 import { productBySlug, yen, type Product } from "@/app/lib/products";
-import { lpShopUrl } from "./utm";
-
-export function baseItemId(baseUrl: string): string {
-  const id = baseUrl.match(/\/items\/(\d+)/)?.[1];
-  if (!id) throw new Error(`BASE item id not found in ${baseUrl}`);
-  return id;
-}
+import { LP_PRODUCT_NAMES } from "./names";
+import { baseItemId, lpShopUrl } from "./utm";
 
 /**
  * LINEUP の4点。表示名は BASE に出した「新しい商品名」。
@@ -14,27 +9,16 @@ export function baseItemId(baseUrl: string): string {
  * ¥1,980 は六角鉢セット「3つの六角形」（159039931）。
  * 同じ金額の2本セット（162185287）は在庫0のためカードにしない。
  */
-export const LINEUP: { slug: string; displayName: string }[] = [
-  {
-    slug: "hex2",
-    displayName: 'PLANTS POLE "2つの六角形" 19.5cm｜小鉢の植物支柱 アイアン',
-  },
-  {
-    slug: "hex3",
-    displayName: 'PLANTS POLE "3つの六角形" 22cm｜観葉植物の支柱 アイアン',
-  },
-  {
-    slug: "hexpot-set",
-    displayName: '六角鉢セット "3つの六角形"｜支柱が差せる鉢・受け皿・支柱',
-  },
-  {
-    slug: "noboribo",
-    displayName: '上り棒セット "3つの六角形"｜モンステラ・ポトスの水苔支柱＋鉢',
-  },
+export const LINEUP: { slug: string; badge: string }[] = [
+  { slug: "hex2", badge: "定番" },
+  { slug: "hex3", badge: "人気" },
+  { slug: "hexpot-set", badge: "鉢・受け皿・支柱" },
+  { slug: "noboribo", badge: "NEW" },
 ];
 
 export type LineupCard = {
   slug: string;
+  badge: string;
   displayName: string;
   priceLabel: string;
   price: number;
@@ -52,12 +36,15 @@ export function lineupCards(): LineupCard[] {
 }
 
 function toCard(item: (typeof LINEUP)[number], product: Product): LineupCard {
+  const displayName = LP_PRODUCT_NAMES[item.slug];
+  if (!displayName) throw new Error(`new product name missing: ${item.slug}`);
   const itemId = baseItemId(product.baseUrl);
   return {
     slug: item.slug,
-    displayName: item.displayName,
+    badge: item.badge,
+    displayName,
     price: product.price,
-    priceLabel: yen(product.price),
+    priceLabel: `${yen(product.price)}（税込）`,
     image: product.image,
     itemId,
     href: lpShopUrl("lineup", itemId),
