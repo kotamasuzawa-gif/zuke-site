@@ -16,6 +16,12 @@ export type Product = {
   /** カテゴリ（導線用）: 支柱 / 鉢・セット / 支柱の拡張 / 園芸道具 */
   category: CategoryKey;
   image: string;
+  /**
+   * 商品ページのメイン画像で、色を選ぶ前に出す写真。未指定なら BASE の1枚目。
+   * 一覧・OG・JSON-LD には使わない。
+   * 2026-11-01 広告・SEO 案、増澤さん承認（17:04 JST）
+   */
+  initialImage?: string;
   /** SNS共有カード用の画像（未指定なら image）。白背景で輪郭が消える商品用 */
   ogImage?: string;
   /** ogImage のサイズ（未指定なら1200x1200の正方形扱い）。横長OG画像を使う商品で指定 */
@@ -31,6 +37,11 @@ export type Product = {
   /** 詳細ページのリード文 */
   lead: string;
   height: string;
+  /**
+   * スペック表の高さラベル。未指定は「高さ」。
+   * 2026-11-01 広告・SEO 案、増澤さん承認: 全商品のラベルは変えず、商品ごとに上書きする。
+   */
+  heightLabel?: string;
   /**
    * 幅。確定値（実測・サイズ図）がある商品だけ入れる。
    * 2026-10-10 EC店長#6718: 高さの違う3商品に「約8cm（差込部）」が雛形で入っていたため任意化。
@@ -113,6 +124,12 @@ export type Product = {
    * 在庫は BASE が正（/api/base-items の variations.stock）。色が戻ったらこの行を外す。
    */
   stockNote?: string;
+  /**
+   * 商品ページの購入ボタン付近に出す在庫の一言。ガイドカード用の stockNote とは別。
+   * soldOut の商品では出さない（表示側で抑止）。
+   * 2026-11-01 広告・SEO 案、増澤さん承認
+   */
+  pageStockNote?: string;
   /**
    * 2026-10-18 SEO: 商品ページ本文（見出し＋段落）。lead・スペック・箇条書きだけでは本文量が足りず、
    * 同カテゴリの別商品とページの中身がほぼ同じになる商品があるため（/products/soilstick が
@@ -355,13 +372,17 @@ export const PRODUCTS: Product[] = [
     kind: "iron",
     category: "pole",
     name: 'PLANTS POLE "うねうね"',
-    fullName: 'PLANTS POLE ”うねうね” -横に広がる植物を矯正できる支柱-',
+    // 2026-11-01 広告・SEO 案、増澤さん承認: 検索タイトル・説明・正式名称・リード。name（h1）は変えない。
+    // {price} は generateMetadata が price から「1,320円」に置換。末尾の｜ZUKE は layout の title template。
+    fullName: 'PLANTS POLE "うねうね" -横に広がる観葉植物の支柱-',
     // 2026-10-17 SEO(#10800): 売上の中心3商品のうち、うねうねだけ shortTitle が無く
     // title が「PLANTS POLE "うねうね"｜観葉植物の園芸支柱」= 価格も用途も出ていなかった。
     // hex3 / noboribo と同じ「商品名＋価格＋中身」の型に揃える（商品名は変えない）
-    shortTitle: '"うねうね" {price}｜横に広がる株を整える曲線の園芸支柱',
+    shortTitle: '横に広がる観葉植物の支柱 "うねうね" {price}',
     price: 1320,
     image: "/products/product-uneune-base.webp",
+    // 2026-11-01 広告・SEO 案、増澤さん承認（17:04 JST）: 色ボタンを押す前の1枚目だけ白。image / ogImage は変えない。
+    initialImage: "/products/product-uneune-white.webp",
     // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
     ogImage: "/products/product-uneune-og-wide.jpg",
     ogWidth: 1200,
@@ -371,13 +392,18 @@ export const PRODUCTS: Product[] = [
     // hex3 と同じ「黒だけ品切れ・白は買える」状態なので、hex3 と同文の但し書きを出す（soldOut にはしない）。
     // 白24点は当面尽きないので soldOut への切り替え予定は無い。黒が戻る経路も無い（declined.md 2026-10-03 / 10-06）。
     stockNote: "いまホワイトのみ（ブラックは品切れ）",
+    // 2026-11-01 広告・SEO 案、増澤さん承認: 商品ページだけの在庫一言。stockNote（ガイドカード）は変えない。
+    pageStockNote: "いまホワイトのみ（ブラックは2月ごろ再入荷予定）",
     summary:
-      "左右にうねるラインで、横に広がる植物の姿を整えるアイアン製園芸支柱。高さ約35cm・うねうね部 約12cmで5〜7号鉢が目安。アロカシアなど葉が暴れる株をまとまりのある姿に。",
+      "横に広がって姿が乱れた観葉植物を、内側へ寄せて整えるアイアン製の支柱。全長約35cm、幅約12cmで、5〜7号鉢が目安。アロカシアやポトスに。",
     lead:
-      "左右を行き来する「うねうね」としたラインが特徴の支柱。まっすぐ支えるのではなく、横に広がってしまう株の姿をやさしく矯正します。葉が四方に暴れがちなアロカシアなどを、まとまりのあるシルエットに整えたいときに。",
+      "横に広がってしまった観葉植物を、内側へ寄せて整える支柱です。左右にうねる形なので、まっすぐな支柱では止められない横向きの茎も、1本で何か所も押さえられます。アロカシアやポトスに。",
     height: "約35cm",
+    // 2026-11-01 広告・SEO 案、増澤さん承認: スペック表のラベルだけ「全長」。height の値は変えない。
+    heightLabel: "全長",
     // 2026-10-10 EC店長#6718: 旧「約8cm（差込部）」は雛形。10/10納品のサイズ図の確定値に差し替え
-    width: "約12cm（うねうね部）",
+    // 2026-11-01 広告・SEO 案、増澤さん承認: 幅の表示文言。サイズ図のキャプションは変えない。
+    width: "約12cm（いちばん広いところ）",
     // 2026-10-10 デザイナー納品のBASE5枚目と同じ図。幅表記を消したぶんをサイズ図で埋める（#6730）
     sizeImage: {
       src: "/products/base-130117282-05-size.jpg",
