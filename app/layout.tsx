@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
 import Script from "next/script";
+import { clickToBaseListener } from "./lib/clickToBase";
 import "./globals.css";
 
 // 2026-10-31 SEO: GA4 と Search Console 所有確認。値は Vercel の環境変数で設定（コードに書かない）
@@ -65,7 +66,7 @@ export default function RootLayout({
           <>
             <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
             <Script id="ga4" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');\n${clickToBaseListener}`}
             </Script>
           </>
         )}
