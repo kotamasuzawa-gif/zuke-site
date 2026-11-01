@@ -16,7 +16,9 @@ const priceTo = (items: Product[]) => {
 // 2026-10-16: 「◯円から◯円まで◯型」の集計は単品だけ（セットを入れると上限がセット価格・型数も合わなくなる）
 const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet);
 const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole");
-const potSets = PRODUCTS.filter((p) => p.category === "pot" && p.name.includes("セット"));
+// 名前に「セット」が付く鉢は丸鉢スタンドセット（¥1,600）も含む。ここは六角鉢セットの最安だけを出す
+// （hexpot-set2 が ¥1,880。丸鉢を混ぜると「六角鉢セットは¥1,600から」になる）。
+const potSets = PRODUCTS.filter((p) => p.name.includes("六角鉢セット"));
 const ironFrom = priceFrom(ironPoles);
 const ironTo = priceTo(ironPoles);
 const plaFrom = priceFrom(plaPoles);
