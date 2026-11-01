@@ -144,7 +144,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           </div>
           <div className="mt-14 text-center">
             <Link href="/products" className="inline-block border border-[#222] px-10 py-3 text-[13px] tracking-[0.15em] text-[#222] hover:bg-[#222] hover:text-white transition-colors">
-              すべての商品を見る（{PRODUCTS.length}点）
+              すべての商品を見る
             </Link>
           </div>
         </section>
