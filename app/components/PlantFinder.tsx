@@ -7,21 +7,83 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CollectionNav from "@/app/components/CollectionNav";
-import { productBySlug, yen, withUtm, type Product } from "@/app/lib/products";
+import { productBySlug, yen, withUtm } from "@/app/lib/products";
 import { baseImage } from "@/app/lib/colors";
-import { TREE, type Opt, type Result, type Step } from "@/app/components/finderTree";
 
-export type PlantFinderProps = {
-  /** 未指定なら購入リンクは utm_source=zukeplants_guide（ガイド計測のまま） */
-  purchaseUrl?: (baseUrl: string) => string;
-  /** 未指定なら表示名は products.ts の name。LP では新しい商品名を渡す */
-  productName?: (slug: string) => string | undefined;
+type Result = { slugs: string[]; collection: string; collectionLabel: string; note?: string };
+type Opt = { id: string; label: string; sub: string; next?: Step; result?: Result };
+type Step = { en: string; q: string; options: Opt[] };
+
+const IRON_SIZE: Step = {
+  en: "SIZE",
+  q: "鉢と植物の大きさは？",
+  // 2026-10-23 SEO(#12779 EC店長の裏取り): アイアンで BASE にブラックが残っているのは hex2(124680568・黒10/白10) だけ。
+  // hex3 は黒0/白2・hex5 は黒0/白7・uneune は黒0/白24 で、hex-set-2pcs(162185287) は黒白とも0。
+  // 黒は単独で売れ、白は「黒の注文に1本足す」形でしか売れていない（白単独受注0本）ので、
+  // 4つの枝すべてから黒の買える hex2 に届くようにする。main（先頭＝ヒーローカード）の商品と並び順は変えない＝追加のみ。
+  // 「大きく育てたい」(l) は当初 19.5cm を並べると質問（39cm・主役サイズ）と食い違うため足していなかったが、
+  // 2026-10-26 に 39cm の hex5 が落ちて答えが樹脂1点になったため hex2 を2点目に足した（#13855）。
+  // 在庫数は書かない（腐るため。PAIRINGS の 2026-10-16 方針と同じ）。
+  options: [
+    { id: "s", label: "小鉢・まだ小さい株", sub: "高さ約19.5cm", result: { slugs: ["hex2", "hex3"], collection: "iron", collectionLabel: "アイアン支柱" } },
+    // 2026-10-23 SEO(#12790 EC店長): 2本セット hex-set-2pcs(162185287) は visible=1 のまま黒白とも在庫0で、
+    // 店頭（shop.zukeplants.com）に「カートに入れる」が1件も出ていない＝クリックしても買えないカード。m・l の2枝から外す。
+    // l は hex5(白7のみ)だけでは黒が0になるため、黒8本が買える上り棒セット noboribo(162757270・3,980円) を併記。
+    // sub の「約39cm」と寸法が食い違わないよう、性質（水苔を詰めて気根を登らせる・鉢と受け皿付き）を note で明示する。
+    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
+    // 2026-10-26 SEO(#13848 EC店長): hex5(117375069) は 10/29 の卸引き当て（承認セット169）で黒白とも0＝完全完売。
+    // l 枝は noboribo 単独に。sub の「高さ約39cm・主役サイズ」は嘘になるので noboribo の確定値に差し替えた。
+    // 2026-10-26 追記(#13855 EC店長): noboribo は kind:"pla"＝「アイアン」を選んだ答えが樹脂1点だけになるため
+    // 2点目に hex2 を足す。並びは noboribo → hex2（目的＝大きく育てる が先、素材の答えが後）。sub は noboribo の確定値のまま。
+    { id: "l", label: "大きく育てたい", sub: "全高約28.5cm・鉢と受け皿つき", result: { slugs: ["noboribo", "hex2"], collection: "iron", collectionLabel: "アイアン支柱", note: "上り棒セットは水苔を詰めて気根を登らせるタイプです（六角鉢・受け皿付き）。アイアンでお探しなら高さ約19.5cmの「2つの六角形」に黒・白とも在庫があります。" } },
+    { id: "w", label: "横に広がる株", sub: "うねる形で株をまとめる", result: { slugs: ["uneune", "hex3", "hex2"], collection: "iron", collectionLabel: "アイアン支柱" } },
+  ],
 };
 
-export default function PlantFinder({ purchaseUrl, productName }: PlantFinderProps = {}) {
-  const buyUrl = (baseUrl: string) => purchaseUrl?.(baseUrl) ?? withUtm(baseUrl, "finder");
-  const nameOf = (p: Product) => productName?.(p.slug) ?? p.name;
-  const altOf = (p: Product) => productName?.(p.slug) ?? p.fullName;
+const PLA_SIZE: Step = {
+  en: "SIZE",
+  q: "鉢と植物の大きさは？",
+  options: [
+    { id: "xs", label: "挿し木・小さな苗", sub: "全長約12cm。あとから伸ばせる", result: { slugs: ["pole1pla", "hexparts"], collection: "extension", collectionLabel: "支柱の拡張", note: "育ったら六角形を継ぎ足して、2連・3連へ伸ばせます。" } },
+    { id: "s", label: "小鉢", sub: "高さ約17cm", result: { slugs: ["pole2pla", "hexpot-set2"], collection: "pla", collectionLabel: "PLA樹脂製品" } },
+    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["pole3pla", "hexpot-set", "hexparts"], collection: "pla", collectionLabel: "PLA樹脂製品" } },
+  ],
+};
+
+const TREE: Step = {
+  en: "PURPOSE",
+  q: "植物を、どうしたいですか？",
+  options: [
+    {
+      id: "pole", label: "つる性の植物を立ち上げたい", sub: "ポトス・モンステラ・ホヤなど",
+      next: {
+        en: "MATERIAL",
+        q: "どちらの質感が好きですか？",
+        options: [
+          { id: "iron", label: "アイアン", sub: "細く強い。植物の陰になる存在感", next: IRON_SIZE },
+          { id: "pla", label: "樹脂（3Dプリント）", sub: "軽くて4色。あとから伸ばせる", next: PLA_SIZE },
+        ],
+      },
+    },
+    { id: "climb", label: "気根を這わせて大きく育てたい", sub: "水苔を詰める登り棒（モス支柱）", result: { slugs: ["noboribo"], collection: "climb", collectionLabel: "登り棒" } },
+    { id: "hang", label: "吊るして飾りたい", sub: "S字フックで窓辺や棚に", result: { slugs: ["hexhanging", "hexwall-set", "hexwallplate"], collection: "hanging", collectionLabel: "ハンギング", note: "壁に掛けて飾るなら、壁掛けプレートと鉢のセットもあります。" } },
+    {
+      id: "pot", label: "鉢ごとそろえたい", sub: "支柱の差込口付きの六角鉢",
+      next: {
+        en: "SET",
+        q: "支柱もいっしょに？",
+        options: [
+          { id: "set", label: "鉢と支柱のセット", sub: "届いてすぐ仕立てられる", result: { slugs: ["hexpot-set", "hexpot-set2"], collection: "pot", collectionLabel: "鉢・セット" } },
+          { id: "only", label: "鉢だけ", sub: "手持ちの支柱と合わせる", result: { slugs: ["hexpot", "marupot-stand"], collection: "pot", collectionLabel: "鉢・セット" } },
+        ],
+      },
+    },
+    { id: "ext", label: "今の支柱を伸ばしたい", sub: "樹脂版 PLANTS POLE 用", result: { slugs: ["hexparts", "hexclip5"], collection: "extension", collectionLabel: "支柱の拡張", note: "拡張パーツは樹脂版 PLANTS POLE 専用です（アイアン製には使えません）。" } },
+    { id: "tool", label: "植え替えの道具がほしい", sub: "小鉢用のスコップ・スティック", result: { slugs: ["scoop", "soilstick"], collection: "tool", collectionLabel: "園芸道具" } },
+  ],
+};
+
+export default function PlantFinder() {
   const [path, setPath] = useState<string[]>([]);
   const lastRef = useRef<HTMLLIElement>(null);
 
@@ -238,16 +300,16 @@ export default function PlantFinder({ purchaseUrl, productName }: PlantFinderPro
             <h3 className="mt-1 text-[17px] font-bold">あなたには、これ。</h3>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 border border-[#222] rounded-md overflow-hidden bg-white">
               <Link href={`/products/${main.slug}`} className="relative aspect-square bg-[#fbfbfb] block">
-                <Image src={baseImage(main.slug)} alt={altOf(main)} fill className="object-contain" sizes="(max-width: 768px) 100vw, 480px" />
+                <Image src={baseImage(main.slug)} alt={main.fullName} fill className="object-contain" sizes="(max-width: 768px) 100vw, 480px" />
                 {main.isNew && <span className="absolute top-3 left-3 bg-[#222] text-white text-[10px] font-bold tracking-[0.15em] px-2 py-0.5">NEW</span>}
               </Link>
               <div className="p-5 md:p-7 flex flex-col gap-3">
                 <p className="text-[10px] tracking-[0.2em] text-gray-500">{main.material}</p>
-                <p className="text-[17px] font-bold leading-relaxed">{nameOf(main)}</p>
+                <p className="text-[17px] font-bold leading-relaxed">{main.name}</p>
                 <p className="text-[13px] text-gray-600 leading-loose">{main.summary}</p>
                 <p className="text-[12px] text-gray-500">サイズ {main.height}</p>
                 <p className="text-xl font-bold">{main.price ? yen(main.price) : ""}</p>
-                <a href={buyUrl(main.baseUrl)} target="_blank" rel="noopener noreferrer" className="mt-1 flex items-center justify-center min-h-[52px] bg-[#222] text-white text-[14px] font-bold tracking-[0.1em] hover:opacity-85 transition-opacity">
+                <a href={withUtm(main.baseUrl, "finder")} target="_blank" rel="noopener noreferrer" className="mt-1 flex items-center justify-center min-h-[52px] bg-[#222] text-white text-[14px] font-bold tracking-[0.1em] hover:opacity-85 transition-opacity">
                   ショップで購入する
                 </a>
                 <Link href={`/products/${main.slug}`} className="text-center text-[13px] text-gray-600 underline underline-offset-4 decoration-gray-300 py-1">詳しく見る</Link>
@@ -261,9 +323,9 @@ export default function PlantFinder({ purchaseUrl, productName }: PlantFinderPro
                   {more.map((p) => (
                     <Link key={p.slug} href={`/products/${p.slug}`} className="block group">
                       <div className="relative aspect-square bg-[#fbfbfb]">
-                        <Image src={baseImage(p.slug)} alt={altOf(p)} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 240px" />
+                        <Image src={baseImage(p.slug)} alt={p.fullName} fill className="object-contain group-hover:opacity-90 transition-opacity" sizes="(max-width: 768px) 50vw, 240px" />
                       </div>
-                      <p className="mt-2 text-[13px] leading-relaxed line-clamp-2">{nameOf(p)}</p>
+                      <p className="mt-2 text-[13px] leading-relaxed line-clamp-2">{p.name}</p>
                       <p className="mt-1 text-[13px] font-bold">{yen(p.price)}</p>
                     </Link>
                   ))}
