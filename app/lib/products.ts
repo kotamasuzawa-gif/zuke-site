@@ -183,19 +183,9 @@ export const PRODUCTS: Product[] = [
     slug: "hex5",
     kind: "iron",
     category: "pole",
-    // 2026-10-26 SEO(#13855 EC店長): 10/29 の卸引き当て（承認セット169・白7本を The Naturalist へ明け渡す）で
-    // 黒0・白0＝完全完売。BASE 117375069 は他商品の本文から4本リンクが来ているので visible=1 のまま残す（#13847）＝
-    // 振り替えの理由は「非公開＝404 の回避」ではなく「公開のまま在庫0＝押しても買えない行き止まりの回避」。
-    soldOut: true,
-    // 2026-10-28 EC店長: hex5 には stockNote を付けない。BASE 実読は ブラック0・ホワイト7 で「白は買える」状態だが、
-    // その白7点は (169b) で The Naturalist（10/30 納品）へ引き当て済み＝BASE から売れると卸が欠品する。
-    // soldOut の先出しは意図どおり。10/29 午前の `zuke_hex5_soldout_sync.sh` が実棚と表示を合わせる。
-    // 行き先は noboribo。3,980円は hex5 の1,320円の3倍で仕組みも違うため、BASE 直送ではなく商品ページ経由にする。
-    soldOutAlt: {
-      href: "/products/noboribo",
-      label: "上り棒セット 3,980円（4色とも在庫あり）を見る",
-      note: "水苔を詰めて気根を掴ませるタイプで、六角鉢と受け皿が付きます（全高約28.5cm）。同じ六角形のかたちをアイアンでお探しなら、高さ約19.5cmの「2つの六角形」770円に黒・白とも在庫があります。",
-    },
+    // 2026-11-01: 手動の soldOut を外した。購入は baseUrl（BASE 117375069）へ。
+    // 2026-10-26 に付けていた soldOut と soldOutAlt（上り棒セットへの振り替え）は削除。
+    // 価格FAQは hex5 を含めた4型（商品名の括弧なし。HomeFaq.tsx）。stockNote は付けない。price は 1,320 のまま。
     name: 'PLANTS POLE "5つの六角形"',
     fullName: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
     // 2026-10-17 SEO(#10850): 販売数1位（全期間71本・L126）なのに shortTitle が無く、title が
