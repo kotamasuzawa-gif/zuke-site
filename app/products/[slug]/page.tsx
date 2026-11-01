@@ -39,14 +39,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     "{price}",
     `${p.price.toLocaleString("ja-JP")}円`,
   );
+  // 2026-11-01 SEO: pageDescription がある商品だけ meta / OGP description を差し替える。
+  // 未指定の商品は summary のまま（ホームの診断が summary を表示しているため、summary 自体は変えない）。
+  const description = p.pageDescription ?? p.summary;
   return {
-    title,
-    description: p.summary,
+    // titleAbsolute の商品は案の title がブランドで終わっているので、ルートの「｜ZUKE」を付けない
+    title: p.titleAbsolute ? { absolute: title } : title,
+    description,
     alternates: { canonical: `/products/${p.slug}` },
     openGraph: {
       ...OG_BASE,
       title: `${p.name}｜ZUKE`,
-      description: p.summary,
+      description,
       url: `/products/${p.slug}`,
       images: [
         { url: p.ogImage ?? p.image, width: p.ogWidth ?? 1200, height: p.ogHeight ?? 1200, alt: p.fullName },
@@ -72,6 +76,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const todayJst = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const activeCampaign = p.campaigns?.find((c) => todayJst >= c.startDate && todayJst <= c.endDate);
 
+  const pageDescription = p.pageDescription ?? p.summary;
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -81,7 +86,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       // 2026-09-29 SEO R4: 手書きの条件式をやめ、BASE で実際に選べる色（soldColors）に合わせる
       // 2026-10-06 SEO: 色ボタンを出さない商品（丸鉢スタンドセット等・sold が空）は image が [] になりリッチリザルト対象外だった → BASE の1枚目で補う
       image: sold.length ? sold.map((c) => `${SITE}${productImage(p.slug, c)}`) : [`${SITE}${baseImage(p.slug)}`],
-      description: p.summary,
+      description: pageDescription,
       sku: p.slug,
       url: `${SITE}/products/${p.slug}`,
       material: p.material,
