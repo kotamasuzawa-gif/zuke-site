@@ -26,8 +26,18 @@ export type Product = {
   baseUrl: string;
   /** titleタグが長すぎる(37字超)商品のみ指定する短縮title。未指定なら name｜TITLE_SUFFIX を使う */
   shortTitle?: string;
-  /** 一覧・meta description 用の短い説明 */
+  /**
+   * true のとき shortTitle を文書 title そのものにする（ルートの「｜ZUKE」テンプレートを付けない）。
+   * 2026-11-01: hex2 の案 title は「｜PLANTS POLE」で終わるため。
+   */
+  titleAbsolute?: boolean;
+  /** 一覧・meta description 用の短い説明。ホームの診断（PlantFinder）でもこの文を出す */
   summary: string;
+  /**
+   * 商品ページの meta / OGP / JSON-LD description。未指定なら summary。
+   * 2026-11-01: summary はホームの診断でも表示するため、商品ページだけの文言はこちらに置く。
+   */
+  pageDescription?: string;
   /** 詳細ページのリード文 */
   lead: string;
   height: string;
@@ -204,7 +214,11 @@ export const PRODUCTS: Product[] = [
     // 10表示・0クリック・平均順位3.5（10/17 GSC実査）で、サイトに来ているモンステラ系クエリは
     // 40表示・0クリック（「モンステラ 自立しない」6 /「垂らす」4 /「倒れる」4 /「支柱」4）。
     // 39cm = height の確定値、モンステラ・ポトス = plants の記載。
-    shortTitle: '"5つの六角形" {price}｜モンステラ・ポトスを立ち上げる39cmの園芸支柱',
+    // 2026-11-01 SEO: 検索語「モンステラの支柱」を title 先頭へ。案の title は「｜PLANTS POLE」で終わるので
+    // ルートの「｜ZUKE」は付けない（titleAbsolute）。39cm は height、1,320円は price。
+    // soldOut / soldOutAlt / baseUrl はこのPRでは変えない（別PRで販売再開とBASEリンクを入れる）。
+    shortTitle: "モンステラの支柱 39cm アイアン製 {price}｜PLANTS POLE",
+    titleAbsolute: true,
     price: 1320,
     image: "/products/product-hex5-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップでトレリス上部が切れる指摘→横長OGに差し替え
@@ -214,8 +228,12 @@ export const PRODUCTS: Product[] = [
     baseUrl: `${SHOP}/items/117375069`,
     summary:
       "六角形を5つ連ねた全長約39cmの園芸支柱。アイアン製で6〜8号鉢が目安、モンステラやポトスなど伸びる蔓性の観葉植物をインテリアグリーンとして美しく仕立てられます。",
+    // 2026-11-01 SEO: 商品ページの meta / OGP / JSON-LD だけ。summary は変えない。
+    // 全長約39cm は height、6〜8号は現行 summary と同じ。モンステラ・ポトスは plants。
+    pageDescription:
+      "モンステラやポトスを立ち上げるアイアン製の支柱。六角形を5つ連ねた全長約39cmで、6〜8号鉢が目安です。倒れやすい株を支えながら、インテリアに馴染む形に仕立てられます。",
     lead:
-      "シリーズでいちばん背が高い、主役になるサイズ。六角形を5つ連ねた独自のフォルムが、植物を支えながらそのまま部屋のオブジェとして成立します。伸び盛りのモンステラやポトスを、垂れ流しではなく「立ち上げて魅せる」ための一本です。",
+      "シリーズでいちばん背が高い、主役になるサイズ。六角形を5つ連ねた独自のフォルムが、植物を支えながらそのまま部屋のオブジェとして成立します。伸び盛りのモンステラやポトスを、垂れ流しではなく「立ち上げて魅せる」ための一本です。モンステラが倒れたり横に広がったりするときは、6〜8号鉢に合う39cmのこの支柱が目安です。",
     height: "約39cm（全長・差込部含む）",
     // 2026-10-10 EC店長#6733: 旧「約7cm（差込部）」も雛形の使い回しの疑いが濃い（デザイナー#6727 の3型突き合わせ＝
     // 同じ六角形部品を同じ千鳥配置で連ねた構造なのに 2つ=8cm／3つ=8cm／5つ=7cm と型ごとに違う理由がない）。
@@ -324,6 +342,10 @@ export const PRODUCTS: Product[] = [
     category: "pole",
     name: 'PLANTS POLE "2つの六角形"',
     fullName: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
+    // 2026-11-01 SEO: 検索語「亀甲竜の支柱」を title 先頭へ。案の title は「｜PLANTS POLE」で終わるので
+    // ルートの「｜ZUKE」は付けない（titleAbsolute）。19.5cm は height、770円は price。
+    shortTitle: "亀甲竜の支柱 19.5cm アイアン製 {price}｜PLANTS POLE",
+    titleAbsolute: true,
     price: 770,
     image: "/products/product-hex2-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで欠ける指摘→横長OGに差し替え
@@ -333,8 +355,13 @@ export const PRODUCTS: Product[] = [
     baseUrl: `${SHOP}/items/124680568`,
     summary:
       "六角形を2つ連ねた高さ約19.5cmの園芸支柱。亀甲竜など背の低い蔓性植物と好相性。アイアン製で最も手に取りやすい¥770。",
+    // 2026-11-01 SEO: 商品ページの meta / OGP / JSON-LD だけを差し替える（summary はホームの診断でも出す）。
+    // 案の末尾「シリーズで最も手に取りやすい770円です。」は使わない。樹脂版「1つの六角形」は480円で、
+    // 本品770円はシリーズ最安ではない。価格の範囲は現行 summary の「アイアン製で最も手に取りやすい¥770。」のまま。
+    pageDescription:
+      "亀甲竜など背の低い蔓性植物に向けた、高さ約19.5cmのアイアン製支柱。六角形を2つ連ねた形で、伸びたツルを誘引しながら小鉢でもすっきり飾れます。アイアン製で最も手に取りやすい¥770。",
     lead:
-      "アイアン製のシリーズでいちばん小さく、いちばん手に取りやすい一本。高さ約19.5cmと低いので、亀甲竜のようにこれから蔓を伸ばす植物の「最初の一手」に向いています。まず1つ試してみたい方にもおすすめです。",
+      "アイアン製のシリーズでいちばん小さく、いちばん手に取りやすい一本。高さ約19.5cmと低いので、亀甲竜のようにこれから蔓を伸ばす植物の「最初の一手」に向いています。まず1つ試してみたい方にもおすすめです。亀甲竜のツルを六角形に沿わせて巻くと、小鉢のままでもまとまった姿に仕立てられます。",
     height: "約19.5cm",
     // 2026-10-10 EC店長#6718: 「約8cm（差込部）」は雛形の使い回しだったため削除（確定値なし）
     material: "アイアンスチール",
@@ -516,7 +543,8 @@ export const PRODUCTS: Product[] = [
     category: "climb",
     isNew: true,
     name: 'PLANTS POLE 上り棒セット "3つの六角形"',
-    shortTitle: '上り棒セット {price}｜水苔を詰めるモス支柱（登り棒）＋六角鉢・受け皿',
+    // 2026-11-01 SEO: title を「水苔支柱（モス支柱）」に。3,980円は price。｜ZUKE はルートのテンプレート。
+    shortTitle: "水苔支柱（モス支柱）セット {price}｜鉢・受け皿付き",
     fullName: 'PLANTS POLE 上り棒セット "3つの六角形" - 水苔を詰めて育てる登り棒＋専用六角鉢・受け皿 -',
     price: 3980,
     image: "/products/product-noboribo-base.webp",
@@ -527,8 +555,11 @@ export const PRODUCTS: Product[] = [
     baseUrl: `${SHOP}/items/162757270`,
     summary:
       "水苔やネコチップを詰めて使う、六角形の登り棒（モス支柱）。3つの六角形をつなぎ、専用の六角鉢の差込口に挿せば自立。受け皿付き。モンステラやポトスが気根を伸ばしながら上へ登ります。PLA樹脂・3Dプリント製、ブラック／オレンジ／ライトグレー／ホワイトの4色。",
+    // 2026-11-01 SEO: 商品ページの meta のみ。全高約28.5cm は height、4色は上の summary と同じ色数。
+    pageDescription:
+      "水苔を詰めて気根を登らせる六角形のモス支柱と、専用の六角鉢・受け皿のセット。全高約28.5cmで、小型のモンステラやポトスに。3Dプリント製、4色から選べます。",
     lead:
-      "3つの六角形の箱に水苔（ネコチップでも）を詰めて、辺のアリ溝でつなぐだけの水苔ポール。前面は六角格子のシールドで押さえ、脚を専用の六角鉢の差込口に挿せば自立します。水やりは上の六角形の穴から。水苔が湿り気を保ち、モンステラやポトスの気根をしっかり支えます。セット内容は六角形3個（下＝脚付き／中／上）、シールド3枚、登り棒用六角鉢1個、六角受け皿1枚。水苔・植物は付属しません。PLA樹脂でひとつずつ3Dプリントしています。",
+      "3つの六角形の箱に水苔（ネコチップでも）を詰めて、辺のアリ溝でつなぐだけの水苔ポール。前面は六角格子のシールドで押さえ、脚を専用の六角鉢の差込口に挿せば自立します。水やりは上の六角形の穴から。水苔が湿り気を保ち、モンステラやポトスの気根をしっかり支えます。セット内容は六角形3個（下＝脚付き／中／上）、シールド3枚、登り棒用六角鉢1個、六角受け皿1枚。水苔・植物は付属しません。PLA樹脂でひとつずつ3Dプリントしています。ヘゴ支柱やコケ棒の代わりに、水苔を詰めた六角形の登り棒で気根を上へ導けます。",
     // 2026-10-24 product-dev: 旧「六角鉢 約95mm」は鉢単体の高さで、一覧カードの「高さ」欄に出ると
     // 19.5/35/39cm の支柱より小さく見えていた。BASE 4枚目のサイズ図の確定値（全高 約28.5cm）に差し替え。
     height: "全高 約28.5cm（受け皿の底〜一番上の六角形まで）",
@@ -818,7 +849,8 @@ export const PRODUCTS: Product[] = [
     // 2026-10-10 SEO: GSC「六角鉢」3.6位・0click。title 先頭がブランド名で検索語が後ろだったので「六角鉢」を先頭に
     // 2026-10-10 SEO: 価格が無く検索結果で比べられていなかったので {price}（下の price から自動で埋まる）を追加。
     // 価格はEC店長が10/10にBASEライブ値で確認済み（#7524: 1,480円・4色バリエーションも一致）
-    shortTitle: "六角鉢＋受け皿 {price}｜支柱が差せる3Dプリント鉢 4色",
+    // 2026-11-01 SEO: title の後半を「六角形の植木鉢」に。1,480円は price。｜ZUKE はルートのテンプレート。
+    shortTitle: "六角鉢＋受け皿 {price}｜支柱が差せる六角形の植木鉢",
     price: 1480,
     image: "/products/product-hexpot-black.webp",
     // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
@@ -830,8 +862,11 @@ export const PRODUCTS: Product[] = [
     // 号数表記は使わない（3.5号がそのまま入る丸鉢スタンドセットと混同されるため。EC店長 #7524）
     summary:
       "PLANTS POLEを差し込める六角形の鉢と受け皿（鉢 高さ95mm・対辺69mm／受け皿 対角91mm）。2号前後の小さな株向け。支柱の差込口・タグポケット付き、ブラック／ホワイト／オレンジ／ライトグレーの4色。支柱は付属しません。",
+    // 2026-11-01 SEO: 商品ページの meta のみ。約9.5cm・約6.9cm は高さ約95mm・対辺約69mmと同じ値。2号前後は現行 summary と同じ。
+    pageDescription:
+      "支柱を差し込める六角形の植木鉢と受け皿のセット。鉢は高さ約9.5cm・対辺約6.9cmで、2号前後の小さな株に向いています。3Dプリント製。支柱は付属しません。",
     lead:
-      "PLANTS POLEの六角形に合わせてつくった鉢と受け皿のセット。鉢の内側に支柱の差込口があり、鉄製・樹脂版どちらのPLANTS POLEも差し込むだけで固定できます。お手持ちの支柱と組み合わせて。",
+      "PLANTS POLEの六角形に合わせてつくった鉢と受け皿のセット。鉢の内側に支柱の差込口があり、鉄製・樹脂版どちらのPLANTS POLEも差し込むだけで固定できます。お手持ちの支柱と組み合わせて。「六角形の鉢」の内側に支柱の差込口があるので、土に頼らず支柱がまっすぐ立ちます。",
     height: "鉢 約95mm／受け皿 約13mm",
     width: "鉢 対辺約69mm／受け皿 対角約91mm",
     material: "PLA樹脂（3Dプリント・マット仕上げ）",
@@ -1059,13 +1094,15 @@ export const MATERIALS: { key: MaterialKind; label: string; lead: string; image:
   { key: "pla", label: "PLA樹脂製品", lead: "3Dプリントの六角鉢・樹脂支柱・拡張パーツ。軽く、4色から選べます。", image: "/products/product-hexpot-set-black.webp" },
 ];
 export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
-  { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。" },
+  // 2026-11-01 SEO: 本文に1文。2.5〜5号・約22cm は hex3、6〜8号・約39cm は hex5（height 約39cm、summary の6〜8号鉢）。
+  // 39cm・6〜8号は販売再開予定のため案どおり。soldOut フラグ自体はこのPRでは変えない。
+  { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。鉢の号数で選ぶなら、2.5〜5号は約22cm、6〜8号は約39cmが目安です。" },
   // 2026-10-16 増澤さん「登り棒というカテゴリも欲しい」
   { key: "climb", label: "登り棒", lead: "水苔やネコチップを詰めて、気根を這わせて育てる六角形の登り棒（モス支柱）。専用の六角鉢に挿して自立します。" },
   // 2026-10-18 増澤さん「LPに新しくハンギングカテゴリを追加」
   { key: "hanging", label: "ハンギング", lead: "S字フックで吊るして、水苔で着生植物を育てる六角形のハンギング鉢。" },
   { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
-  { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
+  { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。支柱を延長したいときは、六角形パーツを辺で並べて留め具で挟むだけです。" },
   { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
 ];
 export type CollectionKey = MaterialKind | CategoryKey;
@@ -1074,13 +1111,16 @@ export type CollectionKey = MaterialKind | CategoryKey;
 // 内容は products.ts（BASE と同期）の事実のみ。
 const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: string }> = {
   pole: {
-    seoTitle: "おしゃれな観葉植物の支柱｜六角形の園芸支柱 一覧",
-    seoDescription: "六角形デザインの園芸支柱 PLANTS POLE の一覧。アイアンスチール製（高さ約19.5〜39cm）と、軽くて色が選べる3Dプリント樹脂版。モンステラ・ポトス・ホヤなど蔓性の観葉植物を、インテリアに馴染むように仕立てられます。",
+    // 2026-11-01 SEO: 約19.5〜39cm は hex2 の高さ約19.5cm〜hex5 の約39cm。¥770〜¥1,320 は hex2 の770円〜うねうね／hex5 の1,320円。
+    // 2本セット hex-set-2pcs（1,980円）は isSet のため価格レンジに混ぜない（既存方針）。39cm は販売再開予定。
+    seoTitle: "おしゃれな観葉植物の支柱 一覧｜アイアン・3Dプリント",
+    seoDescription: "六角形デザインの観葉植物の支柱 PLANTS POLE の一覧です。アイアン製は高さ約19.5〜39cmで¥770〜¥1,320。軽くて色を選べる3Dプリント樹脂版もあり、鉢の号数から選べます。",
   },
   iron: {
     // 2026-10-23 SEO週次: GSC 28日「アイアン支柱」4表示・11.2位／「アイアン 支柱」1表示・11.0位・0click。
     // ナビの label と同じ「アイアン支柱」を title 先頭に置き、検索結果で比べられるよう価格帯（hex2〜hex5/uneune の price）を description に追加。
-    seoTitle: "アイアン支柱｜観葉植物用 六角形の園芸支柱",
+    // 2026-11-01 SEO: title だけ案に合わせる。全4型は hex2 / hex3 / hex5 / うねうね（isSet の2本セットは型数に混ぜない既存方針）。description は変えない。
+    seoTitle: "アイアン支柱 観葉植物用｜六角形の園芸支柱 全4型",
     seoDescription: "アイアン支柱（アイアンスチール製の園芸支柱）PLANTS POLE。六角形を2つ・3つ・5つ連ねた3型と、横に広がる株を整える「うねうね」の全4型。高さ約19.5〜39cm・¥770〜¥1,320。モンステラ・ポトス・アロカシアなどに。",
   },
   pla: {
@@ -1100,8 +1140,9 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
     seoDescription: "鉢の内側に支柱の差込口がある六角形の鉢と受け皿、PLANTS POLE とのセット。差し込むだけで支柱が固定でき、植物タグ用のポケット付き。PLA樹脂・3Dプリント製で、小さな蔓性植物や若い株に。",
   },
   extension: {
-    seoTitle: "支柱を後から伸ばす拡張パーツ・留め具",
-    seoDescription: "樹脂版 PLANTS POLE に六角形を継ぎ足して、植物の成長に合わせて高さを伸ばせる拡張パーツと留め具。辺同士を並べて留め具で挟むだけ。1連の樹脂版支柱から、2連・3連へと伸ばせます。アイアン製には使えません。",
+    // 2026-11-01 SEO: title / description を検索語「支柱の延長」に寄せる。数字の食い違いはない。
+    seoTitle: "支柱の延長パーツ｜成長に合わせて継ぎ足せる留め具",
+    seoDescription: "樹脂版 PLANTS POLE に六角形を継ぎ足して、支柱を延長できるパーツと留め具です。1連から2連、3連へと、植物の成長に合わせて高さを伸ばせます。アイアン製には使えません。",
   },
   tool: {
     seoTitle: "小鉢用の土入れスコップ・園芸道具",
@@ -1109,7 +1150,14 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
   },
 };
 export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; seoTitle: string; seoDescription: string; filter: (p: Product) => boolean }[] = [
-  ...MATERIALS.map((m) => ({ key: m.key as CollectionKey, label: m.label, lead: m.lead, ...COLLECTION_SEO[m.key], filter: (p: Product) => p.kind === m.key })),
+  ...MATERIALS.map((m) => ({
+    key: m.key as CollectionKey,
+    label: m.label,
+    // 2026-11-01 SEO: iron の追加文はカテゴリページだけ。MATERIALS.lead は商品一覧の導線カードでも出すので変えない。
+    lead: m.key === "iron" ? `${m.lead}黒いアイアンの細い線なので、葉の色を邪魔せずに株を支えます。` : m.lead,
+    ...COLLECTION_SEO[m.key],
+    filter: (p: Product) => p.kind === m.key,
+  })),
   ...CATEGORIES.map((c) => ({
     key: c.key as CollectionKey, label: c.label, lead: c.lead, ...COLLECTION_SEO[c.key],
     // 「支柱の拡張」には拡張パーツに加え、起点になる挿入部つきの 1連樹脂版も並べる（2026-09-26 増澤さん指示）
