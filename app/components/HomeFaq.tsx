@@ -14,9 +14,10 @@ const priceTo = (items: Product[]) => {
   return { price: yen(max), names: items.filter((p) => p.price === max).map(shortName).join("・") };
 };
 // 2026-10-16: 「◯円から◯円まで◯型」の集計は単品だけ（セットを入れると上限がセット価格・型数も合わなくなる）
-const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet);
+// 2026-11-01: 完売の単品（5つの六角形）は型数に入れない。六角鉢セットは名前どおりのものだけ（丸鉢スタンドセットを下限にしない）。
+const ironPoles = PRODUCTS.filter((p) => p.kind === "iron" && p.category === "pole" && !p.isSet && !p.soldOut);
 const plaPoles = PRODUCTS.filter((p) => p.kind === "pla" && p.category === "pole");
-const potSets = PRODUCTS.filter((p) => p.category === "pot" && p.name.includes("セット"));
+const potSets = PRODUCTS.filter((p) => p.category === "pot" && p.name.includes("六角鉢セット"));
 const ironFrom = priceFrom(ironPoles);
 const ironTo = priceTo(ironPoles);
 const plaFrom = priceFrom(plaPoles);
@@ -52,7 +53,7 @@ export const FAQS = [
   },
   {
     q: "価格と購入方法を教えてください。",
-    a: `鉄製のPLANTS POLEは${ironFrom.price}（${ironFrom.names}）から${ironTo.price}（${ironTo.names}）まで${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです。公式オンラインストア（BASE）からご購入いただけます。`,
+    a: `鉄製のPLANTS POLEは${ironFrom.price}〜${ironTo.price}（${ironTo.names}）の${ironPoles.length}型、3Dプリント製の樹脂版支柱は${plaFrom.price}（${plaFrom.names}）から、支柱の差込口付きの六角鉢セットは${setFrom.price}からです。公式オンラインストア（BASE）からご購入いただけます。`,
   },
   {
     q: "鉄製と3Dプリント製（樹脂版）の支柱はどう違いますか？",
