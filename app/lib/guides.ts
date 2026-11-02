@@ -73,8 +73,13 @@ export type Section = {
 export type Guide = {
   slug: string;
   title: string;
-  /** <title> 用（ブランド名はテンプレートで付く） */
+  /** <title> 用（ブランド名はテンプレートで付く）。パンくず・フッター・JSON-LD の name にも使う */
   metaTitle: string;
+  /**
+   * <title> と og:title / twitter:title だけを差し替える（未指定なら metaTitle）。
+   * パンくず・フッター・JSON-LD は metaTitle のまま。ブランド名はテンプレートで付く。
+   */
+  documentTitle?: string;
   description: string;
   /** 一覧カードの1行要約 */
   excerpt: string;
@@ -778,6 +783,10 @@ export const GUIDES: Guide[] = [
     // 2026-10-26 秘書(SEO): 本番 <title> が32字で、10/17 倒れるガイドで決めた上限(＋｜ZUKE=24字前後)を超え
     // モバイルで末尾が切れていた（GSC 10/26記録 64表示3click・CTR4.7%）。「自立しない」は description と keywords に残す。
     metaTitle: "モンステラ支柱の立て方｜倒れる株を起こす",
+    // 2026-11-02 SEO（オーナー承認）: <title> だけ「モンステラの支柱の立て方と結び方｜倒れる株を起こす」。
+    // 「結び方」は 10/31（#14978）で keywords に足した語で、title には無かった。
+    // パンくず・フッター・BreadcrumbList の name は metaTitle のまま。h1・description・本文・JSON-LD は変えない。
+    documentTitle: "モンステラの支柱の立て方と結び方｜倒れる株を起こす",
     description:
       "モンステラが倒れる・自立しないのは生育が順調な証拠。支柱は鉢のふちから2〜3cm内側に挿し、茎を8の字でゆるく留めて数週間かけて起こします。作業は5分。立てる時期、気根の扱い、垂らす仕立てとの違い、インテリアに合う支柱の選び方も解説。",
     excerpt: "倒れる・広がるモンステラを、支柱で立ち上げて整える。差し込む位置と誘引のコツ。",

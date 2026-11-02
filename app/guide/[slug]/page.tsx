@@ -22,15 +22,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const g = guideBySlug(slug);
   if (!g) return {};
+  // documentTitle がある記事は <title> と og/twitter だけ差し替える。パンくずと JSON-LD は metaTitle。
+  const pageTitle = g.documentTitle ?? g.metaTitle;
   return {
-    title: g.metaTitle,
+    title: pageTitle,
     description: g.description,
     keywords: g.keywords,
     alternates: { canonical: `/guide/${g.slug}` },
     openGraph: {
       ...OG_BASE,
       type: "article",
-      title: `${g.metaTitle}｜ZUKE`,
+      title: `${pageTitle}｜ZUKE`,
       description: g.description,
       url: `/guide/${g.slug}`,
       images: [{ url: g.ogImage ?? "/og.jpg", width: 1200, height: 630, alt: g.ogImage ? g.title : "ZUKE" }],
