@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SiteHeader from "@/app/components/SiteHeader";
 import SiteFooter from "@/app/components/SiteFooter";
-import { PRODUCTS, yen } from "@/app/lib/products";
+import { PRODUCTS, yen, SHOP, withUtm } from "@/app/lib/products";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -111,7 +111,7 @@ export default function AboutPage() {
           </h2>
           <ul className="mt-5 flex flex-col gap-3 text-[15px] text-gray-700">
             <li>
-              <a href="https://shop.zukeplants.com" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
+              <a href={withUtm(SHOP)} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
                 オンラインストア（BASE）
               </a>
               <span className="ml-2 text-[13px] text-gray-500">— 全商品の購入はこちら</span>

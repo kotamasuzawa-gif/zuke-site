@@ -1,5 +1,8 @@
 // 商品マスタ（単一の正）。スペックは BASE 本店の商品ページ実記載と一致させること。
 // 2026-08-22 SEO強化: 商品ごとの内部ページを新設し、ここを共通データ源にした。
+import { SHOP, bindItemCampaigns } from "./shopUrl";
+
+export { SHOP, withUtm } from "./shopUrl";
 
 export type MaterialKind = "iron" | "pla";
 export type CategoryKey = "pole" | "climb" | "hanging" | "pot" | "extension" | "tool";
@@ -176,13 +179,7 @@ export type Product = {
   altPicks?: { lead: string; items: { slug: string; note: string }[] };
 };
 
-export const SHOP = "https://shop.zukeplants.com";
-// 2026-10-07 EC店長依頼(#4631): BASE注文をzukeplants.com経由と切り分けられるよう、
-// 購入リンク（クリックして実際にBASEへ出ていくもの）にUTMを付与する。JSON-LD等の正規URLには付けない。
-export const withUtm = (url: string, utmContent?: string) => {
-  const base = `${url}${url.includes("?") ? "&" : "?"}utm_source=zukeplants_guide`;
-  return utmContent ? `${base}&utm_content=${utmContent}` : base;
-};
+// 購入リンクの UTM は app/lib/shopUrl.ts の withUtm。JSON-LD 等の正規 URL には付けない。
 /** 送料（BASE 本店の記載と同期。2026-09-29 BASE に合わせて修正: ヤマト宅急便・地域/サイズ別 ¥940〜¥2,200、¥5,500以上で無料） */
 export const SHIPPING = { feeFrom: 940, freeOver: 5500 };
 // 2026-09-29 SEO R4: 樹脂版（pole3pla / pole2pla / hexpot / hexvase）の色数を BASE の実バリエーション（4色）に合わせた。
@@ -1224,3 +1221,5 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
     { slug: "hex3", note: "アイアン製（ブラック／ホワイト）の六角形3連。つる性・細葉の植物をすっきりまとめる" },
   ],
 };
+
+bindItemCampaigns(PRODUCTS);

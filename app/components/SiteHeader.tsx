@@ -4,10 +4,9 @@
 // トップ(BaseClone)のBASE準拠デザインは変更せず、下層だけ内部ナビを持つ。
 import Link from "next/link";
 import { useState } from "react";
+import { SHOP, withUtm } from "@/app/lib/shopUrl";
 
-const SHOP = "https://shop.zukeplants.com";
-// ストア入口にもUTMを付けてBASEのアクセス解析でzukeplants.com経由を切り分ける（2026-10-07）
-const STORE = `${SHOP}?utm_source=zukeplants_guide`;
+const STORE = withUtm(SHOP);
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);

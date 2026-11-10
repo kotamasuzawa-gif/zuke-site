@@ -4,7 +4,7 @@
 // 構成: ヘッダー(ハンバーガー/ZUKE/検索/カート) + 六角ロゴ + 商品グリッド + SNS + © ZUKE
 import Image from "next/image";
 import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
-import { PRODUCTS, HOME_FEATURED_SLUGS, yen, withUtm } from "@/app/lib/products";
+import { PRODUCTS, HOME_FEATURED_SLUGS, yen, SHOP, withUtm } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
 import PlantFinder from "@/app/components/PlantFinder";
@@ -12,8 +12,6 @@ import { COLORS, type ColorKey, shownImageFor, shownColorLabel } from "@/app/lib
 import { useState, useEffect } from "react";
 import { CATEGORY_VIDEOS } from "@/app/lib/videos";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
-
-const SHOP = "https://shop.zukeplants.com";
 
 // 2026-08-22 増澤さん要望: ホームでブラック/ホワイトを切り替え。商品画像とライフスタイル写真が連動する。
 // BASE 本店も各商品ページ内でブラック/ホワイトの2種展開のため、リンク先URLは色に関わらず同じ。
@@ -64,8 +62,8 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
               <li><a href="https://thebase.com/inquiry/zukeplants-base-shop" target="_blank" rel="noopener noreferrer">CONTACT</a></li>
             </ul>
             <ul className="mt-6 pt-4 border-t border-gray-100 flex flex-col gap-2 text-xs text-gray-500">
-              <li><a href={`${SHOP}/privacy`} target="_blank" rel="noopener noreferrer">・プライバシーポリシー</a></li>
-              <li><a href={`${SHOP}/law`} target="_blank" rel="noopener noreferrer">・特定商取引法に基づく表記</a></li>
+              <li><a href={withUtm(`${SHOP}/privacy`)} target="_blank" rel="noopener noreferrer">・プライバシーポリシー</a></li>
+              <li><a href={withUtm(`${SHOP}/law`)} target="_blank" rel="noopener noreferrer">・特定商取引法に基づく表記</a></li>
             </ul>
         </nav>
       </header>

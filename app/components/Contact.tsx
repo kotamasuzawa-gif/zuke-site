@@ -1,3 +1,5 @@
+import { SHOP, withUtm } from "@/app/lib/shopUrl";
+
 export default function Contact() {
   return (
     <section id="contact" className="py-24 px-4 md:px-6 border-t border-[#e5e5e0]">
@@ -11,7 +13,7 @@ export default function Contact() {
           お気軽にお問い合わせください。
         </p>
         <a
-          href="https://shop.zukeplants.com/contact"
+          href={withUtm(`${SHOP}/contact`)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block px-10 py-4 border border-neutral-400 text-neutral-900 text-sm tracking-widest hover:border-black hover:bg-black hover:text-white transition-all duration-200"
@@ -34,7 +36,7 @@ export default function Contact() {
             <span className="text-xs tracking-widest">@zuke.plantspole</span>
           </a>
           <a
-            href="https://shop.zukeplants.com/"
+            href={withUtm(SHOP)}
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center gap-2 text-neutral-500 hover:text-neutral-700 transition-colors group"

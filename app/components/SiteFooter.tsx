@@ -2,12 +2,10 @@
 import Link from "next/link";
 import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
 import { GUIDES } from "@/app/lib/guides";
-import { PRODUCTS, COLLECTIONS } from "@/app/lib/products";
+import { PRODUCTS, COLLECTIONS, SHOP, withUtm } from "@/app/lib/products";
 import { WHOLESALE_MAILTO } from "@/app/lib/contact";
 
-const SHOP = "https://shop.zukeplants.com";
-// ストア入口にもUTMを付けてBASEのアクセス解析でzukeplants.com経由を切り分ける（2026-10-07）
-const STORE = `${SHOP}?utm_source=zukeplants_guide`;
+const STORE = withUtm(SHOP);
 
 // 2026-09-29 SEO R4: 列見出しは h2 → p（全ページの見出し構造に h2 が3つ混ざっていたため。見た目は同じ）。
 // 一覧ページ・カテゴリページ・卸売のご案内への内部リンクを追加。
@@ -54,8 +52,8 @@ export default function SiteFooter() {
             <li><a href={WHOLESALE_MAILTO} className="hover:text-[#222]">卸売のお問い合わせ（メール）</a></li>
             <li><a href="https://www.instagram.com/zuke.plantspole/" target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">Instagram</a></li>
             <li><a href="https://note.com/zuke_plantspole" target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">note</a></li>
-            <li><a href={`${SHOP}/privacy`} target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">プライバシーポリシー</a></li>
-            <li><a href={`${SHOP}/law`} target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">特定商取引法に基づく表記</a></li>
+            <li><a href={withUtm(`${SHOP}/privacy`)} target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">プライバシーポリシー</a></li>
+            <li><a href={withUtm(`${SHOP}/law`)} target="_blank" rel="noopener noreferrer" className="hover:text-[#222]">特定商取引法に基づく表記</a></li>
           </ul>
         </div>
       </div>

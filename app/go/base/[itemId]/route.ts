@@ -1,6 +1,7 @@
 import { NextResponse, after } from "next/server";
 import type { NextRequest } from "next/server";
-import { SHOP, PRODUCTS } from "@/app/lib/products";
+import { PRODUCTS } from "@/app/lib/products";
+import { SHOP, shopItemUrl, withUtm } from "@/app/lib/shopUrl";
 
 // 2026-10-10 EC店長依頼(#7630): BASE の注文API(`/api/base-orders`)には流入元の項目が無く、
 // UTM も BASE 側に残らないため「ガイド経由でBASEへ出ていったクリック数」を社内で数える手段が無かった。
@@ -39,7 +40,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ item
 
   // 不正な item_id はショップトップへ（404 を見せるより購入可能なページに着地させる）
   if (!ALLOWED_ITEM_IDS.has(itemId)) {
-    return NextResponse.redirect(SHOP, { status: 302, headers: { "cache-control": "no-store" } });
+    return NextResponse.redirect(withUtm(SHOP), {
+      status: 302,
+      headers: { "cache-control": "no-store" },
+    });
   }
 
   const from = sanitizeTag(req.nextUrl.searchParams.get("from"));
@@ -47,13 +51,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ item
 
   const soldOutSlug = SOLD_OUT_ITEM_SLUG.get(itemId);
   const dest = soldOutSlug
-    ? new URL(`/products/${soldOutSlug}`, req.nextUrl.origin)
-    : new URL(`${SHOP}/items/${itemId}`);
-  if (!soldOutSlug) {
-    dest.searchParams.set("utm_source", "zukeplants_guide");
-    if (content) dest.searchParams.set("utm_content", content);
-    if (from) dest.searchParams.set("from", from);
-  }
+    ? new URL(`/products/${soldOutSlug}`, req.nextUrl.origin).toString()
+    : shopItemUrl(itemId, { from, utmContent: content });
 
   const ua = req.headers.get("user-agent") ?? "";
   // クローラ・OGPプレビューのアクセスはクリック数に混ぜない
@@ -91,7 +90,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ item
     }
   }
 
-  return NextResponse.redirect(dest.toString(), {
+  return NextResponse.redirect(dest, {
     status: 302,
     headers: { "cache-control": "no-store", "x-robots-tag": "noindex, nofollow" },
   });

@@ -3,8 +3,9 @@
 // 2026-08-21 増澤さん要望: Ducks(plants.)風リデザイン。
 // 左ハンバーガー（全デバイス共通のオーバーレイメニュー）＋中央ワードマーク＋右カート(BASE)
 import { useState } from "react";
+import { SHOP, withUtm } from "@/app/lib/shopUrl";
 
-const STORE_URL = "https://shop.zukeplants.com/";
+const STORE_URL = withUtm(SHOP);
 
 const links = [
   { label: "PRODUCTS", jp: "商品", href: "#products" },
