@@ -162,7 +162,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
           <div className="mt-8 relative w-full max-w-lg mx-auto aspect-square overflow-hidden bg-[#f5f4f2]">
             <Image
               src={lifestyleImage(color)}
-              alt={`コンクリート壁の棚に飾った PLANTS POLE（${COLORS.find((c) => c.key === color)?.label ?? "ブラック"}）と蔓性の観葉植物。六角形の影が壁に映るインテリアグリーンの実例`}
+              alt={`木の机に置いた白い鉢の PLANTS POLE（${COLORS.find((c) => c.key === color)?.label ?? "ブラック"}）と蔓性の観葉植物`}
               fill
               sizes="(max-width: 640px) 100vw, 512px"
               className="object-cover"
