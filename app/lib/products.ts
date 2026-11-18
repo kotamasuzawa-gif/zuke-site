@@ -174,6 +174,18 @@ export type Product = {
    * 価格も note に書かない（price から自動で出す。値上げ・値下げでズレないため bundleNote と同じ方針）。
    */
   altPicks?: { lead: string; items: { slug: string; note: string }[] };
+  /**
+   * 商品ページの「写真」欄に並べる写真（BASE と同じ順）。2026-11-19 HEX POT BOLD 追加時に新設。
+   * 色の名前が COLORS（ブラック／ホワイト／オレンジ／ライトグレー）に無い商品（ホワイトマーブル）は
+   * 色ボタンで写真を切り替えられないので、BASE の写真を順に並べて見せる。JSON-LD の image にも使う。
+   */
+  gallery?: { src: string; alt: string }[];
+  /**
+   * BASE で選べる色の名前（COLORS に無い色名の商品だけ。JSON-LD の color に使う）。2026-11-19 新設。
+   */
+  colorNames?: string[];
+  /** 卸売ページの樹脂製品一覧に出さない（卸の条件が決まっていない商品）。2026-11-19 新設 */
+  notWholesale?: boolean;
 };
 
 export const SHOP = "https://shop.zukeplants.com";
@@ -478,6 +490,78 @@ export const PRODUCTS: Product[] = [
       "デスクや窓辺の小鉢に、支柱ごとコンパクトに",
       "4色から鉢や部屋の色に合わせる",
       "タグポケット（幅20mm・厚み2.5mmまで）で品種管理も一緒に",
+    ],
+  },
+  {
+    // 2026-11-19 新商品: HEX POT BOLD（BASE 166371542・11/19 公開）。増澤さん承認（秘書経由「zukeplants.comにHEX POT BOLDを追加して本番に出してよい」）。
+    // 名前・価格・色・説明は BASE の公開ページどおり。BASE 説明文の最後の「縦長の形がよい場合は「HEX POT LEAN」をご覧ください。」は
+    // LEAN（166191532）が非公開のため載せない。支柱の差込口は無いので、カテゴリ pot の既定 title（支柱が差せる六角鉢）は使わず shortTitle を指定。
+    // 在庫は受注生産（BASE の色名も「ホワイトマーブル（受注生産）」「ブラック（受注生産）」）。売り切れにするときは soldOut / soldOutAlt を付ける。
+    slug: "hexpot-bold",
+    kind: "pla",
+    category: "pot",
+    isNew: true,
+    notWholesale: true,
+    name: "HEX POT BOLD",
+    fullName: "HEX POT BOLD",
+    shortTitle: "HEX POT BOLD {price}｜ぼってりした六角形のスリット鉢・受け皿付き",
+    price: 3780,
+    image: "/products/product-hexpot-bold-base.webp",
+    ogImage: "/products/product-hexpot-bold-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
+    ogImageSquare: "/products/product-hexpot-bold-og.jpg",
+    baseUrl: `${SHOP}/items/166371542`,
+    summary:
+      "3Dプリントで作った、ぼってりした形の六角形スリット鉢。本体・外せる底部・格子・受け皿の4つのセットです。本体は対辺117mm・高さ77mm、土の量は約650ml（4号鉢弱が目安）。ホワイトマーブル／ブラック。受注生産で、ご注文から7日以内に発送します。",
+    lead:
+      "3Dプリントで作った、ぼってりした形の六角形スリット鉢です。本体、外せる底部、格子、受け皿の4つがセットになっています。底部は本体に差し込み、ひねって留めます。底のスリットには鉢底ネットを敷いてお使いください。カラーはホワイトマーブルとブラック。受注生産です。ご注文から7日以内に発送します。",
+    height: "本体 77mm／受け皿を含むセット 104mm",
+    width: "本体 対辺117mm（角から角まで135mm）／受け皿 一辺120mm・高さ16mm",
+    material: "3Dプリント",
+    colorNames: ["ホワイトマーブル", "ブラック"],
+    details: [
+      {
+        heading: "サイズと土の量",
+        paragraphs: [
+          "本体は対辺117mm（角から角まで135mm）、高さ77mm。受け皿を含むセットの高さは104mmです。受け皿は一辺120mm、高さ16mm。",
+          "土の量は約650mlで、4号鉢弱が目安です。",
+        ],
+      },
+      {
+        heading: "セット内容",
+        paragraphs: [
+          "本体、外せる底部、格子、受け皿の4つです。底部は本体に差し込み、ひねって留めます。",
+          "底のスリットには鉢底ネットを敷いてお使いください。",
+        ],
+      },
+      {
+        heading: "ご注意",
+        paragraphs: [
+          "支柱の差込口はありません。",
+          "本体の角が受け皿より少し外に出ています。水やりは鉢の内側に向けてください。",
+        ],
+      },
+      {
+        heading: "在庫と発送",
+        paragraphs: ["受注生産です。ご注文から7日以内に発送します。"],
+      },
+    ],
+    gallery: [
+      { src: "/products/hexpot-bold/01-whitemarble-front.webp", alt: "HEX POT BOLD（ホワイトマーブル）を正面から見たところ。受け皿に乗せた六角形の鉢" },
+      { src: "/products/hexpot-bold/02-whitemarble-angle.webp", alt: "HEX POT BOLD（ホワイトマーブル）を斜めから見たところ" },
+      { src: "/products/hexpot-bold/03-whitemarble-top.webp", alt: "HEX POT BOLD（ホワイトマーブル）を真上から見たところ。底の格子が見える" },
+      { src: "/products/hexpot-bold/04-whitemarble-bottom.webp", alt: "HEX POT BOLD（ホワイトマーブル）の底面。外せる底部のスリット" },
+      { src: "/products/hexpot-bold/05-black-set.webp", alt: "HEX POT BOLD（ブラック）を受け皿に乗せたところ" },
+      { src: "/products/hexpot-bold/06-black-pot-front.webp", alt: "HEX POT BOLD（ブラック）の本体を正面から見たところ" },
+      { src: "/products/hexpot-bold/07-black-pot-angle.webp", alt: "HEX POT BOLD（ブラック）の本体を斜めから見たところ" },
+      { src: "/products/hexpot-bold/08-black-base.webp", alt: "HEX POT BOLD（ブラック）の受け皿と格子" },
+    ],
+    plants: ["4号鉢弱が目安の株（土の量 約650ml）"],
+    scenes: [
+      "ぼってりした六角形の鉢を、受け皿ごと棚やテーブルに置く",
+      "ホワイトマーブル／ブラックの2色から選ぶ",
+      "外せる底部と格子で、底のスリットから水を抜く",
     ],
   },
   {
@@ -1070,7 +1154,7 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "climb", label: "登り棒", lead: "水苔やネコチップを詰めて、気根を這わせて育てる六角形の登り棒（モス支柱）。専用の六角鉢に挿して自立します。" },
   // 2026-10-18 増澤さん「LPに新しくハンギングカテゴリを追加」
   { key: "hanging", label: "ハンギング", lead: "S字フックで吊るして、水苔で着生植物を育てる六角形のハンギング鉢。" },
-  { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。" },
+  { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。差込口のない六角形のスリット鉢「HEX POT BOLD」も。" },
   { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
   { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
 ];

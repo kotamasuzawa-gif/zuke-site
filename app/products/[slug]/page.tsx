@@ -80,12 +80,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       // 2026-09-28 SEO: 色違い画像もすべて登録（画像検索・リッチリザルト）
       // 2026-09-29 SEO R4: 手書きの条件式をやめ、BASE で実際に選べる色（soldColors）に合わせる
       // 2026-10-06 SEO: 色ボタンを出さない商品（丸鉢スタンドセット等・sold が空）は image が [] になりリッチリザルト対象外だった → BASE の1枚目で補う
-      image: sold.length ? sold.map((c) => `${SITE}${productImage(p.slug, c)}`) : [`${SITE}${baseImage(p.slug)}`],
+      // 2026-11-19: 写真欄（gallery）がある商品は、その写真（BASE と同じ順）を登録する
+      image: p.gallery?.length
+        ? p.gallery.map((g) => `${SITE}${g.src}`)
+        : sold.length ? sold.map((c) => `${SITE}${productImage(p.slug, c)}`) : [`${SITE}${baseImage(p.slug)}`],
       description: p.summary,
       sku: p.slug,
       url: `${SITE}/products/${p.slug}`,
       material: p.material,
-      color: sold.length ? sold.map(colorLabel).join(" / ") : undefined,
+      color: p.colorNames?.length ? p.colorNames.join(" / ") : sold.length ? sold.map(colorLabel).join(" / ") : undefined,
       category: p.kind === "iron" ? "園芸支柱（アイアン）" : "3Dプリント園芸用品（PLA樹脂）",
       brand: { "@type": "Brand", name: "ZUKE" },
       offers: {
@@ -306,6 +309,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </dl>
           </div>
         </div>
+
+        {/* 2026-11-19: 色ボタンで切り替えられない色名（ホワイトマーブル）の商品は、BASE と同じ順で写真を並べる */}
+        {p.gallery && p.gallery.length > 0 && (
+          <section className="mt-16" aria-label="写真">
+            <h2 className="text-base font-bold">写真</h2>
+            <ul className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+              {p.gallery.map((g) => (
+                <li key={g.src} className="relative aspect-square bg-[#fbfbfb]">
+                  <Image src={g.src} alt={g.alt} fill className="object-contain" sizes="(max-width: 768px) 50vw, 25vw" />
+                </li>
+              ))}
+            </ul>
+            {p.colorNames && p.colorNames.length > 0 && (
+              <p className="mt-3 text-[13px] text-gray-500">カラー：{p.colorNames.join("、")}</p>
+            )}
+          </section>
+        )}
 
         {/* 2026-10-10 SEO #7590(EC店長): ヒーローが商品単体カットだと「何に使う物か」がLP上で1枚も分からない。
             ヒーロー直下に使用イメージ1枚＋キャプションで補う（サイズ図と同じく遅延読み込み・LCPには載せない） */}

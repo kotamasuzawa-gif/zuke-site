@@ -8,7 +8,8 @@ import { PRODUCTS, yen } from "@/app/lib/products";
 // 2026-10-16: BtoC向けのまとめ買いセット（isSet）は、1商品1ロット（10本）単位の卸売ラインナップに混ぜない
 const WHOLESALE_PRODUCTS = PRODUCTS.filter((p) => p.kind === "iron" && !p.isSet);
 // 2026-10-18 増澤さん「3Dプリンタ商品を卸対象にして」: 樹脂製品も卸対象（卸はブラック・ライトグレーの2色のみ）
-const WHOLESALE_PLA = PRODUCTS.filter((p) => p.kind === "pla");
+// 2026-11-19: 卸の条件が決まっていない商品（notWholesale・HEX POT BOLD）は出さない
+const WHOLESALE_PLA = PRODUCTS.filter((p) => p.kind === "pla" && !p.notWholesale);
 import { WHOLESALE_EMAIL, WHOLESALE_MAILTO, WHOLESALE_MAIL_FIELDS } from "@/app/lib/contact";
 import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 
