@@ -40,9 +40,9 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hexwallpot: [],
   hexwallplate: [],
   "hex-set-2pcs": [],
-  // 2026-11-19 HEX POT BOLD と六角スリット鉢セット（hexpot-lean）はホワイトマーブル／ブラック（受注生産）。
-  // COLORS に「ホワイトマーブル」が無いので色ボタンは出さず、商品ページの「写真」欄（gallery）に BASE と同じ順で並べる。
-  // ライトグレー・オレンジ・ホワイト・半透明ライトブルーは販売していない。
+  // 2026-11-19 HEX POT BOLD はホワイトマーブル／ブラック。HEX POT LEAN（hexpot-lean）はブラック／ホワイトマーブル／半透明ライトブルー。
+  // いずれも受注生産。COLORS に「ホワイトマーブル」「半透明ライトブルー」が無いので色ボタンは出さず、
+  // 商品ページの「写真」欄（gallery）に BASE と同じ順で並べる。ライトグレー・オレンジ・ホワイトは販売していない。
   "hexpot-bold": [],
   "hexpot-lean": [],
 };
@@ -62,7 +62,7 @@ const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
   "hexwall-set": ["black", "white", "orange", "lightgray"],
   hexwallpot: ["black", "white", "orange", "lightgray"],
   hexwallplate: ["black", "white", "orange", "lightgray"],
-  // 2026-11-19 HEX POT BOLD / 六角スリット鉢セットは色別の一覧用写真を作っていない（色名もホワイトマーブル）。一覧で色を押しても1枚目のまま
+  // 2026-11-19 HEX POT BOLD / HEX POT LEAN は色別の一覧用写真を作っていない（色名もホワイトマーブルなど）。一覧で色を押しても1枚目のまま
   "hexpot-bold": ["black", "white", "orange", "lightgray"],
   "hexpot-lean": ["black", "white", "orange", "lightgray"],
 };
