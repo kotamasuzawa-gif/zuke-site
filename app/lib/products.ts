@@ -592,7 +592,7 @@ export const PRODUCTS: Product[] = [
     // 公開名が HEX POT LEAN に変わったので、公開ページを正にする。価格・説明文は変わっていない。
     // 色は公開ページの3色（ブラック／ホワイトマーブル／半透明ライトブルー、いずれも受注生産）。
     // ライトグレー・オレンジ・ホワイトは無い。半透明ライトブルーの写真は添付に無く、公開ページにも無いので載せない。
-    // 写真は公開ページに残っている5枚（白マーブル正面、黒斜め、白真上、白の格子と受け皿、白の底部）の順。
+    // 写真は公開ページの5枚の前に、増澤さん指定の1枚目（半透明ライトブルーとホワイトマーブルの並び）を置く。合計6枚。動画は載せない。
     // 支柱の差込口は無いので、カテゴリ pot の既定 title は使わず shortTitle を指定。卸の条件は未定。
     slug: "hexpot-lean",
     kind: "pla",
@@ -648,11 +648,12 @@ export const PRODUCTS: Product[] = [
       },
     ],
     gallery: [
-      { src: "/products/hexpot-lean/01-whitemarble-front.webp", alt: "HEX POT LEAN（ホワイトマーブル）を受け皿に乗せたところ" },
-      { src: "/products/hexpot-lean/02-black-angle.webp", alt: "HEX POT LEAN（ブラック）の本体を斜めから見たところ" },
-      { src: "/products/hexpot-lean/03-whitemarble-top.webp", alt: "HEX POT LEAN（ホワイトマーブル）を真上から見たところ。底の格子が見える" },
-      { src: "/products/hexpot-lean/04-whitemarble-saucer.webp", alt: "HEX POT LEAN（ホワイトマーブル）の格子と受け皿" },
-      { src: "/products/hexpot-lean/05-whitemarble-bottom.webp", alt: "HEX POT LEAN（ホワイトマーブル）の外せる底部" },
+      { src: "/products/hexpot-lean/01-blue-whitemarble.webp", alt: "HEX POT LEAN の半透明ライトブルーとホワイトマーブルを並べたところ。それぞれ受け皿に乗せている" },
+      { src: "/products/hexpot-lean/02-whitemarble-front.webp", alt: "HEX POT LEAN（ホワイトマーブル）を受け皿に乗せたところ" },
+      { src: "/products/hexpot-lean/03-black-angle.webp", alt: "HEX POT LEAN（ブラック）の本体を斜めから見たところ" },
+      { src: "/products/hexpot-lean/04-whitemarble-top.webp", alt: "HEX POT LEAN（ホワイトマーブル）を真上から見たところ。底の格子が見える" },
+      { src: "/products/hexpot-lean/05-whitemarble-saucer.webp", alt: "HEX POT LEAN（ホワイトマーブル）の格子と受け皿" },
+      { src: "/products/hexpot-lean/06-whitemarble-bottom.webp", alt: "HEX POT LEAN（ホワイトマーブル）の外せる底部" },
     ],
     plants: ["支柱を差さずに育てる株"],
     scenes: [
