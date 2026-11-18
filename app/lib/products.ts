@@ -136,7 +136,15 @@ export type Product = {
    * 「クロール済み - インデックス未登録」になった）。入れてよいのは products.ts の確定値と
    * 使い方の説明だけ（推定値・効能の誇張は書かない。width と同じ方針）。
    */
-  details?: { heading: string; paragraphs: string[] }[];
+  details?: {
+    heading: string;
+    paragraphs: string[];
+    /**
+     * この節の最後に出す文中リンク。BASE 説明文の「商品名＋商品URL」の2行を、
+     * サイト内の商品ページへのリンク1つに置き換えるときに使う。
+     */
+    link?: { before: string; label: string; href: string; after: string };
+  }[];
   /** 相性のよい植物 */
   plants: string[];
   /** インテリア文脈での使いどころ */
@@ -494,8 +502,8 @@ export const PRODUCTS: Product[] = [
   },
   {
     // 2026-11-19 新商品: HEX POT BOLD（BASE 166371542・11/19 公開）。増澤さん承認（秘書経由「zukeplants.comにHEX POT BOLDを追加して本番に出してよい」）。
-    // 名前・価格・色・説明は BASE の公開ページどおり。BASE 説明文の最後の「縦長の形がよい場合は「HEX POT LEAN」をご覧ください。」は
-    // LEAN（166191532）が非公開のため載せない。支柱の差込口は無いので、カテゴリ pot の既定 title（支柱が差せる六角鉢）は使わず shortTitle を指定。
+    // 名前・価格・色・説明は BASE の公開ページどおり。説明の最後の2行（縦長の形の商品名と BASE の URL）は、
+    // サイト上では /products/hexpot-lean へのリンクにする。支柱の差込口は無いので、カテゴリ pot の既定 title（支柱が差せる六角鉢）は使わず shortTitle を指定。
     // 在庫は受注生産（BASE の色名も「ホワイトマーブル（受注生産）」「ブラック（受注生産）」）。売り切れにするときは soldOut / soldOutAlt を付ける。
     slug: "hexpot-bold",
     kind: "pla",
@@ -515,25 +523,32 @@ export const PRODUCTS: Product[] = [
     summary:
       "3Dプリントで作った、ぼってりした形の六角形スリット鉢。本体・外せる底部・格子・受け皿の4つのセットです。本体は対辺117mm・高さ77mm、土の量は約650ml（4号鉢弱が目安）。ホワイトマーブル／ブラック。受注生産で、ご注文から7日以内に発送します。",
     lead:
-      "3Dプリントで作った、ぼってりした形の六角形スリット鉢です。本体、外せる底部、格子、受け皿の4つがセットになっています。底部は本体に差し込み、ひねって留めます。底のスリットには鉢底ネットを敷いてお使いください。カラーはホワイトマーブルとブラック。受注生産です。ご注文から7日以内に発送します。",
+      "3Dプリントで作った、ぼってりした形の六角形スリット鉢です。本体、外せる底部、格子、受け皿の4つがセットになっています。",
     height: "本体 77mm／受け皿を含むセット 104mm",
     width: "本体 対辺117mm（角から角まで135mm）／受け皿 一辺120mm・高さ16mm",
     material: "3Dプリント",
     colorNames: ["ホワイトマーブル", "ブラック"],
     details: [
       {
-        heading: "サイズと土の量",
+        heading: "サイズ",
         paragraphs: [
-          "本体は対辺117mm（角から角まで135mm）、高さ77mm。受け皿を含むセットの高さは104mmです。受け皿は一辺120mm、高さ16mm。",
-          "土の量は約650mlで、4号鉢弱が目安です。",
+          "本体：対辺117mm（角から角まで135mm）、高さ77mm",
+          "受け皿を含むセットの高さ：104mm",
+          "受け皿：一辺120mm、高さ16mm",
+          "土の量：約650ml（4号鉢弱が目安です）",
         ],
       },
       {
         heading: "セット内容",
         paragraphs: [
-          "本体、外せる底部、格子、受け皿の4つです。底部は本体に差し込み、ひねって留めます。",
+          "本体、外せる底部、格子、受け皿",
+          "底部は本体に差し込み、ひねって留めます。",
           "底のスリットには鉢底ネットを敷いてお使いください。",
         ],
+      },
+      {
+        heading: "カラー",
+        paragraphs: ["ホワイトマーブル、ブラック"],
       },
       {
         heading: "ご注意",
@@ -541,6 +556,13 @@ export const PRODUCTS: Product[] = [
           "支柱の差込口はありません。",
           "本体の角が受け皿より少し外に出ています。水やりは鉢の内側に向けてください。",
         ],
+        // BASE の最後の2行（商品名と https://shop.zukeplants.com/items/166191532）は、サイト内の商品ページへのリンクにする
+        link: {
+          before: "縦長の形がよい場合は「",
+          label: "六角スリット鉢セット｜本体・外せる底部・格子付き受け皿",
+          href: "/products/hexpot-lean",
+          after: "」をご覧ください。",
+        },
       },
       {
         heading: "在庫と発送",
@@ -562,6 +584,83 @@ export const PRODUCTS: Product[] = [
       "ぼってりした六角形の鉢を、受け皿ごと棚やテーブルに置く",
       "ホワイトマーブル／ブラックの2色から選ぶ",
       "外せる底部と格子で、底のスリットから水を抜く",
+    ],
+  },
+  {
+    // 2026-11-19 新商品: 六角スリット鉢セット（slug hexpot-lean・BASE 166191532）。増澤さん承認（「LEANも出して良い」）。
+    // 商品名は BASE の公開名のまま（「HEX POT LEAN」とは呼ばない）。価格・色・説明文は公開ページと同一。
+    // 色はブラック（受注生産）とホワイトマーブル（受注生産）のみ。ライトグレー・オレンジ・半透明ライトブルー・ホワイトは載せない。
+    // 写真は添付の9枚を、BASE 公開ページに出ている順（黒の正面・斜め・手持ち → 白マーブル6枚）に並べる。
+    // 公開ページ先頭の黒4枚（受け皿に乗せたカット、格子の単品、分解、受け皿と底部）は添付に無かったので載せていない。
+    // 支柱の差込口は無いので、カテゴリ pot の既定 title は使わず shortTitle を指定。卸の条件は未定。
+    slug: "hexpot-lean",
+    kind: "pla",
+    category: "pot",
+    isNew: true,
+    notWholesale: true,
+    name: "六角スリット鉢セット｜本体・外せる底部・格子付き受け皿",
+    fullName: "六角スリット鉢セット｜本体・外せる底部・格子付き受け皿",
+    shortTitle: "六角スリット鉢セット {price}｜本体・外せる底部・格子付き受け皿",
+    price: 3780,
+    image: "/products/product-hexpot-lean-base.webp",
+    ogImage: "/products/product-hexpot-lean-og-wide.jpg",
+    ogWidth: 1200,
+    ogHeight: 630,
+    ogImageSquare: "/products/product-hexpot-lean-og.jpg",
+    baseUrl: `${SHOP}/items/166191532`,
+    summary:
+      "3Dプリントで作った六角形のスリット鉢。本体・外せる底部・格子付き受け皿の3つのセットです。本体は対辺90mm・高さ100mm、受け皿を含むセットの高さは134mm。ブラック（受注生産）／ホワイトマーブル（受注生産）。ご注文から7日以内に発送します。",
+    lead:
+      "3Dプリントで作った六角形のスリット鉢です。本体、外せる底部、格子付きの受け皿の3つがセットになっています。",
+    height: "本体 100mm／受け皿を含むセット 134mm",
+    width: "本体 対辺90mm",
+    material: "3Dプリント",
+    colorNames: ["ブラック（受注生産）", "ホワイトマーブル（受注生産）"],
+    details: [
+      {
+        heading: "サイズ",
+        paragraphs: [
+          "本体：対辺90mm、高さ100mm",
+          "受け皿を含むセットの高さ：134mm",
+        ],
+      },
+      {
+        heading: "セット内容",
+        paragraphs: ["本体、外せる底部、格子付き受け皿"],
+      },
+      {
+        heading: "ご注意",
+        paragraphs: [
+          "支柱の差込口はありません。支柱を立てたい場合は、ほかの六角鉢シリーズをご覧ください。",
+        ],
+        // 公開ページの説明文には無い。増澤さん「LEAN側からもBOLDを案内してよい」のため、ご注意のあとに1行だけ足す。
+        link: {
+          before: "ぼってりした形がよい場合は「",
+          label: "HEX POT BOLD",
+          href: "/products/hexpot-bold",
+          after: "」をご覧ください。",
+        },
+      },
+      {
+        heading: "在庫と発送",
+        paragraphs: ["受注生産です。ご注文から7日以内に発送します。"],
+      },
+    ],
+    gallery: [
+      { src: "/products/hexpot-lean/01-black-front.webp", alt: "六角スリット鉢セット（ブラック）の本体を正面から見たところ" },
+      { src: "/products/hexpot-lean/02-black-angle.webp", alt: "六角スリット鉢セット（ブラック）の本体を斜めから見たところ" },
+      { src: "/products/hexpot-lean/03-black-handheld.webp", alt: "六角スリット鉢セット（ブラック）の本体を手に持ったところ" },
+      { src: "/products/hexpot-lean/04-whitemarble-front.webp", alt: "六角スリット鉢セット（ホワイトマーブル）を受け皿に乗せたところ" },
+      { src: "/products/hexpot-lean/05-whitemarble-saucer.webp", alt: "六角スリット鉢セット（ホワイトマーブル）の格子と受け皿" },
+      { src: "/products/hexpot-lean/06-whitemarble-side.webp", alt: "六角スリット鉢セット（ホワイトマーブル）の本体を横から見たところ" },
+      { src: "/products/hexpot-lean/07-whitemarble-top.webp", alt: "六角スリット鉢セット（ホワイトマーブル）を真上から見たところ。底の格子が見える" },
+      { src: "/products/hexpot-lean/08-whitemarble-bottom.webp", alt: "六角スリット鉢セット（ホワイトマーブル）の外せる底部" },
+      { src: "/products/hexpot-lean/09-whitemarble-grid.webp", alt: "六角スリット鉢セット（ホワイトマーブル）の格子付き受け皿を上から見たところ" },
+    ],
+    plants: ["支柱を差さずに育てる株"],
+    scenes: [
+      "対辺90mm・高さ100mmの六角形の鉢を、格子付きの受け皿に乗せる",
+      "ブラック（受注生産）とホワイトマーブル（受注生産）から選ぶ",
     ],
   },
   {
@@ -1154,7 +1253,7 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "climb", label: "登り棒", lead: "水苔やネコチップを詰めて、気根を這わせて育てる六角形の登り棒（モス支柱）。専用の六角鉢に挿して自立します。" },
   // 2026-10-18 増澤さん「LPに新しくハンギングカテゴリを追加」
   { key: "hanging", label: "ハンギング", lead: "S字フックで吊るして、水苔で着生植物を育てる六角形のハンギング鉢。" },
-  { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。差込口のない六角形のスリット鉢「HEX POT BOLD」も。" },
+  { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。差込口のない六角形のスリット鉢「HEX POT BOLD」と「六角スリット鉢セット」も。" },
   { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
   { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
 ];

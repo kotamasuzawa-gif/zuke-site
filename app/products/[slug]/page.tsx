@@ -401,6 +401,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <h2 className="text-base font-bold">{d.heading}</h2>
                 <div className="mt-4 flex flex-col gap-4 text-[15px] leading-loose text-gray-700">
                   {d.paragraphs.map((x) => <p key={x}>{x}</p>)}
+                  {d.link && (
+                    <p>
+                      {d.link.before}
+                      <Link href={d.link.href} className="underline underline-offset-4 decoration-gray-300 hover:text-[#222]">
+                        {d.link.label}
+                      </Link>
+                      {d.link.after}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}

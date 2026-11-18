@@ -40,9 +40,11 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hexwallpot: [],
   hexwallplate: [],
   "hex-set-2pcs": [],
-  // 2026-11-19 HEX POT BOLD はホワイトマーブル／ブラック。COLORS に「ホワイトマーブル」が無いので色ボタンは出さず、
-  // 商品ページの「写真」欄（products.ts の gallery）に BASE と同じ順で8枚並べる
+  // 2026-11-19 HEX POT BOLD と六角スリット鉢セット（hexpot-lean）はホワイトマーブル／ブラック（受注生産）。
+  // COLORS に「ホワイトマーブル」が無いので色ボタンは出さず、商品ページの「写真」欄（gallery）に BASE と同じ順で並べる。
+  // ライトグレー・オレンジ・ホワイト・半透明ライトブルーは販売していない。
   "hexpot-bold": [],
+  "hexpot-lean": [],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
 // 2026-10-10 EC店長#7597: ホーム・商品一覧・カテゴリの色ボタンは全4色固定なので、その商品に存在しない配色を押すと
@@ -60,8 +62,9 @@ const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
   "hexwall-set": ["black", "white", "orange", "lightgray"],
   hexwallpot: ["black", "white", "orange", "lightgray"],
   hexwallplate: ["black", "white", "orange", "lightgray"],
-  // 2026-11-19 HEX POT BOLD は色別の一覧用写真を作っていない（色名もホワイトマーブル）。一覧で色を押しても1枚目のまま
+  // 2026-11-19 HEX POT BOLD / 六角スリット鉢セットは色別の一覧用写真を作っていない（色名もホワイトマーブル）。一覧で色を押しても1枚目のまま
   "hexpot-bold": ["black", "white", "orange", "lightgray"],
+  "hexpot-lean": ["black", "white", "orange", "lightgray"],
 };
 export const hasColorPhoto = (slug: string, color: ColorKey | null): color is ColorKey =>
   color !== null && !(NO_PHOTO_COLORS[slug] ?? []).includes(color);
