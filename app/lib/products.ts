@@ -583,7 +583,7 @@ export const PRODUCTS: Product[] = [
         heading: "サイズ",
         images: [
           {
-            src: "/products/hexpot-bold/09-bold-l-s-pair-dim.webp",
+            src: "/products/hexpot-bold/09-bold-l-s-pair-dim-l.webp",
             alt: "HEX POT BOLD のLサイズとSサイズを並べた寸法写真（ホワイトマーブル）。左のLサイズ（HEX POT BOLD L）はセットの高さ104mm、右のSサイズ（HEX POT BOLD S）は83mm",
             width: 1200,
             height: 1200,
@@ -722,7 +722,7 @@ export const PRODUCTS: Product[] = [
         heading: "サイズ",
         images: [
           {
-            src: "/products/hexpot-lean/07-lean-l-s-pair-dim.webp",
+            src: "/products/hexpot-lean/07-lean-l-s-pair-dim-l.webp",
             alt: "HEX POT LEAN のLサイズとSサイズを並べた寸法写真（ホワイトマーブル）。左のLサイズ（HEX POT LEAN L）はセットの高さ134mm、右のSサイズ（HEX POT LEAN S）は107mm",
             width: 1200,
             height: 1200,
