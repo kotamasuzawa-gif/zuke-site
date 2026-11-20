@@ -44,9 +44,8 @@ const PLA_SIZE: Step = {
   en: "SIZE",
   q: "鉢と植物の大きさは？",
   options: [
-    { id: "xs", label: "挿し木・小さな苗", sub: "全長約12cm。あとから伸ばせる", result: { slugs: ["pole1pla", "hexparts"], collection: "extension", collectionLabel: "支柱の拡張", note: "育ったら六角形を継ぎ足して、2連・3連へ伸ばせます。" } },
     { id: "s", label: "小鉢", sub: "高さ約17cm", result: { slugs: ["pole2pla", "hexpot-set2"], collection: "pla", collectionLabel: "PLA樹脂製品" } },
-    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["pole3pla", "hexpot-set", "hexparts"], collection: "pla", collectionLabel: "PLA樹脂製品" } },
+    { id: "m", label: "中くらいの鉢", sub: "高さ約22cm", result: { slugs: ["pole3pla", "hexpot-set"], collection: "pla", collectionLabel: "PLA樹脂製品" } },
   ],
 };
 
@@ -61,7 +60,7 @@ const TREE: Step = {
         q: "どちらの質感が好きですか？",
         options: [
           { id: "iron", label: "アイアン", sub: "細く強い。植物の陰になる存在感", next: IRON_SIZE },
-          { id: "pla", label: "樹脂（3Dプリント）", sub: "軽くて4色。あとから伸ばせる", next: PLA_SIZE },
+          { id: "pla", label: "樹脂（3Dプリント）", sub: "軽くて、4色から選べます", next: PLA_SIZE },
         ],
       },
     },
@@ -74,11 +73,11 @@ const TREE: Step = {
         q: "支柱もいっしょに？",
         options: [
           { id: "set", label: "鉢と支柱のセット", sub: "届いてすぐ仕立てられる", result: { slugs: ["hexpot-set", "hexpot-set2"], collection: "pot", collectionLabel: "鉢・セット" } },
-          { id: "only", label: "鉢だけ", sub: "手持ちの支柱と合わせる", result: { slugs: ["hexpot", "marupot-stand"], collection: "pot", collectionLabel: "鉢・セット" } },
+          { id: "only", label: "鉢だけ", sub: "手持ちの支柱と合わせる", result: { slugs: ["hexpot"], collection: "pot", collectionLabel: "鉢・セット" } },
         ],
       },
     },
-    { id: "ext", label: "今の支柱を伸ばしたい", sub: "樹脂版 PLANTS POLE 用", result: { slugs: ["hexparts", "hexclip5"], collection: "extension", collectionLabel: "支柱の拡張", note: "拡張パーツは樹脂版 PLANTS POLE 専用です（アイアン製には使えません）。" } },
+    { id: "ext", label: "今の支柱より高くしたい", sub: "樹脂版の2連・3連", result: { slugs: ["pole3pla", "pole2pla"], collection: "pla", collectionLabel: "PLA樹脂製品", note: "六角形を足す拡張パーツの取り扱いは終了しました。高さが足りないときは、はじめから2連（約17cm）か3連（約22cm）の樹脂版を選んでください。" } },
     { id: "tool", label: "植え替えの道具がほしい", sub: "小鉢用のスコップ・スティック", result: { slugs: ["scoop", "soilstick"], collection: "tool", collectionLabel: "園芸道具" } },
   ],
 };

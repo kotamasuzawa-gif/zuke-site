@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   // 2026-10-26 SEO(#13848 EC店長): iron の代表商品を hex5(117375069・10/29 に完全完売) から hex2(124680568・黒/白とも在庫あり) へ。
   // 共有カードの画像が完売品だと、SNS・チャットから来た人の着地が買えない商品になる。
   const OG_PRODUCT_SLUG: Record<string, string> = {
-    iron: "hex2", pla: "hexpot-set", extension: "hexparts",
+    iron: "hex2", pla: "hexpot-set",
     pole: "uneune", pot: "hexpot",
   };
   // 2026-10-18 増澤さん「ハンギングのリンク画像が鉄支柱になる」: 対応表に無いカテゴリは汎用 og.jpg ではなく、そのカテゴリの先頭商品の画像にする

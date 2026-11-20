@@ -12,7 +12,7 @@ import { SITE, OG_BASE, jsonLdHtml } from "@/app/lib/seo";
 export const metadata: Metadata = {
   title: "PLANTS POLE 全商品一覧｜園芸支柱・六角鉢",
   description:
-    "ZUKE の PLANTS POLE 全商品一覧。アイアンスチール製の園芸支柱4型、3Dプリント樹脂版の支柱と拡張パーツ、支柱が差せる六角鉢・セット。モンステラ・ポトス・ホヤ・亀甲竜などの観葉植物に。",
+    "ZUKE の PLANTS POLE 全商品一覧。アイアンスチール製の園芸支柱4型、3Dプリント樹脂版の支柱、支柱が差せる六角鉢・セット。モンステラ・ポトス・ホヤ・亀甲竜などの観葉植物に。",
   alternates: { canonical: "/products" },
   openGraph: {
     ...OG_BASE,
@@ -65,7 +65,7 @@ export default function ProductsPage() {
         </h1>
         <p className="mt-4 text-[15px] leading-loose text-gray-700 max-w-2xl">
           ZUKE の PLANTS POLE は、&ldquo;魅せる&rdquo;園芸支柱です。植物を支えるという実用性に、六角形のデザインを加えました。
-          アイアン支柱はアイアンスチール製で、高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。ほかに、PLA樹脂を3Dプリントした樹脂版の支柱・拡張パーツ、支柱が差せる六角鉢と受け皿を展開しています。
+          アイアン支柱はアイアンスチール製で、高さ約19.5cm の小鉢向けから約39cm の主役サイズまで4型。ほかに、PLA樹脂を3Dプリントした樹脂版の支柱、支柱が差せる六角鉢と受け皿を展開しています。
           モンステラ・ポトス・ホヤ・亀甲竜など蔓性の観葉植物を、インテリアグリーンとして美しく仕立てられます。
         </p>
 

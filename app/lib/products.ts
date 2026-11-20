@@ -2,7 +2,7 @@
 // 2026-08-22 SEO強化: 商品ごとの内部ページを新設し、ここを共通データ源にした。
 
 export type MaterialKind = "iron" | "pla";
-export type CategoryKey = "pole" | "climb" | "hanging" | "pot" | "extension" | "tool";
+export type CategoryKey = "pole" | "climb" | "hanging" | "pot" | "tool";
 
 export type Product = {
   slug: string;
@@ -13,7 +13,7 @@ export type Product = {
   price: number;
   /** 素材系統（導線用）: アイアン / PLA樹脂 */
   kind: MaterialKind;
-  /** カテゴリ（導線用）: 支柱 / 鉢・セット / 支柱の拡張 / 園芸道具 */
+  /** カテゴリ（導線用）: 支柱 / 鉢・セット / 園芸道具 */
   category: CategoryKey;
   image: string;
   /**
@@ -783,38 +783,6 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
-    // 2026-10-16 EC店長#10314 で (a) 承認: 2本セット（BASE 162185287・10/14公開）をサイトに載せ、hex3・hex5 から送る。
-    // 理由: hex5 の PAIRINGS を「hex3と2点＝2,200円」で出すと、同じ中身のセット1,980円より 220円高い買い方を案内することになる。
-    // 並びは人気順＋NEW枠（上の方針）に従い、新商品ブロックの先頭。クーポン ZUKE2SET は BASE 商品ページの記載どおり
-    // 「本セットは1点のご注文のため対象外」なので campaigns は付けない（10/19 までは単品2点＋クーポンでも同額）。
-    slug: "hex-set-2pcs",
-    kind: "iron",
-    category: "pole",
-    isNew: true,
-    isSet: true,
-    // 2026-11-01: BASE 162185287 販売再開（EC確認・黒2/白5）、soldOut と soldOutAlt を削除。
-    name: 'PLANTS POLE 2本セット "3つの六角形"＋"5つの六角形"',
-    shortTitle: '六角形の支柱 2本セット {price}｜22cm＋39cm（220円おトク）',
-    fullName: 'PLANTS POLE 2本セット「3つの六角形」22cm＋「5つの六角形」39cm（カラー選択・1配送）',
-    price: 1980,
-    // 2026-10-16: BASEの1枚目と同じ写真（md5一致を確認）。注記入りの差し替え版が BASE に反映されたら
-    // base-162185287-01-set-2pcs-v2.jpg から作り直す（EC店長#10313 でデザイナー納品済み）
-    image: "/products/product-hex-set-2pcs-base.webp",
-    baseUrl: `${SHOP}/items/162185287`,
-    summary:
-      "高さ約22cmの「3つの六角形」と約39cmの「5つの六角形」をまとめた2本セット。単品2本で2,200円のところ1,980円（220円おトク）、送料も1配送分です。小さな株と立ち上げたい大株を、同じ色でそろえられます。",
-    lead:
-      "当店で2本以上まとめて買われたご注文のなかで、いちばん多い組み合わせがこの2本です。育てはじめのポトスやハートカズラには22cm、鉢増ししたモンステラには39cm。株の成長段階で使い分けられます。2本とも、お選びいただいた同じ色でお届けします（色の組み合わせはできません）。在庫が切れているときは、同じ2本を単品でもお求めいただけます。",
-    height: "約22cm ＋ 約39cm（2本）",
-    material: "アイアンスチール",
-    plants: ["モンステラ", "ポトス", "ハートカズラ", "ホヤ"],
-    scenes: [
-      "小鉢には22cm、鉢増しした大株には39cmと使い分ける",
-      "大株の中心に39cmを1本、子株の鉢に22cmを1本。棚の上で高さに差をつける",
-      "1鉢に2本差して、伸びた蔓を低い側・高い側に分けて誘引する",
-    ],
-  },
-  {
     // 2026-10-14 新商品: 上り棒セット（BASE 162757270）。説明は BASE 商品ページの記載どおり（受け皿付き・水苔／ネコチップを詰める）。
     // 樹脂製品（2026-10-18 から卸対象・卸はブラック／ライトグレーのみ）。六角鉢＋支柱のセットなので category は「鉢・セット」
     slug: "noboribo",
@@ -1151,61 +1119,6 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
-    // 2026-10-05 新商品: 丸鉢スタンドセット。BASE 161140229
-    slug: "marupot-stand",
-    kind: "pla",
-    category: "pot",
-    // 2026-10-05 増澤さん指示: 支柱(POLE)はセット外なので、名前に「PLANTS POLE」を直接冠さない（六角花瓶と同じ「シリーズ」表記に統一）
-    name: "丸鉢スタンドセット",
-    // 2026-10-05 SEO: カテゴリ pot の既定 title「支柱が差せる六角鉢」は丸鉢と合わないので個別に指定
-    shortTitle: "丸鉢スタンドセット｜3.5号ポットがそのまま入る鉢カバー",
-    fullName: "丸鉢スタンドセット - PLANTS POLEシリーズの3Dプリント製 鉢カバー＋3本脚スタンド -",
-    price: 1600,
-    image: "/products/product-marupot-stand-base.webp",
-    // 2026-10-06 SEO: summary_large_image(1.91:1)で正方形og画像の脚が切れる指摘(デザイナー#3866)→横長OGに差し替え
-    ogImage: "/products/product-marupot-stand-og-wide.jpg",
-    ogWidth: 1200,
-    ogHeight: 630,
-    ogImageSquare: "/products/product-marupot-stand-og.jpg",
-    // 2026-10-10 EC店長#7590: ヒーローが鉢単体なので、使うところが分かるカットをLPに1枚足す
-    usageImage: {
-      src: "/products/product-marupot-leaf.webp",
-      // 2026-10-10 EC店長#7597: 写真の支柱はオレンジ＝樹脂版(pole3pla・680円)。アイアン版(hex3)は黒/白のみなので、
-      // 「3つの六角形」とだけ書くと色違いの誤購入になる。文言に必ず「樹脂版」と色を入れる。
-      alt: "オレンジ鉢とブラック鉢の丸鉢スタンドセットを棚に並べ、PLANTS POLE \"3つの六角形\" 樹脂版（オレンジ）でつる性植物を仕立てたところ",
-      caption: "3.5号のビニールポットをそのまま入れて、棚やデスクの上に。写真はオレンジ鉢×ブラックスタンドとブラック鉢×オレンジスタンドの2点に、PLANTS POLE \"3つの六角形\" 樹脂版（オレンジ・別売680円）を合わせたところです。",
-      width: 640,
-      height: 640,
-    },
-    // 2026-10-11 増澤さん指示: 中の構造（内底の六角受け）を説明。数値は試作メモ v3 の設計値
-    structure: {
-      src: "/products/product-marupot-inside.webp",
-      alt: "丸鉢スタンドセットの鉢カバーを真上から見たところ。内底に六角形の受けがある",
-      lines: [
-        "鉢カバーの内底に、六角形の受けがあります。ZUKE の六角鉢（別売）を入れると、鉢の下部がこの受けにちょうどはまり、横にずれません。",
-        "鉢は底から約1cm浮いた位置に座るので、底に水が少し溜まっても鉢底が浸かりにくくなっています。",
-        "受けの内側は対角約8.1cmで、六角鉢（対角約7.9cm）が入る分だけすき間をとっています。",
-        "3.5号のビニールポットも、そのまま入ります（鉢カバーの内径 約10.6cm）。",
-      ],
-      width: 800,
-      height: 800,
-    },
-    baseUrl: `${SHOP}/items/161140229`,
-    summary:
-      "丸みのある鉢カバーと3本脚スタンドのセット。3.5号のビニールポットがそのまま入り、植え替えずに飾れます。PLA樹脂・3Dプリント製、鉢とスタンドは別パーツで、オレンジ鉢×ブラックスタンド／ブラック鉢×オレンジスタンド／ライトグレー鉢×ブラックスタンドの3種から選べます。",
-    lead:
-      "丸みのある底の鉢カバーと、まっすぐな3本脚のスタンドを組み合わせたセット。鉢をスタンドのリングに乗せるだけで、床から少し浮いた軽やかな佇まいになります。3.5号のビニールポットがそのまま入るので、植え替えずに飾れます。鉢とスタンドは別パーツで、オレンジ鉢×ブラックスタンド、ブラック鉢×オレンジスタンド、ライトグレー鉢×ブラックスタンドの3種から選べます。",
-    height: "鉢 約11cm（直径・高さ）／スタンド込み 高さ約13cm",
-    width: "鉢 直径約11cm／スタンド込み 直径約12.5cm",
-    material: "PLA（植物由来の樹脂）・3Dプリント・マット仕上げ",
-    plants: ["つる性植物", "細葉の観葉植物", "3.5号ポット苗"],
-    scenes: [
-      "3.5号のビニールポットをそのまま植え替えずに飾る",
-      "鉢とスタンドの配色を3種（オレンジ×ブラック／ブラック×オレンジ／ライトグレー×ブラック）から選ぶ",
-      "PLANTS POLE \"3つの六角形\"と合わせてつる性植物を仕立てる",
-    ],
-  },
-  {
     slug: "pole3pla",
     kind: "pla",
     category: "pole",
@@ -1261,90 +1174,6 @@ export const PRODUCTS: Product[] = [
       "複数の鉢に並べて、色でそろえる",
     ],
   },
-  {
-    // 2026-09-26 新商品: 1連支柱（樹脂版）と拡張パーツ。BASE 159543555 / 159543653
-    slug: "pole1pla",
-    kind: "pla",
-    category: "pole",
-    name: 'PLANTS POLE "1つの六角形" 樹脂版',
-    fullName: 'PLANTS POLE "1つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
-    shortTitle: '"1つの六角形" 樹脂版｜園芸支柱',
-    price: 480,
-    image: "/products/product-pole1pla-black.webp",
-    // 2026-10-06 SEO: デザイナー納品のOG(1200x630、脚切れ回避クロップ)に差し替え
-    ogImage: "/products/product-pole1pla-og-wide.jpg",
-    ogWidth: 1200,
-    ogHeight: 630,
-    baseUrl: `${SHOP}/items/159543555`,
-    summary:
-      "六角形ひとつの、いちばん小さなPLANTS POLE。鉢に挿すだけで小さな蔓性植物や若い株をやさしく支えます。ブラック／ホワイト／オレンジ／ライトグレーの4色。",
-    lead:
-      "幅約64mm・全長約120mm（挿入部約65mm）。別売りの拡張パーツ（六角形＋留め具）を辺同士でつなぐと、2連・3連と後から伸ばしていけます。",
-    height: "全長 約120mm（挿入部 約65mm）",
-    width: "幅 約64mm／線の太さ4.4mm・厚み3.6mm",
-    material: "PLA樹脂（3Dプリント・マット仕上げ）",
-    plants: ["ホヤ・ポトスなど小さな蔓性植物", "伸び始めの若い株"],
-    scenes: [
-      "3号〜4号鉢に",
-      "六角鉢シリーズと合わせて",
-      "拡張パーツで成長に合わせて伸ばす",
-    ],
-  },
-  {
-    slug: "hexparts",
-    kind: "pla",
-    category: "extension",
-    name: "PLANTS POLE 拡張パーツ 六角形＋留め具",
-    fullName: "PLANTS POLE 拡張パーツ 六角形＋留め具 樹脂版 - 辺同士をつないで伸ばせる -",
-    shortTitle: "拡張パーツ 六角形＋留め具｜樹脂版支柱用",
-    price: 380,
-    image: "/products/product-hexparts-black.webp",
-    // 2026-10-06 SEO: デザイナー依頼(#3877)でクリップ接合部クローズアップが1.91:1で切れるため横長OGに差し替え
-    ogImage: "/products/product-hexparts-og-wide.jpg",
-    ogWidth: 1200,
-    ogHeight: 630,
-    baseUrl: `${SHOP}/items/159543653`,
-    summary:
-      "樹脂版PLANTS POLEを伸ばすための六角形パーツ1つ＋留め具3個。いま使っている支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。4色。",
-    lead:
-      "植物の成長に合わせて、1連→2連→3連と後から伸ばせます。留め具は隣り合う2本の線を1本ずつ咥えるS字型で、入れたあとはねじらないと外れません。鉄製PLANTS POLEには使えません。",
-    height: "六角形 高さ 約72mm／留め具 約16×8×4mm ×3",
-    width: "六角形 幅 約64mm／線の太さ4.4mm・厚み3.6mm",
-    material: "PLA樹脂（3Dプリント・マット仕上げ）",
-    plants: ["樹脂版PLANTS POLE（1つ／2つ／3つの六角形）を使っている株"],
-    scenes: [
-      "支柱と同色でそろえると留め具が目立ちません",
-      "伸びた分だけ六角形を足す",
-    ],
-  },
-  {
-    // 2026-09-28 新商品: 留め具だけの5個入り（増澤さん指示）。BASE 159749568
-    slug: "hexclip5",
-    kind: "pla",
-    category: "extension",
-    name: "PLANTS POLE 留め具 5個入り",
-    fullName: "PLANTS POLE 留め具 5個入り 樹脂版 - 六角形パーツをつなぐクリップ -",
-    shortTitle: "留め具 5個入り｜樹脂版支柱用",
-    price: 330,
-    image: "/products/product-hexclip5-black.webp",
-    // 2026-10-06 SEO: 1.91:1クロップで端が軽微に欠ける指摘→念のため横長OGに差し替え
-    ogImage: "/products/product-hexclip5-og-wide.jpg",
-    ogWidth: 1200,
-    ogHeight: 630,
-    baseUrl: `${SHOP}/items/159749568`,
-    summary:
-      "樹脂版PLANTS POLEの辺同士をつなぐ留め具（クリップ）だけの5個セット。拡張パーツ付属の3個で足りないとき、色をそろえたいとき、なくしたときの補充用に。4色。",
-    lead:
-      "隣り合う支柱の線と六角形の線を並べ、留め具でパチッと挟むだけ。2本の線を1本ずつ咥えるS字型で、入れたあとはねじらないと外れません。鉄製PLANTS POLEには使えません。",
-    height: "約16×8×4mm ×5個",
-    width: "対応線材: 太さ4.4mm・厚み3.6mm（樹脂版PLANTS POLE）",
-    material: "PLA樹脂（3Dプリント・マット仕上げ）",
-    plants: ["樹脂版PLANTS POLE・拡張パーツを使っている株"],
-    scenes: [
-      "支柱と同色でそろえると目立ちません",
-      "拡張パーツの留め具の補充に",
-    ],
-  },
 ];
 
 // 2026-10-14 ホームのおすすめは8点に絞る（人気上位6＋NEW2）。NEW は1段目に入るよう4番目と8番目に置く。
@@ -1364,7 +1193,7 @@ export const yen = (n: number) => `¥${n.toLocaleString("ja-JP")}`;
 // 2026-09-26 増澤さん指示: 「アイアンで探す／PLA樹脂で探す」の導線と、支柱・鉢・拡張・道具のカテゴリページ（2026-10-11 花瓶は廃止）
 export const MATERIALS: { key: MaterialKind; label: string; lead: string; image: string }[] = [
   { key: "iron", label: "アイアン支柱", lead: "職人が曲げるアイアンスチール製。細く、強く、植物の陰になる存在感。", image: "/products/product-hex5-black.webp" },
-  { key: "pla", label: "PLA樹脂製品", lead: "3Dプリントの六角鉢・樹脂支柱・拡張パーツ。軽く、4色から選べます。", image: "/products/product-hexpot-set-black.webp" },
+  { key: "pla", label: "PLA樹脂製品", lead: "3Dプリントの六角鉢・樹脂支柱。軽く、4色から選べます。", image: "/products/product-hexpot-set-black.webp" },
 ];
 export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   { key: "pole", label: "支柱", lead: "蔓性植物を立ち上げる PLANTS POLE。アイアンと樹脂版。" },
@@ -1373,7 +1202,6 @@ export const CATEGORIES: { key: CategoryKey; label: string; lead: string }[] = [
   // 2026-10-18 増澤さん「LPに新しくハンギングカテゴリを追加」
   { key: "hanging", label: "ハンギング", lead: "S字フックで吊るして、水苔で着生植物を育てる六角形のハンギング鉢。" },
   { key: "pot", label: "鉢・セット", lead: "支柱の差込口付き六角鉢と受け皿、支柱とのセット。差込口のない六角形のスリット鉢「HEX POT BOLD」と「HEX POT LEAN」も。" },
-  { key: "extension", label: "支柱の拡張", lead: "六角形を継ぎ足して、植物の成長に合わせて高さを伸ばすパーツ。対応するのは樹脂版PLANTS POLE（1つ/2つ/3つの六角形）のみで、鉄製PLANTS POLEには使えません。支柱の辺と六角形の辺を並べ、留め具でパチッと挟むだけ。六角形パーツ1つにつき高さ約72mm（7.2cm）伸ばせるので、1連→2連→3連と後から育てていけます。" },
   { key: "tool", label: "園芸道具", lead: "小鉢の植え替え・土入れに使う、3Dプリント製の小さな道具。" },
 ];
 export type CollectionKey = MaterialKind | CategoryKey;
@@ -1393,7 +1221,7 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
   },
   pla: {
     seoTitle: "3Dプリントの六角鉢・樹脂支柱（PLA）",
-    seoDescription: "PLA樹脂を3Dプリントでつくる、支柱の差込口付き六角鉢・受け皿・樹脂版支柱・拡張パーツ。軽く、色を選べます。アイアンの PLANTS POLE と同じ六角形のデザインです。",
+    seoDescription: "PLA樹脂を3Dプリントでつくる、支柱の差込口付き六角鉢・受け皿・樹脂版支柱。軽く、色を選べます。アイアンの PLANTS POLE と同じ六角形のデザインです。",
   },
   climb: {
     seoTitle: "登り棒（モス支柱）｜水苔を詰める六角形の支柱",
@@ -1407,10 +1235,6 @@ const COLLECTION_SEO: Record<CollectionKey, { seoTitle: string; seoDescription: 
     seoTitle: "支柱が差せる六角鉢・鉢と支柱のセット",
     seoDescription: "鉢の内側に支柱の差込口がある六角形の鉢と受け皿、PLANTS POLE とのセット。差し込むだけで支柱が固定でき、植物タグ用のポケット付き。PLA樹脂・3Dプリント製で、小さな蔓性植物や若い株に。",
   },
-  extension: {
-    seoTitle: "支柱を後から伸ばす拡張パーツ・留め具",
-    seoDescription: "樹脂版 PLANTS POLE に六角形を継ぎ足して、植物の成長に合わせて高さを伸ばせる拡張パーツと留め具。辺同士を並べて留め具で挟むだけ。1連の樹脂版支柱から、2連・3連へと伸ばせます。アイアン製には使えません。",
-  },
   tool: {
     seoTitle: "小鉢用の土入れスコップ・園芸道具",
     seoDescription: "小さな鉢の植え替えや寄せ植えに使う、3Dプリント製の園芸道具。ふるい穴付きのミニ土入れスコップ（直径約3cm・長さ約14cm）は、斜めカットの注ぎ口で狭いすき間にも土を入れられます。",
@@ -1420,8 +1244,7 @@ export const COLLECTIONS: { key: CollectionKey; label: string; lead: string; seo
   ...MATERIALS.map((m) => ({ key: m.key as CollectionKey, label: m.label, lead: m.lead, ...COLLECTION_SEO[m.key], filter: (p: Product) => p.kind === m.key })),
   ...CATEGORIES.map((c) => ({
     key: c.key as CollectionKey, label: c.label, lead: c.lead, ...COLLECTION_SEO[c.key],
-    // 「支柱の拡張」には拡張パーツに加え、起点になる挿入部つきの 1連樹脂版も並べる（2026-09-26 増澤さん指示）
-    filter: (p: Product) => p.category === c.key || (c.key === "extension" && p.slug === "pole1pla"),
+    filter: (p: Product) => p.category === c.key,
   })),
 ];
 export const collectionByKey = (key: string) => COLLECTIONS.find((c) => c.key === key);
@@ -1444,7 +1267,7 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   ],
   "hexpot-set2": [
     { slug: "pole2pla", note: "付属支柱と同じもの。色違いの買い足しに" },
-    { slug: "hexparts", note: "成長に合わせて六角形を足して伸ばす" },
+    { slug: "pole3pla", note: "同じ樹脂版の3連（約22cm）" },
   ],
   // 2026-10-16 EC店長#10314 で (a) 承認: hex3・hex5 の「3つ＋5つ」は 2本セット(1,980円)が単品2点(2,200円)より
   // 220円安い。両ページともセットを先頭に出す。価格はカード側が product.price から出すので note には書かない
@@ -1455,7 +1278,7 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   // 復活の見込みが無いあいだ、セット先頭＝全導線の一等地を在庫0に使っていた。セットが組めるようになったら戻す。
   hex3: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
-    { slug: "marupot-stand", note: "丸鉢スタンドセットに仕立てて、つる性・細葉の植物をすっきりまとめる" },
+    { slug: "hexpot-set", note: "鉢・受け皿・同じ3連の樹脂版支柱がそろうセット" },
     // 2026-10-10 SEO: BASEの複数点注文は「3つ＋2つ」の組み合わせが最多（9/27・10/9）。相互に導線を出す
     { slug: "hex2", note: "高さ違い（約19.5cm）を隣の小鉢に。2点で合計1,650円" },
   ],
@@ -1468,14 +1291,6 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
     { slug: "hex3", note: "高さ違い（約22cm）。小さめの鉢や子株に" },
     { slug: "uneune", note: "横に広がってしまう株のシルエットを整える曲線タイプ（約35cm）" },
     { slug: "hex2", note: "いちばん低い約19.5cm。大株の隣の小鉢に、もう1本添えるなら" },
-  ],
-  "hex-set-2pcs": [
-    { slug: "hexpot", note: "このセットの支柱を差し込める六角鉢＋受け皿" },
-    { slug: "hex2", note: "さらに低い約19.5cm。もう1鉢ぶん足すなら" },
-    { slug: "hex3", note: "セットが品切れのときは、こちらの単品で（約22cm）" },
-    // 2026-10-26 SEO(#13841): hex5(約39cm) は 10/29 の卸引き当てで完全完売見込みのため、
-    // 背の高い株の行き先を4色とも在庫がある上り棒セットに差し替え（高さは全高約28.5cm）。
-    { slug: "noboribo", note: "大株を上に登らせたいなら、水苔を詰める上り棒セット（4色とも在庫あり）" },
   ],
   hex2: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
@@ -1493,21 +1308,12 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   ],
   pole3pla: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
-    { slug: "hexparts", note: "六角形を足して伸ばす" },
+    { slug: "pole2pla", note: "同じ樹脂版の2連（約17cm）。小鉢に" },
   ],
   pole2pla: [
     { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
-    { slug: "hexparts", note: "六角形を足して伸ばす" },
+    { slug: "pole3pla", note: "同じ樹脂版の3連（約22cm）" },
   ],
-  pole1pla: [
-    { slug: "hexparts", note: "1連→2連→3連と後から伸ばす" },
-    { slug: "hexpot", note: "差込口付きの六角鉢に挿して固定" },
-  ],
-  hexparts: [
-    { slug: "pole1pla", note: "伸ばす前の1連から" },
-    { slug: "hexclip5", note: "留め具の補充に" },
-  ],
-  hexclip5: [{ slug: "hexparts", note: "六角形パーツを足して伸ばす" }],
   noboribo: [
     { slug: "scoop", note: "六角鉢への土入れに" },
     { slug: "soilstick", note: "六角鉢の植え付けに" },
@@ -1519,10 +1325,5 @@ export const PAIRINGS: Record<string, { slug: string; note: string }[]> = {
   scoop: [
     { slug: "hexpot", note: "口の小さな六角鉢への土入れに" },
     { slug: "hexpot-set", note: "鉢・受け皿・支柱の3点セットの植え付けに" },
-  ],
-  "marupot-stand": [
-    // 2026-10-10 EC店長#7597: 使用イメージの支柱は樹脂版(オレンジ)。写真どおりの組み合わせを先頭に出す（客単価 1,600→2,280円）
-    { slug: "pole3pla", note: "使用イメージと同じ組み合わせ。鉢と同じ4色から選べる樹脂版（+680円）" },
-    { slug: "hex3", note: "アイアン製（ブラック／ホワイト）の六角形3連。つる性・細葉の植物をすっきりまとめる" },
   ],
 };

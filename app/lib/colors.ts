@@ -7,7 +7,7 @@ export const COLORS: { key: ColorKey; label: string; swatch: string }[] = [
   { key: "lightgray", label: "ライトグレー", swatch: "#C9CACB" },
 ];
 // アイアン支柱・花瓶はブラック/ホワイトのみ。3Dプリント樹脂製品は4色
-export const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3pla", "pole2pla", "hexpot", "pole1pla", "hexparts", "hexclip5"]);
+export const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3pla", "pole2pla", "hexpot"]);
 // 2026-09-27 増澤さん指示: 全商品でオレンジ/ライトグレーにも切り替える（アイアン・花瓶もCodexで色替え画像を用意）
 export const hasColor = (_slug: string, _color: ColorKey) => true;
 export const productImage = (slug: string, color: ColorKey) => `/products/product-${slug}-${hasColor(slug, color) ? color : "black"}.webp`;
@@ -23,8 +23,6 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hex3: ["black", "white"],
   hex2: ["black", "white"],
   uneune: ["black", "white"],
-  // 2026-10-06 丸鉢スタンドセットは色の選択肢ではなく「オレンジ鉢×ブラックスタンド」「ブラック鉢×オレンジスタンド」「ライトグレー鉢×ブラックスタンド」の3種（EC店長#4408で確定。white・base単色は存在しない）。色ボタンは出さない
-  "marupot-stand": [],
   // 2026-10-11 ミニ土入れスコップは ブラック／ライトグレー／オレンジ の3色（白なし）
   scoop: ["black", "lightgray", "orange"],
   // 2026-10-12 ソイルスティックは ブラック／ライトグレー／オレンジ の3色（白なし）
@@ -39,7 +37,6 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   "hexwall-set": [],
   hexwallpot: [],
   hexwallplate: [],
-  "hex-set-2pcs": [],
   // 2026-11-19 HEX POT BOLD はホワイトマーブル／ブラック。HEX POT LEAN（hexpot-lean）はブラック／ホワイトマーブル／半透明ライトブルー。
   // COLORS に「ホワイトマーブル」「半透明ライトブルー」が無いので色ボタンは出さず、
   // 商品ページの「写真」欄（gallery）に BASE と同じ順で並べる。ライトグレー・オレンジ・ホワイトは販売していない。
@@ -52,12 +49,8 @@ export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COL
 // 2026-09-27 増澤さん「全商品でオレンジ/ライトグレーにも切り替える」は維持したいので、BASE で買える色（soldColors）では
 // なく「その配色の写真が存在しない色」だけを除外し、base 画像＋色名なしの alt に戻す。
 const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
-  // 丸鉢スタンドセットはオレンジ鉢／ブラック鉢／ライトグレー鉢の3種だけ。白の鉢は商品も写真も無い
-  "marupot-stand": ["white"],
   scoop: ["white"],
   soilstick: ["white"],
-  // 2026-10-16 2本セットは配色ごとの写真が1枚も無い（上の SOLD_COLORS 参照）。一覧で色を押しても1枚目のまま
-  "hex-set-2pcs": ["black", "white", "orange", "lightgray"],
   // 2026-10-25 壁掛け六角鉢シリーズは色違い写真が未作成。一覧で色を押すと画像が割れていた
   "hexwall-set": ["black", "white", "orange", "lightgray"],
   hexwallpot: ["black", "white", "orange", "lightgray"],
