@@ -16,8 +16,11 @@ import { SHOP, PRODUCTS } from "@/app/lib/products";
 const MAIBIZ_CLICKS_URL = "https://inventory-app-production-660b.up.railway.app/api/base-clicks";
 
 /** 中継先は BASE 本店の商品だけ。products.ts に載っている item_id 以外は受け付けない（オープンリダイレクト防止） */
+const itemIdOf = (url: string) => url.match(/\/items\/(\d+)$/)?.[1];
 const ALLOWED_ITEM_IDS = new Set(
-  PRODUCTS.map((p) => p.baseUrl.match(/\/items\/(\d+)$/)?.[1]).filter((v): v is string => !!v),
+  PRODUCTS.flatMap((p) => [p.baseUrl, ...(p.sizes?.map((s) => s.baseUrl) ?? [])])
+    .map(itemIdOf)
+    .filter((v): v is string => !!v),
 );
 
 // 2026-10-23 SEO(#12803 EC店長): 品切れ(soldOut)の商品は BASE 側が承認セット(78)で非公開＝404 になる。

@@ -35,10 +35,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!p) return {};
   // 2026-10-10 SEO: shortTitle に `{price}` と書くと products.ts の price から埋める。
   // 価格はEC店長が所有する数字なので、タイトルに数字を二重で持たせない（price を直せばtitleも追従）
-  const title = (p.shortTitle ?? `${p.name}｜${TITLE_SUFFIX[p.category]}`).replace(
-    "{price}",
-    `${p.price.toLocaleString("ja-JP")}円`,
-  );
+  // 2026-11-20: L/S を並べる商品は、各サイズの BASE 名と価格をタイトルにする（L は price、S は sizes）
+  const title = p.sizes?.length
+    ? p.sizes.map((s) => `${s.name} ${s.price.toLocaleString("ja-JP")}円`).join("／")
+    : (p.shortTitle ?? `${p.name}｜${TITLE_SUFFIX[p.category]}`).replace(
+        "{price}",
+        `${p.price.toLocaleString("ja-JP")}円`,
+      );
   return {
     title,
     description: p.summary,
@@ -72,6 +75,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const todayJst = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const activeCampaign = p.campaigns?.find((c) => todayJst >= c.startDate && todayJst <= c.endDate);
 
+  const galleryImages = p.gallery?.length
+    ? p.gallery.map((g) => `${SITE}${g.src}`)
+    : sold.length ? sold.map((c) => `${SITE}${productImage(p.slug, c)}`) : [`${SITE}${baseImage(p.slug)}`];
+  const sizeImages = (p.details ?? []).flatMap((d) => d.images ?? []).map((im) => `${SITE}${im.src}`);
+  // 2026-10-23 EC店長#12795: 全商品 InStock のハードコードをやめ、products.ts の soldOut で分岐。
+  // 2026-10-23 SEO(#12803): 品切れの間は自社の商品ページを行き先にする。
+  const offerFor = (price: number, url: string, name?: string) => ({
+    "@type": "Offer",
+    ...(name ? { name } : {}),
+    price,
+    priceCurrency: "JPY",
+    availability: p.soldOut ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+    itemCondition: "https://schema.org/NewCondition",
+    seller: { "@type": "Organization", name: "ZUKE", url: SITE },
+    hasMerchantReturnPolicy: { "@type": "MerchantReturnPolicy", applicableCountry: "JP", returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted" },
+    url: p.soldOut ? `${SITE}/products/${p.slug}` : url,
+  });
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -81,9 +101,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       // 2026-09-29 SEO R4: 手書きの条件式をやめ、BASE で実際に選べる色（soldColors）に合わせる
       // 2026-10-06 SEO: 色ボタンを出さない商品（丸鉢スタンドセット等・sold が空）は image が [] になりリッチリザルト対象外だった → BASE の1枚目で補う
       // 2026-11-19: 写真欄（gallery）がある商品は、その写真（BASE と同じ順）を登録する
-      image: p.gallery?.length
-        ? p.gallery.map((g) => `${SITE}${g.src}`)
-        : sold.length ? sold.map((c) => `${SITE}${productImage(p.slug, c)}`) : [`${SITE}${baseImage(p.slug)}`],
+      // 2026-11-20: L/S の寸法写真も登録する
+      image: [...galleryImages, ...sizeImages],
       description: p.summary,
       sku: p.slug,
       url: `${SITE}/products/${p.slug}`,
@@ -91,24 +110,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       color: p.colorNames?.length ? p.colorNames.join(" / ") : sold.length ? sold.map(colorLabel).join(" / ") : undefined,
       category: p.kind === "iron" ? "園芸支柱（アイアン）" : "3Dプリント園芸用品（PLA樹脂）",
       brand: { "@type": "Brand", name: "ZUKE" },
-      offers: {
-        "@type": "Offer",
-        price: p.price,
-        priceCurrency: "JPY",
-        // 2026-10-23 EC店長#12795: 全商品 InStock のハードコードをやめ、products.ts の soldOut で分岐。
-        // 在庫0の商品を「在庫あり」で配信するとGoogleへの不実表示になる（ショッピングタブ側の信頼にも効く）。
-        availability: p.soldOut ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
-        // 2026-09-29 SEO R4: 販売者リスティングの推奨項目。返品ポリシー・送料は表し方をオーナー確認後に追加する
-        itemCondition: "https://schema.org/NewCondition",
-        seller: { "@type": "Organization", name: "ZUKE", url: SITE },
-        // 2026-10-19 Search Console「ショッピングタブに未掲載」対応: BASE 特商法表記どおり（欠陥品以外は返品不可）。送料は地域・サイズで変わるため shippingDetails は入れない
-        hasMerchantReturnPolicy: { "@type": "MerchantReturnPolicy", applicableCountry: "JP", returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted" },
-        // 2026-10-23 SEO(#12803 EC店長): soldOut の商品は BASE 側の商品ページが承認セット(78)で非公開＝404 になる。
-        // availability だけ OutOfStock にして offers.url を死んだ URL のまま配信すると、Offer の行き先が
-        // クロールで 404 になる（表示上の黒ボタンは 6eee200 で外れているが、構造化データだけ残っていた）。
-        // 品切れの間は自社の商品ページを行き先にする。在庫が戻って soldOut を外せば自動で baseUrl に戻る。
-        url: p.soldOut ? `${SITE}/products/${p.slug}` : p.baseUrl,
-      },
+      // 2026-11-20: サイズが複数ある商品は、サイズごとの Offer（L の価格・URLは変えない）
+      offers: p.sizes?.length
+        ? p.sizes.map((s) => offerFor(s.price, s.baseUrl, s.name))
+        : offerFor(p.price, p.baseUrl),
     },
     {
       "@context": "https://schema.org",
@@ -154,7 +159,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div>
             <h1 className="text-xl md:text-2xl font-bold leading-relaxed">{p.name}</h1>
             <p className="mt-2 text-[13px] text-gray-500 leading-relaxed">{p.fullName}</p>
-            <p className="mt-5 text-2xl font-bold">{yen(p.price)}<span className="ml-2 text-xs font-normal text-gray-500">税込</span></p>
+            {p.sizes && p.sizes.length > 0 ? (
+              <p className="mt-5 text-xl md:text-2xl font-bold leading-relaxed">
+                {p.sizes.map((s, i) => (
+                  <span key={s.name}>
+                    {i > 0 && <span className="mx-1.5 font-normal text-gray-300">／</span>}
+                    <span className="mr-1.5 text-[13px] font-normal text-gray-500">{s.label}</span>
+                    {yen(s.price)}
+                  </span>
+                ))}
+                <span className="ml-2 text-xs font-normal text-gray-500">税込</span>
+              </p>
+            ) : (
+              <p className="mt-5 text-2xl font-bold">{yen(p.price)}<span className="ml-2 text-xs font-normal text-gray-500">税込</span></p>
+            )}
 
             {activeCampaign && (
               <p className="mt-4 text-xs font-bold text-white bg-[#c0392b] inline-block px-3 py-1.5 rounded">
@@ -190,7 +208,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   </>
                 )}
               </>
-            ) : (
+            ) : p.sizes && p.sizes.length > 0 ? null : (
               <>
                 {/* 2026-11-01 広告・SEO 案、増澤さん承認: 購入ボタンの直上。soldOut ではこの枝に入らない */}
                 {p.pageStockNote && (
@@ -207,7 +225,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </>
             )}
             {/* soldOut のときのボタンはサイト内の商品ページへ行くので、「BASE へ移動します」の注記は出さない（行き先と食い違う） */}
-            {!p.soldOut && (
+            {/* サイズごとの購入ボタンがある商品は、その直下に同じ注記を出す */}
+            {!p.soldOut && !p.sizes?.length && (
               <p className="mt-3 text-xs text-gray-500 leading-relaxed">
                 購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
               </p>
@@ -310,6 +329,39 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
+        {p.sizes && p.sizes.length > 0 && !p.soldOut && (
+          <section className="mt-12" aria-label="サイズを選ぶ">
+            <h2 className="text-base font-bold">サイズ</h2>
+            <div className="mt-6 grid grid-cols-2 gap-3 md:gap-6">
+              {p.sizes.map((s) => (
+                <div key={s.name} className="flex h-full flex-col border border-gray-100 px-3 py-4 sm:px-4">
+                  <p className="text-[13px] font-bold leading-relaxed">{s.name}</p>
+                  <p className="mt-1 text-[11px] tracking-[0.14em] text-gray-500">{s.label}</p>
+                  <p className="mt-2 text-lg font-bold sm:text-xl">{yen(s.price)}<span className="ml-1.5 text-[11px] font-normal text-gray-500">税込</span></p>
+                  <ul className="mt-3 flex flex-col gap-1 text-[12px] leading-relaxed text-gray-700 sm:text-[13px]">
+                    {s.lines.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto pt-4">
+                    <a
+                      href={withUtm(s.baseUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-full py-3 bg-[#222] text-white text-[12px] tracking-[0.08em] hover:opacity-85 transition-opacity sm:text-[13px]"
+                    >
+                      {s.label}を購入する
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-xs text-gray-500 leading-relaxed">
+              購入は BASE の ZUKE 公式ストアへ移動します。送料は地域・サイズにより {yen(SHIPPING.feeFrom)}〜（ヤマト宅急便）、{yen(SHIPPING.freeOver)}以上のご注文で国内送料無料。
+            </p>
+          </section>
+        )}
+
         {/* 2026-11-19: 色ボタンで切り替えられない色名（ホワイトマーブル）の商品は、BASE と同じ順で写真を並べる */}
         {p.gallery && p.gallery.length > 0 && (
           <section className="mt-16" aria-label="写真">
@@ -399,6 +451,21 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             {p.details.map((d) => (
               <div key={d.heading} className="mt-10 first:mt-0">
                 <h2 className="text-base font-bold">{d.heading}</h2>
+                {d.images && d.images.length > 0 && (
+                  <div className={`mt-4 grid gap-4 ${d.images.length > 1 ? "sm:grid-cols-2" : ""}`}>
+                    {d.images.map((im) => (
+                      <Image
+                        key={im.src}
+                        src={im.src}
+                        alt={im.alt}
+                        width={im.width}
+                        height={im.height}
+                        sizes="(max-width: 640px) 100vw, 360px"
+                        className="w-full h-auto"
+                      />
+                    ))}
+                  </div>
+                )}
                 <div className="mt-4 flex flex-col gap-4 text-[15px] leading-loose text-gray-700">
                   {d.paragraphs.map((x) => <p key={x}>{x}</p>)}
                   {d.link && (

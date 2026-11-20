@@ -41,7 +41,7 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hexwallplate: [],
   "hex-set-2pcs": [],
   // 2026-11-19 HEX POT BOLD はホワイトマーブル／ブラック。HEX POT LEAN（hexpot-lean）はブラック／ホワイトマーブル／半透明ライトブルー。
-  // いずれも受注生産。COLORS に「ホワイトマーブル」「半透明ライトブルー」が無いので色ボタンは出さず、
+  // COLORS に「ホワイトマーブル」「半透明ライトブルー」が無いので色ボタンは出さず、
   // 商品ページの「写真」欄（gallery）に BASE と同じ順で並べる。ライトグレー・オレンジ・ホワイトは販売していない。
   "hexpot-bold": [],
   "hexpot-lean": [],
