@@ -606,7 +606,6 @@ export const PRODUCTS: Product[] = [
           "受け皿を含むセットの高さ：83mm",
           "受け皿：96mm",
           "土の量：約320ml",
-          "寸法写真の大きいほう（写真内の「通常サイズ」）がLサイズ（HEX POT BOLD L）、小さいほう（BOLD S）がSサイズ（HEX POT BOLD S）です。",
         ],
       },
       {
@@ -745,7 +744,6 @@ export const PRODUCTS: Product[] = [
           "受け皿：96mm",
           "土の量：約315ml",
           "カラー：ブラック、ホワイトマーブル、半透明ライトブルー",
-          "寸法写真の大きいほう（写真内の「通常サイズ」）がLサイズ（HEX POT LEAN L）、小さいほう（LEAN S）がSサイズ（HEX POT LEAN S）です。",
         ],
       },
       {
