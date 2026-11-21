@@ -60,7 +60,7 @@ const TREE: Step = {
         q: "どちらの質感が好きですか？",
         options: [
           { id: "iron", label: "アイアン", sub: "細く強い。植物の陰になる存在感", next: IRON_SIZE },
-          { id: "pla", label: "樹脂（3Dプリント）", sub: "軽くて、4色から選べます", next: PLA_SIZE },
+          { id: "pla", label: "樹脂（3Dプリント）", sub: "軽くて、3色から選べます", next: PLA_SIZE },
         ],
       },
     },

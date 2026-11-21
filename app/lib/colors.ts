@@ -1,12 +1,11 @@
 // 2026-09-26 商品画像のカラー切替（ホーム・商品一覧・カテゴリページで共通）
-export type ColorKey = "black" | "white" | "orange" | "lightgray";
+export type ColorKey = "black" | "white" | "lightgray";
 export const COLORS: { key: ColorKey; label: string; swatch: string }[] = [
   { key: "black", label: "ブラック", swatch: "#222" },
   { key: "white", label: "ホワイト", swatch: "#EDEAE3" },
-  { key: "orange", label: "オレンジ", swatch: "#F06A1E" },
   { key: "lightgray", label: "ライトグレー", swatch: "#C9CACB" },
 ];
-// アイアン支柱・花瓶はブラック/ホワイトのみ。3Dプリント樹脂製品は4色
+// アイアン支柱はブラック/ホワイトのみ。3Dプリント樹脂製品（鉢・支柱）はブラック／ホワイト／ライトグレーの3色
 export const FOUR_COLORS = new Set<string>(["hexpot-set", "hexpot-set2", "pole3pla", "pole2pla", "hexpot"]);
 // 2026-09-27 増澤さん指示: 全商品でオレンジ/ライトグレーにも切り替える（アイアン・花瓶もCodexで色替え画像を用意）
 export const hasColor = (_slug: string, _color: ColorKey) => true;
@@ -23,14 +22,14 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hex3: ["black", "white"],
   hex2: ["black", "white"],
   uneune: ["black", "white"],
-  // 2026-10-11 ミニ土入れスコップは ブラック／ライトグレー／オレンジ の3色（白なし）
-  scoop: ["black", "lightgray", "orange"],
-  // 2026-10-12 ソイルスティックは ブラック／ライトグレー／オレンジ の3色（白なし）
-  soilstick: ["black", "lightgray", "orange"],
-  // 2026-10-14 上り棒セットは4色（増澤さん指示）
-  noboribo: ["black", "orange", "lightgray", "white"],
-  // 2026-10-18 六角形ハンギング鉢は4色（増澤さん指示でオレンジ／ホワイト追加）
-  hexhanging: ["black", "orange", "lightgray", "white"],
+  // 2026-11-22 オレンジ終了。ミニ土入れスコップは ブラック／ライトグレー の2色（白なし）
+  scoop: ["black", "lightgray"],
+  // 2026-11-22 オレンジ終了。ソイルスティックは ブラック／ライトグレー の2色（白なし）
+  soilstick: ["black", "lightgray"],
+  // 2026-11-22 オレンジ終了。上り棒セットはブラック／ライトグレー／ホワイトの3色
+  noboribo: ["black", "lightgray", "white"],
+  // 2026-11-22 オレンジ終了。六角形ハンギング鉢はブラック／ライトグレー／ホワイトの3色
+  hexhanging: ["black", "lightgray", "white"],
   // 2026-10-16 2本セット（BASE 162185287）はブラック／ホワイトを選べるが、2本そろいの色違い写真が無い
   // （BASEの5枚もブラックの実写＋カラー説明図）。無い写真を合成して出さないので色ボタンは出さず1枚目のみ
   // 2026-10-24 壁掛け六角鉢セットは4色販売だが実写はブラックのみ。無い写真を合成しないので色ボタンは出さない
@@ -39,25 +38,24 @@ const SOLD_COLORS: Record<string, ColorKey[]> = {
   hexwallplate: [],
   // 2026-11-19 HEX POT BOLD はホワイトマーブル／ブラック。HEX POT LEAN（hexpot-lean）はブラック／ホワイトマーブル／半透明ライトブルー。
   // COLORS に「ホワイトマーブル」「半透明ライトブルー」が無いので色ボタンは出さず、
-  // 商品ページの「写真」欄（gallery）に BASE と同じ順で並べる。ライトグレー・オレンジ・ホワイトは販売していない。
+  // 商品ページの「写真」欄（gallery）に BASE と同じ順で並べる。ライトグレーとホワイトは販売していない。
   "hexpot-bold": [],
   "hexpot-lean": [],
 };
 export const soldColors = (slug: string): ColorKey[] => SOLD_COLORS[slug] ?? COLORS.map((c) => c.key);
 // 2026-10-10 EC店長#7597: ホーム・商品一覧・カテゴリの色ボタンは全4色固定なので、その商品に存在しない配色を押すと
 // 中身は base のままなのに alt だけ「（ホワイト）」になっていた（丸鉢スタンドのホワイト用ファイルは base と同一）。
-// 2026-09-27 増澤さん「全商品でオレンジ/ライトグレーにも切り替える」は維持したいので、BASE で買える色（soldColors）では
-// なく「その配色の写真が存在しない色」だけを除外し、base 画像＋色名なしの alt に戻す。
+// 2026-11-22 オレンジは販売色から外した。写真が無い色だけを除外し、base 画像＋色名なしの alt に戻す方針は残す。
 const NO_PHOTO_COLORS: Record<string, ColorKey[]> = {
   scoop: ["white"],
   soilstick: ["white"],
   // 2026-10-25 壁掛け六角鉢シリーズは色違い写真が未作成。一覧で色を押すと画像が割れていた
-  "hexwall-set": ["black", "white", "orange", "lightgray"],
-  hexwallpot: ["black", "white", "orange", "lightgray"],
-  hexwallplate: ["black", "white", "orange", "lightgray"],
+  "hexwall-set": ["black", "white", "lightgray"],
+  hexwallpot: ["black", "white", "lightgray"],
+  hexwallplate: ["black", "white", "lightgray"],
   // 2026-11-19 HEX POT BOLD / HEX POT LEAN は色別の一覧用写真を作っていない（色名もホワイトマーブルなど）。一覧で色を押しても1枚目のまま
-  "hexpot-bold": ["black", "white", "orange", "lightgray"],
-  "hexpot-lean": ["black", "white", "orange", "lightgray"],
+  "hexpot-bold": ["black", "white", "lightgray"],
+  "hexpot-lean": ["black", "white", "lightgray"],
 };
 export const hasColorPhoto = (slug: string, color: ColorKey | null): color is ColorKey =>
   color !== null && !(NO_PHOTO_COLORS[slug] ?? []).includes(color);

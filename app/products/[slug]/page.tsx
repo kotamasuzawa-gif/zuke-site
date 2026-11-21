@@ -151,7 +151,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             slug={p.slug}
             name={p.fullName}
             colors={sold}
-            initial={(p.image.match(/-(black|white|orange|lightgray)\.webp$/)?.[1] as ColorKey | undefined) ?? sold[0]}
+            initial={(p.image.match(/-(black|white|lightgray)\.webp$/)?.[1] as ColorKey | undefined) ?? sold[0]}
             defaultImage={p.initialImage}
           />
 
