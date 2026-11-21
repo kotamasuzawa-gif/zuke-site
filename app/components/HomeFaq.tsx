@@ -4,7 +4,8 @@ import { WHOLESALE_EMAIL } from "@/app/lib/contact";
 
 // 2026-09-29 SEO R4: 価格は products.ts（BASE と同期）から算出する。
 // 固定文言だと「樹脂版支柱は¥580から」のように実売価格（¥480）とずれ、FAQPage の JSON-LD にもそのまま出ていた。
-const shortName = (p: Product) => p.name.match(/"(.+?)"/)?.[1] ?? p.name;
+// 括弧内は BASE の商品名からシリーズ名だけ外したもの（"2つの六角形" 17cm 樹脂版 など）
+const shortName = (p: Product) => p.name.replace(/^PLANTS POLE\s*/, "");
 const priceFrom = (items: Product[]) => {
   const min = Math.min(...items.map((p) => p.price));
   return { price: yen(min), names: items.filter((p) => p.price === min).map(shortName).join("・") };

@@ -157,7 +157,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           <div>
             <h1 className="text-xl md:text-2xl font-bold leading-relaxed">{p.name}</h1>
-            <p className="mt-2 text-[13px] text-gray-500 leading-relaxed">{p.fullName}</p>
+            {p.fullName !== p.name && (
+              <p className="mt-2 text-[13px] text-gray-500 leading-relaxed">{p.fullName}</p>
+            )}
             {p.sizes && p.sizes.length > 0 ? (
               <p className="mt-5 text-xl md:text-2xl font-bold leading-relaxed">
                 {p.sizes.map((s, i) => (

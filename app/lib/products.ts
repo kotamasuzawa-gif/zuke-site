@@ -243,15 +243,16 @@ export const PRODUCTS: Product[] = [
     // 2026-11-01: 手動の soldOut を外した。購入は baseUrl（BASE 117375069）へ。
     // 2026-10-26 に付けていた soldOut と soldOutAlt（上り棒セットへの振り替え）は削除。
     // 価格FAQは hex5 を含めた4型（商品名の括弧なし。HomeFaq.tsx）。stockNote は付けない。price は 1,320 のまま。
-    name: 'PLANTS POLE "5つの六角形"',
-    fullName: 'PLANTS POLE "5つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
+    // 2026-11-21: 商品名は BASE 公開ページのタイトル。旧サブタイトル（用途の一文）は lead / summary に残す。
+    name: 'PLANTS POLE "5つの六角形" 39cm アイアン',
+    fullName: 'PLANTS POLE "5つの六角形" 39cm アイアン',
     // 2026-10-17 SEO(#10850): 販売数1位（全期間71本・L126）なのに shortTitle が無く、title が
     // 商品名＋カテゴリ固定文（"5つの六角形"｜観葉植物の園芸支柱）＝用途も高さも価格も出ていなかった。
     // 入れる言葉はGSCに実在するクエリと products.ts の確定値だけ: /products/hex5 は直近3か月で
     // 10表示・0クリック・平均順位3.5（10/17 GSC実査）で、サイトに来ているモンステラ系クエリは
     // 40表示・0クリック（「モンステラ 自立しない」6 /「垂らす」4 /「倒れる」4 /「支柱」4）。
     // 39cm = height の確定値、モンステラ・ポトス = plants の記載。
-    shortTitle: '"5つの六角形" {price}｜モンステラ・ポトスを立ち上げる39cmの園芸支柱',
+    shortTitle: 'PLANTS POLE "5つの六角形" 39cm アイアン {price}｜モンステラ・ポトスを立ち上げる園芸支柱',
     price: 1320,
     image: "/products/product-hex5-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップでトレリス上部が切れる指摘→横長OGに差し替え
@@ -297,10 +298,10 @@ export const PRODUCTS: Product[] = [
     slug: "hex3",
     kind: "iron",
     category: "pole",
-    name: 'PLANTS POLE "3つの六角形"',
-    fullName: 'PLANTS POLE "3つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
+    name: 'PLANTS POLE "3つの六角形" 22cm アイアン',
+    fullName: 'PLANTS POLE "3つの六角形" 22cm アイアン',
     // 2026-10-14 SEO(#8901/#8919): 10/15リールのキャプション軸「伸びた蔓が、インテリアの一部に」と検索結果の言葉を揃える
-    shortTitle: '"3つの六角形" {price}｜伸びた蔓をインテリアの一部にする園芸支柱',
+    shortTitle: 'PLANTS POLE "3つの六角形" 22cm アイアン {price}｜伸びた蔓をインテリアの一部にする園芸支柱',
     price: 880,
     image: "/products/product-hex3-base.webp",
     // 2026-10-04 SEO: summary_large_image(1.91:1)で正方形og画像の上下が切れる指摘→横長OGに差し替え
@@ -321,7 +322,7 @@ export const PRODUCTS: Product[] = [
     // 2026-10-10 デザイナー#6729 納品のBASE5枚目と同じ図。幅表記を消したぶんをサイズ図で埋める
     sizeImage: {
       src: "/products/base-128906974-05-size.jpg",
-      alt: 'PLANTS POLE "3つの六角形" の寸法図。高さ 約22cm。',
+      alt: 'PLANTS POLE "3つの六角形" 22cm アイアンの寸法図。高さ 約22cm。',
       caption: "高さ 約22cm。2.5〜5号前後の鉢が目安です（写真はブラック）。",
       width: 1600,
       height: 1600,
@@ -369,8 +370,8 @@ export const PRODUCTS: Product[] = [
     slug: "hex2",
     kind: "iron",
     category: "pole",
-    name: 'PLANTS POLE "2つの六角形"',
-    fullName: 'PLANTS POLE "2つの六角形" - 蔓性植物をインテリアに馴染むように飾る支柱 -',
+    name: 'PLANTS POLE "2つの六角形" 19.5cm アイアン',
+    fullName: 'PLANTS POLE "2つの六角形" 19.5cm アイアン',
     price: 770,
     image: "/products/product-hex2-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで欠ける指摘→横長OGに差し替え
@@ -411,14 +412,14 @@ export const PRODUCTS: Product[] = [
     slug: "uneune",
     kind: "iron",
     category: "pole",
-    name: 'PLANTS POLE "うねうね"',
-    // 2026-11-01 広告・SEO 案、増澤さん承認: 検索タイトル・説明・正式名称・リード。name（h1）は変えない。
+    name: 'PLANTS POLE "うねうね" 35cm アイアン',
     // {price} は generateMetadata が price から「1,320円」に置換。末尾の｜ZUKE は layout の title template。
-    fullName: 'PLANTS POLE "うねうね" -横に広がる観葉植物の支柱-',
+    // 旧サブタイトル「横に広がる観葉植物の支柱」は shortTitle の後半と lead に残す。
+    fullName: 'PLANTS POLE "うねうね" 35cm アイアン',
     // 2026-10-17 SEO(#10800): 売上の中心3商品のうち、うねうねだけ shortTitle が無く
     // title が「PLANTS POLE "うねうね"｜観葉植物の園芸支柱」= 価格も用途も出ていなかった。
     // hex3 / noboribo と同じ「商品名＋価格＋中身」の型に揃える（商品名は変えない）
-    shortTitle: '横に広がる観葉植物の支柱 "うねうね" {price}',
+    shortTitle: 'PLANTS POLE "うねうね" 35cm アイアン {price}｜横に広がる観葉植物の支柱',
     price: 1320,
     image: "/products/product-uneune-base.webp",
     // 2026-11-01 広告・SEO 案、増澤さん承認（17:04 JST）: 色ボタンを押す前の1枚目だけ白。image / ogImage は変えない。
@@ -447,7 +448,7 @@ export const PRODUCTS: Product[] = [
     // 2026-10-10 デザイナー納品のBASE5枚目と同じ図。幅表記を消したぶんをサイズ図で埋める（#6730）
     sizeImage: {
       src: "/products/base-130117282-05-size.jpg",
-      alt: 'PLANTS POLE "うねうね" の寸法図。全長 約35cm、うねうね部 約12cm。',
+      alt: 'PLANTS POLE "うねうね" 35cm アイアンの寸法図。全長 約35cm、うねうね部 約12cm。',
       caption: "全長 約35cm／うねうね部 約12cm。5〜7号前後の鉢が目安です（写真はホワイト）。",
       width: 1600,
       height: 1600,
@@ -465,10 +466,10 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "pot",
     name: 'PLANTS POLE 六角鉢セット "3つの六角形"',
-    fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"（鉢・受け皿・支柱の3点）',
+    fullName: 'PLANTS POLE 六角鉢セット "3つの六角形"',
     // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
     // 2026-10-10 SEO: 六角鉢3点を検索結果で比べられるよう価格を追加（{price} は price から自動）。EC店長が10/10ライブ値で確認 #7524
-    shortTitle: '六角鉢セット "3つの六角形" {price}｜受け皿・支柱付き',
+    shortTitle: 'PLANTS POLE 六角鉢セット "3つの六角形" {price}｜受け皿・支柱付き',
     price: 1980,
     image: "/products/product-hexpot-set-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
@@ -495,10 +496,10 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "pot",
     name: 'PLANTS POLE 六角鉢セット "2つの六角形"',
-    fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"（鉢・受け皿・支柱の3点）',
+    fullName: 'PLANTS POLE 六角鉢セット "2つの六角形"',
     // 2026-10-08 SEO: GSC「六角鉢」4imp・4.0位・0click。title に検索で選ばれる中身（受け皿・支柱付き）を足す（商品名は変えない）
     // 2026-10-10 SEO: 同上（#7524・1,880円）
-    shortTitle: '六角鉢セット "2つの六角形" {price}｜受け皿・支柱付き',
+    shortTitle: 'PLANTS POLE 六角鉢セット "2つの六角形" {price}｜受け皿・支柱付き',
     price: 1880,
     image: "/products/product-hexpot-set2-base.webp",
     // 2026-10-06 SEO: 1.91:1クロップで鉢皿が切れる指摘→横長OGに差し替え
@@ -792,8 +793,8 @@ export const PRODUCTS: Product[] = [
     category: "climb",
     isNew: true,
     name: 'PLANTS POLE 上り棒セット "3つの六角形"',
-    shortTitle: '上り棒セット {price}｜水苔を詰めるモス支柱（登り棒）＋六角鉢・受け皿',
-    fullName: 'PLANTS POLE 上り棒セット "3つの六角形" - 水苔を詰めて育てる登り棒＋専用六角鉢・受け皿 -',
+    shortTitle: 'PLANTS POLE 上り棒セット "3つの六角形" {price}｜水苔を詰めるモス支柱（登り棒）＋六角鉢・受け皿',
+    fullName: 'PLANTS POLE 上り棒セット "3つの六角形"',
     price: 3980,
     image: "/products/product-noboribo-base.webp",
     ogImage: "/products/product-noboribo-og-wide.jpg",
@@ -866,9 +867,9 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "hanging",
     isNew: true,
-    name: "六角形ハンギング鉢",
-    shortTitle: "六角形ハンギング鉢 {price}｜S字フックで吊るす着生植物用ポケット",
-    fullName: "PLANTS POLE 六角形ハンギング鉢 - S字フックで吊るす着生植物用ポケット 3Dプリント -",
+    name: "PLANTS POLE 六角形ハンギング鉢",
+    shortTitle: "PLANTS POLE 六角形ハンギング鉢 {price}｜S字フックで吊るす着生植物用ポケット",
+    fullName: "PLANTS POLE 六角形ハンギング鉢",
     price: 1380,
     image: "/products/product-hexhanging-base.webp",
     ogImage: "/products/product-hexhanging-og-wide.jpg",
@@ -897,9 +898,9 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "hanging",
     isNew: true,
-    name: "壁掛けプレート（単品）",
-    shortTitle: "壁掛けプレート {price}｜壁掛け六角鉢を7か所に掛けられる",
-    fullName: "PLANTS POLE 壁掛けプレート（単品） - 壁面緑化 3Dプリント -",
+    name: "PLANTS POLE 壁掛けプレート（単品）",
+    shortTitle: "PLANTS POLE 壁掛けプレート（単品） {price}｜壁掛け六角鉢を7か所に掛けられる",
+    fullName: "PLANTS POLE 壁掛けプレート（単品）",
     price: 2480,
     image: "/products/product-hexwallplate-base.webp",
     ogImage: "/products/product-hexwallplate-og-wide.jpg",
@@ -928,9 +929,9 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "hanging",
     isNew: true,
-    name: "壁掛け六角鉢（単品）",
-    shortTitle: "壁掛け六角鉢 {price}｜壁掛けプレートに足せる単品",
-    fullName: "PLANTS POLE 壁掛け六角鉢（単品） - 壁面緑化 3Dプリント -",
+    name: "PLANTS POLE 壁掛け六角鉢（単品）",
+    shortTitle: "PLANTS POLE 壁掛け六角鉢（単品） {price}｜壁掛けプレートに足せる単品",
+    fullName: "PLANTS POLE 壁掛け六角鉢（単品）",
     price: 1100,
     image: "/products/product-hexwallpot-base.webp",
     ogImage: "/products/product-hexwallpot-og-wide.jpg",
@@ -966,9 +967,9 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "hanging",
     isNew: true,
-    name: "壁掛け六角鉢3個＋壁掛けプレートセット",
-    shortTitle: "壁掛け六角鉢3個＋プレートセット {price}｜壁面緑化",
-    fullName: "PLANTS POLE 壁掛け六角鉢3個＋壁掛けプレートセット - 壁面緑化 3Dプリント -",
+    name: "PLANTS POLE 壁掛け六角鉢セット",
+    shortTitle: "PLANTS POLE 壁掛け六角鉢セット {price}｜壁面緑化",
+    fullName: "PLANTS POLE 壁掛け六角鉢セット",
     price: 5500,
     image: "/products/product-hexwall-base.webp",
     ogImage: "/products/product-hexwall-og-wide.jpg",
@@ -1006,9 +1007,9 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "tool",
     isNew: true,
-    name: "ソイルスティック",
-    shortTitle: "ソイルスティック {price}｜植え替え用の土入れ棒・ヘラ付き",
-    fullName: "ソイルスティック - 植え替え用の土入れ棒・ヘラ付き 3Dプリント -",
+    name: "PLANTS POLE ソイルスティック",
+    shortTitle: "PLANTS POLE ソイルスティック {price}｜植え替え用の土入れ棒・ヘラ付き",
+    fullName: "PLANTS POLE ソイルスティック",
     price: 550,
     image: "/products/product-soilstick-base.webp",
     ogImage: "/products/product-soilstick-og-wide.jpg",
@@ -1040,7 +1041,7 @@ export const PRODUCTS: Product[] = [
       {
         heading: "スコップとの使い分け",
         paragraphs: [
-          "ミニ土入れスコップは「土を入れる」道具、ソイルスティックは「入れたあとに詰める・ならす」道具です。筒型のスコップで鉢のふちから土を流し込み、ソイルスティックの突き棒ですき間を埋め、最後に反対側のヘラ（長さ約5cm・幅約14mm）で表面をならす、という順番で使うと、口の小さな鉢でも土が偏りません。",
+          "PLANTS POLE ミニ土入れスコップは「土を入れる」道具、PLANTS POLE ソイルスティックは「入れたあとに詰める・ならす」道具です。筒型のスコップで鉢のふちから土を流し込み、ソイルスティックの突き棒ですき間を埋め、最後に反対側のヘラ（長さ約5cm・幅約14mm）で表面をならす、という順番で使うと、口の小さな鉢でも土が偏りません。",
           "ヘラの側は、化粧砂を広げたり、減った土を少しだけ足したりするのにも使えます。全長は約18cmで、口径6〜12cmほどの鉢なら底近くまで届きます。",
         ],
       },
@@ -1060,9 +1061,9 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "tool",
     isNew: true,
-    name: "ミニ土入れスコップ",
-    shortTitle: "ミニ土入れスコップ {price}｜ふるい穴付き・小鉢の土入れに",
-    fullName: "ミニ土入れスコップ - ふるい穴付き・3Dプリント製 小鉢用の土入れ -",
+    name: "PLANTS POLE ミニ土入れスコップ",
+    shortTitle: "PLANTS POLE ミニ土入れスコップ {price}｜ふるい穴付き・小鉢の土入れに",
+    fullName: "PLANTS POLE ミニ土入れスコップ",
     price: 550,
     image: "/products/product-scoop-base.webp",
     ogImage: "/products/product-scoop-og-wide.jpg",
@@ -1090,11 +1091,11 @@ export const PRODUCTS: Product[] = [
     kind: "pla",
     category: "pot",
     name: "PLANTS POLE 六角鉢＋受け皿",
-    fullName: "PLANTS POLE 六角鉢＋受け皿 - 支柱の差込口付き3Dプリント鉢 -",
+    fullName: "PLANTS POLE 六角鉢＋受け皿",
     // 2026-10-10 SEO: GSC「六角鉢」3.6位・0click。title 先頭がブランド名で検索語が後ろだったので「六角鉢」を先頭に
     // 2026-10-10 SEO: 価格が無く検索結果で比べられていなかったので {price}（下の price から自動で埋まる）を追加。
     // 価格はEC店長が10/10にBASEライブ値で確認済み（#7524: 1,480円・4色バリエーションも一致）
-    shortTitle: "六角鉢＋受け皿 {price}｜支柱が差せる3Dプリント鉢 4色",
+    shortTitle: "PLANTS POLE 六角鉢＋受け皿 {price}｜支柱が差せる3Dプリント鉢 4色",
     price: 1480,
     image: "/products/product-hexpot-black.webp",
     // 2026-10-06 SEO: 共有カードが汎用og.jpgだったので横長画像を追加（デザイナー制作）
@@ -1122,9 +1123,9 @@ export const PRODUCTS: Product[] = [
     slug: "pole3pla",
     kind: "pla",
     category: "pole",
-    name: 'PLANTS POLE "3つの六角形" 樹脂版',
-    fullName: 'PLANTS POLE "3つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
-    shortTitle: '"3つの六角形" 樹脂版｜園芸支柱',
+    name: 'PLANTS POLE "3つの六角形" 22cm 樹脂版',
+    fullName: 'PLANTS POLE "3つの六角形" 22cm 樹脂版',
+    shortTitle: 'PLANTS POLE "3つの六角形" 22cm 樹脂版｜園芸支柱',
     price: 680,
     image: "/products/product-pole3pla-base.webp",
     // 2026-10-05 SEO: デザイナー納品の実写OG(1200x630)に差し替え(#3172)
@@ -1150,9 +1151,9 @@ export const PRODUCTS: Product[] = [
     slug: "pole2pla",
     kind: "pla",
     category: "pole",
-    name: 'PLANTS POLE "2つの六角形" 樹脂版',
-    fullName: 'PLANTS POLE "2つの六角形" 樹脂版 - 軽くて色が選べる3Dプリント支柱 -',
-    shortTitle: '"2つの六角形" 樹脂版｜園芸支柱',
+    name: 'PLANTS POLE "2つの六角形" 17cm 樹脂版',
+    fullName: 'PLANTS POLE "2つの六角形" 17cm 樹脂版',
+    shortTitle: 'PLANTS POLE "2つの六角形" 17cm 樹脂版｜園芸支柱',
     price: 580,
     image: "/products/product-pole2pla-base.webp",
     // 2026-10-05 SEO: デザイナー納品の実写OG(1200x630)に差し替え(#3172)

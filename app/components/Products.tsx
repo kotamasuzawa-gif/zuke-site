@@ -4,7 +4,7 @@ import { withUtm } from "@/app/lib/products";
 const products = [
   {
     id: 1,
-    name: 'PLANTS POLE "うねうね"',
+    name: 'PLANTS POLE "うねうね" 35cm アイアン',
     subtitle: "横に広がる植物を矯正できる支柱",
     price: "¥1,320",
     // 2026-10-10 EC店長#6718: 幅約8cm は雛形の使い回しだった。サイズ図の確定値に差し替え
@@ -17,7 +17,7 @@ const products = [
   },
   {
     id: 2,
-    name: 'PLANTS POLE "5つの六角形"',
+    name: 'PLANTS POLE "5つの六角形" 39cm アイアン',
     subtitle: "蔓性植物をインテリアに馴染むように飾る支柱",
     price: "¥1,320",
     // 2026-10-10 EC店長#6733: 幅約7cm も雛形の使い回しの疑い。アイアン4商品そろえて幅を外す（確定値なし）
@@ -30,7 +30,7 @@ const products = [
   },
   {
     id: 3,
-    name: 'PLANTS POLE "3つの六角形"',
+    name: 'PLANTS POLE "3つの六角形" 22cm アイアン',
     subtitle: "蔓性植物をインテリアに馴染むように飾る支柱",
     price: "¥880",
     // 2026-10-10 EC店長#6718: 幅約8cm は雛形の使い回しのため削除（確定値なし）
@@ -43,7 +43,7 @@ const products = [
   },
   {
     id: 4,
-    name: 'PLANTS POLE "2つの六角形"',
+    name: 'PLANTS POLE "2つの六角形" 19.5cm アイアン',
     subtitle: "蔓性植物をインテリアに馴染むように飾る支柱",
     price: "¥770",
     // 2026-10-10 EC店長#6718: 幅約8cm は雛形の使い回しのため削除（確定値なし）
