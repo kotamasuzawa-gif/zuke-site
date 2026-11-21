@@ -31,14 +31,15 @@ export type Product = {
   ogImageSquare?: string;
   baseUrl: string;
   /**
-   * 同じ商品ページに並べるサイズ。先頭が今までの大きさ（L）。
-   * price と baseUrl は先頭（L）と同じ値のまま。name は BASE の商品名。
+   * 同じ商品ページに並べるサイズ。先頭が今までの大きさ（M）。
+   * price と baseUrl は先頭（M）と同じ値のまま。name は BASE の商品名。
    * 2026-11-20 HEX POT LEAN / BOLD に S を追加（増澤さん承認）。
+   * 2026-11-22 増澤さん承認: 大きい方の表記を L から M に変更。
    */
   sizes?: {
-    /** BASE の商品名。例: HEX POT LEAN L */
+    /** BASE の商品名。例: HEX POT LEAN M */
     name: string;
-    /** 画面上のサイズ名。例: Lサイズ */
+    /** 画面上のサイズ名。例: Mサイズ */
     label: string;
     price: number;
     baseUrl: string;
@@ -155,7 +156,7 @@ export type Product = {
     heading: string;
     paragraphs: string[];
     /**
-     * この節の先頭に出す写真。2026-11-20 HEX POT の L/S 寸法写真。
+     * この節の先頭に出す写真。2026-11-20 HEX POT の M/S 寸法写真。
      * 入れてよい寸法は確定値だけ（sizes と同じ）。
      */
     images?: { src: string; alt: string; width: number; height: number }[];
@@ -525,17 +526,17 @@ export const PRODUCTS: Product[] = [
     // 2026-11-19 新商品: HEX POT BOLD（BASE 166371542・11/19 公開）。増澤さん承認（秘書経由「zukeplants.comにHEX POT BOLDを追加して本番に出してよい」）。
     // 説明の最後の2行（縦長の形の商品名と BASE の URL）は、サイト上では /products/hexpot-lean へのリンクにする。
     // 支柱の差込口は無いので、カテゴリ pot の既定 title（支柱が差せる六角鉢）は使わず shortTitle を指定。
-    // 2026-11-20 増澤さん承認: 今の大きさを Lサイズ（HEX POT BOLD L・BASE 166371542・3,780円）と明記し、
+    // 2026-11-20 増澤さん承認: 今の大きさを Lサイズ（当時の商品名 HEX POT BOLD L・BASE 166371542・3,780円）と明記し、
     // Sサイズ（HEX POT BOLD S・BASE 166527833・2,480円）を同じページに追加。ページURLは /products/hexpot-bold のまま。
-    // Lの寸法・価格・リンクは変えない。表示タイトルは sizes から組み立てる。
+    // 2026-11-22 増澤さん承認: 大きい方の表記を Mサイズ（HEX POT BOLD M）に変更。寸法・価格・BASEのリンク・ページURL・画像ファイルは変えない。表示タイトルは sizes から組み立てる。
     slug: "hexpot-bold",
     kind: "pla",
     category: "pot",
     isNew: true,
     notWholesale: true,
     name: "HEX POT BOLD",
-    fullName: "HEX POT BOLD L／HEX POT BOLD S",
-    shortTitle: "HEX POT BOLD L {price}／HEX POT BOLD S 2,480円｜ぼってりした六角形のスリット鉢",
+    fullName: "HEX POT BOLD M／HEX POT BOLD S",
+    shortTitle: "HEX POT BOLD M {price}／HEX POT BOLD S 2,480円｜ぼってりした六角形のスリット鉢",
     price: 3780,
     image: "/products/product-hexpot-bold-base.webp",
     ogImage: "/products/product-hexpot-bold-og-wide.jpg",
@@ -545,8 +546,8 @@ export const PRODUCTS: Product[] = [
     baseUrl: `${SHOP}/items/166371542`,
     sizes: [
       {
-        name: "HEX POT BOLD L",
-        label: "Lサイズ",
+        name: "HEX POT BOLD M",
+        label: "Mサイズ",
         price: 3780,
         baseUrl: `${SHOP}/items/166371542`,
         lines: [
@@ -572,11 +573,11 @@ export const PRODUCTS: Product[] = [
       },
     ],
     summary:
-      "3Dプリントで作った、ぼってりした形の六角形スリット鉢。本体・外せる底部・格子・受け皿の4つのセットです。HEX POT BOLD L（Lサイズ）は対辺117mm・高さ77mm・土の量約650ml、3,780円。HEX POT BOLD S（Sサイズ）は対辺94mm・高さ62mm・土の量約320ml、2,480円。ホワイトマーブル／ブラック。ご注文から7日以内に発送します。",
+      "3Dプリントで作った、ぼってりした形の六角形スリット鉢。本体・外せる底部・格子・受け皿の4つのセットです。HEX POT BOLD M（Mサイズ）は対辺117mm・高さ77mm・土の量約650ml、3,780円。HEX POT BOLD S（Sサイズ）は対辺94mm・高さ62mm・土の量約320ml、2,480円。ホワイトマーブル／ブラック。ご注文から7日以内に発送します。",
     lead:
-      "3Dプリントで作った、ぼってりした形の六角形スリット鉢です。本体、外せる底部、格子、受け皿の4つがセットになっています。HEX POT BOLD L（Lサイズ）と HEX POT BOLD S（Sサイズ）があります。",
-    height: "Lサイズ 本体77mm・セット104mm／Sサイズ 本体62mm・セット83mm",
-    width: "Lサイズ 対辺117mm（角から角まで135mm）／Sサイズ 対辺94mm（角から角まで108mm）・受け皿96mm",
+      "3Dプリントで作った、ぼってりした形の六角形スリット鉢です。本体、外せる底部、格子、受け皿の4つがセットになっています。HEX POT BOLD M（Mサイズ）と HEX POT BOLD S（Sサイズ）があります。",
+    height: "Mサイズ 本体77mm・セット104mm／Sサイズ 本体62mm・セット83mm",
+    width: "Mサイズ 対辺117mm（角から角まで135mm）／Sサイズ 対辺94mm（角から角まで108mm）・受け皿96mm",
     material: "3Dプリント",
     colorNames: ["ホワイトマーブル", "ブラック"],
     details: [
@@ -585,7 +586,7 @@ export const PRODUCTS: Product[] = [
         images: [
           {
             src: "/products/hexpot-bold/09-bold-l-s-pair-dim-l.webp",
-            alt: "HEX POT BOLD のLサイズとSサイズを並べた寸法写真（ホワイトマーブル）。左のLサイズ（HEX POT BOLD L）はセットの高さ104mm、右のSサイズ（HEX POT BOLD S）は83mm",
+            alt: "HEX POT BOLD のMサイズとSサイズを並べた寸法写真（ホワイトマーブル）。左のMサイズ（HEX POT BOLD M）はセットの高さ104mm、右のSサイズ（HEX POT BOLD S）は83mm",
             width: 1200,
             height: 1200,
           },
@@ -597,7 +598,7 @@ export const PRODUCTS: Product[] = [
           },
         ],
         paragraphs: [
-          "HEX POT BOLD L（Lサイズ）",
+          "HEX POT BOLD M（Mサイズ）",
           "本体：対辺117mm（角から角まで135mm）、高さ77mm",
           "受け皿を含むセットの高さ：104mm",
           "受け皿：一辺120mm、高さ16mm",
@@ -619,7 +620,7 @@ export const PRODUCTS: Product[] = [
       },
       {
         heading: "カラー",
-        paragraphs: ["ホワイトマーブル、ブラック（Lサイズ・Sサイズとも）"],
+        paragraphs: ["ホワイトマーブル、ブラック（Mサイズ・Sサイズとも）"],
       },
       {
         heading: "ご注意",
@@ -630,7 +631,7 @@ export const PRODUCTS: Product[] = [
         // BASE の最後の2行（商品名と https://shop.zukeplants.com/items/166191532）は、サイト内の商品ページへのリンクにする
         link: {
           before: "縦長の形がよい場合は「",
-          label: "HEX POT LEAN（Lサイズ・Sサイズ）",
+          label: "HEX POT LEAN（Mサイズ・Sサイズ）",
           href: "/products/hexpot-lean",
           after: "」をご覧ください。",
         },
@@ -650,7 +651,7 @@ export const PRODUCTS: Product[] = [
       { src: "/products/hexpot-bold/07-black-pot-angle.webp", alt: "HEX POT BOLD（ブラック）の本体を斜めから見たところ" },
       { src: "/products/hexpot-bold/08-black-base.webp", alt: "HEX POT BOLD（ブラック）の受け皿と格子" },
     ],
-    plants: ["Lサイズは土の量約650ml（4号鉢弱）。Sサイズは約320ml"],
+    plants: ["Mサイズは土の量約650ml（4号鉢弱）。Sサイズは約320ml"],
     scenes: [
       "ぼってりした六角形の鉢を、受け皿ごと棚やテーブルに置く",
       "ホワイトマーブル／ブラックの2色から選ぶ",
@@ -665,17 +666,17 @@ export const PRODUCTS: Product[] = [
     // 半透明ライトブルーの単色写真は添付に無く、公開ページにも無いので載せない。
     // 写真は公開ページの5枚の前に、増澤さん指定の1枚目（半透明ライトブルーとホワイトマーブルの並び）を置く。合計6枚。動画は載せない。
     // 支柱の差込口は無いので、カテゴリ pot の既定 title は使わず shortTitle を指定。卸の条件は未定。
-    // 2026-11-20 増澤さん承認: 今の大きさを Lサイズ（HEX POT LEAN L・BASE 166191532・3,780円）と明記し、
+    // 2026-11-20 増澤さん承認: 今の大きさを Lサイズ（当時の商品名 HEX POT LEAN L・BASE 166191532・3,780円）と明記し、
     // Sサイズ（HEX POT LEAN S・BASE 166527777・2,480円）を同じページに追加。ページURLは /products/hexpot-lean のまま。
-    // Lの寸法・価格・リンクは変えない。表示タイトルは sizes から組み立てる。
+    // 2026-11-22 増澤さん承認: 大きい方の表記を Mサイズ（HEX POT LEAN M）に変更。寸法・価格・BASEのリンク・ページURL・画像ファイルは変えない。表示タイトルは sizes から組み立てる。
     slug: "hexpot-lean",
     kind: "pla",
     category: "pot",
     isNew: true,
     notWholesale: true,
     name: "HEX POT LEAN",
-    fullName: "HEX POT LEAN L／HEX POT LEAN S",
-    shortTitle: "HEX POT LEAN L {price}／HEX POT LEAN S 2,480円｜本体・外せる底部・格子付き受け皿",
+    fullName: "HEX POT LEAN M／HEX POT LEAN S",
+    shortTitle: "HEX POT LEAN M {price}／HEX POT LEAN S 2,480円｜本体・外せる底部・格子付き受け皿",
     price: 3780,
     image: "/products/product-hexpot-lean-base.webp",
     ogImage: "/products/product-hexpot-lean-og-wide.jpg",
@@ -685,8 +686,8 @@ export const PRODUCTS: Product[] = [
     baseUrl: `${SHOP}/items/166191532`,
     sizes: [
       {
-        name: "HEX POT LEAN L",
-        label: "Lサイズ",
+        name: "HEX POT LEAN M",
+        label: "Mサイズ",
         price: 3780,
         baseUrl: `${SHOP}/items/166191532`,
         lines: [
@@ -710,11 +711,11 @@ export const PRODUCTS: Product[] = [
       },
     ],
     summary:
-      "3Dプリントで作った六角形のスリット鉢。本体・外せる底部・格子付き受け皿の3つのセットです。HEX POT LEAN L（Lサイズ）は対辺90mm・高さ100mm・セットの高さ134mm、3,780円。HEX POT LEAN S（Sサイズ）は対辺72mm・高さ86mm・セットの高さ107mm・土の量約315ml、2,480円。ブラック／ホワイトマーブル／半透明ライトブルー。ご注文から7日以内に発送します。",
+      "3Dプリントで作った六角形のスリット鉢。本体・外せる底部・格子付き受け皿の3つのセットです。HEX POT LEAN M（Mサイズ）は対辺90mm・高さ100mm・セットの高さ134mm、3,780円。HEX POT LEAN S（Sサイズ）は対辺72mm・高さ86mm・セットの高さ107mm・土の量約315ml、2,480円。ブラック／ホワイトマーブル／半透明ライトブルー。ご注文から7日以内に発送します。",
     lead:
-      "3Dプリントで作った六角形のスリット鉢です。本体、外せる底部、格子付きの受け皿の3つがセットになっています。HEX POT LEAN L（Lサイズ）と HEX POT LEAN S（Sサイズ）があります。",
-    height: "Lサイズ 本体100mm・セット134mm／Sサイズ 本体86mm・セット107mm",
-    width: "Lサイズ 対辺90mm／Sサイズ 対辺72mm・受け皿96mm",
+      "3Dプリントで作った六角形のスリット鉢です。本体、外せる底部、格子付きの受け皿の3つがセットになっています。HEX POT LEAN M（Mサイズ）と HEX POT LEAN S（Sサイズ）があります。",
+    height: "Mサイズ 本体100mm・セット134mm／Sサイズ 本体86mm・セット107mm",
+    width: "Mサイズ 対辺90mm／Sサイズ 対辺72mm・受け皿96mm",
     material: "3Dプリント",
     colorNames: ["ブラック", "ホワイトマーブル", "半透明ライトブルー"],
     details: [
@@ -723,7 +724,7 @@ export const PRODUCTS: Product[] = [
         images: [
           {
             src: "/products/hexpot-lean/07-lean-l-s-pair-dim-l.webp",
-            alt: "HEX POT LEAN のLサイズとSサイズを並べた寸法写真（ホワイトマーブル）。左のLサイズ（HEX POT LEAN L）はセットの高さ134mm、右のSサイズ（HEX POT LEAN S）は107mm",
+            alt: "HEX POT LEAN のMサイズとSサイズを並べた寸法写真（ホワイトマーブル）。左のMサイズ（HEX POT LEAN M）はセットの高さ134mm、右のSサイズ（HEX POT LEAN S）は107mm",
             width: 1200,
             height: 1200,
           },
@@ -735,7 +736,7 @@ export const PRODUCTS: Product[] = [
           },
         ],
         paragraphs: [
-          "HEX POT LEAN L（Lサイズ）",
+          "HEX POT LEAN M（Mサイズ）",
           "本体：対辺90mm、高さ100mm",
           "受け皿を含むセットの高さ：134mm",
           "カラー：ブラック、ホワイトマーブル、半透明ライトブルー",
@@ -759,7 +760,7 @@ export const PRODUCTS: Product[] = [
         // 公開ページの説明文には無い。増澤さん「LEAN側からもBOLDを案内してよい」のため、ご注意のあとに1行だけ足す。
         link: {
           before: "ぼってりした形がよい場合は「",
-          label: "HEX POT BOLD（Lサイズ・Sサイズ）",
+          label: "HEX POT BOLD（Mサイズ・Sサイズ）",
           href: "/products/hexpot-bold",
           after: "」をご覧ください。",
         },
@@ -779,7 +780,7 @@ export const PRODUCTS: Product[] = [
     ],
     plants: ["支柱を差さずに育てる株"],
     scenes: [
-      "Lサイズ（対辺90mm・高さ100mm）か、Sサイズ（対辺72mm・高さ86mm）を、格子付きの受け皿に乗せる",
+      "Mサイズ（対辺90mm・高さ100mm）か、Sサイズ（対辺72mm・高さ86mm）を、格子付きの受け皿に乗せる",
       "ブラック、ホワイトマーブル、半透明ライトブルーから選ぶ",
     ],
   },

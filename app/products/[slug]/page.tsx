@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!p) return {};
   // 2026-10-10 SEO: shortTitle に `{price}` と書くと products.ts の price から埋める。
   // 価格はEC店長が所有する数字なので、タイトルに数字を二重で持たせない（price を直せばtitleも追従）
-  // 2026-11-20: L/S を並べる商品は、各サイズの BASE 名と価格をタイトルにする（L は price、S は sizes）
+  // 2026-11-20: M/S を並べる商品は、各サイズの BASE 名と価格をタイトルにする（M は price、S は sizes）
   const title = p.sizes?.length
     ? p.sizes.map((s) => `${s.name} ${s.price.toLocaleString("ja-JP")}円`).join("／")
     : (p.shortTitle ?? `${p.name}｜${TITLE_SUFFIX[p.category]}`).replace(
@@ -100,7 +100,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       // 2026-09-29 SEO R4: 手書きの条件式をやめ、BASE で実際に選べる色（soldColors）に合わせる
       // 2026-10-06 SEO: 色ボタンを出さない商品（丸鉢スタンドセット等・sold が空）は image が [] になりリッチリザルト対象外だった → BASE の1枚目で補う
       // 2026-11-19: 写真欄（gallery）がある商品は、その写真（BASE と同じ順）を登録する
-      // 2026-11-20: L/S の寸法写真も登録する
+      // 2026-11-20: M/S の寸法写真も登録する
       image: [...galleryImages, ...sizeImages],
       description: p.summary,
       sku: p.slug,
@@ -109,7 +109,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       color: p.colorNames?.length ? p.colorNames.join(" / ") : sold.length ? sold.map(colorLabel).join(" / ") : undefined,
       category: p.kind === "iron" ? "園芸支柱（アイアン）" : "3Dプリント園芸用品（PLA樹脂）",
       brand: { "@type": "Brand", name: "ZUKE" },
-      // 2026-11-20: サイズが複数ある商品は、サイズごとの Offer（L の価格・URLは変えない）
+      // 2026-11-20: サイズが複数ある商品は、サイズごとの Offer（M の価格・URLは変えない）
       offers: p.sizes?.length
         ? p.sizes.map((s) => offerFor(s.price, s.baseUrl, s.name))
         : offerFor(p.price, p.baseUrl),
