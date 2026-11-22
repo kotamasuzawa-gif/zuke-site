@@ -7,6 +7,7 @@ import ShokuyokuAppBanner from "./ShokuyokuAppBanner";
 import { PRODUCTS, HOME_FEATURED_SLUGS, yen, withUtm } from "@/app/lib/products";
 import { GUIDES } from "@/app/lib/guides";
 import Link from "next/link";
+import HomeSlider from "@/app/components/HomeSlider";
 import PlantFinder from "@/app/components/PlantFinder";
 import { COLORS, type ColorKey, shownImageFor, shownColorLabel } from "@/app/lib/colors";
 import { useState, useEffect } from "react";
@@ -34,7 +35,7 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
   const [color, setColor] = useState<ColorKey | null>(null);
 
   return (
-    <div className="min-h-screen bg-white text-[#222] flex flex-col">
+    <div className="min-h-screen w-full min-w-0 bg-white text-[#222] flex flex-col">
       {/* ヘッダー */}
       <header className="sticky top-0 z-50 bg-white">
         <div className="h-16 md:h-20 px-4 md:px-8 flex items-center justify-between">
@@ -70,7 +71,8 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
         </nav>
       </header>
 
-      <main className="flex-1">
+      {/* min-w-0: 横スライダーの中身でページ全体が横にはみ出さない */}
+      <main className="flex-1 min-w-0">
         {/* 組み立て動画（2026-09-24 増澤さん要望: 横動画をヘッダー下に）。自動再生・無音・ループ */}
         <section aria-label="PLANTS POLE の組み立てムービー" className="w-full bg-white">
           <video
@@ -82,12 +84,13 @@ export default function BaseClone({ showLifestyle = false }: { showLifestyle?: b
             aria-label={hero.label}
           />
         </section>
+        {/* 2026-11-22 増澤さん（11:05 JST）: 動画の直下、FIND YOUR POLE の上 */}
+        <HomeSlider />
         {/* 六角ロゴ。SEO: ページに h1 が1つも無かったため、見た目を変えずにロゴを h1 にした */}
         {/* 2026-09-24 増澤さん指示: ロゴ画像はホームから外し、動画冒頭に移動。h1 は SEO のため sr-only で維持 */}
-        <h1 className="pt-10 md:pt-12">
-          <span className="sr-only">
-            ZUKE｜インテリアに馴染む園芸支柱 PLANTS POLE — 観葉植物・インテリアグリーンを魅せる支柱
-          </span>
+        {/* 2026-11-22: 動画と診断のあいだの余白は HomeSlider が持つ。h1 自体は画面に出さない */}
+        <h1 className="sr-only">
+          ZUKE｜インテリアに馴染む園芸支柱 PLANTS POLE — 観葉植物・インテリアグリーンを魅せる支柱
         </h1>
 
         {/* 探し方の導線（2026-09-26 増澤さん指示: 素材→カテゴリ）
