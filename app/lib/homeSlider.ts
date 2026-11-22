@@ -1,22 +1,17 @@
 // 2026-11-22 増澤さん（11:05 JST）: トップの動画の下に出すカード。
-// 画像・文言・リンクの差し替えは、このファイルだけを編集する。
+// 画像・文言・リンク・alt の差し替えは、このファイルだけを編集する。
 //
 // 画像の置き場所: public/home-slider/
-// 推奨サイズ: 横 1200 × 縦 800（3:2）。
-// 枠は 3:2。はみ出した部分は中央で切り抜かれるので、見せたいものは中央に置く。
-// 同じファイル名で上書きするか、各カードの image を新しいパスに変える。
+// サイズ: 横 1200 × 縦 800（3:2）。地は上 #F2F2F2 → 下 #FAFAFA。文字は画像に入れない。
 
 export type HomeSliderCard = {
   id: string;
-  /** タイトルの上に出す短いラベル */
-  eyebrow: string;
   title: string;
-  /** カード本文。仮の文言 */
   body: string;
   href: string;
   /** true のとき新しいタブで開く */
   external?: boolean;
-  /** public/ からのパス。例: /home-slider/hex-pot.webp */
+  /** public/ からのパス。例: /home-slider/card_01_hexpot.webp */
   image: string;
   imageAlt: string;
 };
@@ -29,37 +24,32 @@ export const HOME_SLIDER_IMAGE = {
   aspectRatio: "3:2",
 } as const;
 
-// リンク先（2026-11-22 時点）:
-// HEX POT SYSTEM / HEX POLE SYSTEM という名前のページは無い。
-// 鉢は /collections/pot（鉢・セット。HEX POT BOLD / LEAN を含む）、
-// 支柱は /collections/pole。商品一覧の該当見出しは /products#grp-pot と /products#grp-pole。
+// 2026-11-22 デザイナー素材。文言・リンク・alt は copy.md のとおり。
+// HEX POT は LEAN の商品ページ。HEX POLE は支柱のまとまり。植欲マップは別タブ。
 export const HOME_SLIDER_CARDS: HomeSliderCard[] = [
   {
     id: "hex-pot",
-    eyebrow: "POT",
     title: "HEX POT SYSTEM",
-    body: "六角形のスリット鉢。形をそろえて、植物を飾る。",
-    href: "/collections/pot",
-    image: "/home-slider/hex-pot.webp",
-    imageAlt: "HEX POT BOLD（ホワイトマーブル）の仮画像",
+    body: "根が呼吸する、六角のスリット鉢",
+    href: "/products/hexpot-lean",
+    image: "/home-slider/card_01_hexpot.webp",
+    imageAlt: "HEX POT（ホワイトマーブル・半透明ライトブルー・ブラック）",
   },
   {
     id: "hex-pole",
-    eyebrow: "POLE",
     title: "HEX POLE SYSTEM",
-    body: "六角形の園芸支柱。蔓を立ち上げて、部屋の景色にする。",
+    body: "伸びた蔓を、インテリアの一部に。",
     href: "/collections/pole",
-    image: "/home-slider/hex-pole.webp",
-    imageAlt: "六角形の園芸支柱と観葉植物の仮画像",
+    image: "/home-slider/card_02_hexpole.webp",
+    imageAlt: "六角鉢に差したPLANTS POLE 3つの六角形（樹脂版）",
   },
   {
     id: "shokuyoku-map",
-    eyebrow: "MAP",
     title: "植欲マップ",
-    body: "行きたい園芸店が、地図から見つかる。",
-    href: "https://shokuyoku-map.com",
+    body: "近くの園芸店が、地図で見つかる",
+    href: "https://shokuyoku-map.com/?utm_source=zukeplants&utm_medium=top_slider",
     external: true,
-    image: "/home-slider/shokuyoku.webp",
-    imageAlt: "植欲マップのアイコン（仮画像）",
+    image: "/home-slider/card_03_shokuyoku.webp",
+    imageAlt: "植欲マップのアプリアイコンとホーム画面",
   },
 ];

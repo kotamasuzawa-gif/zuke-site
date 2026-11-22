@@ -447,7 +447,7 @@ export default function HomeSlider() {
 function SliderCard({ card }: { card: HomeSliderCard }) {
   const inner = (
     <>
-      <div className="relative aspect-[3/2] overflow-hidden bg-[#fbfbfb]">
+      <div className="relative aspect-[3/2] overflow-hidden bg-[linear-gradient(#F2F2F2,#FAFAFA)]">
         <Image
           src={card.image}
           alt={card.imageAlt}
@@ -457,9 +457,8 @@ function SliderCard({ card }: { card: HomeSliderCard }) {
           draggable={false}
         />
       </div>
-      <div className="flex flex-1 flex-col px-4 py-4">
-        <p className="text-[11px] tracking-[0.2em] text-gray-500">{card.eyebrow}</p>
-        <p className="mt-2 text-[15px] font-bold tracking-[0.04em] text-[#222]">{card.title}</p>
+      <div className="flex flex-1 flex-col bg-[#FAFAFA] px-4 py-4">
+        <p className="text-[15px] font-bold tracking-[0.04em] text-[#222]">{card.title}</p>
         <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-gray-600">{card.body}</p>
         <p className="mt-4 text-[12px] tracking-[0.12em] text-[#222]">
           {card.external ? "サイトを見る" : "詳しく見る"}
@@ -470,7 +469,7 @@ function SliderCard({ card }: { card: HomeSliderCard }) {
     </>
   );
   const className =
-    "group flex h-full w-full min-h-full flex-col border border-[#e5e5e0] bg-white text-left outline-offset-4 transition-colors hover:border-[#222] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#222] motion-reduce:transition-none";
+    "group flex h-full w-full min-h-full flex-col border border-[#E8E8E8] bg-[#FAFAFA] text-left outline-offset-4 transition-colors hover:border-[#222] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#222] motion-reduce:transition-none";
   if (card.external) {
     return (
       <a href={card.href} target="_blank" rel="noopener noreferrer" className={className}>
