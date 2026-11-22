@@ -9,8 +9,6 @@ export type HomeSliderCard = {
   title: string;
   body: string;
   href: string;
-  /** true のとき新しいタブで開く */
-  external?: boolean;
   /** public/ からのパス。例: /home-slider/card_01_hexpot.webp */
   image: string;
   imageAlt: string;
@@ -24,8 +22,8 @@ export const HOME_SLIDER_IMAGE = {
   aspectRatio: "3:2",
 } as const;
 
-// 2026-11-22 デザイナー素材。文言・リンク・alt は copy.md のとおり。
-// HEX POT は LEAN の商品ページ。HEX POLE は支柱のまとまり。植欲マップは別タブ。
+// 2026-11-22 12:29 増澤さん: 3枚目は植欲マップではなく HEX IRON。
+// 文言・リンク・alt は copy.md のとおり。すべてサイト内で、同じタブで開く。
 export const HOME_SLIDER_CARDS: HomeSliderCard[] = [
   {
     id: "hex-pot",
@@ -44,12 +42,11 @@ export const HOME_SLIDER_CARDS: HomeSliderCard[] = [
     imageAlt: "六角鉢に差したPLANTS POLE 3つの六角形（樹脂版）",
   },
   {
-    id: "shokuyoku-map",
-    title: "植欲マップ",
-    body: "近くの園芸店が、地図で見つかる",
-    href: "https://shokuyoku-map.com/?utm_source=zukeplants&utm_medium=top_slider",
-    external: true,
-    image: "/home-slider/card_03_shokuyoku.webp",
-    imageAlt: "植欲マップのアプリアイコンとホーム画面",
+    id: "hex-iron",
+    title: "HEX IRON",
+    body: "細いアイアンで、植物を軽やかに",
+    href: "/collections/iron",
+    image: "/home-slider/card_03_hexiron.webp",
+    imageAlt: 'PLANTS POLE "5つの六角形" アイアン（ブラック）を鉢に立てた写真',
   },
 ];

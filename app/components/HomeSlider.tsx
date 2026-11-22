@@ -461,22 +461,14 @@ function SliderCard({ card }: { card: HomeSliderCard }) {
         <p className="text-[15px] font-bold tracking-[0.04em] text-[#222]">{card.title}</p>
         <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-gray-600">{card.body}</p>
         <p className="mt-4 text-[12px] tracking-[0.12em] text-[#222]">
-          {card.external ? "サイトを見る" : "詳しく見る"}
+          詳しく見る
           <span aria-hidden> →</span>
-          {card.external && <span className="sr-only">（新しいタブで開きます）</span>}
         </p>
       </div>
     </>
   );
   const className =
     "group flex h-full w-full min-h-full flex-col border border-[#E8E8E8] bg-[#FAFAFA] text-left outline-offset-4 transition-colors hover:border-[#222] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#222] motion-reduce:transition-none";
-  if (card.external) {
-    return (
-      <a href={card.href} target="_blank" rel="noopener noreferrer" className={className}>
-        {inner}
-      </a>
-    );
-  }
   return (
     <Link href={card.href} className={className}>
       {inner}
