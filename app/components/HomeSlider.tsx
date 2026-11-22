@@ -445,33 +445,21 @@ export default function HomeSlider() {
 }
 
 function SliderCard({ card }: { card: HomeSliderCard }) {
-  const inner = (
-    <>
-      <div className="relative aspect-[3/2] overflow-hidden bg-[linear-gradient(#F2F2F2,#FAFAFA)]">
-        <Image
-          src={card.image}
-          alt={card.imageAlt}
-          fill
-          sizes="(max-width: 640px) 82vw, (max-width: 1024px) 46vw, 31vw"
-          className="object-cover transition-opacity group-hover:opacity-90 motion-reduce:transition-none"
-          draggable={false}
-        />
-      </div>
-      <div className="flex flex-1 flex-col bg-[#FAFAFA] px-4 py-4">
-        <p className="text-[15px] font-bold tracking-[0.04em] text-[#222]">{card.title}</p>
-        <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-gray-600">{card.body}</p>
-        <p className="mt-4 text-[12px] tracking-[0.12em] text-[#222]">
-          詳しく見る
-          <span aria-hidden> →</span>
-        </p>
-      </div>
-    </>
-  );
-  const className =
-    "group flex h-full w-full min-h-full flex-col border border-[#E8E8E8] bg-[#FAFAFA] text-left outline-offset-4 transition-colors hover:border-[#222] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#222] motion-reduce:transition-none";
   return (
-    <Link href={card.href} className={className}>
-      {inner}
+    <Link
+      href={card.href}
+      className="block w-full outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#222]"
+    >
+      {/* 1200×800 のまま出す。object-fit で正方形に切らない */}
+      <Image
+        src={card.image}
+        alt={card.imageAlt}
+        width={1200}
+        height={800}
+        sizes="(max-width: 640px) 82vw, (max-width: 1024px) 46vw, 31vw"
+        className="block h-auto w-full"
+        draggable={false}
+      />
     </Link>
   );
 }
